@@ -1,0 +1,91 @@
+library(tidyverse)
+
+
+#### Import geodata ----
+library(sf)
+
+trees <- read_sf('data/Streuobst_Klassen3bis5.shp')                             # Import der Streuobstkartierung des LUBW
+study_area <- read_sf('data/VG250_GEM.shp') %>% filter(GEN=='Tübingen')         # Import der Verwaltungsgebiete und Auswahl des Tübinger Stadtgebiets
+
+trees <- st_intersection(trees, study_area)                                     # Auswahl des Streuobsts im Untersuchungsgebiet
+
+saveRDS(trees, 'data/trees_tuebingen.Rds')                                      # Speichert das Zwischenergebnis, kann mit readRDS('data/trees_tuebingen.Rds') geladen werden
+
+# Plot geodata
+library(leaflet)
+
+trees_wgs84 <- trees %>% st_transform(crs='+proj=longlat +datum=WGS84')         # Leaflet kann nur mit geographischen Koordinaten arbeiten, deshalb wird hier aus 
+leaflet(trees_wgs84) %>% 
+  addTiles() %>% 
+  addCircleMarkers(radius=1, color='green', popup=~as.character(hoehe))
+  
+
+
+
+#### Load climate data ----
+library(rdwd)
+library(terra)
+
+# Climate period 1960-1990
+temp60_data <- dataDWD(url='multi_annual/air_temperature_mean/grids_germany_multi_annual_air_temp_mean_1961-1990_17.asc.gz', 
+                         base=gridbase, joinbf=TRUE, read=FALSE)
+temp60 <- readDWD(temp60_data)
+crs(temp60) <- 'EPSG:31467'                                                     # Legt Koordinatensystem der DWD-Daten fest, welches hier definiert ist: https://opendata.dwd.de/climate_environment/CDC/grids_germany/multi_annual/air_temperature_mean/BESCHREIBUNG_gridsgermany_multi_annual_air_temperature_mean_6190_de.pdf
+temp60 <- temp60 %>% project(crs(trees))                                        # Projiziert Daten in UTM 32, dem CRS des Layers trees
+temp60                                                                          # Zeigt die Eigenschaften des Layers
+plot(temp60, main='Klimaperiode 1961-1990')
+saveRDS(temp60, 'data/temp60.Rds')                                              # Speichert das Zwischenergebnis, kann mit readRDS() geladen werden
+
+# Climate period 1990-2020
+temp90_data <- dataDWD(url='multi_annual/air_temperature_mean/grids_germany_multi_annual_air_temp_mean_1991_2020_17.asc.gz', 
+                       base=gridbase, joinbf=TRUE, read=FALSE)
+temp90 <- readDWD(temp90_data)
+crs(temp90) <- 'EPSG:31467'                                                     # Legt Koordinatensystem der DWD-Daten fest, welches hier definiert ist: https://opendata.dwd.de/climate_environment/CDC/grids_germany/multi_annual/air_temperature_mean/BESCHREIBUNG_gridsgermany_multi_annual_air_temperature_mean_6190_de.pdf
+temp90 <- temp90 %>% project(crs(trees))                                        # Projiziert Daten in UTM 32, dem CRS des Layers trees
+temp90                                                                          # Zeigt die Eigenschaften des Layers
+plot(temp90, main='Klimaperiode 1991-2020')
+saveRDS(temp90, 'data/temp90.Rds')                                              # Speichert das Zwischenergebnis, kann mit readRDS() geladen werden
+
+plot(temp90-temp60, main='Differenz der Klimaperioden')                         # Zeigt Temperaturanstieg zwischen den Klimaperioden
+
+
+#### Extract raster values ----
+trees <- trees %>% mutate(                                                      # Legt zwei neue Spalten für die beiden Klimaperioden in der Attributtabelle an
+  temp60=extract(temp60, trees)[,2],                                            # Extrahiert die Pixelwerte der Temperatur 1960-1990 an den Baumstandorten
+  temp90=extract(temp90, trees)[,2])                                            # Extrahiert die Pixelwerte der Temperatur 1990-2020 an den Baumstandorten
+saveRDS(trees, 'data/trees_with_temperature.Rds')                                              # Speichert das Zwischenergebnis, kann mit readRDS() geladen werden
+
+
+
+#### Statistics ----
+
+# Visual interpretation
+data <- trees %>% pivot_longer(c(temp60, temp90), names_to='variable', values_to='values')  # Macht die Tabelle lang, in der eine Spalte den Variablennamen enthält, die andere den Wert
+
+ggplot(data=data, aes(x=values, fill=variable))+                                # Plot des Ergebnisses
+  geom_histogram()
+
+# t-Test
+t.test(x=trees$temp60, y=trees$temp90, paired=T, alternative='two.sided')       # Zeigt hochsignifikante Temperaturunterschiede (p<0.001) zwischen den Perioden an Streuobststandorten
+
+# Effektstärke
+effsize::cohen.d(trees$temp60, trees$temp90)                                    # Zeigt eine hohe Effektstärke des Temperaturunterschieds
+
+# Deskriptve Statistik
+mean(trees$temp60)                                                              # Mittelwert
+sd(trees$temp60)                                                                # Standardabweichung
+quantile(trees$temp60)                                                          # Quantile
+
+mean(trees$temp90)
+sd(trees$temp90)
+
+# Einfaches Envelope-Model
+library(tidyterra)
+library(RColorBrewer)
+lower_margin <- quantile(trees$temp60, prob=0.025)                              # Unteres limit (2,5% quantil)
+upper_margin <- quantile(trees$temp60, prob=0.975)                              # oberes limit (97,5% quantil)
+
+temp60 %>% filter(`multi_annual_air_temperature_mean_grids_germany_multi_annual_air_temp_mean_1961-1990_17`>lower_margin & `multi_annual_air_temperature_mean_grids_germany_multi_annual_air_temp_mean_1961-1990_17`<upper_margin) %>% plot(main='Suitable areas 1961-1990')
+temp90 %>% filter(`multi_annual_air_temperature_mean_grids_germany_multi_annual_air_temp_mean_1991_2020_17`>lower_margin & `multi_annual_air_temperature_mean_grids_germany_multi_annual_air_temp_mean_1991_2020_17`<upper_margin) %>% plot(main='Suitable areas 1991-2020')
+
+
