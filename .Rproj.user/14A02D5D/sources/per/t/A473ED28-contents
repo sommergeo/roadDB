@@ -32,6 +32,7 @@ road_query <- function(culture, spatial=T){
 
 test <- road_query(culture='Oldowan - Africa')
 
+head(test)
 
 #### Test ----
 
