@@ -40,8 +40,6 @@ road_locality <- function(country="'%'", continent="'%'"){
   # Connect do ROAD
   con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host="134.2.216.14", port=5432, user=rstudioapi::askForPassword("Database username"), password=rstudioapi::askForPassword("Database password"))
   
-  country <- paste0("'",country,"'")
-  continent <- paste0("'",continent,"'")
   
   if(is.string(country) && country==''){
     country <- "country ILIKE '%'"
@@ -74,6 +72,8 @@ road_locality <- function(country="'%'", continent="'%'"){
   
   # Run the query
   dat <- dbGetQuery(con, query)
+  
+  return(dat)
   
 }
 
