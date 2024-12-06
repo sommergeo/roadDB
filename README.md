@@ -11,7 +11,6 @@ An extensive set of arguments can be applied to all `road_get_*` functions, allo
 
 As the ROAD database is exceptionally rich in information at the assemblage level, there are subordinate functions for querying human remains, archaeology, palaeofauna and palaeobotany.
 
-![Illustration of the three levels of the roadDB R-package from top to bottom: Locality, Assemblage and Date](docs/levels_of_detail.svg)
 <img src="docs/levels_of_detail.svg" alt="Illustration of the three levels of the roadDB R-package from top to bottom: Locality, Assemblage and Date" height="250">
 
 
