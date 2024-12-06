@@ -1,9 +1,13 @@
-# roadDB: An R package to query ROAD data with R
+# roadDB: An R package to query ROAD data with R <a href="https://roceeh.net"><img src="man/figures/logo.png" align="right" height="138" /></a>
 
 The aim of the package `roadDB` is to provide access to the [ROCEEH Out of Africa Database (ROAD)](https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php) and supply users with dataframes for further analysis in the R ecosystem.
 
 ## Structure
 The roadDB package has three main levels of detail (LOD) that follow a hierarchical order: Locality, Assemblage and Date. A locality can have multiple assemblages, and each assemblage can have multiple dates associated with it.
+
+<p align="center">
+<img src="docs/levels_of_detail.svg" alt="Illustration of the three levels of the roadDB R-package from top to bottom: Locality, Assemblage and Date" height="250">
+</p>
 
 Users can query information at different LODs using dedicated functions that follow the `road_get_*` naming convention. These return dataframes where each row represents an item at the requested granularity and includes attribute columns relevant to those items.
 
@@ -11,9 +15,6 @@ An extensive set of arguments can be applied to all `road_get_*` functions, allo
 
 As the ROAD database is exceptionally rich in information at the assemblage level, there are subordinate functions for querying human remains, archaeology, palaeofauna and palaeobotany.
 
-<p align="center">
-<img src="docs/levels_of_detail.svg" alt="Illustration of the three levels of the roadDB R-package from top to bottom: Locality, Assemblage and Date" height="250">
-</p>
 
 ## Functions
 - road_get_localities()
