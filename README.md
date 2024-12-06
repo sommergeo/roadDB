@@ -25,7 +25,7 @@ As the ROAD database is exceptionally rich in information at the assemblage leve
 - road_get_dates()
 
 ### Arguments
-The following arguments are optional and can be used with every road_get_* function to constraining queries.
+The following arguments are optional and can be used with every `road_get_*` function to constrain queries.
 
 | Argument                  | Type      | ROAD table / attribute                               | Example                                       |
 | ------------------------- | --------- | ---------------------------------------------------- | --------------------------------------------- |
@@ -62,58 +62,3 @@ The following arguments are optional and can be used with every road_get_* funct
 | faunal_species?           | character |                                                      |                                               |
 | `animal_remains`            | boolean   |                                                      |                                               |
 | further arguments?        |           |                                                      |                                               |
-
-
-## Function: road_locality
-	* LOD: Locality
-	* Arguments:
-		* country (string list)
-		* continent (string list)
-		* subcontinent (string list)
-		* locality_type (string list)
-	* Output:
-		* locality (string)
-		* country (string)
-		* continent (string)
-		* subcontinent (string)
-		* locality_type (string)
-		* x (numeric)
-		* y (numeric)
-
-## Function: road_assemblage
-	* LOD: Assemblage
-	* Arguments:
-		* country (string list)
-		* continent (string list)
-		* subcontinent (string list)
-		* locality_type (string list)
-		* continent (string list)
-		* age_min (numeric)
-		* age_max (numeric)
-	* Output:
-		* locality (string)
-		* country (string)
-		* continent (string)
-		* subcontinent (string)
-		* locality_type (string)
-		* x (numeric)
-		* y (numeric)
-		* assemblage_name (string)
-		* assemblage_id (numeric)
-		* technology (boolean)
-		* typology (boolean)
-		* raw-material (boolean)
-		* function (boolean)
-		* miscelaneous_finds (boolean)
-		* organic_tools (boolean)
-		* symbolic_artifacts (boolean)
-		* feature (boolean)
-		* animal_remains (boolean)
-		* paleofauna (boolean)
-		* plant_remains (boolean)
-		* assemblage_min_aggregated (numeric): minimum of all age_min associated with an assemblage
-		* assemblage_max_aggregated (numeric): maximum of all age_max associated with an assemblage
-		* assemblage_ages (string list)
-		* geolayer (string list)
-
-
