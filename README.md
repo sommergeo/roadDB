@@ -1,5 +1,5 @@
-# roadDB: An R package to query ROAD data with R <a href="https://roceeh.net"><img src="man/figures/logo.png" align="right" height="138" /></a>
-
+# roadDB  <a href="https://roceeh.net"><img src="docs/logo.png" align="right" height="138" /></a>
+An R package to query ROAD data with R
 The aim of the package `roadDB` is to provide access to the [ROCEEH Out of Africa Database (ROAD)](https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php) and supply users with dataframes for further analysis in the R ecosystem.
 
 ## Structure
