@@ -1,5 +1,4 @@
-# roadDB  <a href="https://roceeh.net"><img src="docs/logo.png" align="right" height="138" /></a>
-An R package to query ROAD data with R
+# roadDB  <a href="http://roceeh.net"><img src="docs/logo.png" align="right" height="138" /></a>
 The aim of the package `roadDB` is to provide access to the [ROCEEH Out of Africa Database (ROAD)](https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php) and supply users with dataframes for further analysis in the R ecosystem.
 
 ## Structure
@@ -43,7 +42,7 @@ The following arguments are optional and can be used with every `road_get_*` fun
 | `age_min`                   | numeric   | assemblage_age / age and negative_standard_deviation | 20000                                         |
 | `age_max`                   | numeric   | assemblage_age / age and positive_standard_deviation | 3000000                                       |
 | `culture`                   | character | archaeological_layer / archstratigraphy_idarchstrat  | "Post-Howiesonspoort"                         |
-| `cultural_period`           | character |                                                      | "Middle Stone Age"                            |
+| `cultural_period`           | character |  archaeological_stratigraphy / cultural_period       | "Middle Stone Age"                            |
 | `archaeological_technology` | character |                                                      |                                               |
 | `archaeological_typology`   | character |                                                      |                                               |
 | `raw_materials`             | character |                                                      |                                               |
