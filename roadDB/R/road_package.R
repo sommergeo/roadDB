@@ -20,14 +20,26 @@ cm_assemblage_in_geolayer_geolayer_name <- "Geolayer"
 
 
 
-#' Get Localities
+#' Get localities from ROAD Database
 #'
-#' returns locality data from road database
-#' @param continent: string (one item) or vector of strings (one or more items)
-#' @param subcontinent: string (one item) or vector of strings (one or more items)
-#' @param country: string (one item) or vector of strings (one or more items)
-#' @param locality_type: string (one item) or vector of strings (one or more items)
-#' @return list of sql results
+#' `road_get_localities` fetches data of archeological sites (localities) from ROAD database.
+#'
+#' Use parameters to spatially delimit search results or oimit them to have a broader radius.
+#' All parameters are optional and should be omitted or set to NULL when not used.
+#'
+#' @param continent string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param subcontinent string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param country string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param locality_type string (one item) or vector of strings (one or more items); defaults to NULL.
+#'
+#' @return Database search result as list of localities.
+#' @export
+#'
+#' @examples road_get_localities()
+#' @examples road_get_localities(continent = c("Europe"), country = c("Germany", "France"))
+#' @examples road_get_localities(continent = "Europe", country = c("Germany", "France"))
+#' @examples road_get_localities(country = c("Germany", "France"), locality_type = "cave")
+#' @examples road_get_localities(NULL, NULL, "Germany")
 road_get_localities <- function(continent = NULL, subcontinent = NULL, country = NULL, locality_type = NULL)
 {
   # select fields
@@ -67,10 +79,30 @@ road_get_localities <- function(continent = NULL, subcontinent = NULL, country =
 
 
 
-# localities: return value from road_get_localities()
-# category: string (one item) or vector of strings (one or more items)
-# age_min: integer
-# age_max: integer
+#' Get assemblages from ROAD database
+#'
+#' `road_get_assemblages` fetches data of archeological assembalges from ROAD database.
+#'
+#' Assembalges are articulated archeological finds inside in a locality. One locality
+#' can host multiple assemblages which can for example be associated with certain
+#' geological layers or historical time periods.
+#' This frunction uses the return value of `road_get_localities` (list of localities)
+#' to get assemblages that were found in these localities.
+#' Use parameters to further narrow down the assemblages you are searching for.
+#' Excluding `localities` all parameters are optional and should be omitted or
+#' set to NULL when not used.
+#'
+#' @param localities list of localities; return value from function `road_get_localities`.
+#' @param category string (one item) or vector of strings (one or more items).
+#' @param age_min integer; minimum age of assemblage.
+#' @param age_max integer; maximum age of assemblage.
+#'
+#' @return Database search result as list of assembalges.
+#' @export
+#'
+#' @examples road_get_assemblages(localities = road_get_localities())
+#' @examples road_get_assemblages(localities, NULL, 80000L, 120000L)
+#' @examples road_get_assemblages(localities = localities, category = "human remains", age_max = 100000L)
 road_get_assemblages <- function(localities, category = NULL, age_min = NULL, age_max = NULL)
 {
   if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
@@ -121,14 +153,29 @@ road_get_assemblages <- function(localities, category = NULL, age_min = NULL, ag
 }
 
 
-# Parameter 'genus_species' can't be used in combination with 'genus' or 'species'
-# mode1: either one or both of 'genus' and 'species' is used (not NULL), then 'genus_species' can't be used and has to be set to NULL
-# mode2: 'genus_species' is used (not NULL), then 'genus' and 'species' can't be used and have to be set to NULL
-# -----
-# assemblages: return value from road_get_assemblages()
-# genus: string (one item) or vector of strings (one or more items)
-# species: string (one item) or vector of strings (one or more items)
-# genus_species: string (one item) or vector of strings (one or more items)
+
+#' Get human remains from ROAD database
+#'
+#' `road_get_human_remains` fetches data of human remains from ROAD database.
+#'
+#' Human remains are always part of an assemblage which means the function needs a list of
+#' assemblages (return value of function `road_get_assemblages`) as its first parameter.
+#' The parameter `genus_species` can't be used in combination with `genus' or `species`. Use this function
+#' in one of the two modes depending on which parameters you use:
+#' Mode 1: either one or both of `genus` and `species` is used (not NULL), then `genus_species` can't be used and has to be set to NULL.
+#' Mode 2: `genus_species` is used (not NULL), then `genus` and `species` can't be used and have to be set to NULL.
+#'
+#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
+#' @param genus string (one item) or vector of strings (one or more items); can not be used in combination with `genus_species`.
+#' @param species string (one item) or vector of strings (one or more items); can not be used in combination with `genus_species`.
+#' @param genus_species string (one item) or vector of strings (one or more items); can not be used in combination with `genus` or `species`.
+#'
+#' @return Database search result as list of human remains.
+#' @export
+#'
+#' @examples road_get_human_remains(assemblages = assemblages, genus = 'Homo', species = 'neanderthalensis')
+#' @examples road_get_human_remains(assemblages = assemblages, genus = 'Homo')
+#' @examples road_get_human_remains(assemblages = assemblages, genus_species = 'Homo neanderthalensis')
 road_get_human_remains <- function(assemblages, genus = NULL, species = NULL, genus_species = NULL)
 {
   if (!is.null(genus_species) && (!is.null(genus) || !is.null(species)))
