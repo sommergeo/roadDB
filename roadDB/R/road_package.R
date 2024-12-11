@@ -1,4 +1,4 @@
-source("R/login.R")
+source("roadDB/R/login.R")
 library(assertthat)
 library(RPostgres)
 
@@ -64,8 +64,6 @@ road_get_localities <- function(continent = NULL, subcontinent = NULL, country =
 
   return(data)
 }
-
-
 
 # localities: return value from road_get_localities()
 # category: string (one item) or vector of strings (one or more items)
