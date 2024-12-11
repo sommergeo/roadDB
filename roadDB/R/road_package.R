@@ -3,20 +3,20 @@ library(assertthat)
 library(RPostgres)
 
 # column names
-cm_locality_idlocality <- "Locality ID"
-cm_locality_type <- "Type"
-cm_geopolitical_units_continent <- "Continent"
-cm_geopolitical_units_continent_region <- "Subcontinent"
-cm_locality_country <- "Country"
-cm_locality_x <- "Coord X"
-cm_locality_y <- "Coord Y"
-cm_assemblages_locality_idlocality <- "Locality ID"
-cm_assemblages_idassemblage <- "Assemblage ID"
-cm_assemblages_name <- "Name"
-cm_assemblages_category <- "Category"
-cm_geological_stratigraphy_age_min <- "Age Min"
-cm_geological_stratigraphy_age_max <- "Age Max"
-cm_assemblage_in_geolayer_geolayer_name <- "Geolayer"
+cm_locality_idlocality <- "locality_id"
+cm_locality_type <- "type"
+cm_geopolitical_units_continent <- "continent"
+cm_geopolitical_units_continent_region <- "subcontinent"
+cm_locality_country <- "country"
+cm_locality_x <- "coord_x"
+cm_locality_y <- "coord_y"
+cm_assemblages_locality_idlocality <- "locality_id"
+cm_assemblages_idassemblage <- "assemblage_id"
+cm_assemblages_name <- "name"
+cm_assemblages_category <- "category"
+cm_geological_stratigraphy_age_min <- "age_min"
+cm_geological_stratigraphy_age_max <- "age_max"
+cm_assemblage_in_geolayer_geolayer_name <- "geolayer"
 
 
 
