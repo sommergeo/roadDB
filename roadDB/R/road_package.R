@@ -1,10 +1,10 @@
-source("roadDB/R/login.R")
+source("./R/login.R")
 library(assertthat)
 library(RPostgres)
 
 # column names
 cm_locality_idlocality <- "locality_id"
-cm_locality_type <- "type"
+cm_locality_types <- "locality_types"
 cm_geopolitical_units_continent <- "continent"
 cm_geopolitical_units_continent_region <- "subcontinent"
 cm_locality_country <- "country"
@@ -13,7 +13,7 @@ cm_locality_y <- "coord_y"
 cm_assemblages_locality_idlocality <- "locality_id"
 cm_assemblages_idassemblage <- "assemblage_id"
 cm_assemblages_name <- "name"
-cm_assemblages_category <- "category"
+cm_assemblages_categories <- "categories"
 cm_geological_stratigraphy_age_min <- "age_min"
 cm_geological_stratigraphy_age_max <- "age_max"
 cm_assemblage_in_geolayer_geolayer_name <- "geolayer"
@@ -22,30 +22,30 @@ cm_assemblage_in_geolayer_geolayer_name <- "geolayer"
 
 #' Get localities from ROAD Database
 #'
-#' `road_get_localities` fetches data of archeological sites (localities) from ROAD database.
+#' `road_get_localities` fetches data of archaeological sites (localities) from ROAD database.
 #'
-#' Use parameters to spatially delimit search results or oimit them to have a broader radius.
+#' Use parameters to spatially delimit search results or omit them to have a broader radius.
 #' All parameters are optional and should be omitted or set to NULL when not used.
 #'
-#' @param continent string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param subcontinent string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param country string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param locality_type string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
 #'
 #' @return Database search result as list of localities.
 #' @export
 #'
 #' @examples road_get_localities()
-#' @examples road_get_localities(continent = c("Europe"), country = c("Germany", "France"))
-#' @examples road_get_localities(continent = "Europe", country = c("Germany", "France"))
-#' @examples road_get_localities(country = c("Germany", "France"), locality_type = "cave")
+#' @examples road_get_localities(continents = c("Europe"), countries = c("Germany", "France"))
+#' @examples road_get_localities(continents = "Europe", countries = c("Germany", "France"))
+#' @examples road_get_localities(countries = c("Germany", "France"), locality_type = "cave")
 #' @examples road_get_localities(NULL, NULL, "Germany")
-road_get_localities <- function(continent = NULL, subcontinent = NULL, country = NULL, locality_type = NULL)
+road_get_localities <- function(continents = NULL, subcontinents = NULL, countries = NULL, locality_types = NULL)
 {
   # select fields
   select_fields <- c(
     paste0("locality.idlocality AS \"", cm_locality_idlocality, "\""),
-    paste0("locality.type AS \"", cm_locality_type, "\""),
+    paste0("locality.type AS \"", cm_locality_types, "\""),
     paste0("geopolitical_units.continent AS \"", cm_geopolitical_units_continent, "\""),
     paste0("geopolitical_units.continent_region AS \"", cm_geopolitical_units_continent_region, "\""),
     paste0("locality.country AS \"", cm_locality_country, "\""),
@@ -55,7 +55,7 @@ road_get_localities <- function(continent = NULL, subcontinent = NULL, country =
 
   # order by
   query_order_by <- ""
-  if (!is.null(country))
+  if (!is.null(countries))
   {
     query_order_by <- "ORDER BY locality.idlocality"
   }
@@ -65,10 +65,10 @@ road_get_localities <- function(continent = NULL, subcontinent = NULL, country =
     "SELECT DISTINCT",
     paste(select_fields, collapse = ", "),
     "FROM locality LEFT JOIN geopolitical_units ON locality.country = geopolitical_units.geopolitical_name WHERE NOT locality.no_data_entry AND geopolitical_units.rank = 1",
-    parameter_to_query("AND geopolitical_units.continent IN (", continent, ")"),
-    parameter_to_query("AND geopolitical_units.continent_region IN (", subcontinent, ")"),
-    parameter_to_query("AND locality.country IN (", country, ")"),
-    parameter_to_query("AND string_to_array(locality.type, ', ') && array[", locality_type, "]"),
+    parameter_to_query("AND geopolitical_units.continent IN (", continents, ")"),
+    parameter_to_query("AND geopolitical_units.continent_region IN (", subcontinents, ")"),
+    parameter_to_query("AND locality.country IN (", countries, ")"),
+    parameter_to_query("AND string_to_array(locality.type, ', ') && array[", locality_types, "]"),
     query_order_by
   )
 
@@ -93,7 +93,7 @@ road_get_localities <- function(continent = NULL, subcontinent = NULL, country =
 #' set to NULL when not used.
 #'
 #' @param localities list of localities; return value from function `road_get_localities`.
-#' @param category string (one item) or vector of strings (one or more items).
+#' @param categories string (one item) or vector of strings (one or more items).
 #' @param age_min integer; minimum age of assemblage.
 #' @param age_max integer; maximum age of assemblage.
 #'
@@ -102,8 +102,8 @@ road_get_localities <- function(continent = NULL, subcontinent = NULL, country =
 #'
 #' @examples road_get_assemblages(localities = road_get_localities())
 #' @examples road_get_assemblages(localities, NULL, 80000L, 120000L)
-#' @examples road_get_assemblages(localities = localities, category = "human remains", age_max = 100000L)
-road_get_assemblages <- function(localities, category = NULL, age_min = NULL, age_max = NULL)
+#' @examples road_get_assemblages(localities = localities, categories = "human remains", age_max = 100000L)
+road_get_assemblages <- function(localities, categories = NULL, age_min = NULL, age_max = NULL)
 {
   if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
     stop("Parameters 'min_age' and 'max_age' have to be integers.")
@@ -123,7 +123,7 @@ road_get_assemblages <- function(localities, category = NULL, age_min = NULL, ag
     paste0("assemblage.locality_idlocality AS \"", cm_assemblages_locality_idlocality, "\""),
     paste0("assemblage.idassemblage AS \"", cm_assemblages_idassemblage, "\""),
     paste0("assemblage.name AS \"", cm_assemblages_name, "\""),
-    paste0("assemblage.category AS \"", cm_assemblages_category, "\""),
+    paste0("assemblage.category AS \"", cm_assemblages_categories, "\""),
     paste0("geological_stratigraphy.age_min AS \"", cm_geological_stratigraphy_age_min, "\""),
     paste0("geological_stratigraphy.age_max AS \"", cm_geological_stratigraphy_age_max, "\""),
     paste0("assemblage_in_geolayer.geolayer_name AS \"", cm_assemblage_in_geolayer_geolayer_name, "\"")
@@ -134,17 +134,19 @@ road_get_assemblages <- function(localities, category = NULL, age_min = NULL, ag
     "SELECT DISTINCT",
     paste(select_fields, collapse = ", "),
     "FROM assemblage",
-    "JOIN assemblage_in_geolayer ON assemblage_in_geolayer.assemblage_idassemblage = assemblage.idassemblage",
     "JOIN geostrat_desc_geolayer ON geostrat_desc_geolayer.geolayer_idlocality = assemblage.locality_idlocality",
+    "JOIN assemblage_in_geolayer ON",
+      "assemblage_in_geolayer.assemblage_idlocality = assemblage.locality_idlocality AND",
+      "assemblage_in_geolayer.assemblage_idassemblage = assemblage.idassemblage AND",
+      "assemblage_in_geolayer.geolayer_name = geostrat_desc_geolayer.geolayer_name",
     "JOIN geological_stratigraphy ON geological_stratigraphy.idgeostrat = geostrat_desc_geolayer.geostrat_idgeostrat",
-    "WHERE assemblage_in_geolayer.geolayer_idlocality = geostrat_desc_geolayer.geolayer_idlocality AND assemblage_in_geolayer.geolayer_name = geostrat_desc_geolayer.geolayer_name AND geological_stratigraphy.idgeostrat = geostrat_desc_geolayer.geostrat_idgeostrat AND assemblage_in_geolayer.assemblage_idlocality = assemblage.locality_idlocality AND assemblage_in_geolayer.assemblage_idassemblage = assemblage.idassemblage AND assemblage_in_geolayer.geolayer_idlocality IN (",
-    #"FROM geological_stratigraphy, geostrat_desc_geolayer, assemblage_in_geolayer, assemblage WHERE assemblage_in_geolayer.geolayer_idlocality = geostrat_desc_geolayer.geolayer_idlocality AND assemblage_in_geolayer.geolayer_name = geostrat_desc_geolayer.geolayer_name AND geological_stratigraphy.idgeostrat = geostrat_desc_geolayer.geostrat_idgeostrat AND assemblage_in_geolayer.assemblage_idlocality = assemblage.locality_idlocality AND assemblage_in_geolayer.assemblage_idassemblage = assemblage.idassemblage AND assemblage_in_geolayer.geolayer_idlocality IN (",
+    "WHERE assemblage.locality_idlocality IN (",
     query_localities,
     ")",
-    parameter_to_query("AND cardinality(array(select unnest(string_to_array(", category, ", ', ')) intersect select unnest(string_to_array(category, ', ')))) != 0"),
+    query_check_intersection("AND ", categories, "assemblage.category"),
     parameter_to_query("AND ", age_min, " <= age_max"),
     parameter_to_query("AND ", age_max, " >= age_min"),
-    "ORDER BY locality_idlocality"
+    "ORDER BY assemblage.locality_idlocality"
   )
 
   data <- road_run_query(query)
@@ -260,13 +262,7 @@ parameter_to_query <- function(query_start, parameter, query_end)
   query <- ""
   if (!is.null(parameter))
   {
-    # convert string to vector
-    if (is.string(parameter) && parameter != "")
-      parameter <- c(parameter)
-
-    # convert integer to vector
-    if (is.integer(parameter) && parameter != 0)
-      parameter <- c(parameter)
+    parameter <- parameter_to_vector(parameter)
 
     if (is.vector(parameter))
     {
@@ -284,4 +280,46 @@ parameter_to_query <- function(query_start, parameter, query_end)
   }
 
   return(query)
+}
+
+# build query to check if parameters intersect with comma seperated database values
+query_check_intersection <- function(query_start, parameter, column)
+{
+  query <- ""
+  if (!is.null(parameter))
+  {
+    parameter <- parameter_to_vector(parameter)
+
+    if (is.vector(parameter))
+    {
+      query <- paste(
+        sapply(parameter, function(x) paste0("OR '", x, "' = ANY(STRING_TO_ARRAY(", column, ", ', '))")),
+        collapse = " "
+      )
+      query <- paste0(
+        query_start,
+        "(",
+        sub("OR ", "", query),
+        ")"
+      )
+    }
+    else
+      stop(paste("Wrong input for '", deparse(substitute(parameter)), "'."))
+  }
+
+  return(query)
+}
+
+# convert non-vector parameter to vector
+parameter_to_vector <- function(parameter)
+{
+  # convert string to vector
+  if (is.string(parameter) && parameter != "")
+    parameter <- c(parameter)
+
+  # convert integer to vector
+  if (is.integer(parameter) && parameter != 0)
+    parameter <- c(parameter)
+
+  return(parameter)
 }
