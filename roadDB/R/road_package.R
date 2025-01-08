@@ -16,7 +16,7 @@ cm_assemblages_name <- "name"
 cm_assemblages_categories <- "categories"
 cm_geological_stratigraphy_age_min <- "age_min"
 cm_geological_stratigraphy_age_max <- "age_max"
-cm_assemblage_in_geolayer_geolayer_name <- "geolayer"
+cm_assemblage_in_geolayer_geolayer_name <- "geolayers"
 
 
 
@@ -31,6 +31,7 @@ cm_assemblage_in_geolayer_geolayer_name <- "geolayer"
 #' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
 #'
 #' @return Database search result as list of localities.
 #' @export
@@ -40,7 +41,8 @@ cm_assemblage_in_geolayer_geolayer_name <- "geolayer"
 #' @examples road_get_localities(continents = "Europe", countries = c("Germany", "France"))
 #' @examples road_get_localities(countries = c("Germany", "France"), locality_type = "cave")
 #' @examples road_get_localities(NULL, NULL, "Germany")
-road_get_localities <- function(continents = NULL, subcontinents = NULL, countries = NULL, locality_types = NULL)
+#' @examples road_get_localities(countries = c("Germany", "France"), cultural_periods = "Middle Paleolithic")
+road_get_localities <- function(continents = NULL, subcontinents = NULL, countries = NULL, locality_types = NULL, cultural_periods = NULL)
 {
   # select fields
   select_fields <- c(
@@ -53,6 +55,18 @@ road_get_localities <- function(continents = NULL, subcontinents = NULL, countri
     paste0("locality.y AS \"", cm_locality_y, "\"")
   )
 
+  # cultural periods
+  query_additional_joins <- ""
+  query_additional_where_clauses <- ""
+  if (!is.null(cultural_periods))
+  {
+    query_additional_joins <- paste(
+      "INNER JOIN archaeological_layer ON locality.idlocality = archaeological_layer.locality_idlocality",
+      "INNER JOIN archaeological_stratigraphy ON archaeological_layer.archstratigraphy_idarchstrat = archaeological_stratigraphy.idarchstrat"
+    )
+    query_additional_where_clauses <- parameter_to_query("AND archaeological_stratigraphy.cultural_period IN (", cultural_periods, ")")
+  }
+
   # order by
   query_order_by <- ""
   if (!is.null(countries))
@@ -64,11 +78,15 @@ road_get_localities <- function(continents = NULL, subcontinents = NULL, countri
   query <- paste(
     "SELECT DISTINCT",
     paste(select_fields, collapse = ", "),
-    "FROM locality LEFT JOIN geopolitical_units ON locality.country = geopolitical_units.geopolitical_name WHERE NOT locality.no_data_entry AND geopolitical_units.rank = 1",
+    "FROM locality",
+    "INNER JOIN geopolitical_units ON locality.country = geopolitical_units.geopolitical_name",
+    query_additional_joins,
+    "WHERE NOT locality.no_data_entry AND geopolitical_units.rank = 1",
     parameter_to_query("AND geopolitical_units.continent IN (", continents, ")"),
     parameter_to_query("AND geopolitical_units.continent_region IN (", subcontinents, ")"),
     parameter_to_query("AND locality.country IN (", countries, ")"),
     parameter_to_query("AND string_to_array(locality.type, ', ') && array[", locality_types, "]"),
+    query_additional_where_clauses,
     query_order_by
   )
 
@@ -124,9 +142,9 @@ road_get_assemblages <- function(localities, categories = NULL, age_min = NULL, 
     paste0("assemblage.idassemblage AS \"", cm_assemblages_idassemblage, "\""),
     paste0("assemblage.name AS \"", cm_assemblages_name, "\""),
     paste0("assemblage.category AS \"", cm_assemblages_categories, "\""),
-    paste0("geological_stratigraphy.age_min AS \"", cm_geological_stratigraphy_age_min, "\""),
-    paste0("geological_stratigraphy.age_max AS \"", cm_geological_stratigraphy_age_max, "\""),
-    paste0("assemblage_in_geolayer.geolayer_name AS \"", cm_assemblage_in_geolayer_geolayer_name, "\"")
+    paste0("MIN(geological_stratigraphy.age_min) AS \"", cm_geological_stratigraphy_age_min, "\""),
+    paste0("MAX(geological_stratigraphy.age_max) AS \"", cm_geological_stratigraphy_age_max, "\""),
+    paste0("STRING_AGG(assemblage_in_geolayer.geolayer_name, ', ') AS \"", cm_assemblage_in_geolayer_geolayer_name, "s\"")
   )
 
   # combine query parts
@@ -134,19 +152,20 @@ road_get_assemblages <- function(localities, categories = NULL, age_min = NULL, 
     "SELECT DISTINCT",
     paste(select_fields, collapse = ", "),
     "FROM assemblage",
-    "JOIN geostrat_desc_geolayer ON geostrat_desc_geolayer.geolayer_idlocality = assemblage.locality_idlocality",
-    "JOIN assemblage_in_geolayer ON",
-      "assemblage_in_geolayer.assemblage_idlocality = assemblage.locality_idlocality AND",
-      "assemblage_in_geolayer.assemblage_idassemblage = assemblage.idassemblage AND",
-      "assemblage_in_geolayer.geolayer_name = geostrat_desc_geolayer.geolayer_name",
-    "JOIN geological_stratigraphy ON geological_stratigraphy.idgeostrat = geostrat_desc_geolayer.geostrat_idgeostrat",
+    "LEFT JOIN assemblage_in_geolayer ON",
+      "assemblage_in_geolayer.assemblage_idlocality = assemblage.locality_idlocality",
+      "AND assemblage_in_geolayer.assemblage_idassemblage = assemblage.idassemblage",
+    "LEFT JOIN geostrat_desc_geolayer ON geostrat_desc_geolayer.geolayer_idlocality = assemblage.locality_idlocality",
+      "AND assemblage_in_geolayer.geolayer_name = geostrat_desc_geolayer.geolayer_name",
+    "LEFT JOIN geological_stratigraphy ON geological_stratigraphy.idgeostrat = geostrat_desc_geolayer.geostrat_idgeostrat",
     "WHERE assemblage.locality_idlocality IN (",
     query_localities,
     ")",
     query_check_intersection("AND ", categories, "assemblage.category"),
     parameter_to_query("AND ", age_min, " <= age_max"),
     parameter_to_query("AND ", age_max, " >= age_min"),
-    "ORDER BY assemblage.locality_idlocality"
+    "GROUP BY assemblage.locality_idlocality, assemblage.idassemblage, assemblage.name, assemblage.category",
+    "ORDER BY assemblage.locality_idlocality ASC"
   )
 
   data <- road_run_query(query)
