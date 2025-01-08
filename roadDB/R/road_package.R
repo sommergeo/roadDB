@@ -115,7 +115,7 @@ road_get_localities <- function(continents = NULL, subcontinents = NULL, countri
 #' @param age_min integer; minimum age of assemblage.
 #' @param age_max integer; maximum age of assemblage.
 #'
-#' @return Database search result as list of assembalges.
+#' @return Database search result as list of assemblages.
 #' @export
 #'
 #' @examples road_get_assemblages(localities = road_get_localities())
