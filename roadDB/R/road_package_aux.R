@@ -3,7 +3,7 @@ library(assertthat)
 library(RPostgres)
 
 attributes <- c("type", "continent", "continent_region", "country", "category", "cultural_period")
-tables <- c("locality", "geopolitical_units", "geopolitical_units", "geopolitical_units", "assemblage", "archaeological_stratigraphy")
+tables <- c("locality", "geopolitical_units", "geopolitical_units", "locality",  "assemblage", "archaeological_stratigraphy")
 
 
 #' Get attribute value from ROAD Database
@@ -28,10 +28,14 @@ road_list_values <- function (attribute_name = NULL)
     }
   }  
   # query <- paste( "SELECT DISTINCT ", attribute_name, " FROM ", table, " ORDER BY ", attribute_name)
-  query <- paste( "SELECT DISTINCT ", attribute_name, " FROM (select distinct(unnest(string_to_array(
-                  string_agg(", attribute_name, ", ', '),', '))) as ",
-                  attribute_name, ", 'dummy' as dummy from ", table,  " GROUP BY dummy) as foo ", 
-                  " ORDER BY ", attribute_name)
+  # query <- paste( "SELECT DISTINCT ", attribute_name, " FROM (select distinct(unnest(string_to_array(
+                  # string_agg(", attribute_name, ", ', '),', '))) as ",
+                  # attribute_name, ", 'dummy' as dummy from ", table,  " GROUP BY dummy) as foo ", 
+                  # " ORDER BY ", attribute_name)
+  query <- paste( "SELECT DISTINCT(unnest(string_to_array(string_agg(", attribute_name, ", ', '),', '))) as ",
+                  attribute_name, " from ", table, " ORDER BY ", attribute_name)
+
+  
   
   data <- road_run_query(query)
   

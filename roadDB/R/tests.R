@@ -13,7 +13,7 @@ assemblages1 <- road_get_assemblages(localities1)
 
 # road_get_human_remains <- function(assemblages, genus = NULL, species = NULL, genus_species = NULL)
 
-humanremains1 <- road_get_human_remains(assemblages1)
+# humanremains1 <- road_get_human_remains(assemblages1)
 
 values1 <- road_list_values("type")
 values2 <- road_list_values("continent")
@@ -22,3 +22,4 @@ values3 <- road_list_values("continent_region")
 values4 <- road_list_values("category")
 # values5 <- road_list_values("country") needs query extension
 values6 <- road_list_values("cultural_period")
+values7 <- road_list_values("country")
