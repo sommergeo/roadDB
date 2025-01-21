@@ -41,3 +41,9 @@ localities0 <- c("Bacho Kiro")
 assemblages2 <- road_get_assemblages(localities5, NULL, NULL, NULL)
 assemblages3 <- road_get_assemblages(localities2, NULL, 80000L, 120000L)
 assemblages4 <- road_get_assemblages(localities = localities2, categories = "typology", age_max = 100000L)
+
+# aux functions
+query_check_intersection("and ", "technology, typology", "technology, paleofauna")
+
+#
+dates0 <- road_get_dates("geology, biostratigraphy")

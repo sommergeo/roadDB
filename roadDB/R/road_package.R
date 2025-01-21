@@ -112,14 +112,25 @@ road_get_localities <- function(continents = NULL, subcontinents = NULL, countri
 #' geological layers or historical time periods.
 #' This frunction uses the return value of `road_get_localities` (list of localities)
 #' to get assemblages that were found in these localities.
+#' This function uses a list of localities to get assemblages that were found in these localities.
+#' To preselect these localities the same parameters as in `road_get_localities` can be used.
+#' Alternatively, if you run `road_get_localities` independently, you can pass its return value
+#' (list of localities) to this function. This will overwrite any argumnets passed to the localities
+#' parameters in this function (continents, subcontinents, countries, locality_types, cultural_periods).
 #' Use parameters to further narrow down the assemblages you are searching for.
 #' Excluding `localities` all parameters are optional and should be omitted or
 #' set to NULL when not used.
 #'
 #' @param localities list of localities; return value from function `road_get_localities`.
+#' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param categories string (one item) or vector of strings (one or more items).
 #' @param age_min integer; minimum age of assemblage.
 #' @param age_max integer; maximum age of assemblage.
+#' @param localities list of localities; return value from function `road_get_localities`.
 #'
 #' @return Database search result as list of assemblages.
 #' @export
@@ -136,6 +147,11 @@ road_get_assemblages <- function(localities, categories = NULL, age_min = NULL, 
     stop("Parameter 'min_age' can not be bigger than 'max_age'.")
 
   # get preselected list of localities
+  if (is.null(localities))
+  {
+    # run `road_get_localities` else preselected list of localities is used
+     localities <- road_get_localities(continents, subcontinents, countries, locality_types, cultural_periods)
+  }
   localities <- localities[cm_locality_idlocality]
   query_localities <- paste(
     sapply(localities, function(x) paste0("'", x, "'")),
@@ -150,6 +166,7 @@ road_get_assemblages <- function(localities, categories = NULL, age_min = NULL, 
     paste0("assemblage.category AS \"", cm_assemblages_categories, "\""),
     paste0("MIN(geological_stratigraphy.age_min) AS \"", cm_geological_stratigraphy_age_min, "\""),
     paste0("MAX(geological_stratigraphy.age_max) AS \"", cm_geological_stratigraphy_age_max, "\""),
+<<<<<<< HEAD
     paste0("STRING_AGG(assemblage_in_geolayer.geolayer_name, ', ') AS \"", cm_assemblage_in_geolayer_geolayer_name, "s\""),
     paste0("CASE WHEN (assemblage.locality_idlocality, assemblage.idassemblage) in 
                              (select assemblage_idlocality, assemblage_idassemblage from humanremains) THEN true 
@@ -168,6 +185,26 @@ road_get_assemblages <- function(localities, categories = NULL, age_min = NULL, 
            CASE WHEN category LIKE '%plant remains%' THEN true 
                 ELSE false END as plantremains")
     )
+=======
+    paste0("STRING_AGG(DISTINCT assemblage_in_geolayer.geolayer_name, ', ') AS \"", cm_assemblage_in_geolayer_geolayer_name, "\""),
+    "CASE
+      WHEN (assemblage.locality_idlocality, assemblage.idassemblage) in (select assemblage_idlocality, assemblage_idassemblage from humanremains) THEN true
+      ELSE false
+    END as humanremains,
+    CASE
+      WHEN category LIKE '%paleofauna%' THEN true
+      ELSE false
+    END as paleofauna,
+    CASE
+      WHEN category ~ 'raw material|symbolic artifacts|technology|typology|miscellaneous finds|feature|organic tools|function' THEN true
+      ELSE false
+    END as archaeology,
+    CASE
+      WHEN category LIKE '%plant remains%' THEN true
+      ELSE false
+    END as plantremains"
+  )
+>>>>>>> b904fd2b02cb4b54cd5473d36acc7a938b8cbcc5
 
   # combine query parts
   query <- paste(
