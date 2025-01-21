@@ -110,8 +110,6 @@ road_get_localities <- function(continents = NULL, subcontinents = NULL, countri
 #' Assembalges are articulated archeological finds inside in a locality. One locality
 #' can host multiple assemblages which can for example be associated with certain
 #' geological layers or historical time periods.
-#' This frunction uses the return value of `road_get_localities` (list of localities)
-#' to get assemblages that were found in these localities.
 #' This function uses a list of localities to get assemblages that were found in these localities.
 #' To preselect these localities the same parameters as in `road_get_localities` can be used.
 #' Alternatively, if you run `road_get_localities` independently, you can pass its return value
@@ -121,7 +119,6 @@ road_get_localities <- function(continents = NULL, subcontinents = NULL, countri
 #' Excluding `localities` all parameters are optional and should be omitted or
 #' set to NULL when not used.
 #'
-#' @param localities list of localities; return value from function `road_get_localities`.
 #' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
@@ -138,7 +135,7 @@ road_get_localities <- function(continents = NULL, subcontinents = NULL, countri
 #' @examples road_get_assemblages(localities = road_get_localities())
 #' @examples road_get_assemblages(localities, NULL, 80000L, 120000L)
 #' @examples road_get_assemblages(localities = localities, categories = "human remains", age_max = 100000L)
-road_get_assemblages <- function(localities, categories = NULL, age_min = NULL, age_max = NULL)
+road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countries = NULL, locality_types = NULL, cultural_periods = NULL, categories = NULL, age_min = NULL, age_max = NULL, localities = NULL)
 {
   if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
     stop("Parameters 'min_age' and 'max_age' have to be integers.")
@@ -146,7 +143,6 @@ road_get_assemblages <- function(localities, categories = NULL, age_min = NULL, 
   if (!is.null(age_min) && !is.null(age_max) && age_min > age_max)
     stop("Parameter 'min_age' can not be bigger than 'max_age'.")
 
-  # get preselected list of localities
   if (is.null(localities))
   {
     # run `road_get_localities` else preselected list of localities is used
@@ -227,8 +223,6 @@ road_get_assemblages <- function(localities, categories = NULL, age_min = NULL, 
     "ORDER BY assemblage.locality_idlocality ASC"
   )
 
-  # message(query)
-  
   data <- road_run_query(query)
 
   return(data)
