@@ -162,26 +162,6 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countr
     paste0("assemblage.category AS \"", cm_assemblages_categories, "\""),
     paste0("MIN(geological_stratigraphy.age_min) AS \"", cm_geological_stratigraphy_age_min, "\""),
     paste0("MAX(geological_stratigraphy.age_max) AS \"", cm_geological_stratigraphy_age_max, "\""),
-<<<<<<< HEAD
-    paste0("STRING_AGG(assemblage_in_geolayer.geolayer_name, ', ') AS \"", cm_assemblage_in_geolayer_geolayer_name, "s\""),
-    paste0("CASE WHEN (assemblage.locality_idlocality, assemblage.idassemblage) in 
-                             (select assemblage_idlocality, assemblage_idassemblage from humanremains) THEN true 
-                 ELSE false END as humanremains, 
-            CASE WHEN category LIKE '%paleofauna%' THEN true 
-                 ELSE false END as paleofauna, 
-            CASE WHEN category LIKE '%raw material%' THEN true 
-                 WHEN category LIKE '%symbolic artifacts%' THEN true 
-                 WHEN category LIKE '%technology%' THEN true 
-                 WHEN category LIKE '%typology%' THEN true 
-                 WHEN category LIKE '%miscellaneous finds%' THEN true 
-                 WHEN category LIKE '%feature%' THEN true 
-                 WHEN category LIKE '%organic tools%' THEN true 
-                 WHEN category LIKE '%function%' THEN true 
-                 ELSE false END as archaeology, 
-           CASE WHEN category LIKE '%plant remains%' THEN true 
-                ELSE false END as plantremains")
-    )
-=======
     paste0("STRING_AGG(DISTINCT assemblage_in_geolayer.geolayer_name, ', ') AS \"", cm_assemblage_in_geolayer_geolayer_name, "\""),
     "CASE
       WHEN (assemblage.locality_idlocality, assemblage.idassemblage) in (select assemblage_idlocality, assemblage_idassemblage from humanremains) THEN true
@@ -200,7 +180,6 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countr
       ELSE false
     END as plantremains"
   )
->>>>>>> b904fd2b02cb4b54cd5473d36acc7a938b8cbcc5
 
   # combine query parts
   query <- paste(
