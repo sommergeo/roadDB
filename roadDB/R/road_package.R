@@ -17,8 +17,12 @@ cm_assemblages_categories <- "categories"
 cm_geological_stratigraphy_age_min <- "age_min"
 cm_geological_stratigraphy_age_max <- "age_max"
 cm_assemblage_in_geolayer_geolayer_name <- "geolayers"
-
-
+cm_age <- "age"
+cm_negative_standard_deviation <- "negative_standard_deviation"
+cm_positive_standard_deviation <- "positive_standard_deviation"
+cm_material_dated <- "material_dated"
+cm_dating_method <- "dating_method"
+cm_laboratory_idlaboratory <- "laboratory_idlaboratory"
 
 #' Get localities from ROAD Database
 #'
@@ -89,6 +93,8 @@ road_get_localities <- function(continents = NULL, subcontinents = NULL, countri
     query_additional_where_clauses,
     query_order_by
   )
+  
+  #message(query)
 
   data <- road_run_query(query)
 
@@ -161,7 +167,7 @@ road_get_assemblages <- function(localities, categories = NULL, age_min = NULL, 
                  ELSE false END as archaeology, 
            CASE WHEN category LIKE '%plant remains%' THEN true 
                 ELSE false END as plantremains")
-  )
+    )
 
   # combine query parts
   query <- paste(
