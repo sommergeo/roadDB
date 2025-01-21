@@ -2,14 +2,20 @@
 library(assertthat)
 library(RPostgres)
 
-attributes <- c("type", "continent", "continent_region", "country", "category", "cultural_period", "example")
-tables <- c("locality", "geopolitical_units", "geopolitical_units", "locality",  "assemblage", "archaeological_stratigraphy", "attr_values/ex.txt")
+attributes <- c("type", "continent", "continent_region", "country", "category", 
+                "cultural_period", "example", "dating_method")
+tables <- c("locality", "geopolitical_units", "geopolitical_units", "locality",  
+            "assemblage", "archaeological_stratigraphy", "attr_values/ex.txt", 
+            "geological_layer_age")
 
 #' Get attribute value from ROAD Database
 #'
-#' `road_list_values` fetches values of a given attribute
+#' `road_list_values` fetches values of a given attribute in the database or 
+#' read values from file
 #'
-#' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
+#'#' All parameters are optional and should be omitted or set to NULL when not used.
+#'
+#' @param attribute_name name of an attribute; defaults to NULL.
 #'
 #' @return List of attribute values.
 #' @export
@@ -48,15 +54,17 @@ road_list_values <- function (attribute_name = NULL)
 
 #' Get dates for assemblages, geolayers and archlayers from ROAD Database
 #'
-#' `road_get_dates` fetches values of a given attribute
+#' `road_get_dates` fetches records of the age tables in ROAD
 #'
-#' @param .
+#' All parameters are optional and should be omitted or set to NULL when not used.
 #'
-#' @return dates
+#' @param dating_methods; defaults to NULL.
+#'
+#' @return date records
 #' @export
 #'
-#' @examples road_get_dates()
-road_get_dates <- function ()
+#' @examples road_get_dates(c("geology", "biostratigraphy"))
+road_get_dates <- function (dating_methods = NULL)
 {
   #query <- "SELECT DISTINCT on (assemblage.locality_idlocality, assemblage.name, 
   #          geological_layer_age.age, geological_layer_age.material_dated, 
@@ -81,8 +89,10 @@ road_get_dates <- function ()
   #          and assemblage.idassemblage = assemblage_in_archlayer.assemblage_idassemblage 
   #          and assemblage_in_archlayer.archlayer_idlocality = archaeological_layer_age.archlayer_idlocality 
   #          and assemblage_in_archlayer.archlayer_name = archaeological_layer_age.archlayer_name)"
-  
-  query <- "SELECT * FROM (SELECT geolayer_idlocality as locality, -1 as assemblage, geolayer_name as geolayer, '-' as archlayer, age, negative_standard_deviation, positive_standard_deviation, 
+ 
+  query <- paste0("SELECT * FROM (SELECT geolayer_idlocality as locality, -1 as
+            assemblage, geolayer_name as geolayer, '-' as archlayer, age, 
+            negative_standard_deviation, positive_standard_deviation, 
             material_dated, dating_method, laboratory_idlaboratory 
             FROM geological_layer_age
             UNION
@@ -93,8 +103,9 @@ road_get_dates <- function ()
             SELECT assemblage_idlocality, assemblage_idassemblage as assemblage, '-' as geolayer, '-' as archlayer, 
             age, negative_standard_deviation, positive_standard_deviation, 
             material_dated, dating_method, laboratory_idlaboratory 
-            FROM assemblage_age) as foo ORDER BY locality, geolayer, archlayer"
-  
+            FROM assemblage_age) as foo ", 
+            parameter_to_query("WHERE dating_method IN (", dating_methods, ")"),
+            " ORDER BY locality, geolayer, archlayer")
   
   
   data <- road_run_query(query)
