@@ -33,6 +33,7 @@ localities3 <- road_get_localities(continents = "Europe", countries = c("Germany
 localities4 <- road_get_localities(countries = c("Germany", "France"), locality_type = "cave")
 # localities5 <- road_get_localities(NULL, NULL, "Bulgaria")
 # localities5 <- road_get_localities(NULL, NULL, "Angola")
+localities5 <- road_get_localities(countries = "Ukraine") # Locality "Doroshivtsi III", geolayer "Unit VII-2"
 localities6 <- road_get_localities(countries = c("Germany", "France"), cultural_periods = "Middle Paleolithic")
 
 # road_get_assemblages()
