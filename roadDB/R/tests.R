@@ -29,7 +29,7 @@ values9 <- road_list_values("dating_method")
 
 # road_get_localities()
 localities2 <- road_get_localities(continents = c("Europe"), countries = c("Germany", "France"))
-localities3 <- road_get_localities(continents = "Europe", countries = c("Germany", "France"))
+localities3 <- road_get_localities(continents = "Europe")
 localities4 <- road_get_localities(countries = c("Germany", "France"), locality_type = "cave")
 # localities5 <- road_get_localities(NULL, NULL, "Bulgaria")
 # localities5 <- road_get_localities(NULL, NULL, "Angola")
@@ -38,14 +38,14 @@ localities6 <- road_get_localities(countries = c("Germany", "France"), cultural_
 
 # road_get_assemblages()
 localities0 <- c("Bacho Kiro")
-assemblages2 <- road_get_assemblages(localities5, NULL, NULL, NULL)
-assemblages3 <- road_get_assemblages(localities2, NULL, 80000L, 120000L)
 assemblages2 <- road_get_assemblages(localities = localities5)
+assemblages3 <- road_get_assemblages(localities = localities2, NULL, age_min = 80000L, age_max = 120000L)
 assemblages3 <- road_get_assemblages(localities = localities2, age_min = 80000L, age_max = 120000L)
 assemblages4 <- road_get_assemblages(localities = localities2, categories = "typology", age_max = 100000L)
+assemblages5 <- road_get_assemblages(localities = localities3)
 
 # aux functions
 query_check_intersection("and ", "technology, typology", "technology, paleofauna")
 
 #
-dates0 <- road_get_dates("geology, biostratigraphy")
+dates0 <- road_get_dates(c("geology", "biostratigraphy"))
