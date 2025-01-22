@@ -184,6 +184,7 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countr
 
   # combine query parts
   query <- paste(
+  
   queryAux <- paste(
     "SELECT DISTINCT",
     paste(select_fields, collapse = ", "),
