@@ -203,6 +203,21 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countr
     "ORDER BY assemblage.locality_idlocality ASC"
   )
 
+  
+  query <-  paste("SELECT DISTINCT ", paste(select_fields, collapse = ", "), 
+                  paste0("STRING_AGG(DISTINCT assemblage_in_archlayer.archlayer_name, ', ') AS \"", cm_assemblage_in_archlayer_archlayer_name, "\" "),
+                  "FROM (", queryAux, ") as foo",
+                  "LEFT JOIN assemblage_in_archlayer ON ",
+                  "assemblage_in_archlayer.assemblage_idlocality = ", cm_assemblages_locality_idlocality, 
+                  "AND assemblage_in_archlayer.assemblage_idassemblage = ", cm_assemblages_idassemblage,
+                  "GROUP BY ", cm_assemblages_locality_idlocality, cm_assemblages_idassemblage, 
+                               cm_assemblages_name, cm_assemblages_categories,
+                               cm_geological_stratigraphy_age_min, cm_geological_stratigraphy_age_max, 
+                               "humanremains, paleofauna, archaeology, plantremains",
+                               cm_assemblage_in_geolayer_geolayer_name, 
+                  "ORDER BY ", cm_assemblages_locality_idlocality, " ASC"
+  )
+  message(query)
   data <- road_run_query(query)
 
   return(data)
