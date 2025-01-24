@@ -334,7 +334,7 @@ parameter_to_query <- function(query_start, parameter, query_end)
   {
     parameter <- parameter_to_vector(parameter)
 
-    if (is.vector(parameter))
+    if (is.vector(parameter))  
     {
       query <- paste0(
         query_start,

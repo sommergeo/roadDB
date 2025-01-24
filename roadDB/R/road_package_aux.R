@@ -3,10 +3,11 @@ library(assertthat)
 library(RPostgres)
 
 attributes <- c("type", "continent", "continent_region", "country", "category", 
-                "cultural_period", "example", "dating_method")
+                "cultural_period", "example", "dating_method", "material_dated")
 tables <- c("locality", "geopolitical_units", "geopolitical_units", "locality",  
             "assemblage", "archaeological_stratigraphy", "attr_values/ex.txt", 
-            "geological_layer_age")
+            c("geological_layer_age", "archaeological_layer_age", "assemblage_age"), 
+            c("geological_layer_age", "archaeological_layer_age", "assemblage_age"))
 
 #' Get attribute value from ROAD Database
 #'
@@ -27,7 +28,9 @@ road_list_values <- function (attribute_name = NULL)
   if (is.null(attribute_name))
     return("No attribute name is given.")
   
-    # computing length of attributes array
+  table <- NULL
+  
+  # computing length of attributes array
   size = length(attributes)
   # iterating over elements of attributes
   for (i in 1:size){
@@ -39,14 +42,33 @@ road_list_values <- function (attribute_name = NULL)
       }
     }
   }  
-  # query <- paste( "SELECT DISTINCT ", attribute_name, " FROM ", table, " ORDER BY ", attribute_name)
-  # query <- paste( "SELECT DISTINCT ", attribute_name, " FROM (select distinct(unnest(string_to_array(
-                  # string_agg(", attribute_name, ", ', '),', '))) as ",
-                  # attribute_name, ", 'dummy' as dummy from ", table,  " GROUP BY dummy) as foo ", 
-                  # " ORDER BY ", attribute_name)
-  query <- paste( "SELECT DISTINCT(unnest(string_to_array(string_agg(", attribute_name, ", ', '),', '))) as ",
+  # table <- c("geological_layer_age", "archaeological_layer_age", "assemblage_age")
+  if (is.null(table))
+    return(paste("No data source for parameter ", attribute_name, " was not found."))
+  
+  if (is.vector(table)) {
+    q <- paste( "SELECT DISTINCT(unnest(string_to_array(string_agg(", attribute_name, ", ', '),', '))) as ",
+                attribute_name, " from ")
+    # qu <- paste0(q, table)
+    query <- paste(table, collapse = ",")
+    #query <- paste(
+    #  sapply(table, function(x) paste0(q, x)), 
+    #  collapse = " UNION "
+    #)
+    message(query)
+    return(query)
+  }
+  else
+   query <- paste( "SELECT DISTINCT(unnest(string_to_array(string_agg(", attribute_name, ", ', '),', '))) as ",
                   attribute_name, " from ", table, " ORDER BY ", attribute_name)
 
+  
+  # query <- paste( "SELECT DISTINCT ", attribute_name, " FROM (select distinct(unnest(string_to_array(
+  # string_agg(", attribute_name, ", ', '),', '))) as ",
+  # attribute_name, ", 'dummy' as dummy from ", table,  " GROUP BY dummy) as foo ", 
+  # " ORDER BY ", attribute_name)
+  
+  
   data <- road_run_query(query)
   
   return(data)
@@ -59,54 +81,45 @@ road_list_values <- function (attribute_name = NULL)
 #' All parameters are optional and should be omitted or set to NULL when not used.
 #'
 #' @param dating_methods; defaults to NULL.
+#' @param material_dated; defaults to NULL.
+#' @param age_min; defaults to NULL.
+#' @param age_max; defaults to NULL.
 #'
 #' @return date records
 #' @export
 #'
 #' @examples road_get_dates(c("geology", "biostratigraphy"))
-road_get_dates <- function (dating_methods = NULL)
+road_get_dates <- function (dating_methods = NULL, material_dated = NULL, age_min = NULL, age_max = NULL)
 {
-  #query <- "SELECT DISTINCT on (assemblage.locality_idlocality, assemblage.name, 
-  #          geological_layer_age.age, geological_layer_age.material_dated, 
-  #          geological_layer_age.dating_method, geological_layer_age.laboratory_idlaboratory) 
-  #          assemblage.locality_idlocality, assemblage.name, geological_layer_age.age, 
-  #          geological_layer_age.material_dated, geological_layer_age.dating_method, 
-  #          geological_layer_age.laboratory_idlaboratory 
-  #          FROM assemblage, assemblage_in_geolayer, geological_layer_age 
-  #          WHERE (assemblage.locality_idlocality = assemblage_in_geolayer.assemblage_idlocality 
-  #          and assemblage.idassemblage = assemblage_in_geolayer.assemblage_idassemblage 
-  #          and assemblage_in_geolayer.geolayer_idlocality = geological_layer_age.geolayer_idlocality 
-  #          and assemblage_in_geolayer.geolayer_name = geological_layer_age.geolayer_name)
-  #          UNION 
-  #          SELECT DISTINCT on (assemblage.locality_idlocality, assemblage.name, 
-  #          archaeological_layer_age.age, archaeological_layer_age.material_dated, 
-  #          archaeological_layer_age.dating_method, archaeological_layer_age.laboratory_idlaboratory) 
-  #          assemblage.locality_idlocality, assemblage.name, archaeological_layer_age.age, 
-  #          archaeological_layer_age.material_dated, archaeological_layer_age.dating_method, 
-  #          archaeological_layer_age.laboratory_idlaboratory 
-  #          FROM assemblage, assemblage_in_archlayer, archaeological_layer_age 
-  #          WHERE (assemblage.locality_idlocality = assemblage_in_archlayer.assemblage_idlocality 
-  #          and assemblage.idassemblage = assemblage_in_archlayer.assemblage_idassemblage 
-  #          and assemblage_in_archlayer.archlayer_idlocality = archaeological_layer_age.archlayer_idlocality 
-  #          and assemblage_in_archlayer.archlayer_name = archaeological_layer_age.archlayer_name)"
- 
-  query <- paste0("SELECT * FROM (SELECT geolayer_idlocality as locality, -1 as
-            assemblage, geolayer_name as geolayer, '-' as archlayer, age, 
+  if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
+    stop("Parameters 'min_age' and 'max_age' have to be integers.")
+  
+  if (!is.null(age_min) && !is.null(age_max) && age_min > age_max)
+    stop("Parameter 'min_age' can not be bigger than 'max_age'.")
+  
+  query <- paste0("SELECT * FROM (SELECT geolayer_idlocality as locality, NULL as
+            assemblage, geolayer_name as geolayer, NULL as archlayer, age, 
             negative_standard_deviation, positive_standard_deviation, 
             material_dated, dating_method, laboratory_idlaboratory 
             FROM geological_layer_age
             UNION
-            SELECT archlayer_idlocality as locality, -1 as assemblage, '-' as geolayer, archlayer_name as archlayer, age, negative_standard_deviation, positive_standard_deviation, 
+            SELECT archlayer_idlocality as locality, NULL as assemblage, NULL as geolayer, 
+            archlayer_name as archlayer, age, negative_standard_deviation, 
+            positive_standard_deviation, 
             material_dated, dating_method, laboratory_idlaboratory 
             FROM archaeological_layer_age
             UNION
-            SELECT assemblage_idlocality, assemblage_idassemblage as assemblage, '-' as geolayer, '-' as archlayer, 
+            SELECT assemblage_idlocality, CAST(assemblage_idassemblage AS TEXT) as assemblage, NULL as geolayer, 
+            NULL as archlayer, 
             age, negative_standard_deviation, positive_standard_deviation, 
             material_dated, dating_method, laboratory_idlaboratory 
-            FROM assemblage_age) as foo ", 
-            parameter_to_query("WHERE dating_method IN (", dating_methods, ")"),
+            FROM assemblage_age) as foo ",
+            "WHERE true ", 
+            parameter_to_query("AND dating_method IN (", dating_methods, ") "),
+            parameter_to_query("AND material_dated IN (", material_dated, ") "),
+            parameter_to_query("AND age  <= ", age_max, " "),
+            parameter_to_query("AND age  >= ", age_min, " "),
             " ORDER BY locality, geolayer, archlayer")
-  
   
   data <- road_run_query(query)
   
