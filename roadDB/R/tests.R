@@ -40,7 +40,7 @@ localities0 <- c("Bacho Kiro")
 assemblages2 <- road_get_assemblages(localities = localities5)
 assemblages3 <- road_get_assemblages(localities = localities2, age_min = 80000L, age_max = 120000L)
 assemblages3 <- road_get_assemblages(localities = localities2, age_min = 80000L, age_max = 120000L)
-assemblages4 <- road_get_assemblages(localities = localities2, categories = "typology", age_max = 100000L)
+assemblages4 <- road_get_assemblages(localities = localities2, categories = c("typology", "paleofauna"), age_max = 100000L)
 assemblages5 <- road_get_assemblages(localities = localities3)
 
 # aux functions
@@ -50,3 +50,5 @@ query_check_intersection("and ", "technology, typology", "technology, paleofauna
 dates0 <- road_get_dates(dating_methods = c("geology", "biostratigraphy", "U series (uranium-lead) dating"), material_dated = "calcite")
 dates1 <- road_get_dates()
 dates2 <- road_get_dates(age_min = 10000L, age_max = 100000L)
+dates3 <- road_get_dates(material_dated = c("coprolite", "glass", "ivory"))
+dates4 <- road_get_dates(material_dated = c("glass"))

@@ -1,9 +1,7 @@
 # source("roadDB/R/login.R")
-source("roadDB/R/road_package.R")
+# source("roadDB/R/road_package.R")
 library(assertthat)
 library(RPostgres)
-
-cm_assemblages_locality_idlocality <- "locality_id"
 
 attributes <- c("type", "continent", "continent_region", "country", "category", 
               "cultural_period", "example", "dating_method", "material_dated")
@@ -92,7 +90,9 @@ road_list_values <- function (attribute_name = NULL)
 #' @return date records
 #' @export
 #'
-#' @examples road_get_dates(c("geology", "biostratigraphy"))
+#' @examples road_get_dates(dating_methods = c("geology", "biostratigraphy"))
+#' @examples road_get_dates(material_dated = c("coprolite", "glass", "ivory"), age_min = 10000L, 
+#'                          age_max = 100000L, dating_methods = c("geology", "biostratigraphy"))
 road_get_dates <- function (dating_methods = NULL, material_dated = NULL, age_min = NULL, age_max = NULL)
 {
   if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
@@ -103,41 +103,59 @@ road_get_dates <- function (dating_methods = NULL, material_dated = NULL, age_mi
   
   # select fields
   select_fields_gla <- c(
-    paste0("geolayer_idlocality AS ", cm_assemblages_locality_idlocality),
-    paste0("NULL AS ", cm_assemblages_idassemblage),
-    paste0("geolayer_name AS \"", cm_assemblage_in_geolayer_geolayer_name, "\""),
-    paste0("NULL AS archlayer"),
+    paste0("geolayer_idlocality AS  \"", cm_locality_idlocality, "\""),
+    paste0("NULL AS  \"", cm_assemblages_idassemblage, "\""),
+    paste0("geolayer_name AS \"", cm_geolayer_geolayer_name, "\""),
+    paste0("NULL AS \"", cm_archlayer_archlayer_name, "\""),
     paste0("age AS \"", cm_age, "\""),
-    paste0("negative_standard_deviation"),
-    paste0("positive_standard_deviation"),
-    paste0("cm_material_dated"),
-    paste0("dating_method"),
-    paste0("laboratory_idlaboratory"),
+    paste0("negative_standard_deviation AS \"", cm_negative_standard_deviation, "\""),
+    paste0("positive_standard_deviation AS \"", cm_positive_standard_deviation, "\""),
+    paste0("material_dated AS \"", cm_material_dated, "\""),
+    paste0("dating_method AS \"", cm_dating_method, "\""),
+    paste0("laboratory_idlaboratory AS \"", cm_laboratory_idlaboratory, "\"")
   )
   
-  query <- paste0("SELECT * FROM (SELECT geolayer_idlocality as locality, NULL as
-            assemblage, geolayer_name as geolayer, NULL as archlayer, age, 
-            negative_standard_deviation, positive_standard_deviation, material_dated, 
-            dating_method, laboratory_idlaboratory 
-            FROM geological_layer_age
+  select_fields_ala <- c(
+    paste0("archlayer_idlocality AS \"", cm_locality_idlocality, "\""),
+    paste0("NULL AS \"", cm_assemblages_idassemblage, "\""),
+    paste0("NULL AS \"", cm_geolayer_geolayer_name, "\""),
+    paste0("archlayer_name AS \"", cm_archlayer_archlayer_name, "\""),
+    paste0("age AS \"", cm_age, "\""),
+    paste0("negative_standard_deviation AS \"", cm_negative_standard_deviation, "\""),
+    paste0("positive_standard_deviation AS \"", cm_positive_standard_deviation, "\""),
+    paste0("material_dated AS \"", cm_material_dated, "\""),
+    paste0("dating_method AS \"", cm_dating_method, "\""),
+    paste0("laboratory_idlaboratory AS \"", cm_laboratory_idlaboratory, "\"")
+  )
+  
+  select_fields_asa <- c(
+    paste0("assemblage_idlocality AS \"", cm_locality_idlocality, "\""),
+    paste0("CAST(assemblage_idassemblage AS TEXT) AS  \"", cm_assemblages_idassemblage, "\""),
+    paste0("NULL AS \"", cm_geolayer_geolayer_name, "\""),
+    paste0("NULL AS \"", cm_archlayer_archlayer_name, "\""),
+    paste0("age AS \"", cm_age, "\""),
+    paste0("negative_standard_deviation AS \"", cm_negative_standard_deviation, "\""),
+    paste0("positive_standard_deviation AS \"", cm_positive_standard_deviation, "\""),
+    paste0("material_dated AS \"", cm_material_dated, "\""),
+    paste0("dating_method AS \"", cm_dating_method, "\""),
+    paste0("laboratory_idlaboratory AS \"", cm_laboratory_idlaboratory, "\"")
+  )
+  
+  query <- paste0("SELECT * FROM (SELECT ", paste(select_fields_gla, collapse = ", "),
+            " FROM geological_layer_age
             UNION
-            SELECT archlayer_idlocality as locality, NULL as assemblage, NULL as geolayer, 
-            archlayer_name as archlayer, age, negative_standard_deviation, 
-            positive_standard_deviation, 
-            material_dated, dating_method, laboratory_idlaboratory 
-            FROM archaeological_layer_age
+            SELECT ", paste(select_fields_ala, collapse = ", "), 
+            " FROM archaeological_layer_age
             UNION
-            SELECT assemblage_idlocality, CAST(assemblage_idassemblage AS TEXT) as assemblage, NULL as geolayer, 
-            NULL as archlayer, 
-            age, negative_standard_deviation, positive_standard_deviation, 
-            material_dated, dating_method, laboratory_idlaboratory 
-            FROM assemblage_age) as foo ",
+            SELECT ", paste(select_fields_asa, collapse = ", "),
+            " FROM assemblage_age) as foo ",
             "WHERE true ", 
-            parameter_to_query("AND dating_method IN (", dating_methods, ") "),
-            parameter_to_query("AND material_dated IN (", material_dated, ") "),
+            query_check_intersection("AND ", dating_methods, "dating_method"),
+            query_check_intersection("AND ", material_dated, "material_dated"),
             parameter_to_query("AND age  <= ", age_max, " "),
             parameter_to_query("AND age  >= ", age_min, " "),
-            " ORDER BY locality, geolayer, archlayer")
+            " ORDER BY ", cm_locality_idlocality, ", ", cm_geolayer_geolayer_name, 
+            ", ", cm_archlayer_archlayer_name)
   
   data <- road_run_query(query)
   
