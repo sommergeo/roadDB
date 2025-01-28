@@ -1,5 +1,3 @@
-# source("roadDB/R/login.R")
-# source("roadDB/R/road_package.R")
 library(assertthat)
 library(RPostgres)
 

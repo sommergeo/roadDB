@@ -5,20 +5,35 @@
 \title{Get assemblages from ROAD database}
 \usage{
 road_get_assemblages(
-  localities,
+  continents = NULL,
+  subcontinents = NULL,
+  countries = NULL,
+  locality_types = NULL,
+  cultural_periods = NULL,
   categories = NULL,
   age_min = NULL,
-  age_max = NULL
+  age_max = NULL,
+  localities = NULL
 )
 }
 \arguments{
-\item{localities}{list of localities; return value from function `road_get_localities`.}
+\item{continents}{string (one item) or vector of strings (one or more items); defaults to NULL.}
+
+\item{subcontinents}{string (one item) or vector of strings (one or more items); defaults to NULL.}
+
+\item{countries}{string (one item) or vector of strings (one or more items); defaults to NULL.}
+
+\item{locality_types}{string (one item) or vector of strings (one or more items); defaults to NULL.}
+
+\item{cultural_periods}{string (one item) or vector of strings (one or more items); defaults to NULL.}
 
 \item{categories}{string (one item) or vector of strings (one or more items).}
 
 \item{age_min}{integer; minimum age of assemblage.}
 
 \item{age_max}{integer; maximum age of assemblage.}
+
+\item{localities}{list of localities; return value from function `road_get_localities`.}
 }
 \value{
 Database search result as list of assemblages.
@@ -30,8 +45,11 @@ Database search result as list of assemblages.
 Assembalges are articulated archeological finds inside in a locality. One locality
 can host multiple assemblages which can for example be associated with certain
 geological layers or historical time periods.
-This frunction uses the return value of `road_get_localities` (list of localities)
-to get assemblages that were found in these localities.
+This function uses a list of localities to get assemblages that were found in these localities.
+To preselect these localities the same parameters as in `road_get_localities` can be used.
+Alternatively, if you run `road_get_localities` independently, you can pass its return value
+(list of localities) to this function. This will overwrite any argumnets passed to the localities
+parameters in this function (continents, subcontinents, countries, locality_types, cultural_periods).
 Use parameters to further narrow down the assemblages you are searching for.
 Excluding `localities` all parameters are optional and should be omitted or
 set to NULL when not used.

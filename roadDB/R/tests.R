@@ -24,7 +24,7 @@ values3 <- road_list_values("continent_region")
 values4 <- road_list_values("category")
 values6 <- road_list_values("cultural_period")
 values7 <- road_list_values("country")
-values8 <- road_list_values("example")
+# values8 <- road_list_values("example")
 values9 <- road_list_values("dating_method")
 values10 <- road_list_values("material_dated")
 

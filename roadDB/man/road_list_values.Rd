@@ -7,13 +7,17 @@
 road_list_values(attribute_name = NULL)
 }
 \arguments{
-\item{continents}{string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{attribute_name}{name of an attribute; defaults to NULL.}
 }
 \value{
 List of attribute values.
 }
 \description{
-`road_list_values` fetches values of a given attribute
+`road_list_values` fetches values of a given attribute in the database or 
+read values from file
+}
+\details{
+#' All parameters are optional and should be omitted or set to NULL when not used.
 }
 \examples{
 road_list_values("category")
