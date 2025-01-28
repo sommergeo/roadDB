@@ -17,7 +17,9 @@ cm_assemblages_categories <- "categories"
 cm_geological_stratigraphy_age_min <- "age_min"
 cm_geological_stratigraphy_age_max <- "age_max"
 cm_assemblage_in_geolayer_geolayer_name <- "geolayers"
+cm_geolayer_geolayer_name <- "geolayer"
 cm_assemblage_in_archlayer_archlayer_name <- "archlayers"
+cm_archlayer_archlayer_name <- "archlayer"
 cm_age <- "age"
 cm_negative_standard_deviation <- "negative_standard_deviation"
 cm_positive_standard_deviation <- "positive_standard_deviation"
@@ -352,7 +354,7 @@ parameter_to_query <- function(query_start, parameter, query_end)
   return(query)
 }
 
-# build query to check if parameters intersect with comma seperated database values
+# build query to check if parameters intersect with comma separated database values
 query_check_intersection <- function(query_start, parameter, column)
 {
   query <- ""
@@ -363,7 +365,8 @@ query_check_intersection <- function(query_start, parameter, column)
     if (is.vector(parameter))
     {
       query <- paste(
-        sapply(parameter, function(x) paste0("OR '", x, "' = ANY(STRING_TO_ARRAY(", column, ", ', '))")),
+        #sapply(parameter, function(x) paste0("OR '", x, "' = ANY(STRING_TO_ARRAY(", column, ", ', '))")),
+        sapply(parameter, function(x) paste0("OR '", x, "' = ANY(regexp_split_to_array(", column, ", ',\\s*'))")),
         collapse = " "
       )
       query <- paste0(
