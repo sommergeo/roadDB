@@ -126,7 +126,7 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
     paste0("geological_layer_age.geolayer_idlocality AS  \"", cm_locality_idlocality, "\""),
     paste0("CAST(assemblage_idassemblage AS TEXT) AS  \"", cm_assemblages_idassemblage, "\""),
     paste0("geological_layer_age.geolayer_name AS \"", cm_geolayer_geolayer_name, "\""),
-    paste0("NULL AS \"", cm_archlayer_archlayer_name, "\""),
+    paste0("archlayer_name AS \"", cm_archlayer_archlayer_name, "\""),
     paste0("age AS \"", cm_age, "\""),
     paste0("negative_standard_deviation AS \"", cm_negative_standard_deviation, "\""),
     paste0("positive_standard_deviation AS \"", cm_positive_standard_deviation, "\""),
@@ -139,7 +139,7 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
   select_fields_ala <- c(
     paste0("archaeological_layer_age.archlayer_idlocality AS \"", cm_locality_idlocality, "\""),
     paste0("CAST(assemblage_idassemblage AS TEXT) AS \"", cm_assemblages_idassemblage, "\""),
-    paste0("NULL AS \"", cm_geolayer_geolayer_name, "\""),
+    paste0("archlayer_correl_geolayer.geolayer_name AS \"", cm_geolayer_geolayer_name, "\""),
     paste0("archaeological_layer_age.archlayer_name AS \"", cm_archlayer_archlayer_name, "\""),
     paste0("age AS \"", cm_age, "\""),
     paste0("negative_standard_deviation AS \"", cm_negative_standard_deviation, "\""),
@@ -153,8 +153,8 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
   select_fields_asa <- c(
     paste0("assemblage_age.assemblage_idlocality AS \"", cm_locality_idlocality, "\""),
     paste0("CAST(assemblage_age.assemblage_idassemblage AS TEXT) AS  \"", cm_assemblages_idassemblage, "\""),
-    paste0("NULL AS \"", cm_geolayer_geolayer_name, "\""),
-    paste0("NULL AS \"", cm_archlayer_archlayer_name, "\""),
+    paste0("assemblage_in_geolayer.geolayer_name AS \"", cm_geolayer_geolayer_name, "\""),
+    paste0("archlayer_name AS \"", cm_archlayer_archlayer_name, "\""),
     paste0("age AS \"", cm_age, "\""),
     paste0("negative_standard_deviation AS \"", cm_negative_standard_deviation, "\""),
     paste0("positive_standard_deviation AS \"", cm_positive_standard_deviation, "\""),
@@ -170,7 +170,7 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
   #             WHERE archstratigraphy_idarchstrat = idarchstrat",
   #             query_check_intersection("AND", technocomplex, "technocomplex"))
   # 
-  query <- paste0("SELECT DISTINCT * FROM (SELECT ", paste(select_fields_gla, collapse = ", "),
+  query <- paste0("SELECT * FROM (SELECT ", paste(select_fields_gla, collapse = ", "),
             " FROM geological_layer_age ",
             "LEFT JOIN assemblage_in_geolayer ON ",
             " assemblage_in_geolayer.geolayer_idlocality = geological_layer_age.geolayer_idlocality ",
@@ -200,9 +200,12 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
             "UNION
             SELECT ", paste(select_fields_asa, collapse = ", "),
             " FROM assemblage_age ",
-            "LEFT JOIN assemblage_in_archlayer ON ",
-            "assemblage_in_archlayer.assemblage_idlocality = assemblage_age.assemblage_idlocality",
-            " AND assemblage_in_archlayer.assemblage_idassemblage = assemblage_age.assemblage_idassemblage ",
+            "LEFT JOIN assemblage_in_geolayer ON ",
+            " assemblage_in_geolayer.assemblage_idlocality = assemblage_age.assemblage_idlocality ",
+            " AND assemblage_in_geolayer.assemblage_idassemblage = assemblage_age.assemblage_idassemblage ",
+            "LEFT JOIN archlayer_correl_geolayer ON ",
+            "archlayer_correl_geolayer.geolayer_idlocality = assemblage_in_geolayer.geolayer_idlocality ",
+            " AND archlayer_correl_geolayer.geolayer_name =  assemblage_in_geolayer.geolayer_name ",
             "LEFT JOIN  archaeological_layer ON ",
             "locality_idlocality = archlayer_idlocality ",
             "AND name = archlayer_name ",
