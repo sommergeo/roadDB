@@ -83,13 +83,15 @@ road_list_values <- function (attribute_name = NULL)
 #' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param localities list of localities; return value from function `road_get_localities`.
+#' @param categories string (one item) or vector of strings (one or more items).
+#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #' @param dating_methods string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param material_dated string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param age_min integer; defaults to NULL.
 #' @param age_max integer; defaults to NULL.
 #' @param technocomplex string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param localities list of localities; return value from function `road_get_localities`.
-#'
+tt#'
 #' @return date records
 #' @export
 #'
@@ -102,7 +104,8 @@ road_list_values <- function (attribute_name = NULL)
 road_get_dates <- function (continents = NULL, subcontinents = NULL, countries = NULL, 
                             locality_types = NULL, cultural_periods = NULL, 
                             dating_methods = NULL, material_dated = NULL, 
-                            age_min = NULL, age_max = NULL, technocomplex = NULL, localities = NULL)
+                            age_min = NULL, age_max = NULL, technocomplex = NULL, 
+                            categories = NULL, localities = NULL, assemblages = NULL)
 {
   if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
     stop("Parameters 'min_age' and 'max_age' have to be integers.")
@@ -116,11 +119,31 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
     localities <- road_get_localities(continents, subcontinents, countries, locality_types, cultural_periods)
   }
   localities <- localities[cm_locality_idlocality]
+
   query_localities <- paste(
     sapply(localities, function(x) paste0("'", x, "'")),
     collapse = ", "
   )
-    
+  
+  if (is.null(assemblages))
+  {
+    assemblages <- road_get_assemblages(categories = categories)
+  }  
+  
+  cols <- c("locality_id", "assemblage_id")
+  # query_locality_assemblage_list 
+  assemblages$locality_assemblage_list <- paste(assemblages$locality_id, assemblages$assemblage_id, sep = ", ")
+    # apply(assemblages[ , cols ] , 1, paste , collapse = "," )
+    # sapply(assemblages["locality_id"], function(x) paste0("'", x, "'")),
+    #assemblages["locality_id"],
+    # assemblages["assemblage_id"]
+    #sep = "--"
+  #)
+  query_locality_assemblage_list <- paste(
+    sapply(assemblages$locality_assemblage_list, function(x) paste0("'", x, "'")),
+    collapse = ", "
+  )
+  message(query_locality_assemblage_list)
   # select fields
   select_fields_gla <- c(
     paste0("geological_layer_age.geolayer_idlocality AS  \"", cm_locality_idlocality, "\""),
