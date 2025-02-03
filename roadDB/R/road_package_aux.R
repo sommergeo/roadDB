@@ -91,7 +91,7 @@ road_list_values <- function (attribute_name = NULL)
 #' @param age_min integer; defaults to NULL.
 #' @param age_max integer; defaults to NULL.
 #' @param technocomplex string (one item) or vector of strings (one or more items); defaults to NULL.
-tt#'
+#'
 #' @return date records
 #' @export
 #'
@@ -118,19 +118,21 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
     # run `road_get_localities` else preselected list of localities is used
     localities <- road_get_localities(continents, subcontinents, countries, locality_types, cultural_periods)
   }
+  
+  if (is.null(assemblages) && !is.null(categories))
+  {
+    assemblages <- road_get_assemblages(categories = categories, localities = localities)
+  }  
+  
   localities <- localities[cm_locality_idlocality]
+  # message(localities)
 
   query_localities <- paste(
     sapply(localities, function(x) paste0("'", x, "'")),
     collapse = ", "
   )
   
-  if (is.null(assemblages))
-  {
-    assemblages <- road_get_assemblages(categories = categories)
-  }  
-  
-  cols <- c("locality_id", "assemblage_id")
+  # cols <- c("locality_id", "assemblage_id")
   # query_locality_assemblage_list 
   assemblages$locality_assemblage_list <- paste(assemblages$locality_id, assemblages$assemblage_id, sep = ", ")
     # apply(assemblages[ , cols ] , 1, paste , collapse = "," )
@@ -143,11 +145,19 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
     sapply(assemblages$locality_assemblage_list, function(x) paste0("'", x, "'")),
     collapse = ", "
   )
-  message(query_locality_assemblage_list)
+  
+  # message(query_locality_assemblage_list)
+  
+  if (!is.null(query_locality_assemblage_list))
+    assemblage_subquery <- paste0(" AND ", cm_locality_idlocality, " || ', ' || ", cm_assemblages_idassemblage," IN (", query_locality_assemblage_list, ")")
+  
+  
   # select fields
   select_fields_gla <- c(
     paste0("geological_layer_age.geolayer_idlocality AS  \"", cm_locality_idlocality, "\""),
-    paste0("CAST(assemblage_idassemblage AS TEXT) AS  \"", cm_assemblages_idassemblage, "\""),
+    # paste0("CAST(assemblage_idassemblage AS TEXT) AS  \"", cm_assemblages_idassemblage, "\""),
+    paste0("assemblage_idassemblage AS \"", cm_assemblages_idassemblage, "\""),
+    # paste0("assemblage.category AS \"", cm_assemblages_categories, "\""),
     paste0("geological_layer_age.geolayer_name AS \"", cm_geolayer_geolayer_name, "\""),
     paste0("archlayer_name AS \"", cm_archlayer_archlayer_name, "\""),
     paste0("age AS \"", cm_age, "\""),
@@ -161,7 +171,9 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
   
   select_fields_ala <- c(
     paste0("archaeological_layer_age.archlayer_idlocality AS \"", cm_locality_idlocality, "\""),
-    paste0("CAST(assemblage_idassemblage AS TEXT) AS \"", cm_assemblages_idassemblage, "\""),
+    # paste0("CAST(assemblage_idassemblage AS TEXT) AS \"", cm_assemblages_idassemblage, "\""),
+    paste0("assemblage_idassemblage AS \"", cm_assemblages_idassemblage, "\""),
+    # paste0("assemblage.category AS \"", cm_assemblages_categories, "\""),
     paste0("archlayer_correl_geolayer.geolayer_name AS \"", cm_geolayer_geolayer_name, "\""),
     paste0("archaeological_layer_age.archlayer_name AS \"", cm_archlayer_archlayer_name, "\""),
     paste0("age AS \"", cm_age, "\""),
@@ -175,7 +187,9 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
   
   select_fields_asa <- c(
     paste0("assemblage_age.assemblage_idlocality AS \"", cm_locality_idlocality, "\""),
-    paste0("CAST(assemblage_age.assemblage_idassemblage AS TEXT) AS  \"", cm_assemblages_idassemblage, "\""),
+    # paste0("CAST(assemblage_age.assemblage_idassemblage AS TEXT) AS  \"", cm_assemblages_idassemblage, "\""),
+    paste0("assemblage_age.assemblage_idassemblage AS \"", cm_assemblages_idassemblage, "\""),
+    # paste0("NULL AS ", cm_assemblages_categories, " "),
     paste0("assemblage_in_geolayer.geolayer_name AS \"", cm_geolayer_geolayer_name, "\""),
     paste0("archlayer_name AS \"", cm_archlayer_archlayer_name, "\""),
     paste0("age AS \"", cm_age, "\""),
@@ -237,13 +251,16 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
             ") as foo ",
             "WHERE ", cm_locality_idlocality," IN (",
             query_localities, ") ", 
-            query_check_intersection("AND ", dating_methods, "dating_method"),
-            query_check_intersection("AND ", material_dated, "material_dated"),
+            assemblage_subquery,
+            query_check_intersection("AND ", dating_methods, "dating_method "),
+            query_check_intersection("AND ", material_dated, "material_dated "),
             parameter_to_query("AND age  <= ", age_max, " "),
             parameter_to_query("AND age  >= ", age_min, " "),
             query_check_intersection("AND ", technocomplex, "technocomplex"),
             " ORDER BY ", cm_locality_idlocality, ", ", cm_geolayer_geolayer_name, 
             ", ", cm_archlayer_archlayer_name)
+  
+  message(query)
   
   data <- road_run_query(query)
   
