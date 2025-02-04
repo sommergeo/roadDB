@@ -122,35 +122,28 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
   if (is.null(assemblages) && !is.null(categories))
   {
     assemblages <- road_get_assemblages(categories = categories, localities = localities)
-  }  
+  }
   
   localities <- localities[cm_locality_idlocality]
-  # message(localities)
 
   query_localities <- paste(
     sapply(localities, function(x) paste0("'", x, "'")),
     collapse = ", "
   )
   
-  # cols <- c("locality_id", "assemblage_id")
-  # query_locality_assemblage_list 
-  assemblages$locality_assemblage_list <- paste(assemblages$locality_id, assemblages$assemblage_id, sep = ", ")
-    # apply(assemblages[ , cols ] , 1, paste , collapse = "," )
-    # sapply(assemblages["locality_id"], function(x) paste0("'", x, "'")),
-    #assemblages["locality_id"],
-    # assemblages["assemblage_id"]
-    #sep = "--"
-  #)
+  if (!is.null(assemblages))
+    assemblages$locality_assemblage_list <- paste(assemblages$locality_id, assemblages$assemblage_id, sep = ", ")
+  
   query_locality_assemblage_list <- paste(
     sapply(assemblages$locality_assemblage_list, function(x) paste0("'", x, "'")),
     collapse = ", "
   )
   
-  # message(query_locality_assemblage_list)
+  if (!is.null(query_locality_assemblage_list) && query_locality_assemblage_list != '')
+    assemblage_condition <- paste0(" AND ", cm_locality_idlocality, " || ', ' || ", cm_assemblages_idassemblage," IN (", query_locality_assemblage_list, ")")
+  else assemblage_condition <- ""
   
-  if (!is.null(query_locality_assemblage_list))
-    assemblage_subquery <- paste0(" AND ", cm_locality_idlocality, " || ', ' || ", cm_assemblages_idassemblage," IN (", query_locality_assemblage_list, ")")
-  
+  # message(assemblage_condition)
   
   # select fields
   select_fields_gla <- c(
@@ -251,7 +244,7 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
             ") as foo ",
             "WHERE ", cm_locality_idlocality," IN (",
             query_localities, ") ", 
-            assemblage_subquery,
+            assemblage_condition,
             query_check_intersection("AND ", dating_methods, "dating_method "),
             query_check_intersection("AND ", material_dated, "material_dated "),
             parameter_to_query("AND age  <= ", age_max, " "),
@@ -260,7 +253,7 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
             " ORDER BY ", cm_locality_idlocality, ", ", cm_geolayer_geolayer_name, 
             ", ", cm_archlayer_archlayer_name)
   
-  message(query)
+  # message(query)
   
   data <- road_run_query(query)
   
