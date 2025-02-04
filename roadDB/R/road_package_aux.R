@@ -119,17 +119,17 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
     localities <- road_get_localities(continents, subcontinents, countries, locality_types, cultural_periods)
   }
   
-  if (is.null(assemblages) && !is.null(categories))
-  {
-    assemblages <- road_get_assemblages(categories = categories, localities = localities)
-  }
-  
   localities <- localities[cm_locality_idlocality]
 
   query_localities <- paste(
     sapply(localities, function(x) paste0("'", x, "'")),
     collapse = ", "
   )
+ 
+  if (is.null(assemblages) && !is.null(categories))
+  {
+    assemblages <- road_get_assemblages(categories = categories, localities = localities)
+  }
   
   if (!is.null(assemblages))
     assemblages$locality_assemblage_list <- paste(assemblages$locality_id, assemblages$assemblage_id, sep = ", ")

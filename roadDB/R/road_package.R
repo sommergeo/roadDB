@@ -250,40 +250,66 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countr
 #' @examples road_get_human_remains(assemblages = assemblages, genus = 'Homo', species = 'neanderthalensis')
 #' @examples road_get_human_remains(assemblages = assemblages, genus = 'Homo')
 #' @examples road_get_human_remains(assemblages = assemblages, genus_species = 'Homo neanderthalensis')
-road_get_human_remains <- function(assemblages, genus = NULL, species = NULL, genus_species = NULL)
+road_get_human_remains <- function(categories = NULL, age_min = NULL, age_max = NULL, 
+                                   genus = NULL, species = NULL, genus_species = NULL, 
+                                   assemblages = NULL)
 {
+  # localities <- localities[cm_locality_idlocality]
+  
+  #query_localities <- paste(
+   # sapply(localities, function(x) paste0("'", x, "'")),
+  #  collapse = ", "
+  #)
+  
+  if (is.null(assemblages) && !is.null(categories))
+  {
+    assemblages <- road_get_assemblages(categories = categories, localities = localities)
+  }
+  
+  if (!is.null(assemblages))
+    assemblages$locality_assemblage_list <- paste(assemblages$locality_id, assemblages$assemblage_id, sep = ", ")
+  
+  query_locality_assemblage_list <- paste(
+    sapply(assemblages$locality_assemblage_list, function(x) paste0("'", x, "'")),
+    collapse = ", "
+  )
+
+  if (!is.null(query_locality_assemblage_list) && query_locality_assemblage_list != '')
+    assemblage_condition <- paste0(" AND ", cm_locality_idlocality, " || ', ' || ", cm_assemblages_idassemblage," IN (", query_locality_assemblage_list, ")")
+  else assemblage_condition <- ""
+  
   if (!is.null(genus_species) && (!is.null(genus) || !is.null(species)))
     stop("Parameter 'genus_species' can't be used in combination with 'genus' or 'species'.")
 
   # get preselected list of localities and list of locality/assemblage strings
-  locality_list <- paste(
-    sapply(assemblages["locality_idlocality"], function(x) paste0("'", x, "'")),
-    collapse = ", "
-  )
-  locality_assemblage_list <- paste(
-    sapply(assemblages["locality_idlocality"], function(x) paste0("'", x, ", ")),
-    sapply(assemblages["idassemblage"], function(x) paste0(x, "'")),
-    collapse = ", "
-  )
+  #locality_list <- paste(
+  #  sapply(assemblages["locality_idlocality"], function(x) paste0("'", x, "'")),
+  #  collapse = ", "
+  #)
+  #locality_assemblage_list <- paste(
+  #  sapply(assemblages["locality_idlocality"], function(x) paste0("'", x, ", ")),
+  #  sapply(assemblages["idassemblage"], function(x) paste0(x, "'")),
+  #  collapse = ", "
+  #)
 
   # build genus/species selection
-  selection_query = ""
+  genus_species_condition = ""
   if (!is.null(genus_species))
   {
-    selection_query <- parameter_to_query("AND genus_species_str IN (", genus_species, ")")
+    genus_species_condition <- parameter_to_query("AND genus_species_str IN (", genus_species, ")")
   }
   else
   {
     species_conjucton <- "AND"
     if (!is.null(genus))
     {
-      selection_query <- parameter_to_query("AND genus IN (", genus, ")")
+      genus_species_condition <- parameter_to_query("AND genus IN (", genus, ")")
       species_conjucton <- "OR"
     }
     if (!is.null(species))
     {
-      selection_query <- paste(
-        selection_query,
+      genus_species_condition <- paste(
+        genus_species_condition,
         species_conjucton,
         parameter_to_query("species IN (", species, ")")
       )
@@ -292,15 +318,24 @@ road_get_human_remains <- function(assemblages, genus = NULL, species = NULL, ge
 
   # combine query parts
   query <- paste(
-    "SELECT DISTINCT * FROM (SELECT humanremains_idlocality || ', ' || humanremains_idassemblage as locality_assemblage_str, genus || ' ' || species as genus_species_str, genus, species, age, sex, humanremains_idhumanremains FROM publication_desc_humanremains WHERE humanremains_idlocality IN (",
-    locality_list,
-    ") ) as foo WHERE locality_assemblage_str IN (",
-    locality_assemblage_list,
-    ")",
-    selection_query,
-    "ORDER BY locality_assemblage_str"
+    "SELECT DISTINCT * FROM (SELECT humanremains_idlocality AS locality_id, 
+    humanremains_idassemblage AS assemblage_id, 
+    genus || ' ' || species as genus_species_str, genus, species, age, sex, 
+    humanremains_idhumanremains FROM publication_desc_humanremains 
+    WHERE true ",
+    #  " humanremains_idlocality IN (",
+    #  locality_list, ")",
+    ") as foo WHERE true ",
+    #"locality_assemblage_str IN (",
+    #query_locality_assemblage_list,
+    #")",
+    assemblage_condition,
+    genus_species_condition,
+    "ORDER BY ", cm_locality_idlocality, ", ", cm_assemblages_idassemblage 
   )
 
+  message(query)
+  
   data <- road_run_query(query)
 
   return(data)
