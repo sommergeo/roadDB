@@ -26,6 +26,12 @@ cm_positive_standard_deviation <- "positive_standard_deviation"
 cm_material_dated <- "material_dated"
 cm_dating_method <- "dating_method"
 cm_laboratory_idlaboratory <- "laboratory_idlaboratory"
+cm_humanremains_genus_species_str <- "genus_species_str"
+cm_humanremains_genus <- "genus"
+cm_humanremains_species <- "species"
+cm_humanremains_age <- "age"
+cm_humanremains_sex <- "sex"
+cm_humanremains_idhumanremains <- "humanremains_id"
 
 #' Get localities from ROAD Database
 #'
@@ -252,7 +258,7 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countr
 #' @examples road_get_human_remains(assemblages = assemblages, genus_species = 'Homo neanderthalensis')
 road_get_human_remains <- function(categories = NULL, age_min = NULL, age_max = NULL, 
                                    genus = NULL, species = NULL, genus_species = NULL, 
-                                   assemblages = NULL)
+                                   assemblages = NULL, localities = NULL)
 {
   # localities <- localities[cm_locality_idlocality]
   
@@ -261,38 +267,24 @@ road_get_human_remains <- function(categories = NULL, age_min = NULL, age_max = 
   #  collapse = ", "
   #)
   
-  if (is.null(assemblages) && !is.null(categories))
-  {
-    assemblages <- road_get_assemblages(categories = categories, localities = localities)
-  }
-  
-  if (!is.null(assemblages))
-    assemblages$locality_assemblage_list <- paste(assemblages$locality_id, assemblages$assemblage_id, sep = ", ")
-  
-  query_locality_assemblage_list <- paste(
-    sapply(assemblages$locality_assemblage_list, function(x) paste0("'", x, "'")),
-    collapse = ", "
-  )
-
-  if (!is.null(query_locality_assemblage_list) && query_locality_assemblage_list != '')
-    assemblage_condition <- paste0(" AND ", cm_locality_idlocality, " || ', ' || ", cm_assemblages_idassemblage," IN (", query_locality_assemblage_list, ")")
-  else assemblage_condition <- ""
+  # calculate assemblage_condition
+  # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
+                                                                age_min = age_min, age_max = age_max, 
+                                                                localities = localities)
+  assemblage_condition <- get_assemblage_condition(assemblages = assemblages)
+  # calculate output extention
+  assemblage_info_for_output <- list()
+  assemblage_info_for_output$locality_id <- assemblages$locality_id
+  assemblage_info_for_output$assemblage_id <- assemblages$assemblage_id
+  assemblage_info_for_output$categories <- assemblages$categories
+  assemblage_info_for_output$age_min <- assemblages$age_min
+  assemblage_info_for_output$age_max <- assemblages$age_max
   
   if (!is.null(genus_species) && (!is.null(genus) || !is.null(species)))
     stop("Parameter 'genus_species' can't be used in combination with 'genus' or 'species'.")
 
-  # get preselected list of localities and list of locality/assemblage strings
-  #locality_list <- paste(
-  #  sapply(assemblages["locality_idlocality"], function(x) paste0("'", x, "'")),
-  #  collapse = ", "
-  #)
-  #locality_assemblage_list <- paste(
-  #  sapply(assemblages["locality_idlocality"], function(x) paste0("'", x, ", ")),
-  #  sapply(assemblages["idassemblage"], function(x) paste0(x, "'")),
-  #  collapse = ", "
-  #)
-
-  # build genus/species selection
+   # build genus/species selection
   genus_species_condition = ""
   if (!is.null(genus_species))
   {
@@ -316,29 +308,35 @@ road_get_human_remains <- function(categories = NULL, age_min = NULL, age_max = 
     }
   }
 
+  # select fields
+  select_fields <- c(
+    paste0("humanremains_idlocality AS \"", cm_locality_idlocality, "\""),
+    paste0("humanremains_idassemblage AS \"", cm_assemblages_idassemblage, "\""),
+    paste0("genus || ' ' || species AS \"", cm_humanremains_genus_species_str, "\""),
+    paste0("genus AS \"", cm_humanremains_genus, "\""),
+    paste0("species AS \"", cm_humanremains_species, "\""),
+    paste0("age AS \"", cm_humanremains_age, "\""),
+    paste0("sex AS \"", cm_humanremains_sex, "\""),
+    paste0("humanremains_idhumanremains AS \"", cm_humanremains_idhumanremains, "\"")
+  )
+  
+  
   # combine query parts
   query <- paste(
-    "SELECT DISTINCT * FROM (SELECT humanremains_idlocality AS locality_id, 
-    humanremains_idassemblage AS assemblage_id, 
-    genus || ' ' || species as genus_species_str, genus, species, age, sex, 
-    humanremains_idhumanremains FROM publication_desc_humanremains 
+    "SELECT DISTINCT * FROM ( SELECT ",
+    paste(select_fields, collapse = ", "), 
+    " FROM publication_desc_humanremains) as foo 
     WHERE true ",
     #  " humanremains_idlocality IN (",
     #  locality_list, ")",
-    ") as foo WHERE true ",
-    #"locality_assemblage_str IN (",
-    #query_locality_assemblage_list,
-    #")",
     assemblage_condition,
     genus_species_condition,
     "ORDER BY ", cm_locality_idlocality, ", ", cm_assemblages_idassemblage 
   )
-
-  message(query)
   
   data <- road_run_query(query)
 
-  return(data)
+  return(merge(x = data, y = assemblage_info_for_output, by = c(cm_locality_idlocality, cm_assemblages_idassemblage)))
 }
 
 
@@ -430,4 +428,30 @@ parameter_to_vector <- function(parameter)
     parameter <- c(parameter)
 
   return(parameter)
+}
+
+# calculate assemblage_condition
+#get_assemblage_condition <- function(categories = NULL, age_min = NULL, age_max = NULL, 
+ #                                    assemblages = NULL, localities = NULL)
+
+get_assemblage_condition <- function(assemblages = NULL)
+{
+  assemblage_condition <- ""
+  # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
+  #if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
+   #                                                             age_min = age_min, age_max = age_max, localities = localities)
+  
+  assemblages$locality_assemblage_list <- paste(assemblages$locality_id, assemblages$assemblage_id, sep = ", ")
+  
+  query_locality_assemblage_list <- ""
+  query_locality_assemblage_list <- paste(
+    sapply(assemblages$locality_assemblage_list, function(x) paste0("'", x, "'")),
+    collapse = ", "
+  )
+  
+  if (!is.null(query_locality_assemblage_list) && query_locality_assemblage_list != '')
+    assemblage_condition <- paste0(" AND ", cm_locality_idlocality, " || ', ' || ", 
+                                   cm_assemblages_idassemblage," IN (", query_locality_assemblage_list, ")")
+  
+  return(assemblage_condition)
 }

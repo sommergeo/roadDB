@@ -125,24 +125,16 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
     sapply(localities, function(x) paste0("'", x, "'")),
     collapse = ", "
   )
- 
-  if (is.null(assemblages) && !is.null(categories))
-  {
-    assemblages <- road_get_assemblages(categories = categories, localities = localities)
-  }
   
-  if (!is.null(assemblages))
-    assemblages$locality_assemblage_list <- paste(assemblages$locality_id, assemblages$assemblage_id, sep = ", ")
-  
-  query_locality_assemblage_list <- paste(
-    sapply(assemblages$locality_assemblage_list, function(x) paste0("'", x, "'")),
-    collapse = ", "
-  )
-  
-  if (!is.null(query_locality_assemblage_list) && query_locality_assemblage_list != '')
-    assemblage_condition <- paste0(" AND ", cm_locality_idlocality, " || ', ' || ", cm_assemblages_idassemblage," IN (", query_locality_assemblage_list, ")")
-  else assemblage_condition <- ""
-  
+  # calculate assemblage_condition
+  # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, localities = localities)
+  assemblage_condition <- get_assemblage_condition(assemblages = assemblages)
+  # calculate output extention
+  assemblage_info_for_output <- list()
+  assemblage_info_for_output$locality_id <- assemblages$locality_id
+  assemblage_info_for_output$assemblage_id <- assemblages$assemblage_id
+  assemblage_info_for_output$categories <- assemblages$categories
   # message(assemblage_condition)
   
   # select fields
@@ -253,10 +245,8 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
             " ORDER BY ", cm_locality_idlocality, ", ", cm_geolayer_geolayer_name, 
             ", ", cm_archlayer_archlayer_name)
   
-  # message(query)
-  
   data <- road_run_query(query)
   
-  return(data)
+  return(merge(x = data, y = assemblage_info_for_output, by = c(cm_locality_idlocality, cm_assemblages_idassemblage)))
   
 }
