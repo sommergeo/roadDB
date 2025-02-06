@@ -256,16 +256,34 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countr
 #' @examples road_get_human_remains(assemblages = assemblages, genus = 'Homo', species = 'neanderthalensis')
 #' @examples road_get_human_remains(assemblages = assemblages, genus = 'Homo')
 #' @examples road_get_human_remains(assemblages = assemblages, genus_species = 'Homo neanderthalensis')
-road_get_human_remains <- function(categories = NULL, age_min = NULL, age_max = NULL, 
+road_get_human_remains <- function(continents = NULL, subcontinents = NULL, countries = NULL, 
+                                   locality_types = NULL, cultural_periods = NULL, 
+                                   categories = NULL, age_min = NULL, age_max = NULL, 
                                    genus = NULL, species = NULL, genus_species = NULL, 
                                    assemblages = NULL, localities = NULL)
 {
-  # localities <- localities[cm_locality_idlocality]
+  # calculate locality_condition
+  # To do: !is.null(one of localities parameters) AND !is.null(localities)  ---> Warnung an den Benutzer
+  if (is.null(localities)) localities <- road_get_localities(continents = continents, 
+                                                             subcontinents = subcontinents, 
+                                                             countries = countries, 
+                                                             locality_types = locality_types, 
+                                                             cultural_periods = cultural_periods)
+  # locality_condition <- get_locality_condition(localities = localities)
+  query_localities <- paste(
+   sapply(localities$locality_id, function(x) paste0("'", x, "'")),
+    collapse = ", "
+  )
+  # calculate output extention
+  locality_info_for_output <- list()
+  locality_info_for_output$locality_id <- localities$locality_id
+  locality_info_for_output$assemblage_id <- localities$assemblage_id
+  locality_info_for_output$continents <- localities$continent
+  locality_info_for_output$subcontinents <- localities$subcontinent
+  locality_info_for_output$countries <- localities$country
+  locality_info_for_output$locality_types <- localities$locality_types
+  locality_info_for_output$cultural_periods <- localities$cultural_periods
   
-  #query_localities <- paste(
-   # sapply(localities, function(x) paste0("'", x, "'")),
-  #  collapse = ", "
-  #)
   
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
@@ -325,10 +343,9 @@ road_get_human_remains <- function(categories = NULL, age_min = NULL, age_max = 
   query <- paste(
     "SELECT DISTINCT * FROM ( SELECT ",
     paste(select_fields, collapse = ", "), 
-    " FROM publication_desc_humanremains) as foo 
-    WHERE true ",
-    #  " humanremains_idlocality IN (",
-    #  locality_list, ")",
+    " FROM publication_desc_humanremains) as foo  
+    WHERE ", cm_locality_idlocality," IN (",
+    query_localities, ")",
     assemblage_condition,
     genus_species_condition,
     "ORDER BY ", cm_locality_idlocality, ", ", cm_assemblages_idassemblage 
@@ -336,7 +353,10 @@ road_get_human_remains <- function(categories = NULL, age_min = NULL, age_max = 
   
   data <- road_run_query(query)
 
-  return(merge(x = data, y = assemblage_info_for_output, by = c(cm_locality_idlocality, cm_assemblages_idassemblage)))
+  data_plus_assemblage_info <- merge(x = data, y = assemblage_info_for_output, by = c(cm_locality_idlocality, cm_assemblages_idassemblage))
+
+  return(merge(x = data_plus_assemblage_info, y = locality_info_for_output, by = cm_locality_idlocality))
+
 }
 
 
