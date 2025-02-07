@@ -105,7 +105,7 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
                             locality_types = NULL, cultural_periods = NULL, 
                             dating_methods = NULL, material_dated = NULL, 
                             age_min = NULL, age_max = NULL, technocomplex = NULL, 
-                            categories = NULL, localities = NULL, assemblages = NULL)
+                            categories = NULL, assemblages = NULL, localities = NULL)
 {
   if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
     stop("Parameters 'min_age' and 'max_age' have to be integers.")
@@ -113,18 +113,28 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
   if (!is.null(age_min) && !is.null(age_max) && age_min > age_max)
     stop("Parameter 'min_age' can not be bigger than 'max_age'.")
 
-  if (is.null(localities))
-  {
-    # run `road_get_localities` else preselected list of localities is used
-    localities <- road_get_localities(continents, subcontinents, countries, locality_types, cultural_periods)
-  }
+  # calculate locality_condition
+  # To do: !is.null(one of localities parameters) AND !is.null(localities)  ---> Warnung an den Benutzer
+  if (is.null(localities)) localities <- road_get_localities(continents = continents, 
+                                                             subcontinents = subcontinents, 
+                                                             countries = countries, 
+                                                             locality_types = locality_types, 
+                                                             cultural_periods = cultural_periods)
   
-  localities <- localities[cm_locality_idlocality]
-
+  # locality_condition <- get_locality_condition(localities = localities)
   query_localities <- paste(
-    sapply(localities, function(x) paste0("'", x, "'")),
+    sapply(localities$locality_id, function(x) paste0("'", x, "'")),
     collapse = ", "
   )
+  # calculate output extention
+  locality_info_for_output <- list()
+  locality_info_for_output$locality_id <- localities$locality_id
+  locality_info_for_output$assemblage_id <- localities$assemblage_id
+  locality_info_for_output$continent <- localities$continent
+  locality_info_for_output$subcontinent <- localities$subcontinent
+  locality_info_for_output$country <- localities$country
+  locality_info_for_output$locality_types <- localities$locality_types
+  locality_info_for_output$cultural_periods <- localities$cultural_periods
   
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
@@ -247,6 +257,8 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
   
   data <- road_run_query(query)
   
-  return(merge(x = data, y = assemblage_info_for_output, by = c(cm_locality_idlocality, cm_assemblages_idassemblage)))
+  data_plus_assemblage_info <- merge(x = data, y = assemblage_info_for_output, by = c(cm_locality_idlocality, cm_assemblages_idassemblage))
+  
+  return(merge(x = data_plus_assemblage_info, y = locality_info_for_output, by = cm_locality_idlocality))
   
 }

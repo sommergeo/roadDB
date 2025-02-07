@@ -245,11 +245,20 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countr
 #' Mode 1: either one or both of `genus` and `species` is used (not NULL), then `genus_species` can't be used and has to be set to NULL.
 #' Mode 2: `genus_species` is used (not NULL), then `genus` and `species` can't be used and have to be set to NULL.
 #'
+#' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param localities list of localities; return value from function `road_get_localities`.
+#' @param categories string (one item) or vector of strings (one or more items).
+#' @param age_min integer; minimum age of assemblage.
+#' @param age_max integer; maximum age of assemblage.
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #' @param genus string (one item) or vector of strings (one or more items); can not be used in combination with `genus_species`.
 #' @param species string (one item) or vector of strings (one or more items); can not be used in combination with `genus_species`.
 #' @param genus_species string (one item) or vector of strings (one or more items); can not be used in combination with `genus` or `species`.
-#'
+#' 
 #' @return Database search result as list of human remains.
 #' @export
 #'
@@ -278,12 +287,11 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
   locality_info_for_output <- list()
   locality_info_for_output$locality_id <- localities$locality_id
   locality_info_for_output$assemblage_id <- localities$assemblage_id
-  locality_info_for_output$continents <- localities$continent
-  locality_info_for_output$subcontinents <- localities$subcontinent
-  locality_info_for_output$countries <- localities$country
+  locality_info_for_output$continent <- localities$continent
+  locality_info_for_output$subcontinent <- localities$subcontinent
+  locality_info_for_output$country <- localities$country
   locality_info_for_output$locality_types <- localities$locality_types
   locality_info_for_output$cultural_periods <- localities$cultural_periods
-  
   
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
