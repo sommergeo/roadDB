@@ -127,26 +127,15 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
     collapse = ", "
   )
   # calculate output extention
-  locality_info_for_output <- list()
-  locality_info_for_output$locality_id <- localities$locality_id
-  locality_info_for_output$assemblage_id <- localities$assemblage_id
-  locality_info_for_output$continent <- localities$continent
-  locality_info_for_output$subcontinent <- localities$subcontinent
-  locality_info_for_output$country <- localities$country
-  locality_info_for_output$locality_types <- localities$locality_types
-  locality_info_for_output$cultural_periods <- localities$cultural_periods
-  
+  locality_info_for_output <- get_output_extention_locality(localities)
+
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
   if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, localities = localities)
   assemblage_condition <- get_assemblage_condition(assemblages = assemblages)
   # calculate output extention
-  assemblage_info_for_output <- list()
-  assemblage_info_for_output$locality_id <- assemblages$locality_id
-  assemblage_info_for_output$assemblage_id <- assemblages$assemblage_id
-  assemblage_info_for_output$categories <- assemblages$categories
-  # message(assemblage_condition)
-  
+  assemblage_info_for_output <- get_output_extention_assemblage(assemblages)
+
   # select fields
   select_fields_gla <- c(
     paste0("geological_layer_age.geolayer_idlocality AS  \"", cm_locality_idlocality, "\""),
@@ -196,12 +185,6 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
     paste0("technocomplex as technocomplex")
   )
   
-  # 
-  # queAux <- paste0("SELECT locality_idlocality, name 
-  #             FROM  archaeological_layer, archaeological_stratigraphy 
-  #             WHERE archstratigraphy_idarchstrat = idarchstrat",
-  #             query_check_intersection("AND", technocomplex, "technocomplex"))
-  # 
   query <- paste0("SELECT * FROM (SELECT ", paste(select_fields_gla, collapse = ", "),
             " FROM geological_layer_age ",
             "LEFT JOIN assemblage_in_geolayer ON ",

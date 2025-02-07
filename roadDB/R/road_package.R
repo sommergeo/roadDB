@@ -284,15 +284,8 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
     collapse = ", "
   )
   # calculate output extention
-  locality_info_for_output <- list()
-  locality_info_for_output$locality_id <- localities$locality_id
-  locality_info_for_output$assemblage_id <- localities$assemblage_id
-  locality_info_for_output$continent <- localities$continent
-  locality_info_for_output$subcontinent <- localities$subcontinent
-  locality_info_for_output$country <- localities$country
-  locality_info_for_output$locality_types <- localities$locality_types
-  locality_info_for_output$cultural_periods <- localities$cultural_periods
-  
+  locality_info_for_output <- get_output_extention_locality(localities)
+
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
   if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
@@ -300,13 +293,8 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
                                                                 localities = localities)
   assemblage_condition <- get_assemblage_condition(assemblages = assemblages)
   # calculate output extention
-  assemblage_info_for_output <- list()
-  assemblage_info_for_output$locality_id <- assemblages$locality_id
-  assemblage_info_for_output$assemblage_id <- assemblages$assemblage_id
-  assemblage_info_for_output$categories <- assemblages$categories
-  assemblage_info_for_output$age_min <- assemblages$age_min
-  assemblage_info_for_output$age_max <- assemblages$age_max
-  
+  assemblage_info_for_output <- get_output_extention_assemblage(assemblages)
+
   if (!is.null(genus_species) && (!is.null(genus) || !is.null(species)))
     stop("Parameter 'genus_species' can't be used in combination with 'genus' or 'species'.")
 
@@ -366,8 +354,6 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
   return(merge(x = data_plus_assemblage_info, y = locality_info_for_output, by = cm_locality_idlocality))
 
 }
-
-
 
 # run query in ROAD db
 road_run_query <- function(query)
@@ -459,9 +445,6 @@ parameter_to_vector <- function(parameter)
 }
 
 # calculate assemblage_condition
-#get_assemblage_condition <- function(categories = NULL, age_min = NULL, age_max = NULL, 
- #                                    assemblages = NULL, localities = NULL)
-
 get_assemblage_condition <- function(assemblages = NULL)
 {
   assemblage_condition <- ""
@@ -482,4 +465,34 @@ get_assemblage_condition <- function(assemblages = NULL)
                                    cm_assemblages_idassemblage," IN (", query_locality_assemblage_list, ")")
   
   return(assemblage_condition)
+}
+
+get_output_extention_locality <- function(localities = NULL)
+{
+  if (is.null(localities)) return(NULL)
+  
+  locality_info_for_output <- list()
+  locality_info_for_output$locality_id <- localities$locality_id
+  locality_info_for_output$assemblage_id <- localities$assemblage_id
+  locality_info_for_output$continent <- localities$continent
+  locality_info_for_output$subcontinent <- localities$subcontinent
+  locality_info_for_output$country <- localities$country
+  locality_info_for_output$locality_types <- localities$locality_types
+  locality_info_for_output$cultural_periods <- localities$cultural_periods
+  
+  return(locality_info_for_output)
+}
+
+get_output_extention_assemblage <- function(assemblages = NULL)
+{
+  if (is.null(assemblages)) return(NULL)
+  
+  assemblage_info_for_output <- list()
+  assemblage_info_for_output$locality_id <- assemblages$locality_id
+  assemblage_info_for_output$assemblage_id <- assemblages$assemblage_id
+  assemblage_info_for_output$categories <- assemblages$categories
+  assemblage_info_for_output$age_min <- assemblages$age_min
+  assemblage_info_for_output$age_max <- assemblages$age_max
+  
+  return(assemblage_info_for_output)
 }
