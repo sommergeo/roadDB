@@ -155,7 +155,7 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countr
   if (is.null(localities))
   {
     # run `road_get_localities` else preselected list of localities is used
-     localities <- road_get_localities(continents, subcontinents, countries, locality_types, cultural_periods)
+    localities <- road_get_localities(continents, subcontinents, countries, locality_types, cultural_periods)
   }
   localities <- localities[cm_locality_idlocality]
   query_localities <- paste(
@@ -163,70 +163,56 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countr
     collapse = ", "
   )
 
-  # select fields
-  select_fields <- c(
-    paste0("assemblage.locality_idlocality AS \"", cm_assemblages_locality_idlocality, "\""),
-    paste0("assemblage.idassemblage AS \"", cm_assemblages_idassemblage, "\""),
-    paste0("assemblage.name AS \"", cm_assemblages_name, "\""),
-    paste0("assemblage.category AS \"", cm_assemblages_categories, "\""),
-    paste0("MIN(geological_stratigraphy.age_min) AS \"", cm_geological_stratigraphy_age_min, "\""),
-    paste0("MAX(geological_stratigraphy.age_max) AS \"", cm_geological_stratigraphy_age_max, "\""),
-    paste0("STRING_AGG(DISTINCT assemblage_in_geolayer.geolayer_name, ', ') AS \"", cm_assemblage_in_geolayer_geolayer_name, "\""),
-    "CASE
-      WHEN (assemblage.locality_idlocality, assemblage.idassemblage) in (select assemblage_idlocality, assemblage_idassemblage from humanremains) THEN true
-      ELSE false
-    END as humanremains,
-    CASE
-      WHEN category LIKE '%paleofauna%' THEN true
-      ELSE false
-    END as paleofauna,
-    CASE
-      WHEN category ~ 'raw material|symbolic artifacts|technology|typology|miscellaneous finds|feature|organic tools|function' THEN true
-      ELSE false
-    END as archaeology,
-    CASE
-      WHEN category LIKE '%plant remains%' THEN true
-      ELSE false
-    END as plantremains"
-  )
-
   # combine query parts
-  queryAux <- paste(
+  query <- paste(
+    # SELECT
     "SELECT DISTINCT",
-    paste(select_fields, collapse = ", "),
+    "assemblage.locality_idlocality AS \"", cm_assemblages_locality_idlocality, "\",",
+    "assemblage.idassemblage AS \"", cm_assemblages_idassemblage, "\",",
+    "assemblage.name AS \"", cm_assemblages_name, "\",",
+    "assemblage.category AS \"", cm_assemblages_categories, "\",",
+    "MIN(geological_stratigraphy.age_min) AS \"", cm_geological_stratigraphy_age_min, "\",",
+    "MAX(geological_stratigraphy.age_max) AS \"", cm_geological_stratigraphy_age_max, "\",",
+    "STRING_AGG(DISTINCT assemblage_in_geolayer.geolayer_name, ', ') AS \"", cm_assemblage_in_geolayer_geolayer_name, "\",",
+    "STRING_AGG(DISTINCT assemblage_in_archlayer.archlayer_name, ', ') AS \"", cm_assemblage_in_archlayer_archlayer_name, "\",",
+    "CASE",
+      "WHEN (assemblage.locality_idlocality, assemblage.idassemblage) IN (SELECT assemblage_idlocality, assemblage_idassemblage FROM humanremains) THEN true",
+      "ELSE false",
+    "END AS humanremains,",
+    "CASE",
+      "WHEN category LIKE '%paleofauna%' THEN true",
+      "ELSE false",
+    "END AS paleofauna,",
+    "CASE",
+      "WHEN category ~ 'raw material|symbolic artifacts|technology|typology|miscellaneous finds|feature|organic tools|function' THEN true",
+      "ELSE false",
+    "END AS archaeology,",
+    "CASE",
+      "WHEN category LIKE '%plant remains%' THEN true",
+      "ELSE false",
+    "END AS plantremains",
+    # FROM
     "FROM assemblage",
     "LEFT JOIN assemblage_in_geolayer ON",
       "assemblage_in_geolayer.assemblage_idlocality = assemblage.locality_idlocality",
       "AND assemblage_in_geolayer.assemblage_idassemblage = assemblage.idassemblage",
-    "LEFT JOIN geostrat_desc_geolayer ON geostrat_desc_geolayer.geolayer_idlocality = assemblage.locality_idlocality",
+    "LEFT JOIN geostrat_desc_geolayer ON",
+      "geostrat_desc_geolayer.geolayer_idlocality = assemblage.locality_idlocality",
       "AND assemblage_in_geolayer.geolayer_name = geostrat_desc_geolayer.geolayer_name",
-    "LEFT JOIN geological_stratigraphy ON geological_stratigraphy.idgeostrat = geostrat_desc_geolayer.geostrat_idgeostrat",
-    "WHERE assemblage.locality_idlocality IN (",
-    query_localities,
-    ")",
+    "LEFT JOIN geological_stratigraphy ON",
+      "geological_stratigraphy.idgeostrat = geostrat_desc_geolayer.geostrat_idgeostrat",
+    "LEFT JOIN assemblage_in_archlayer ON",
+      "assemblage_in_archlayer.assemblage_idlocality = assemblage.locality_idlocality",
+      "AND assemblage_in_archlayer.assemblage_idassemblage = assemblage.idassemblage",
+    # WHERE
+    "WHERE assemblage.locality_idlocality IN (", query_localities, ")",
     query_check_intersection("AND ", categories, "assemblage.category"),
     parameter_to_query("AND ", age_min, " <= age_max"),
     parameter_to_query("AND ", age_max, " >= age_min"),
-    "GROUP BY assemblage.locality_idlocality, assemblage.idassemblage, assemblage.name, assemblage.category",
+    "GROUP BY assemblage.locality_idlocality, assemblage.idassemblage, assemblage.name, assemblage.category, geological_stratigraphy.age_min, geological_stratigraphy.age_max",
     "ORDER BY assemblage.locality_idlocality ASC"
   )
-  
-  query <-  paste("SELECT DISTINCT locality_id, assemblage_id, name, categories, age_min, age_max, geolayers",
-                  paste0(", STRING_AGG(DISTINCT assemblage_in_archlayer.archlayer_name, ', ') AS \" ", 
-                         cm_assemblage_in_archlayer_archlayer_name, "\", "),
-                  "humanremains, paleofauna, archaeology, plantremains ",
-                  "FROM (", queryAux, ") as foo ",
-                  "LEFT JOIN assemblage_in_archlayer ON ",
-                  "assemblage_in_archlayer.assemblage_idlocality = ", cm_assemblages_locality_idlocality, 
-                  "AND assemblage_in_archlayer.assemblage_idassemblage = ", cm_assemblages_idassemblage,
-                  "GROUP BY ", cm_assemblages_locality_idlocality, ", ", cm_assemblages_idassemblage, ", ",
-                  cm_assemblages_name, ", ",cm_assemblages_categories, ", ", 
-                  cm_geological_stratigraphy_age_min, ", ", cm_geological_stratigraphy_age_max, ", ", 
-                  "humanremains, paleofauna, archaeology, plantremains", ", ", 
-                  cm_assemblage_in_geolayer_geolayer_name, 
-                  "ORDER BY ", cm_assemblages_locality_idlocality, " ASC"
-  )
-  
+
   data <- road_run_query(query)
 
   return(data)
