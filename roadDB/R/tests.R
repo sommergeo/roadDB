@@ -6,8 +6,9 @@ localities1 <- road_get_localities(continents = "Africa")
 localities1 <- road_get_localities(continents = c('Africa', "Asia"))
 # localities11 <- road_get_localities(continents = "Africa", country = "South Africa")
 
-humanremains0 <- road_get_human_remains()
+humanremains0 <- road_get_human_remains(countries = "Ukraine")
 humanremains1 <- road_get_human_remains(age_min = 80000L, age_max = 120000L)
+humanremains0 <- road_get_human_remains(continents = "Africa", genus = "Homo")
 
 values0 <- road_list_values()
 values1 <- road_list_values("type")
@@ -53,4 +54,4 @@ dates8 <- road_get_dates(continents = "Europe", countries = c("Germany", "France
 dates9 <- road_get_dates(countries = "France", categories = c("feature"))
 dates10 <- road_get_dates(technocomplex = "EP/ Epipaleolithic")
 dates11 <- road_get_dates(localities=localities5) #, technocomplex = "UP/ Upper Paleolithic - Eurasia")
-dates12 <- road_get_dates(assemblages=assemblages2) #, technocomplex = "UP/ Upper Paleolithic - Eurasia")
+dates12 <- road_get_dates(assemblages=assemblages2, technocomplex = "UP/ Upper Paleolithic - Eurasia")

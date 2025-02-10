@@ -240,6 +240,13 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
   
   data <- road_run_query(query)
   
+  data$negative_standard_deviation[data$negative_standard_deviation == "-1"] <- NA
+  data$positive_standard_deviation[data$positive_standard_deviation == "-1"] <- NA
+  data$age[data$age == "-1"] <- NA
+  data$dating_method[data$dating_method == ""] <- NA
+  data$material_dated[data$material_dated == ""] <- NA
+  data$laboratory_idlaboratory[data$laboratory_idlaboratory == ""] <- NA
+  
   data_plus_assemblage_info <- merge(x = data, y = assemblage_info_for_output, by = c(cm_locality_idlocality, cm_assemblages_idassemblage))
   
   return(merge(x = data_plus_assemblage_info, y = locality_info_for_output, by = cm_locality_idlocality))

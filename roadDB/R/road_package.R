@@ -334,7 +334,6 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
     paste0("humanremains_idhumanremains AS \"", cm_humanremains_idhumanremains, "\"")
   )
   
-  
   # combine query parts
   query <- paste(
     "SELECT DISTINCT * FROM ( SELECT ",
@@ -348,6 +347,12 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
   )
   
   data <- road_run_query(query)
+  
+  data$genus[data$genus == ""] <- NA
+  data$species[data$species == ""] <- NA
+  data$age[data$age == ""] <- NA
+  data$sex[data$sex == ""] <- NA
+  data$genus_species_str[data$genus_species_str == ""] <- NA
 
   data_plus_assemblage_info <- merge(x = data, y = assemblage_info_for_output, by = c(cm_locality_idlocality, cm_assemblages_idassemblage))
 
