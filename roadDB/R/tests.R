@@ -8,7 +8,7 @@ localities1 <- road_get_localities(continents = c('Africa', "Asia"))
 
 humanremains0 <- road_get_human_remains(countries = "Ukraine")
 humanremains1 <- road_get_human_remains(age_min = 80000L, age_max = 120000L)
-humanremains2 <- road_get_human_remains(continents = "Africa", genus = "Homo")
+humanremains2 <- road_get_human_remains(continents = "Africa", genus = "Homo", species = "rudolfensis")
 
 values0 <- road_list_values()
 values1 <- road_list_values("type")
@@ -22,6 +22,7 @@ values7 <- road_list_values("country")
 values9 <- road_list_values("dating_method")
 values10 <- road_list_values("material_dated")
 values11 <- road_list_values("technocomplex")
+values12 <- road_list_values("publication_desc_humanremains.species")
 
 # road_get_localities()
 localities2 <- road_get_localities(continents = c("Europe"), countries = c("Germany", "France"))
