@@ -309,7 +309,7 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
     species_conjucton <- "AND"
     if (!is.null(genus))
     {
-      genus_species_condition <- parameter_to_query("AND genus IN (", genus, ")")
+      genus_species_condition <- parameter_to_query("AND ( genus IN (", genus, ")")
       species_conjucton <- "OR"
     }
     if (!is.null(species))
@@ -317,9 +317,10 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
       genus_species_condition <- paste(
         genus_species_condition,
         species_conjucton,
-        parameter_to_query("species IN (", species, ")")
+        parameter_to_query("species IN (", species, ") )")
       )
     }
+    else genus_species_condition <- paste(genus_species_condition," )")
   }
 
   # select fields
@@ -345,6 +346,8 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
     genus_species_condition,
     "ORDER BY ", cm_locality_idlocality, ", ", cm_assemblages_idassemblage 
   )
+  
+  message(query)
   
   data <- road_run_query(query)
   
