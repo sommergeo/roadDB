@@ -1,13 +1,17 @@
 library(assertthat)
 library(RPostgres)
+# library(stringr)
 
 attributes <- c("type", "continent", "continent_region", "country", "category", 
-              "cultural_period", "example", "dating_method", "material_dated", "technocomplex")
+              "cultural_period", "example", "dating_method", "material_dated", 
+              "technocomplex", "humanremains:genus", 
+              "humanremains:species")
 tables <- list("locality", "geopolitical_units", "geopolitical_units", "locality",  
             "assemblage", "archaeological_stratigraphy", "roadDB/attr_values/ex.txt", 
             c("geological_layer_age", "archaeological_layer_age", "assemblage_age"), 
             c("geological_layer_age", "archaeological_layer_age", "assemblage_age"),
-            "archaeological_stratigraphy")
+            "archaeological_stratigraphy", "publication_desc_humanremains", 
+            "publication_desc_humanremains")
 
 #' Get attribute value from ROAD Database
 #'
@@ -47,21 +51,21 @@ road_list_values <- function (attribute_name = NULL)
     return(data)
   }
   
+  x <- strsplit(attribute_name, ":")
+
+  if (length(x[[1]]) > 1) cm_attribute_name <- x[[1]][2]
+  else cm_attribute_name <- attribute_name
+    
   # if we use tables <- list(...), all elements of the list are vectors
-  #if (is.vector(table)) {
-  q <- paste( "SELECT DISTINCT(unnest(string_to_array(string_agg(", attribute_name, ", ', '),', '))) as ",
-              attribute_name, " from ")
+  q <- paste( "SELECT DISTINCT(unnest(string_to_array(string_agg(", cm_attribute_name, ", ', '),', '))) as ",
+              cm_attribute_name,
+              " from ")
   qu <- paste0(q, table)
   que <- paste(
     sapply(table, function(x) paste0(q, x)), 
     collapse = " UNION "
   )
-  query <- paste0(que, " ORDER BY ", attribute_name)
-  # }
-  # else
-  #  query <- paste( "SELECT DISTINCT(unnest(string_to_array(string_agg(", attribute_name, ", ', '),', '))) as ",
-  #                 attribute_name, " from ", table, " ORDER BY ", attribute_name)
-
+  query <- paste0(que, " ORDER BY ", cm_attribute_name)
   
   # query <- paste( "SELECT DISTINCT ", attribute_name, " FROM (select distinct(unnest(string_to_array(
   # string_agg(", attribute_name, ", ', '),', '))) as ",
