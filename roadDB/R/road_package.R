@@ -333,7 +333,7 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
     "ORDER BY ", cm_locality_idlocality, ", ", cm_assemblages_idassemblage 
   )
   
-  message(query)
+  # message(query)
   
   data <- road_run_query(query)
   
