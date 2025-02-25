@@ -32,6 +32,7 @@ cm_humanremains_species <- "species"
 cm_humanremains_age <- "age"
 cm_humanremains_sex <- "sex"
 cm_humanremains_idhumanremains <- "humanremains_id"
+cm_archaeological_category <- "archaeological_category"
 
 #' Get localities from ROAD Database
 #'
@@ -109,7 +110,6 @@ road_get_localities <- function(continents = NULL, subcontinents = NULL, countri
 
   return(data)
 }
-
 
 
 #' Get assemblages from ROAD database

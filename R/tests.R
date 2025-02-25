@@ -57,3 +57,13 @@ dates9 <- road_get_dates(countries = "France", categories = c("feature"))
 dates10 <- road_get_dates(technocomplex = "EP/ Epipaleolithic")
 dates11 <- road_get_dates(localities=localities5) #, technocomplex = "UP/ Upper Paleolithic - Eurasia")
 dates12 <- road_get_dates(assemblages=assemblages2, technocomplex = "UP/ Upper Paleolithic - Eurasia")
+
+#
+archaeo0 <- road_get_archaeology()
+archaeo1 <- road_get_archaeology(continents = "Europe")
+archaeo2 <- road_get_archaeology(continents = "Europe", archaeological_category = "feature")
+archaeo3 <- road_get_archaeology(continents = "Europe", archaeological_category = c("feature", "symbolic artefacts"))
+
+#
+paleofauna0 <- road_get_paleofauna()
+paleofauna <- road_get_paleofauna(continents = "Asia")

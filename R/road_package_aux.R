@@ -257,3 +257,226 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
   return(merge(x = data_plus_assemblage_info, y = locality_info_for_output, by = cm_locality_idlocality))
   
 }
+
+
+#' Get archaeology from ROAD database
+#'
+#' `road_get_archaeology` fetches data of archaeological finds from ROAD database.
+#'
+#' Archaeological finds are often part of an assemblage which means the function needs a list of
+#' assemblages (return value of function `road_get_assemblages`) as its parameter.
+#'
+#' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param localities list of localities; return value from function `road_get_localities`.
+#' @param categories string (one item) or vector of strings (one or more items).
+#' @param age_min integer; minimum age of assemblage.
+#' @param age_max integer; maximum age of assemblage.
+#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
+#' @param archaeological_category string (one item) or vector of strings ('lithics', 'organic tools', 'symbolic artefacts', 'miscellaneous finds', 'feature');
+#' 
+#' @return Database search result as list of archaeological finds.
+#' @export
+#'
+#' @examples road_get_archaeology(continents = "Europe")
+#' @examples road_get_archaeology(continents = "Europe", archaeological_category = "feature")
+#' @examples road_get_archaeology(continents = "Europe", archaeological_category = c("feature", "symbolic artefacts"))
+road_get_archaeology <- function(continents = NULL, subcontinents = NULL, countries = NULL, 
+                                   locality_types = NULL, cultural_periods = NULL, 
+                                   categories = NULL, age_min = NULL, age_max = NULL, 
+                                   archaeological_category = NULL, 
+                                   assemblages = NULL, localities = NULL)
+{
+  # calculate locality_condition
+  # To do: !is.null(one of localities parameters) AND !is.null(localities)  ---> Warnung an den Benutzer
+  if (is.null(localities)) localities <- road_get_localities(continents = continents, 
+                                                             subcontinents = subcontinents, 
+                                                             countries = countries, 
+                                                             locality_types = locality_types, 
+                                                             cultural_periods = cultural_periods)
+  # locality_condition <- get_locality_condition(localities = localities)
+  query_localities <- paste(
+    sapply(localities$locality_id, function(x) paste0("'", x, "'")),
+    collapse = ", "
+  )
+  # calculate output extention
+  locality_info_for_output <- get_output_extention_locality(localities=localities)
+  
+  # calculate assemblage_condition
+  # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
+                                                                age_min = age_min, age_max = age_max, 
+                                                                localities = localities)
+  assemblage_condition <- get_assemblage_condition(assemblages = assemblages)
+  # calculate output extention
+  assemblage_info_for_output <- get_output_extention_assemblage(assemblages)
+  
+ 
+  # select fields
+  select_fields <- c(
+    paste0(" assemblage_idlocality AS ", cm_locality_idlocality),
+    paste0(" assemblage_idassemblage AS ", cm_assemblages_idassemblage)
+    # paste0(" archaeological_category AS ", cm_archaeological_category)
+  )
+  
+  fromPart_dummy <- paste("SELECT ", paste(select_fields, collapse = ", "),
+                          ", 'dummy' as ", cm_archaeological_category, " FROM typology WHERE false")
+ 
+  if (is.null(archaeological_category) || !is.vector(archaeological_category) && archaeological_category == 'lithics' ||
+      is.element('lithics', archaeological_category))
+                                    fromPart_lithics <- paste(" UNION ",
+                                                 " SELECT DISTINCT ", paste(select_fields, collapse = ", "), ", 
+                                                          'typology' as ", cm_archaeological_category, " FROM typology ",
+                                                 " UNION ",
+                                                 "SELECT DISTINCT ", paste(select_fields, collapse = ", "), ", 
+                                                          'technology' as ", cm_archaeological_category, " FROM technology ",
+                                                 " UNION ",
+                                                 "SELECT DISTINCT ", paste(select_fields, collapse = ", "), ", 
+                                                          'function' as ", cm_archaeological_category, " FROM function ",
+                                                 " UNION ",
+                                                 "SELECT DISTINCT ", paste(select_fields, collapse = ", "), ", 
+                                                          'raw material' as ", cm_archaeological_category, " FROM raw_material ")
+  else fromPart_lithics <- ""
+  
+  if (is.null(archaeological_category) || !is.vector(archaeological_category) && archaeological_category == 'organic tools' ||
+      is.element('organic tools', archaeological_category))
+                                     fromPart_organic_tools <- paste(" UNION ", 
+                                                  "SELECT DISTINCT ", paste(select_fields, collapse = ", "),
+                                                  ", 'organic tools' as ", cm_archaeological_category, " FROM organic_tools")
+  else fromPart_organic_tools <- ""
+  
+  if (is.null(archaeological_category) || !is.vector(archaeological_category) && archaeological_category == 'symbolic artefacts' ||
+      is.element('symbolic artefacts', archaeological_category))
+                                    fromPart_symbolic_artifacts <- paste(" UNION ", 
+                                                  "SELECT DISTINCT ", paste(select_fields, collapse = ", "),
+                                                  ", 'symbolic_artifacts' as ", cm_archaeological_category, " FROM symbolic_artifacts")
+  else fromPart_symbolic_artifacts <- ""
+  
+  if (is.null(archaeological_category) || !is.vector(archaeological_category) && archaeological_category == 'miscellaneous finds' ||
+      is.element('miscellaneous finds', archaeological_category))
+                                    fromPart_miscellaneous_finds <- paste(" UNION ", 
+                                                  "SELECT DISTINCT ", paste(select_fields, collapse = ", "),
+                                                  ", 'miscellaneous finds' as ", cm_archaeological_category, " FROM miscellaneous_finds")
+  else fromPart_miscellaneous_finds <- ""
+  
+  if (is.null(archaeological_category) || !is.vector(archaeological_category) && archaeological_category == 'feature' ||
+      is.element('feature', archaeological_category))
+                                    fromPart_feature <- paste(" UNION ", 
+                                                  "SELECT DISTINCT ", paste(select_fields, collapse = ", "),
+                                                  ", 'feature' as ", cm_archaeological_category, " FROM feature")
+  else fromPart_feature <- ""
+
+  # combine query parts
+  query <- paste(
+    "SELECT DISTINCT * FROM (",
+    fromPart_dummy,
+    fromPart_lithics,
+    fromPart_organic_tools,
+    fromPart_symbolic_artifacts,
+    fromPart_feature,
+    ") as foo WHERE ", cm_locality_idlocality," IN (", query_localities, ")",
+    assemblage_condition,
+    # genus_species_condition,
+    "ORDER BY ", cm_locality_idlocality, ", ", cm_assemblages_idassemblage 
+  )
+  
+  # message(query)
+  
+  data <- road_run_query(query)
+  
+  # data$genus[data$genus == ""] <- NA
+
+  data_plus_assemblage_info <- merge(x = data, y = assemblage_info_for_output, 
+                                     by = c(cm_locality_idlocality, cm_assemblages_idassemblage))
+  
+  return(merge(x = data_plus_assemblage_info, y = locality_info_for_output, by = cm_locality_idlocality))
+  
+}
+
+
+#' Get paleofauna finds from ROAD database
+#'
+#' `road_get_paleofauna` fetches data of paleofauna finds from ROAD database.
+#'
+#' Paleofauna finds are often part of an assemblage which means the function needs a list of
+#' assemblages (return value of function `road_get_assemblages`) as its parameter.
+#'
+#' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param localities list of localities; return value from function `road_get_localities`.
+#' @param categories string (one item) or vector of strings (one or more items).
+#' @param age_min integer; minimum age of assemblage.
+#' @param age_max integer; maximum age of assemblage.
+#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
+#' 
+#' @return Database search result as list of archaeological finds.
+#' @export
+#'
+#' @examples road_get_archaeology(continents = "Europe")
+#' @examples road_get_archaeology(continents = "Europe", archaeological_category = "feature")
+#' @examples road_get_archaeology(continents = "Europe", archaeological_category = c("feature", "symbolic artefacts"))
+road_get_paleofauna <- function(continents = NULL, subcontinents = NULL, countries = NULL, 
+                                 locality_types = NULL, cultural_periods = NULL, 
+                                 categories = NULL, age_min = NULL, age_max = NULL, 
+                                 assemblages = NULL, localities = NULL)
+{
+  # calculate locality_condition
+  # To do: !is.null(one of localities parameters) AND !is.null(localities)  ---> Warnung an den Benutzer
+  if (is.null(localities)) localities <- road_get_localities(continents = continents, 
+                                                             subcontinents = subcontinents, 
+                                                             countries = countries, 
+                                                             locality_types = locality_types, 
+                                                             cultural_periods = cultural_periods)
+  # locality_condition <- get_locality_condition(localities = localities)
+  query_localities <- paste(
+    sapply(localities$locality_id, function(x) paste0("'", x, "'")),
+    collapse = ", "
+  )
+  # calculate output extention
+  locality_info_for_output <- get_output_extention_locality(localities=localities)
+  
+  # calculate assemblage_condition
+  # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
+                                                                age_min = age_min, age_max = age_max, 
+                                                                localities = localities)
+  assemblage_condition <- get_assemblage_condition(assemblages = assemblages)
+  # calculate output extention
+  assemblage_info_for_output <- get_output_extention_assemblage(assemblages)
+  
+  # select fields
+  select_fields <- c(
+    paste0(" assemblage_idlocality AS ", cm_locality_idlocality),
+    paste0(" assemblage_idassemblage AS ", cm_assemblages_idassemblage)
+    # paste0(" archaeological_category AS ", cm_archaeological_category)
+  )
+  
+  # combine query parts
+  query <- paste(
+    "SELECT DISTINCT * FROM ( SELECT ",
+    paste(select_fields, collapse = ", "),
+    " FROM paleofauna",
+    ") as foo WHERE ", cm_locality_idlocality," IN (", query_localities, ")",
+    assemblage_condition,
+    # genus_species_condition,
+    "ORDER BY ", cm_locality_idlocality, ", ", cm_assemblages_idassemblage 
+  )
+  
+  # message(query)
+  
+  data <- road_run_query(query)
+  
+  # data$genus[data$genus == ""] <- NA
+  
+  data_plus_assemblage_info <- merge(x = data, y = assemblage_info_for_output, 
+                                     by = c(cm_locality_idlocality, cm_assemblages_idassemblage))
+  
+  return(merge(x = data_plus_assemblage_info, y = locality_info_for_output, by = cm_locality_idlocality))
+  
+}
