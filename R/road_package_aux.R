@@ -2,16 +2,22 @@ library(assertthat)
 library(RPostgres)
 # library(stringr)
 
-attributes <- c("type", "continent", "continent_region", "country", "category", 
-              "cultural_period", "example", "dating_method", "material_dated", 
-              "technocomplex", "humanremains:genus", 
-              "humanremains:species")
-tables <- list("locality", "geopolitical_units", "geopolitical_units", "locality",  
-            "assemblage", "archaeological_stratigraphy", "roadDB/attr_values/ex.txt", 
+tables <- list("feature", "locality", "geopolitical_units", "geopolitical_units", "locality",  
+            "assemblage", "archaeological_stratigraphy", "attr_values/ex.txt", 
             c("geological_layer_age", "archaeological_layer_age", "assemblage_age"), 
             c("geological_layer_age", "archaeological_layer_age", "assemblage_age"),
-            "archaeological_stratigraphy", "publication_desc_humanremains", 
-            "publication_desc_humanremains")
+            "archaeological_stratigraphy", "miscellaneous_finds", "publication_desc_humanremains", 
+            "symbolic_artifacts",
+            "publication_desc_humanremains", "organic_tools", "raw_material", 
+            "symbolic_artifacts", "typology")
+attributes <- c("feature:interpretation", "type", "continent", "continent_region", 
+                "country", "category", 
+                "cultural_period", "example", "dating_method", "material_dated", 
+                "technocomplex","miscellaneous_finds:material", "humanremains:genus", 
+                "symbolic_artifacts:interpretation",
+                "humanremains:species", "organic_tools:interpretation", "raw_material_list", 
+                "symbolic_artifacts:interpretation", "tool_list")
+
 
 #' Get attribute value from ROAD Database
 #'
@@ -36,7 +42,7 @@ road_list_values <- function (attribute_name = NULL)
   
   # computing length of attributes array
   size = length(attributes)
-  # iterating over elements of attributes
+  # iterating over elements of attributes to get table list
   for (i in 1:size){
     if(attribute_name == attributes[i]) {
       table = tables[i]
@@ -57,15 +63,21 @@ road_list_values <- function (attribute_name = NULL)
   else cm_attribute_name <- attribute_name
     
   # if we use tables <- list(...), all elements of the list are vectors
-  q <- paste( "SELECT DISTINCT(unnest(string_to_array(string_agg(", cm_attribute_name, ", ', '),', '))) as ",
+  q_extension <- paste( "SELECT DISTINCT regexp_replace(", cm_attribute_name,", '.+[1234567890 ]+', '') AS ",
+                        cm_attribute_name,
+                        " FROM ( ")
+  
+  q <- paste( "SELECT 
+              DISTINCT(unnest(regexp_split_to_array(", cm_attribute_name, ",',[ ]*'))) AS ",
               cm_attribute_name,
               " from ")
-  qu <- paste0(q, table)
   que <- paste(
     sapply(table, function(x) paste0(q, x)), 
     collapse = " UNION "
   )
-  query <- paste0(que, " ORDER BY ", cm_attribute_name)
+  query <- paste0(q_extension, que, ") AS foo ORDER BY ", cm_attribute_name)
+  
+  message(query)
   
   # query <- paste( "SELECT DISTINCT ", attribute_name, " FROM (select distinct(unnest(string_to_array(
   # string_agg(", attribute_name, ", ', '),', '))) as ",
@@ -73,6 +85,8 @@ road_list_values <- function (attribute_name = NULL)
   # " ORDER BY ", attribute_name)
   
   data <- road_run_query(query)
+  
+  #data_d <- data.frame(lapply(data, function(x) {gsub("1|2|3|5|6|7<89|0", "", x)}))
   
   return(data)
 }
@@ -277,6 +291,12 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
 #' @param age_max integer; maximum age of assemblage.
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #' @param archaeological_category string (one item) or vector of strings ('lithics', 'organic tools', 'symbolic artefacts', 'miscellaneous finds', 'feature');
+#' @param tool_list string (one item) or vector of strings
+#' @param raw_material_list string (one item) or vector of strings
+#' @param organic_tools:interpretation string (one item) or vector of strings
+#' @param symbolic_artefacts:interpretation string (one item) or vector of strings
+#' @param feature:interpretation string (one item) or vector of strings
+#' @param miscellaneous_finds:material string (one item) or vector of strings
 #' 
 #' @return Database search result as list of archaeological finds.
 #' @export
