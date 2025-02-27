@@ -22,7 +22,7 @@ values7 <- road_list_values("country")
 values9 <- road_list_values("dating_method")
 values10 <- road_list_values("material_dated")
 values11 <- road_list_values("technocomplex")
-values12 <- road_list_values("publication_desc_humanremains.species")
+values12 <- road_list_values("humanremains:genus")
 
 # road_get_localities()
 localities2 <- road_get_localities(continents = c("Europe"), countries = c("Germany", "France"))
@@ -39,6 +39,7 @@ assemblages3 <- road_get_assemblages(localities = localities2, age_min = 80000L,
 assemblages3 <- road_get_assemblages(localities = localities2, age_min = 80000L, age_max = 120000L)
 assemblages4 <- road_get_assemblages(localities = localities2, categories = c("typology", "paleofauna"), age_max = 100000L)
 assemblages5 <- road_get_assemblages(localities = localities3)
+assemblages6 <- road_get_assemblages(countries = "Ukraine")
 
 # aux functions
 query_check_intersection("and ", "technology, typology", "technology, paleofauna")
@@ -66,4 +67,5 @@ archaeo3 <- road_get_archaeology(continents = "Europe", archaeological_category 
 
 #
 paleofauna0 <- road_get_paleofauna()
-paleofauna <- road_get_paleofauna(continents = "Asia")
+paleofauna1 <- road_get_paleofauna(continents = "Asia")
+paleofauna2 <- road_get_paleofauna(countries = c("Germany", "France"))
