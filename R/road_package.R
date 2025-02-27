@@ -1,4 +1,4 @@
-#source("./roadDB/R/login.R")
+source("./roadDB/R/login.R")
 library(assertthat)
 library(RPostgres)
 
@@ -61,10 +61,10 @@ road_get_localities <- function(continents = NULL, subcontinents = NULL, countri
   # select fields
   select_fields <- c(
     paste0("locality.idlocality AS ", cm_locality_idlocality),
-    paste0("locality.type AS ", cm_locality_types),
     paste0("geopolitical_units.continent AS ", cm_geopolitical_units_continent),
     paste0("geopolitical_units.continent_region AS ", cm_geopolitical_units_continent_region),
     paste0("locality.country AS ", cm_locality_country),
+    paste0("locality.type AS ", cm_locality_types),
     paste0("locality.x AS ", cm_locality_x),
     paste0("locality.y AS ", cm_locality_y)
   )
@@ -167,14 +167,20 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countr
   query <- paste(
     # SELECT
     "SELECT DISTINCT",
-    "assemblage.locality_idlocality AS ", cm_assemblages_locality_idlocality, ", ",
-    "assemblage.idassemblage AS ", cm_assemblages_idassemblage, ", ",
-    "assemblage.name AS ", cm_assemblages_name, ", ",
-    "assemblage.category AS ", cm_assemblages_categories, ", ",
-    "MIN(geological_stratigraphy.age_min) AS ", cm_geological_stratigraphy_age_min, ", ",
-    "MAX(geological_stratigraphy.age_max) AS ", cm_geological_stratigraphy_age_max, ", ",
-    "STRING_AGG(DISTINCT assemblage_in_geolayer.geolayer_name, ', ') AS ", cm_assemblage_in_geolayer_geolayer_name, ", ",
-    "STRING_AGG(DISTINCT assemblage_in_archlayer.archlayer_name, ', ') AS ", cm_assemblage_in_archlayer_archlayer_name, ", ",
+    paste0("assemblage.locality_idlocality AS ", cm_assemblages_locality_idlocality, ", "),
+    paste0("geopolitical_units.continent AS ", cm_geopolitical_units_continent, ","),
+    paste0("geopolitical_units.continent_region AS ", cm_geopolitical_units_continent_region, ","),
+    paste0("locality.country AS ", cm_locality_country, ","),
+    paste0("locality.type AS ", cm_locality_types, ","),
+    paste0("locality.x AS ", cm_locality_x, ","),
+    paste0("locality.y AS ", cm_locality_y, ","),
+    paste0("assemblage.idassemblage AS ", cm_assemblages_idassemblage, ","),
+    paste0("assemblage.name AS ", cm_assemblages_name, ","),
+    paste0("assemblage.category AS ", cm_assemblages_categories, ","),
+    paste0("MIN(geological_stratigraphy.age_min) AS ", cm_geological_stratigraphy_age_min, ","),
+    paste0("MAX(geological_stratigraphy.age_max) AS ", cm_geological_stratigraphy_age_max, ","),
+    paste0("STRING_AGG(DISTINCT assemblage_in_geolayer.geolayer_name, ', ') AS ", cm_assemblage_in_geolayer_geolayer_name, ","),
+    paste0("STRING_AGG(DISTINCT assemblage_in_archlayer.archlayer_name, ', ') AS ", cm_assemblage_in_archlayer_archlayer_name, ","),
     "CASE",
       "WHEN (assemblage.locality_idlocality, assemblage.idassemblage) IN 
               (SELECT assemblage_idlocality, assemblage_idassemblage FROM humanremains) 
@@ -206,12 +212,14 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countr
     "LEFT JOIN assemblage_in_archlayer ON",
       "assemblage_in_archlayer.assemblage_idlocality = assemblage.locality_idlocality",
       "AND assemblage_in_archlayer.assemblage_idassemblage = assemblage.idassemblage",
+    "INNER JOIN locality ON assemblage.locality_idlocality = locality.idlocality",
+    "INNER JOIN geopolitical_units ON locality.country = geopolitical_units.geopolitical_name",
     # WHERE
     "WHERE assemblage.locality_idlocality IN (", query_localities, ")",
     query_check_intersection("AND ", categories, "assemblage.category"),
     parameter_to_query("AND ", age_min, " <= age_max"),
     parameter_to_query("AND ", age_max, " >= age_min"),
-    "GROUP BY assemblage.locality_idlocality, assemblage.idassemblage, assemblage.name, assemblage.category, geological_stratigraphy.age_min, geological_stratigraphy.age_max",
+    "GROUP BY assemblage.locality_idlocality, locality.type, geopolitical_units.continent, geopolitical_units.continent_region, locality.country, locality.x, locality.y, assemblage.idassemblage, assemblage.name, assemblage.category, geological_stratigraphy.age_min, geological_stratigraphy.age_max",
     "ORDER BY assemblage.locality_idlocality ASC"
   )
 
@@ -364,6 +372,10 @@ road_run_query <- function(query)
 
   # run query
   result <- dbGetQuery(con, query)
+
+  # replace all possible "NULL" values with NA
+  result[result == ""] <- NA
+  result[result == -1] <- NA
 
   return(result)
 }
