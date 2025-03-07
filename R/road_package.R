@@ -1,4 +1,4 @@
-source("./roadDB/R/login.R")
+source("./R/login.R")
 library(assertthat)
 library(RPostgres)
 
@@ -33,6 +33,12 @@ cm_humanremains_age <- "age"
 cm_humanremains_sex <- "sex"
 cm_humanremains_idhumanremains <- "humanremains_id"
 cm_archaeological_category <- "archaeological_category"
+cm_tool_list <- "tool_list"
+cm_raw_material_list <- "raw_material_list"
+cm_organic_tools_interpretation <- "organic_tools_interpretation"
+cm_feature_interpretation <- "feature_interpretation"
+cm_miscellaneous_finds_material <- "miscellaneous_finds_material"
+
 
 #' Get localities from ROAD Database
 #'
@@ -454,6 +460,8 @@ parameter_to_vector <- function(parameter)
 # calculate assemblage_condition
 get_assemblage_condition <- function(assemblages = NULL)
 {
+  # I am not sure, if it is better to do the assemblage search hier or in the caller function
+  # so this comments is an reminder
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
   #if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
   #                                                             age_min = age_min, age_max = age_max, localities = localities)
@@ -503,6 +511,11 @@ get_output_extention_assemblage <- function(assemblages = NULL)
   assemblage_info_for_output$categories <- assemblages$categories
   assemblage_info_for_output$age_min <- assemblages$age_min
   assemblage_info_for_output$age_max <- assemblages$age_max
+  assemblage_info_for_output$continent <- assemblages$continent
+  assemblage_info_for_output$subcontinent <- assemblages$subcontinent
+  assemblage_info_for_output$country <- assemblages$country
+  assemblage_info_for_output$locality_types <- assemblages$locality_types
+  assemblage_info_for_output$cultural_periods <- assemblages$cultural_periods
   
   return(assemblage_info_for_output)
 }

@@ -77,12 +77,14 @@ road_list_values <- function (attribute_name = NULL)
   )
   query <- paste0(q_extension, que, ") AS foo ORDER BY ", cm_attribute_name)
   
-  message(query)
+  # message(query)
   
   # query <- paste( "SELECT DISTINCT ", attribute_name, " FROM (select distinct(unnest(string_to_array(
   # string_agg(", attribute_name, ", ', '),', '))) as ",
   # attribute_name, ", 'dummy' as dummy from ", table,  " GROUP BY dummy) as foo ", 
   # " ORDER BY ", attribute_name)
+  
+  
   
   data <- road_run_query(query)
   
@@ -291,12 +293,13 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
 #' @param age_max integer; maximum age of assemblage.
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #' @param archaeological_category string (one item) or vector of strings ('lithics', 'organic tools', 'symbolic artefacts', 'miscellaneous finds', 'feature');
+#'
 #' @param tool_list string (one item) or vector of strings
 #' @param raw_material_list string (one item) or vector of strings
-#' @param organic_tools:interpretation string (one item) or vector of strings
-#' @param symbolic_artefacts:interpretation string (one item) or vector of strings
-#' @param feature:interpretation string (one item) or vector of strings
-#' @param miscellaneous_finds:material string (one item) or vector of strings
+#' @param organic_tools_interpretation string (one item) or vector of strings
+#' @param symbolic_artefacts_interpretation string (one item) or vector of strings
+#' @param feature_interpretation string (one item) or vector of strings
+#' @param miscellaneous_finds_material string (one item) or vector of strings
 #' 
 #' @return Database search result as list of archaeological finds.
 #' @export
@@ -307,7 +310,9 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
 road_get_archaeology <- function(continents = NULL, subcontinents = NULL, countries = NULL, 
                                    locality_types = NULL, cultural_periods = NULL, 
                                    categories = NULL, age_min = NULL, age_max = NULL, 
-                                   archaeological_category = NULL, 
+                                   archaeological_category = NULL, tool_list = NULL,
+                                   raw_material_list = NULL, organic_tools_interpretation = NULL,
+                                   feature_interpretation = NULL, miscellaneous_finds_material = NULL, 
                                    assemblages = NULL, localities = NULL)
 {
   # calculate locality_condition
@@ -332,9 +337,14 @@ road_get_archaeology <- function(continents = NULL, subcontinents = NULL, countr
                                                                 localities = localities)
   assemblage_condition <- get_assemblage_condition(assemblages = assemblages)
   # calculate output extention
-  assemblage_info_for_output <- get_output_extention_assemblage(assemblages)
+  assemblage_info_for_output <- get_output_extention_assemblage(assemblages = assemblages)
   
- 
+  run_query <- FALSE
+  if (!is.null(archaeological_category) || !is.null(tool_list) || !is.null(raw_material_list)
+      || !is.null(organic_tools_interpretation) || !is.null(feature_interpretation) 
+      || !is.null(miscellaneous_finds_material)) 
+    run_query <- TRUE
+   
   # select fields
   select_fields <- c(
     paste0(" assemblage_idlocality AS ", cm_locality_idlocality),
@@ -390,29 +400,109 @@ road_get_archaeology <- function(continents = NULL, subcontinents = NULL, countr
   else fromPart_feature <- ""
 
   # combine query parts
-  query <- paste(
-    "SELECT DISTINCT * FROM (",
-    fromPart_dummy,
-    fromPart_lithics,
-    fromPart_organic_tools,
-    fromPart_symbolic_artifacts,
-    fromPart_feature,
-    ") as foo WHERE ", cm_locality_idlocality," IN (", query_localities, ")",
-    assemblage_condition,
-    # genus_species_condition,
-    "ORDER BY ", cm_locality_idlocality, ", ", cm_assemblages_idassemblage 
+  if (!is.null(archaeological_category))
+  {
+    query <- paste(
+      "SELECT DISTINCT * FROM (",
+      fromPart_dummy,
+      fromPart_lithics,
+      fromPart_organic_tools,
+      fromPart_symbolic_artifacts,
+      fromPart_feature,
+      ") as foo WHERE true ",  # cm_locality_idlocality," IN (", query_localities, ")",
+      assemblage_condition,
+      # genus_species_condition,
+      "ORDER BY ", cm_locality_idlocality, ", ", cm_assemblages_idassemblage 
+    )
+  }
+
+  # select fields
+  select_fields <- c(
+    paste0(" assemblage_idlocality AS ", cm_locality_idlocality),
+    paste0(" assemblage_idassemblage AS ", cm_assemblages_idassemblage)
+    # paste0(" tool_list ") # AS ", cm_archaeological_category)
   )
   
-  # message(query)
+  if (!is.null(tool_list))
+  {
+    query <- paste(
+      "SELECT DISTINCT * FROM (",
+      "SELECT DISTINCT ",
+      paste(select_fields, collapse = ", "),
+      ", tool_list as ", cm_tool_list,
+      " FROM typology) as foo WHERE true ",
+      assemblage_condition,
+      query_check_intersection("AND ", tool_list, cm_tool_list)
+    )
+  }
   
-  data <- road_run_query(query)
+  if (!is.null(raw_material_list))
+  {
+    query <- paste(
+      "SELECT DISTINCT * FROM (",
+      "SELECT DISTINCT ",
+      paste(select_fields, collapse = ", "),
+      ", raw_material_list as ", cm_raw_material_list,
+      " FROM raw_material ) as foo WHERE true ",
+      assemblage_condition,
+      query_check_intersection("AND ", raw_material_list, cm_raw_material_list)
+    )
+  }
   
-  # data$genus[data$genus == ""] <- NA
+  if (!is.null(organic_tools_interpretation))
+  {
+    query <- paste(
+      "SELECT DISTINCT * FROM (",
+      "SELECT DISTINCT ",
+      paste(select_fields, collapse = ", "),
+      ", interpretation as ", cm_organic_tools_interpretation,
+      " FROM organic_tools ) as foo WHERE true ",
+      assemblage_condition,
+      query_check_intersection("AND ", organic_tools_interpretation, cm_organic_tools_interpretation)
+    )
+  }
+  
+  if (!is.null(feature_interpretation))
+  {
+    query <- paste(
+      "SELECT DISTINCT * FROM (",
+      "SELECT DISTINCT ",
+      paste(select_fields, collapse = ", "),
+      ", interpretation as ", cm_feature_interpretation,
+      " FROM feature ) as foo WHERE true ",
+      assemblage_condition,
+      query_check_intersection("AND ", feature_interpretation, cm_feature_interpretation)
+    )
+  }
+  
+  if (!is.null(miscellaneous_finds_material))
+  {
+    query <- paste(
+      "SELECT DISTINCT * FROM (",
+      "SELECT DISTINCT ",
+      paste(select_fields, collapse = ", "),
+      ", material as ", cm_miscellaneous_finds_material,
+      " FROM miscellaneous_finds ) as foo WHERE true ",
+      assemblage_condition,
+      query_check_intersection("AND ", miscellaneous_finds_material, cm_miscellaneous_finds_material)
+    )
+  }
+  
+  if (run_query)
+  {
+    # message(query)
+    data <- road_run_query(query)
+  
+    # data$genus[data$genus == ""] <- NA
 
-  data_plus_assemblage_info <- merge(x = data, y = assemblage_info_for_output, 
+    data_plus_assemblage_info <- merge(x = data, y = assemblage_info_for_output, 
                                      by = c(cm_locality_idlocality, cm_assemblages_idassemblage))
   
-  return(merge(x = data_plus_assemblage_info, y = locality_info_for_output, by = cm_locality_idlocality))
+    # return(merge(x = data_plus_assemblage_info, y = locality_info_for_output, by = cm_locality_idlocality))
+  
+    return(data_plus_assemblage_info)
+  }
+  else return(assemblages)
   
 }
 

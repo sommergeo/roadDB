@@ -23,6 +23,9 @@ values9 <- road_list_values("dating_method")
 values10 <- road_list_values("material_dated")
 values11 <- road_list_values("technocomplex")
 values12 <- road_list_values("humanremains:genus")
+values13 <- road_list_values("tool_list")
+values14 <- road_list_values("raw_material_list")
+values15 <- road_list_values("miscellaneous_finds:material")
 
 # road_get_localities()
 localities2 <- road_get_localities(continents = c("Europe"), countries = c("Germany", "France"))
@@ -44,7 +47,7 @@ assemblages6 <- road_get_assemblages(countries = "Ukraine")
 # aux functions
 query_check_intersection("and ", "technology, typology", "technology, paleofauna")
 
-#
+
 dates0 <- road_get_dates(dating_methods = c("geology", "biostratigraphy", "U series (uranium-lead) dating"), material_dated = "calcite")
 dates1 <- road_get_dates()
 dates2 <- road_get_dates(age_min = 10000L, age_max = 100000L)
@@ -64,6 +67,10 @@ archaeo0 <- road_get_archaeology()
 archaeo1 <- road_get_archaeology(continents = "Europe")
 archaeo2 <- road_get_archaeology(continents = "Europe", archaeological_category = "feature")
 archaeo3 <- road_get_archaeology(continents = "Europe", archaeological_category = c("feature", "symbolic artefacts"))
+archaeo4 <- road_get_archaeology(continents = "Europe", tool_list = "biface")
+archaeo5 <- road_get_archaeology(raw_material_list = "syenite")
+archaeo6 <- road_get_archaeology(cultural_periods = "Middle Paleolithic", raw_material_list = c("flysch", "syenite"))
+# archaeo7 <- road_get_archaeology(miscellaneous_finds_material = "glass")
 
 #
 paleofauna0 <- road_get_paleofauna()
