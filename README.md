@@ -19,9 +19,15 @@ As the ROAD database is exceptionally rich in information at the assemblage leve
 - road_get_localities()
 - road_get_assemblages()
 	- road_get_human_remains()
-	- road_get_archaeology()
 	- road_get_paleofauna()
 	- road_get_paleobotany()
+	- archaeology-related:
+		- road_get_lithic_typology()
+		- road_get_lithic_raw_material()
+		- road_get_organic_tools()
+		- road_get_symbolic_artifacts()
+		- road_get_feature()
+		- road_get_miscalaneous_finds()
 - road_get_dates()
 
 ### Arguments
