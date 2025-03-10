@@ -317,22 +317,25 @@ road_get_archaeology <- function(continents = NULL, subcontinents = NULL, countr
 {
   # calculate locality_condition
   # To do: !is.null(one of localities parameters) AND !is.null(localities)  ---> Warnung an den Benutzer
-  if (is.null(localities)) localities <- road_get_localities(continents = continents, 
-                                                             subcontinents = subcontinents, 
-                                                             countries = countries, 
-                                                             locality_types = locality_types, 
-                                                             cultural_periods = cultural_periods)
+  ###if (is.null(localities)) localities <- road_get_localities(continents = continents, 
+     ###                                                        subcontinents = subcontinents, 
+     ###                                                         countries = countries, 
+     ###                                                         locality_types = locality_types, 
+     ###                                                        cultural_periods = cultural_periods)
   # locality_condition <- get_locality_condition(localities = localities)
-  query_localities <- paste(
-    sapply(localities$locality_id, function(x) paste0("'", x, "'")),
-    collapse = ", "
-  )
+  ###query_localities <- paste(
+  ###  sapply(localities$locality_id, function(x) paste0("'", x, "'")),
+  ###  collapse = ", "
+  ###)
   # calculate output extention
-  locality_info_for_output <- get_output_extention_locality(localities=localities)
+  ###locality_info_for_output <- get_output_extention_locality(localities=localities)
   
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents,
+                                                                subcontinents = subcontinents,
+                                                                countries = countries,
+                                                                categories = categories, 
                                                                 age_min = age_min, age_max = age_max, 
                                                                 localities = localities)
   assemblage_condition <- get_assemblage_condition(assemblages = assemblages)
