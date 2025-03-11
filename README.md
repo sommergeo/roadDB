@@ -27,7 +27,7 @@ As the ROAD database is exceptionally rich in information at the assemblage leve
 		- road_get_organic_tools()
 		- road_get_symbolic_artifacts()
 		- road_get_feature()
-		- road_get_miscalaneous_finds()
+		- road_get_miscellaneous_finds()
 - road_get_dates()
 
 ### Arguments
