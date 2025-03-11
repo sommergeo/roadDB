@@ -72,7 +72,16 @@ archaeo0 <- road_get_archaeology()
 archaeo1 <- road_get_archaeology(continents = "Europe")
 archaeo2 <- road_get_archaeology(continents = "Europe", archaeological_category = "feature")
 archaeo3 <- road_get_archaeology(continents = "Europe", archaeological_category = c("feature", "symbolic artefacts"))
-archaeo4 <- road_get_archaeology(continents = "Europe", tool_list = "biface")
+
+# road_get_lithic_typology()
+lithic_typology1 <- road_get_lithic_typology(continents = "Europe", tool_list = "biface")
+
+#road_get_lithic_raw_material()
+lithic_raw_material1 <- road_get_lithic_raw_material(countries = "France", raw_material_list = c("volcanic rock", "obsidian"))
+
+#road_summerize_archaeology
+summery1 <- road_summerize_archaeology(term = "Cores")
+
 archaeo5 <- road_get_archaeology(raw_material_list = "syenite")
 archaeo6 <- road_get_archaeology(cultural_periods = "Middle Paleolithic", raw_material_list = c("flysch", "syenite"))
 archaeo7 <- road_get_archaeology(countries = "France", miscellaneous_finds_material = "glass")
