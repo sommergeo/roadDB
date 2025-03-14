@@ -17,6 +17,7 @@ cm_assemblages_name <- "name"
 cm_assemblages_categories <- "categories"
 cm_geological_stratigraphy_age_min <- "age_min"
 cm_geological_stratigraphy_age_max <- "age_max"
+
 cm_assemblage_in_geolayer_geolayer_name <- "geolayers"
 cm_geolayer_geolayer_name <- "geolayer"
 cm_assemblage_in_archlayer_archlayer_name <- "archlayers"
@@ -41,6 +42,17 @@ cm_transport_distance <- "transport_distance"
 cm_organic_tools_interpretation <- "organic_tools_interpretation"
 cm_feature_interpretation <- "feature_interpretation"
 cm_miscellaneous_finds_material <- "miscellaneous_finds_material"
+cm_organic_tools_interpretation <- "organic_tools_interpretation"
+cm_organic_raw_material <- "organic_raw_material"
+cm_organic_tools_technology <- "organic_tools_technology"
+cm_symbolic_artifacts_interpretation <- "symbolic_artifacts_interpretation"
+cm_symbolic_artifacts_category <- "symbolic_artifacts_category"
+cm_symbolic_artifacts_material <- "symbolic_artifacts_material"
+cm_symbolic_artifacts_technology <- "symbolic_artifacts_technology"
+cm_symbolic_artifacts_raw_material_source <- "symbolic_artifacts_raw_material_source"
+cm_feature_interpretation <- "feature_interpretation"
+cm_miscellaneous_finds_material <- "miscellaneous_finds_material"
+cm_miscellaneous_finds_raw_material_source <- "miscellaneous_finds_raw_material_source"
 
 
 #' Get localities from ROAD Database
@@ -175,7 +187,7 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL,
   }
 
   ### calculate output extention
-  ###locality_info_for_output <- get_output_extention_locality(localities=localities)
+  locality_info_for_output <- get_output_extention_locality(localities=localities)
   
   localities <- localities[cm_locality_idlocality]
   query_localities <- paste(
@@ -248,9 +260,9 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL,
 
   data <- road_run_query(query)
   
-  ###return(merge(x = data, y = locality_info_for_output, by = cm_locality_idlocality))
+  return(merge(x = data, y = locality_info_for_output, by = cm_locality_idlocality))
   
-  return(data)
+  ###return(data)
 }
 
 
@@ -532,11 +544,13 @@ get_output_extention_assemblage <- function(assemblages = NULL)
   assemblage_info_for_output$categories <- assemblages$categories
   assemblage_info_for_output$age_min <- assemblages$age_min
   assemblage_info_for_output$age_max <- assemblages$age_max
-  assemblage_info_for_output$continent <- assemblages$continent
-  assemblage_info_for_output$subcontinent <- assemblages$subcontinent
-  assemblage_info_for_output$country <- assemblages$country
-  assemblage_info_for_output$locality_types <- assemblages$locality_types
+  assemblage_info_for_output$continent <- assemblages$continent.y
+  assemblage_info_for_output$subcontinent <- assemblages$subcontinent.y
+  assemblage_info_for_output$country <- assemblages$country.y
+  assemblage_info_for_output$locality_types <- assemblages$locality_types.y
   assemblage_info_for_output$cultural_period <- assemblages$cultural_period
+  assemblage_info_for_output$coord_x <- assemblages$coord_x.y
+  assemblage_info_for_output$coord_y <- assemblages$coord_y.y  
   
   return(assemblage_info_for_output)
 }

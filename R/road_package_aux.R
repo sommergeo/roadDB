@@ -296,8 +296,8 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
 #' @export
 #'
 #' @examples road_get_lithic_typology(continents = "Europe")
-#' @examples road_get_lithic_typology(continents = "Europe", archaeological_category = "feature")
-#' @examples road_get_lithic_typology(continents = "Europe", archaeological_category = c("feature", "symbolic artefacts"))
+#' @examples road_get_lithic_typology(continents = "Europe",)
+#' @examples road_get_lithic_typology(continents = "Europe",)
 road_get_lithic_typology <- function(continents = NULL, subcontinents = NULL, countries = NULL, 
                                  locality_types = NULL, cultural_periods = NULL, categories = NULL, 
                                  age_min = NULL, age_max = NULL, tool_list = NULL,
@@ -343,14 +343,13 @@ road_get_lithic_typology <- function(continents = NULL, subcontinents = NULL, co
 
   # message(query)
   data <- road_run_query(query)
-    
-  #data_plus_assemblage_info <- 
+  
   return (merge(x = data, y = assemblage_info_for_output, 
                 by = c(cm_locality_idlocality, cm_assemblages_idassemblage)))
 }
 
 
-#' Get lithic raw_material from ROAD database
+#' Get lithic raw material from ROAD database
 #'
 #' `road_get_lithic_raw_material` fetches data of lithic finds from ROAD database.
 #'
@@ -367,12 +366,12 @@ road_get_lithic_typology <- function(continents = NULL, subcontinents = NULL, co
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #' @param raw_material_list string (one item) or vector of strings
 #' 
-#' @return Database search result as list of lithic finds with info about typology.
+#' @return Database search result as list of lithic finds with info about raw material.
 #' @export
 #'
 #' @examples road_get_lithic_typology(continents = "Europe")
-#' @examples road_get_lithic_typology(continents = "Europe", archaeological_category = "feature")
-#' @examples road_get_lithic_typology(continents = "Europe", archaeological_category = c("feature", "symbolic artefacts"))
+#' @examples road_get_lithic_typology(continents = "Europe", )
+#' @examples road_get_lithic_typology(continents = "Europe", ))
 road_get_lithic_raw_material <- function(continents = NULL, subcontinents = NULL, countries = NULL, 
                                      locality_types = NULL, cultural_periods = NULL, categories = NULL, 
                                      age_min = NULL, age_max = NULL, raw_material_list = NULL,
@@ -425,6 +424,314 @@ road_get_lithic_raw_material <- function(continents = NULL, subcontinents = NULL
 }
 
 
+#' Get organic tools from ROAD database
+#'
+#' `road_get_organic_tools` fetches data of organic tools from ROAD database.
+#'
+#'
+#' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param localities list of localities; return value from function `road_get_localities`.
+#' @param categories string (one item) or vector of strings (one or more items).
+#' @param age_min integer; minimum age of assemblage.
+#' @param age_max integer; maximum age of assemblage.
+#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
+#' @param organic_tools_interpretation string (one item) or vector of strings
+#' 
+#' @return Database search result as list of organic tools.
+#' @export
+#'
+#' @examples road_get_organic_tools(continents = "Europe")
+#' @examples road_get_organic_tools(continents = "Europe", )
+#' @examples road_get_organic_tools(continents = "Europe", )
+road_get_organic_tools <- function(continents = NULL, subcontinents = NULL, countries = NULL, 
+                                         locality_types = NULL, cultural_periods = NULL, categories = NULL, 
+                                         age_min = NULL, age_max = NULL, organic_tools_interpretation = NULL,
+                                         assemblages = NULL, localities = NULL)
+{
+  # calculate assemblage_condition
+  # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents,
+                                                                subcontinents = subcontinents,
+                                                                countries = countries,
+                                                                categories = categories, 
+                                                                locality_types = locality_types,
+                                                                cultural_periods = cultural_periods,
+                                                                age_min = age_min, age_max = age_max, 
+                                                                localities = localities)
+  assemblage_condition <- get_assemblage_condition(assemblages = assemblages)
+  # calculate output extention
+  assemblage_info_for_output <- get_output_extention_assemblage(assemblages = assemblages)
+  
+  # select fields
+  select_fields <- c(
+    paste0(" assemblage_idlocality AS ", cm_locality_idlocality),
+    paste0(" assemblage_idassemblage AS ", cm_assemblages_idassemblage),
+    paste0(" interpretation AS ", cm_organic_tools_interpretation),
+    paste0(" organic_raw_material AS ", cm_organic_raw_material),
+    paste0(" technology AS ", cm_organic_tools_technology),
+    "number",
+    "comments"
+  )
+  
+  if (!is.null(organic_tools_interpretation)) 
+    organic_tools_interpretation_condition <- query_check_intersection("AND ", 
+                                                                       organic_tools_interpretation, 
+                                                                       cm_organic_tools_interpretation)
+  else 
+    organic_tools_interpretation_condition <- ""
+  
+  query <- paste(
+    "SELECT DISTINCT * FROM (",
+    "SELECT DISTINCT ",
+    paste(select_fields, collapse = ", "),
+    " FROM organic_tools) as foo WHERE true ",
+    assemblage_condition,
+    organic_tools_interpretation_condition
+  )
+  
+  # message(query)
+  data <- road_run_query(query)
+  
+  return(merge(x = data, y = assemblage_info_for_output, 
+               by = c(cm_locality_idlocality, cm_assemblages_idassemblage)))
+}
+
+
+#' Get symbolic artifacts from ROAD database
+#'
+#' `road_get_symbolic_artifacts` fetches data of symbolic artifacts from ROAD database.
+#'
+#'
+#' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param localities list of localities; return value from function `road_get_localities`.
+#' @param categories string (one item) or vector of strings (one or more items).
+#' @param age_min integer; minimum age of assemblage.
+#' @param age_max integer; maximum age of assemblage.
+#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
+#' @param symbolic_artifacts_interpretation string (one item) or vector of strings
+#' 
+#' @return Database search result as list of symbolic artifacts with info about symbolic.
+#' @export
+#'
+#' @examples road_get_symbolic_artifacts(continents = "Europe")
+#' @examples road_get_symbolic_artifacts(continents = "Europe", )
+#' @examples road_get_symbolic_artifacts(continents = "Europe", )
+road_get_symbolic_artifacts <- function(continents = NULL, subcontinents = NULL, countries = NULL, 
+                                   locality_types = NULL, cultural_periods = NULL, categories = NULL, 
+                                   age_min = NULL, age_max = NULL, 
+                                   symbolic_artifacts_interpretation = NULL,
+                                   assemblages = NULL, localities = NULL)
+{
+  # calculate assemblage_condition
+  # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents,
+                                                                subcontinents = subcontinents,
+                                                                countries = countries,
+                                                                categories = categories, 
+                                                                locality_types = locality_types,
+                                                                cultural_periods = cultural_periods,
+                                                                age_min = age_min, age_max = age_max, 
+                                                                localities = localities)
+  assemblage_condition <- get_assemblage_condition(assemblages = assemblages)
+  # calculate output extention
+  assemblage_info_for_output <- get_output_extention_assemblage(assemblages = assemblages)
+  
+  # select fields
+  select_fields <- c(
+    paste0(" assemblage_idlocality AS ", cm_locality_idlocality),
+    paste0(" assemblage_idassemblage AS ", cm_assemblages_idassemblage),
+    paste0(" interpretation AS ", cm_symbolic_artifacts_interpretation),
+    paste0(" category AS ", cm_symbolic_artifacts_category),
+    paste0(" material AS ", cm_symbolic_artifacts_material),
+    paste0(" technology AS ", cm_symbolic_artifacts_technology),
+    paste0(" raw_material_source AS ", cm_symbolic_artifacts_raw_material_source),
+    "comments"
+  )
+  
+  if (!is.null(symbolic_artifacts_interpretation)) 
+    symbolic_artifacts_interpretation_condition <- query_check_intersection("AND ", 
+                                                                            symbolic_artifacts_interpretation, 
+                                                                            cm_symbolic_artifacts_interpretation)
+  else 
+    symbolic_artifacts_interpretation_condition <- ""
+  
+  query <- paste(
+    "SELECT DISTINCT * FROM (",
+    "SELECT DISTINCT ",
+    paste(select_fields, collapse = ", "),
+    " FROM symbolic_artifacts) as foo WHERE true ",
+    assemblage_condition,
+    symbolic_artifacts_interpretation_condition
+  )
+  
+  # message(query)
+  data <- road_run_query(query)
+  
+  return(merge(x = data, y = assemblage_info_for_output, 
+               by = c(cm_locality_idlocality, cm_assemblages_idassemblage)))
+}
+
+
+#' Get feature assemblages from ROAD database
+#'
+#' `road_get_feature` fetches data of feature finds from ROAD database.
+#'
+#'
+#' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param localities list of localities; return value from function `road_get_localities`.
+#' @param categories string (one item) or vector of strings (one or more items).
+#' @param age_min integer; minimum age of assemblage.
+#' @param age_max integer; maximum age of assemblage.
+#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
+#' @param feature_interpretation string (one item) or vector of strings
+#' 
+#' @return Database search result as list of feature finds.
+#' @export
+#'
+#' @examples road_get_feature(continents = "Europe")
+#' @examples road_get_feature(continents = "Europe", )
+#' @examples road_get_feature(continents = "Europe", )
+road_get_feature <- function(continents = NULL, subcontinents = NULL, countries = NULL, 
+                                        locality_types = NULL, cultural_periods = NULL, categories = NULL, 
+                                        age_min = NULL, age_max = NULL, 
+                                        feature_interpretation = NULL,
+                                        assemblages = NULL, localities = NULL)
+{
+  # calculate assemblage_condition
+  # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents,
+                                                                subcontinents = subcontinents,
+                                                                countries = countries,
+                                                                categories = categories, 
+                                                                locality_types = locality_types,
+                                                                cultural_periods = cultural_periods,
+                                                                age_min = age_min, age_max = age_max, 
+                                                                localities = localities)
+  assemblage_condition <- get_assemblage_condition(assemblages = assemblages)
+  # calculate output extention
+  assemblage_info_for_output <- get_output_extention_assemblage(assemblages = assemblages)
+  
+  # select fields
+  select_fields <- c(
+    paste0(" assemblage_idlocality AS ", cm_locality_idlocality),
+    paste0(" assemblage_idassemblage AS ", cm_assemblages_idassemblage),
+    paste0(" interpretation AS ", cm_feature_interpretation),
+    "comments"
+  )
+  
+  if (!is.null(feature_interpretation)) 
+    feature_interpretation_condition <- query_check_intersection("AND ", 
+                                                                 feature_interpretation, 
+                                                                 cm_feature_interpretation)
+  else 
+    feature_interpretation_condition <- ""
+  
+  query <- paste(
+    "SELECT DISTINCT * FROM (",
+    "SELECT DISTINCT ",
+    paste(select_fields, collapse = ", "),
+    " FROM feature) as foo WHERE true ",
+    assemblage_condition,
+    feature_interpretation_condition
+  )
+  
+  # message(query)
+  data <- road_run_query(query)
+  
+  return(merge(x = data, y = assemblage_info_for_output, 
+               by = c(cm_locality_idlocality, cm_assemblages_idassemblage)))
+}
+
+
+#' Get miscellaneous finds from ROAD database
+#'
+#' `road_get_miscellaneous_finds` fetches data of feature finds from ROAD database.
+#'
+#'
+#' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param localities list of localities; return value from function `road_get_localities`.
+#' @param categories string (one item) or vector of strings (one or more items).
+#' @param age_min integer; minimum age of assemblage.
+#' @param age_max integer; maximum age of assemblage.
+#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
+#' @param miscellaneous_finds_material string (one item) or vector of strings
+#' 
+#' @return Database search result as list of miscellaneous finds.
+#' @export
+#'
+#' @examples road_get_miscellaneous_finds(continents = "Europe")
+#' @examples road_get_miscellaneous_finds(continents = "Europe", )
+#' @examples road_get_miscellaneous_finds(continents = "Europe", )
+road_get_miscellaneous_finds <- function(continents = NULL, subcontinents = NULL, countries = NULL, 
+                             locality_types = NULL, cultural_periods = NULL, categories = NULL, 
+                             age_min = NULL, age_max = NULL, 
+                             miscellaneous_finds_material = NULL,
+                             assemblages = NULL, localities = NULL)
+{
+  # calculate assemblage_condition
+  # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents,
+                                                                subcontinents = subcontinents,
+                                                                countries = countries,
+                                                                categories = categories, 
+                                                                locality_types = locality_types,
+                                                                cultural_periods = cultural_periods,
+                                                                age_min = age_min, age_max = age_max, 
+                                                                localities = localities)
+  assemblage_condition <- get_assemblage_condition(assemblages = assemblages)
+  # calculate output extention
+  assemblage_info_for_output <- get_output_extention_assemblage(assemblages = assemblages)
+  
+  # select fields
+  select_fields <- c(
+    paste0(" assemblage_idlocality AS ", cm_locality_idlocality),
+    paste0(" assemblage_idassemblage AS ", cm_assemblages_idassemblage),
+    paste0(" material AS ", cm_miscellaneous_finds_material),
+    paste0(" raw_material_source AS ", cm_miscellaneous_finds_raw_material_source),
+    "number",
+    "comments"
+  )
+  
+  if (!is.null(miscellaneous_finds_material)) 
+    miscellaneous_finds_material_condition <- query_check_intersection("AND ", 
+                                                                       miscellaneous_finds_material, 
+                                                                       cm_miscellaneous_finds_material)
+  else 
+    miscellaneous_finds_material_condition <- ""
+  
+  query <- paste(
+    "SELECT DISTINCT * FROM (",
+    "SELECT DISTINCT ",
+    paste(select_fields, collapse = ", "),
+    " FROM miscellaneous_finds) as foo WHERE true ",
+    assemblage_condition,
+    miscellaneous_finds_material_condition
+  )
+  
+  # message(query)
+  data <- road_run_query(query)
+  
+  return(merge(x = data, y = assemblage_info_for_output, 
+               by = c(cm_locality_idlocality, cm_assemblages_idassemblage)))
+}
+
+
 #' Get table and attribute overview of ROAD database
 #'
 #' `road_summerize_archaeology` fetches archaeological tables and their attributes from ROAD database.
@@ -461,6 +768,15 @@ road_summerize_archaeology <- function(term = NULL)
                   "SELECT '", term, "' AS term, 'technology' AS table_, 'comments' AS attribute, count(*) AS hit_number 
                    FROM technology WHERE comments ILIKE '%", term, "%'",
                   " UNION ",
+                  "SELECT '", term, "' AS term, 'function' AS table_, 'functional_traces' AS attribute, count(*) AS hit_number 
+                   FROM function WHERE functional_traces ILIKE '%", term, "%'",
+                  " UNION ",
+                  "SELECT '", term, "' AS term, 'function' AS table_, 'function_list' AS attribute, count(*) AS hit_number 
+                   FROM function WHERE function_list ILIKE '%", term, "%'",
+                  " UNION ",
+                  "SELECT '", term, "' AS term, 'function' AS table_, 'comments' AS attribute, count(*) AS hit_number 
+                   FROM function WHERE comments ILIKE '%", term, "%'",
+                  " UNION ",
                   "SELECT '", term, "' AS term, 'raw_material' AS table_, 'raw_material_list' AS attribute, count(*) AS hit_number 
                    FROM raw_material WHERE raw_material_list ILIKE '%", term, "%'", 
                   " UNION ",
@@ -496,13 +812,29 @@ road_summerize_archaeology <- function(term = NULL)
                   " UNION ",
                   "SELECT '", term, "' AS term, 'organic_tools' AS table_, 'comments' AS attribute, count(*) AS hit_number 
                    FROM organic_tools WHERE comments ILIKE '%", term, "%'",
-                  " ) as foo WHERE hit_number > 0 ORDER BY hit_number DESC"
+                  " UNION ",
+                  "SELECT '", term, "' AS term, 'miscellaneous_finds' AS table_, 'raw_material_source' AS attribute, count(*) AS hit_number 
+                   FROM miscellaneous_finds WHERE raw_material_source ILIKE '%", term, "%'",
+                  " UNION ",
+                  "SELECT '", term, "' AS term, 'miscellaneous_finds' AS table_, 'material' AS attribute, count(*) AS hit_number 
+                   FROM miscellaneous_finds WHERE material ILIKE '%", term, "%'",
+                  " UNION ",
+                  "SELECT '", term, "' AS term, 'miscellaneous_finds' AS table_, 'comments' AS attribute, count(*) AS hit_number 
+                   FROM miscellaneous_finds WHERE comments ILIKE '%", term, "%'",
+                  " UNION ",
+                  "SELECT '", term, "' AS term, 'feature' AS table_, 'interpretation' AS attribute, count(*) AS hit_number 
+                   FROM feature WHERE interpretation ILIKE '%", term, "%'",
+                  " UNION ",
+                  "SELECT '", term, "' AS term, 'feature' AS table_, 'comments' AS attribute, count(*) AS hit_number 
+                   FROM feature WHERE comments ILIKE '%", term, "%'",
+                  " ) as foo ORDER BY hit_number DESC,table_, attribute "
    )
   else query <- "SELECT null AS term, null AS table, null AS attribute, null AS hit_number"
   
-  # message(query)
+  #message(query)
   
   data <- road_run_query(query)
+  colnames(data)
   
   return(data)
 }

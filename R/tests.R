@@ -47,6 +47,8 @@ assemblages4 <- road_get_assemblages(localities = localities2, categories = c("t
 assemblages5 <- road_get_assemblages(localities = localities3)
 assemblages6 <- road_get_assemblages(countries = "Ukraine")
 assemblages7 <- road_get_assemblages(countries = "Ukraine", cultural_periods = "Middle Paleolithic")
+assemblages8 <- road_get_assemblages(continents = "Europe", cultural_periods = "Middle Paleolithic")
+
 
 # aux functions
 query_check_intersection("and ", "technology, typology", "technology, paleofauna")
@@ -79,8 +81,21 @@ lithic_typology1 <- road_get_lithic_typology(continents = "Europe", tool_list = 
 #road_get_lithic_raw_material()
 lithic_raw_material1 <- road_get_lithic_raw_material(countries = "France", raw_material_list = c("volcanic rock", "obsidian"))
 
+#road_get_organic_tools()
+organic_tools1 <- road_get_organic_tools(continents = "Europe", organic_tools_interpretation = "abrader/polisher")
+
+#road_get_symbolic_artifacts()
+symbolic_artifacts1 <- road_get_symbolic_artifacts(continents = "Europe", symbolic_artifacts_interpretation = "abstract", cultural_periods = "Middle Paleolithic")
+
+#road_get_feature()
+feature1 <- road_get_feature(continents = "Europe", feature_interpretation = "bedding", cultural_periods = "Middle Paleolithic")
+
+#road_get_miscellaneous_finds()
+miscellaneous_finds1 <- road_get_miscellaneous_finds(continents = "Europe", miscellaneous_finds_material = "wood fossil", cultural_periods = "Middle Paleolithic")
+
 #road_summerize_archaeology
-summery1 <- road_summerize_archaeology(term = "Cores")
+summary1 <- road_summerize_archaeology(term = "Cores")
+summary2 <- road_summerize_archaeology(term = "ochre")
 
 archaeo5 <- road_get_archaeology(raw_material_list = "syenite")
 archaeo6 <- road_get_archaeology(cultural_periods = "Middle Paleolithic", raw_material_list = c("flysch", "syenite"))
