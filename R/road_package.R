@@ -10,12 +10,14 @@ cm_geopolitical_units_continent_region <- "subcontinent"
 cm_locality_country <- "country"
 cm_locality_x <- "coord_x"
 cm_locality_y <- "coord_y"
+cm_cultural_period <- "cultural_period"
 cm_assemblages_locality_idlocality <- "locality_id"
 cm_assemblages_idassemblage <- "assemblage_id"
 cm_assemblages_name <- "name"
 cm_assemblages_categories <- "categories"
 cm_geological_stratigraphy_age_min <- "age_min"
 cm_geological_stratigraphy_age_max <- "age_max"
+
 cm_assemblage_in_geolayer_geolayer_name <- "geolayers"
 cm_geolayer_geolayer_name <- "geolayer"
 cm_assemblage_in_archlayer_archlayer_name <- "archlayers"
@@ -37,6 +39,25 @@ cm_paleoflora_plant_remains <- "plant_remains"
 cm_plant_taxonomy_family <- "plant_family"
 cm_plant_taxonomy_genus <- "plant_genus"
 cm_plant_taxonomy_species <- "plant_species"
+cm_tool_list <- "tool_list"
+cm_typology <- "typology"
+cm_raw_material_list <- "raw_material_list"
+cm_transport_distance <- "transport_distance"
+cm_organic_tools_interpretation <- "organic_tools_interpretation"
+cm_feature_interpretation <- "feature_interpretation"
+cm_miscellaneous_finds_material <- "miscellaneous_finds_material"
+cm_organic_tools_interpretation <- "organic_tools_interpretation"
+cm_organic_raw_material <- "organic_raw_material"
+cm_organic_tools_technology <- "organic_tools_technology"
+cm_symbolic_artifacts_interpretation <- "symbolic_artifacts_interpretation"
+cm_symbolic_artifacts_category <- "symbolic_artifacts_category"
+cm_symbolic_artifacts_material <- "symbolic_artifacts_material"
+cm_symbolic_artifacts_technology <- "symbolic_artifacts_technology"
+cm_symbolic_artifacts_raw_material_source <- "symbolic_artifacts_raw_material_source"
+cm_feature_interpretation <- "feature_interpretation"
+cm_miscellaneous_finds_material <- "miscellaneous_finds_material"
+cm_miscellaneous_finds_raw_material_source <- "miscellaneous_finds_raw_material_source"
+
 
 #' Get localities from ROAD Database
 #'
@@ -60,7 +81,8 @@ cm_plant_taxonomy_species <- "plant_species"
 #' @examples road_get_localities(countries = c("Germany", "France"), locality_type = "cave")
 #' @examples road_get_localities(NULL, NULL, "Germany")
 #' @examples road_get_localities(countries = c("Germany", "France"), cultural_periods = "Middle Paleolithic")
-road_get_localities <- function(continents = NULL, subcontinents = NULL, countries = NULL, locality_types = NULL, cultural_periods = NULL)
+road_get_localities <- function(continents = NULL, subcontinents = NULL, countries = NULL, 
+                                locality_types = NULL, cultural_periods = NULL)
 {
   # select fields
   select_fields <- c(
@@ -71,6 +93,7 @@ road_get_localities <- function(continents = NULL, subcontinents = NULL, countri
     paste0("locality.type AS ", cm_locality_types),
     paste0("locality.x AS ", cm_locality_x),
     paste0("locality.y AS ", cm_locality_y)
+    #paste0("'' AS ", cm_cultural_period)
   )
 
   # cultural periods
@@ -78,18 +101,19 @@ road_get_localities <- function(continents = NULL, subcontinents = NULL, countri
   query_additional_where_clauses <- ""
   if (!is.null(cultural_periods))
   {
+    select_fields[length(select_fields) + 1] <- paste0(" cultural_period AS ", cm_cultural_period)
     query_additional_joins <- paste(
       "INNER JOIN archaeological_layer ON locality.idlocality = archaeological_layer.locality_idlocality",
       "INNER JOIN archaeological_stratigraphy ON archaeological_layer.archstratigraphy_idarchstrat = archaeological_stratigraphy.idarchstrat"
     )
-    query_additional_where_clauses <- parameter_to_query("AND archaeological_stratigraphy.cultural_period IN (", cultural_periods, ")")
+    query_additional_where_clauses <- parameter_to_query(" AND archaeological_stratigraphy.cultural_period IN (", cultural_periods, ")")
   }
 
   # order by
   query_order_by <- ""
   if (!is.null(countries))
   {
-    query_order_by <- "ORDER BY locality.idlocality"
+    query_order_by <- paste("ORDER BY ", cm_locality_idlocality)
   }
 
   # combine query parts
@@ -108,7 +132,7 @@ road_get_localities <- function(continents = NULL, subcontinents = NULL, countri
     query_order_by
   )
   
-  #message(query)
+  # message(query)
 
   data <- road_run_query(query)
 
@@ -118,7 +142,7 @@ road_get_localities <- function(continents = NULL, subcontinents = NULL, countri
 
 #' Get assemblages from ROAD database
 #'
-#' `road_get_assemblages` fetches data of archeological assembalges from ROAD database.
+#' `road_get_assemblages` fetches data of archeological assemblages from ROAD database.
 #'
 #' Assembalges are articulated archeological finds inside in a locality. One locality
 #' can host multiple assemblages which can for example be associated with certain
@@ -148,7 +172,10 @@ road_get_localities <- function(continents = NULL, subcontinents = NULL, countri
 #' @examples road_get_assemblages(localities = road_get_localities())
 #' @examples road_get_assemblages(localities, NULL, 80000L, 120000L)
 #' @examples road_get_assemblages(localities = localities, categories = "human remains", age_max = 100000L)
-road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countries = NULL, locality_types = NULL, cultural_periods = NULL, categories = NULL, age_min = NULL, age_max = NULL, localities = NULL)
+road_get_assemblages <- function(continents = NULL, subcontinents = NULL, 
+                                 countries = NULL, locality_types = NULL, 
+                                 cultural_periods = NULL, categories = NULL, 
+                                 age_min = NULL, age_max = NULL, localities = NULL)
 {
   if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
     stop("Parameters 'min_age' and 'max_age' have to be integers.")
@@ -159,8 +186,13 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countr
   if (is.null(localities))
   {
     # run `road_get_localities` else preselected list of localities is used
-    localities <- road_get_localities(continents, subcontinents, countries, locality_types, cultural_periods)
+    localities <- road_get_localities(continents, subcontinents, countries, 
+                                      locality_types, cultural_periods)
   }
+
+  ### calculate output extention
+  locality_info_for_output <- get_output_extention_locality(localities=localities)
+  
   localities <- localities[cm_locality_idlocality]
   query_localities <- paste(
     sapply(localities, function(x) paste0("'", x, "'")),
@@ -169,7 +201,6 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countr
 
   # combine query parts
   query <- paste(
-    # SELECT
     "SELECT DISTINCT",
     paste0("assemblage.locality_idlocality AS ", cm_assemblages_locality_idlocality, ", "),
     paste0("geopolitical_units.continent AS ", cm_geopolitical_units_continent, ","),
@@ -223,13 +254,19 @@ road_get_assemblages <- function(continents = NULL, subcontinents = NULL, countr
     query_check_intersection("AND ", categories, "assemblage.category"),
     parameter_to_query("AND ", age_min, " <= age_max"),
     parameter_to_query("AND ", age_max, " >= age_min"),
-    "GROUP BY assemblage.locality_idlocality, locality.type, geopolitical_units.continent, geopolitical_units.continent_region, locality.country, locality.x, locality.y, assemblage.idassemblage, assemblage.name, assemblage.category, geological_stratigraphy.age_min, geological_stratigraphy.age_max",
+    "GROUP BY assemblage.locality_idlocality, locality.type, 
+    geopolitical_units.continent, geopolitical_units.continent_region, 
+    locality.country, locality.x, locality.y, assemblage.idassemblage, 
+    assemblage.name, assemblage.category, geological_stratigraphy.age_min, 
+    geological_stratigraphy.age_max",
     "ORDER BY assemblage.locality_idlocality ASC"
   )
 
   data <- road_run_query(query)
-
-  return(data)
+  
+  return(merge(x = data, y = locality_info_for_output, by = cm_locality_idlocality))
+  
+  ###return(data)
 }
 
 
@@ -556,6 +593,8 @@ get_assemblages_from_inputs <- function(continents, subcontinents, countries, lo
 # calculate assemblage_condition
 get_assemblage_condition <- function(query_start = "", assemblages = NULL, locality_id_column_name = cm_locality_idlocality, assemblage_id_column_name = cm_assemblages_idassemblage)
 {
+  # I am not sure, if it is better to do the assemblage search hier or in the caller function
+  # so this comments is an reminder
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
   #if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
   #                                                             age_min = age_min, age_max = age_max, localities = localities)
@@ -598,7 +637,9 @@ get_output_extention_locality <- function(localities = NULL)
   locality_info_for_output$subcontinent <- localities$subcontinent
   locality_info_for_output$country <- localities$country
   locality_info_for_output$locality_types <- localities$locality_types
-  locality_info_for_output$cultural_periods <- localities$cultural_periods
+  locality_info_for_output$coord_x <- localities$coord_x
+  locality_info_for_output$coord_y <- localities$coord_y
+  locality_info_for_output$cultural_period <- localities$cultural_period
   
   return(locality_info_for_output)
 }
@@ -614,6 +655,13 @@ get_output_extention_assemblage <- function(assemblages = NULL)
   assemblage_info_for_output$categories <- assemblages$categories
   assemblage_info_for_output$age_min <- assemblages$age_min
   assemblage_info_for_output$age_max <- assemblages$age_max
+  assemblage_info_for_output$continent <- assemblages$continent.y
+  assemblage_info_for_output$subcontinent <- assemblages$subcontinent.y
+  assemblage_info_for_output$country <- assemblages$country.y
+  assemblage_info_for_output$locality_types <- assemblages$locality_types.y
+  assemblage_info_for_output$cultural_period <- assemblages$cultural_period
+  assemblage_info_for_output$coord_x <- assemblages$coord_x.y
+  assemblage_info_for_output$coord_y <- assemblages$coord_y.y  
   
   return(assemblage_info_for_output)
 }
