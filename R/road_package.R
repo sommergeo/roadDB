@@ -1,4 +1,4 @@
-source("./roadDB/R/login.R")
+source("./R/login.R")
 library(assertthat)
 library(RPostgres)
 
@@ -33,6 +33,10 @@ cm_humanremains_age <- "age"
 cm_humanremains_sex <- "sex"
 cm_humanremains_idhumanremains <- "humanremains_id"
 cm_archaeological_category <- "archaeological_category"
+cm_paleoflora_plant_remains <- "plant_remains"
+cm_plant_taxonomy_family <- "plant_family"
+cm_plant_taxonomy_genus <- "plant_genus"
+cm_plant_taxonomy_species <- "plant_species"
 
 #' Get localities from ROAD Database
 #'
@@ -287,7 +291,7 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
   if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
                                                                 age_min = age_min, age_max = age_max, 
                                                                 localities = localities)
-  assemblage_condition <- get_assemblage_condition(assemblages = assemblages)
+  assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
   # calculate output extention
   assemblage_info_for_output <- get_output_extention_assemblage(assemblages)
 
@@ -358,6 +362,83 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
 
 }
 
+
+road_get_paleobotany <- function(
+  continents = NULL,
+  subcontinents = NULL,
+  countries = NULL,
+  locality_types = NULL,
+  cultural_periods = NULL,
+  categories = NULL,
+  age_min = NULL,
+  age_max = NULL,
+  plant_remains = NULL,
+  plant_family = NULL,
+  plant_genus = NULL,
+  plant_species = NULL,
+  localities = NULL,
+  assemblages = NULL
+) {
+  if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
+    stop("Parameters 'min_age' and 'max_age' have to be integers.")
+
+  if (!is.null(age_min) && !is.null(age_max) && age_min > age_max)
+    stop("Parameter 'min_age' can not be bigger than 'max_age'.")
+
+  assemblages <- get_assemblages_from_inputs(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max, localities, assemblages)
+  assemblage_condition <- get_assemblage_condition(assemblages = assemblages, locality_id_column_name = "paleoflora.plantremains_idlocality", assemblage_id_column_name = "paleoflora.plantremains_idassemblage")
+
+  plant_genus_conjuction <- ""
+  plant_species_conjuction <- ""
+  if (!is.null(plant_genus))
+  {
+    if (is.null(plant_family))
+      plant_genus_conjuction <- "AND"
+    else
+      plant_genus_conjuction <- "OR"
+  }
+  if (!is.null(plant_species))
+  {
+    if (is.null(plant_family) && is.null(plant_genus))
+      plant_species_conjuction <- "AND"
+    else
+      plant_species_conjuction <- "OR"
+  }
+
+  # combine query parts
+  query <- paste(
+    # SELECT
+    "SELECT DISTINCT",
+    paste0("paleoflora.plantremains_idlocality AS ", cm_locality_idlocality, ", "),
+    paste0("paleoflora.plantremains_idassemblage AS ", cm_assemblages_idassemblage, ", "),
+    paste0("paleoflora.plantremains_plant_remains AS ", cm_paleoflora_plant_remains, ", "),
+    paste0("plant_taxonomy.family AS ", cm_plant_taxonomy_family, ", "),
+    paste0("plant_taxonomy.genus AS ", cm_plant_taxonomy_genus, ", "),
+    paste0("plant_taxonomy.species AS ", cm_plant_taxonomy_species),
+    # FROM
+    "FROM paleoflora",
+    "INNER JOIN plant_taxonomy ON paleoflora.plant_taxonomy_taxon = plant_taxonomy.taxon",
+    # WHERE
+    "WHERE",
+    assemblage_condition,
+    parameter_to_query("AND paleoflora.plantremains_plant_remains IN (", plant_remains, ")"),
+    parameter_to_query("AND plant_taxonomy.family IN (", plant_family, ")"),
+    plant_genus_conjuction,
+    parameter_to_query("plant_taxonomy.family IN (", plant_genus, ")"),
+    plant_species_conjuction,
+    parameter_to_query("plant_taxonomy.species IN (", plant_species, ")"),
+    "ORDER BY paleoflora.plantremains_idlocality ASC"
+  )
+
+  data <- road_run_query(query)
+
+  localities <- assemblages[, c("locality_id", "assemblage_id", "continent", "subcontinent", "country", "locality_types", "coord_x", "coord_y")]
+  data <- merge(x = localities, y = data, by = c(cm_locality_idlocality, cm_assemblages_idassemblage))
+
+  return(data)
+}
+
+
 # run query in ROAD db
 road_run_query <- function(query)
 {
@@ -383,14 +464,14 @@ road_run_query <- function(query)
 
 
 # convert string parameter to vector
-parameter_to_query <- function(query_start, parameter, query_end)
+parameter_to_query <- function(query_start = "", parameter, query_end = "")
 {
   query <- ""
   if (!is.null(parameter))
   {
     parameter <- parameter_to_vector(parameter)
 
-    if (is.vector(parameter))  
+    if (is.vector(parameter))
     {
       query <- paste0(
         query_start,
@@ -409,7 +490,7 @@ parameter_to_query <- function(query_start, parameter, query_end)
 }
 
 # build query to check if parameters intersect with comma separated database values
-query_check_intersection <- function(query_start, parameter, column)
+query_check_intersection <- function(query_start = "", parameter, column)
 {
   query <- ""
   if (!is.null(parameter))
@@ -451,8 +532,29 @@ parameter_to_vector <- function(parameter)
   return(parameter)
 }
 
+# takes all assemblage related parameters and returns assemblages
+# if assembalges is set, it is returned, otherwise `road_get_assemblages` is called
+# if localites is set, it is used for `road_get_assemblages` alongside the other assemblage related parameters
+# if localites is not set, `road_get_localities` is called with the locality related parameters
+get_assemblages_from_inputs <- function(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max, localities, assemblages)
+{
+  if (is.null(assemblages))
+  {
+    if (is.null(localities))
+    {
+      # run `road_get_localities` else preselected list of localities is used
+      localities <- road_get_localities(continents, subcontinents, countries, locality_types, cultural_periods)
+    }
+    localities <- localities[cm_locality_idlocality]
+    # run `road_get_assemblages` else preselected list of assemblages is used
+    return(road_get_assemblages(categories = categories, age_min = age_min, age_max = age_max, localities = localities))
+  }
+  else
+    return(assemblages)
+}
+
 # calculate assemblage_condition
-get_assemblage_condition <- function(assemblages = NULL)
+get_assemblage_condition <- function(query_start = "", assemblages = NULL, locality_id_column_name = cm_locality_idlocality, assemblage_id_column_name = cm_assemblages_idassemblage)
 {
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
   #if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
@@ -471,8 +573,17 @@ get_assemblage_condition <- function(assemblages = NULL)
   
   assemblage_condition <- ""
   if (!is.null(query_locality_assemblage_list_str) && query_locality_assemblage_list_str != '')
-    assemblage_condition <- paste0(" AND ", cm_locality_idlocality, " || ', ' || ", 
-                                   cm_assemblages_idassemblage," IN (", query_locality_assemblage_list_str, ")")
+  {
+    assemblage_condition <- paste0(
+      query_start,
+      locality_id_column_name,
+      " || ', ' || ",
+      assemblage_id_column_name,
+      " IN (",
+      query_locality_assemblage_list_str,
+      ")"
+    )
+  }
   
   return(assemblage_condition)
 }
