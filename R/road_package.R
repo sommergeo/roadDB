@@ -156,14 +156,6 @@ road_get_localities <- function(
 #' Assembalges are articulated archeological finds inside in a locality. One locality
 #' can host multiple assemblages which can for example be associated with certain
 #' geological layers or historical time periods.
-#' This function uses a list of localities to get assemblages that were found in these localities.
-#' To preselect these localities the same parameters as in `road_get_localities` can be used.
-#' Alternatively, if you run `road_get_localities` independently, you can pass its return value
-#' (list of localities) to this function. This will overwrite any argumnets passed to the localities
-#' parameters in this function (continents, subcontinents, countries, locality_types, cultural_periods).
-#' Use parameters to further narrow down the assemblages you are searching for.
-#' Excluding `localities` all parameters are optional and should be omitted or
-#' set to NULL when not used.
 #'
 #' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
@@ -173,14 +165,13 @@ road_get_localities <- function(
 #' @param categories string (one item) or vector of strings (one or more items).
 #' @param age_min integer; minimum age of assemblage.
 #' @param age_max integer; maximum age of assemblage.
-#' @param localities list of localities; return value from function `road_get_localities`.
 #'
 #' @return Database search result as list of assemblages.
 #' @export
 #'
-#' @examples road_get_assemblages(localities = road_get_localities())
-#' @examples road_get_assemblages(localities, NULL, 80000L, 120000L)
-#' @examples road_get_assemblages(localities = localities, categories = "human remains", age_max = 100000L)
+#' @examples road_get_assemblages(countries = c("Germany", "France"), age_min = 100000L)
+#' @examples road_get_assemblages(categories = "human remains", age_max = 100000L)
+#' @examples road_get_assemblages(subcontinents = "Central Asia", cultural_periods = "Middle Paleolithic")
 road_get_assemblages <- function(
   continents = NULL,
   subcontinents = NULL,
@@ -354,7 +345,7 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
   if (!is.null(genus_species) && (!is.null(genus) || !is.null(species)))
     stop("Parameter 'genus_species' can't be used in combination with 'genus' or 'species'.")
 
-   # build genus/species selection
+  # build genus/species selection
   genus_species_condition = ""
   if (!is.null(genus_species))
   {
@@ -390,7 +381,7 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
     paste0("sex AS ", cm_humanremains_sex),
     paste0("humanremains_idhumanremains AS ", cm_humanremains_idhumanremains)
   )
-  
+
   # combine query parts
   query <- paste(
     "SELECT DISTINCT * FROM ( SELECT ",
@@ -402,9 +393,9 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
     genus_species_condition,
     "ORDER BY ", cm_locality_idlocality, ", ", cm_assemblages_idassemblage 
   )
-  
+
   data <- road_run_query(query)
-  
+
   data$genus[data$genus == ""] <- NA
   data$species[data$species == ""] <- NA
   data$age[data$age == ""] <- NA
@@ -419,6 +410,34 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
 }
 
 
+#' Get paleobotany data from ROAD database
+#'
+#' `road_get_paleobotany` fetches data of paleobotanical remains from the ROAD database.
+#'
+#' Paleobotanical remains are plant remains found in archaeological contexts. This function allows you to query
+#' paleobotanical data based on various parameters such as geographical location, cultural periods, plant taxonomy,
+#' and assemblages. Use the parameters to filter the results or omit them to retrieve broader results.
+#'
+#' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param categories string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param age_min integer; minimum age of paleobotanical remains.
+#' @param age_max integer; maximum age of paleobotanical remains.
+#' @param plant_remains string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param plant_family string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param plant_genus string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param plant_species string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
+#'
+#' @return Database search result as a list of assemblages with paleobotanical remains.
+#' @export
+#'
+#' @examples road_get_paleobotany(countries = c("Germany", "France"), plant_family = "Poaceae")
+#' @examples road_get_paleobotany(continents = "Europe", cultural_periods = "Neolithic", plant_genus = "Triticum")
+#' @examples road_get_paleobotany(categories = "plant remains", age_min = 5000L, age_max = 10000L)
 road_get_paleobotany <- function(
   continents = NULL,
   subcontinents = NULL,
@@ -647,20 +666,20 @@ get_assemblage_condition <- function(query_start = "", assemblages = NULL, local
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
   #if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
   #                                                             age_min = age_min, age_max = age_max, localities = localities)
-  
+
   locality_assemblage_list <- paste(assemblages$locality_id, assemblages$assemblage_id, sep = ", ")
-  
+
   # selected_cols <- c(1, 2)
   # locality_assemblage_list <- do.call(paste, c(assemblages2[selected_cols], sep = ", "))
-  
+
   query_locality_assemblage_list_str <- ""
   query_locality_assemblage_list_str <- paste(
     sapply(locality_assemblage_list, function(x) paste0("'", x, "'")),
     collapse = ", "
   )
-  
+
   assemblage_condition <- ""
-  if (!is.null(query_locality_assemblage_list_str) && query_locality_assemblage_list_str != '')
+  if (!is.null(query_locality_assemblage_list_str) && query_locality_assemblage_list_str != "")
   {
     assemblage_condition <- paste0(
       query_start,
@@ -672,7 +691,7 @@ get_assemblage_condition <- function(query_start = "", assemblages = NULL, local
       ")"
     )
   }
-  
+
   return(assemblage_condition)
 }
 
@@ -712,7 +731,7 @@ get_output_extention_assemblage <- function(assemblages = NULL)
   assemblage_info_for_output$locality_types <- assemblages$locality_types.y
   assemblage_info_for_output$cultural_period <- assemblages$cultural_period
   assemblage_info_for_output$coord_x <- assemblages$coord_x.y
-  assemblage_info_for_output$coord_y <- assemblages$coord_y.y  
+  assemblage_info_for_output$coord_y <- assemblages$coord_y.y
 
   return(assemblage_info_for_output)
 }
