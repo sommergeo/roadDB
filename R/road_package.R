@@ -336,8 +336,8 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
   if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
-                                                                age_min = age_min, age_max = age_max, 
-                                                                localities = localities)
+                                                                age_min = age_min, age_max = age_max)
+                                                                #localities = localities)
   assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
   # calculate output extention
   assemblage_info_for_output <- get_output_extention_assemblage(assemblages)
@@ -725,13 +725,13 @@ get_output_extention_assemblage <- function(assemblages = NULL)
   assemblage_info_for_output$categories <- assemblages$categories
   assemblage_info_for_output$age_min <- assemblages$age_min
   assemblage_info_for_output$age_max <- assemblages$age_max
-  assemblage_info_for_output$continent <- assemblages$continent.y
-  assemblage_info_for_output$subcontinent <- assemblages$subcontinent.y
-  assemblage_info_for_output$country <- assemblages$country.y
-  assemblage_info_for_output$locality_types <- assemblages$locality_types.y
+  assemblage_info_for_output$continent <- assemblages$continent
+  assemblage_info_for_output$subcontinent <- assemblages$subcontinent
+  assemblage_info_for_output$country <- assemblages$country
+  assemblage_info_for_output$locality_types <- assemblages$locality_types
   assemblage_info_for_output$cultural_period <- assemblages$cultural_period
-  assemblage_info_for_output$coord_x <- assemblages$coord_x.y
-  assemblage_info_for_output$coord_y <- assemblages$coord_y.y
+  assemblage_info_for_output$coord_x <- assemblages$coord_x
+  assemblage_info_for_output$coord_y <- assemblages$coord_y 
 
   return(assemblage_info_for_output)
 }

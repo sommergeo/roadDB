@@ -40,11 +40,11 @@ localities7 <- road_get_localities(countries = "Ukraine", cultural_periods = "Mi
 
 # road_get_assemblages()
 localities0 <- c("Bacho Kiro")
-assemblages2 <- road_get_assemblages(localities = localities5)
-assemblages3 <- road_get_assemblages(localities = localities2, age_min = 80000L, age_max = 120000L)
-assemblages3 <- road_get_assemblages(localities = localities2, age_min = 80000L, age_max = 120000L)
-assemblages4 <- road_get_assemblages(localities = localities2, categories = c("typology", "paleofauna"), age_max = 100000L)
-assemblages5 <- road_get_assemblages(localities = localities3)
+#assemblages2 <- road_get_assemblages(localities = localities5)
+#assemblages3 <- road_get_assemblages(localities = localities2, age_min = 80000L, age_max = 120000L)
+#assemblages3 <- road_get_assemblages(localities = localities2, age_min = 80000L, age_max = 120000L)
+#assemblages4 <- road_get_assemblages(localities = localities2, categories = c("typology", "paleofauna"), age_max = 100000L)
+#assemblages5 <- road_get_assemblages(localities = localities3)
 assemblages6 <- road_get_assemblages(countries = "Ukraine")
 assemblages7 <- road_get_assemblages(countries = "Ukraine", cultural_periods = "Middle Paleolithic")
 assemblages8 <- road_get_assemblages(continents = "Europe", cultural_periods = "Middle Paleolithic")
@@ -65,7 +65,7 @@ dates7 <- road_get_dates(continents = "Europe", cultural_periods = "Middle Paleo
 dates8 <- road_get_dates(continents = "Europe", countries = c("Germany", "France"), cultural_periods = "Middle Paleolithic", dating_methods = c("geology", "biostratigraphy"), technocomplex = c("UP/ Aurignacian"))
 dates9 <- road_get_dates(countries = "France", categories = c("feature"))
 dates10 <- road_get_dates(technocomplex = "EP/ Epipaleolithic")
-dates11 <- road_get_dates(localities=localities5) #, technocomplex = "UP/ Upper Paleolithic - Eurasia")
+#dates11 <- road_get_dates(localities=localities5) #, technocomplex = "UP/ Upper Paleolithic - Eurasia")
 dates12 <- road_get_dates(assemblages=assemblages2, technocomplex = "UP/ Upper Paleolithic - Eurasia")
 
 #road_get_archaeology()
@@ -97,11 +97,11 @@ miscellaneous_finds1 <- road_get_miscellaneous_finds(continents = "Europe", misc
 summary1 <- road_summerize_archaeology(term = "Cores")
 summary2 <- road_summerize_archaeology(term = "ochre")
 
-archaeo5 <- road_get_archaeology(raw_material_list = "syenite")
-archaeo6 <- road_get_archaeology(cultural_periods = "Middle Paleolithic", raw_material_list = c("flysch", "syenite"))
-archaeo7 <- road_get_archaeology(countries = "France", miscellaneous_finds_material = "glass")
-archaeo8 <- road_get_archaeology(feature_interpretation = "footprints")
-archaeo9 <- road_get_archaeology(organic_tools_interpretation = "retoucher", countries = "France")
+# archaeo5 <- road_get_archaeology(raw_material_list = "syenite")
+# archaeo6 <- road_get_archaeology(cultural_periods = "Middle Paleolithic", raw_material_list = c("flysch", "syenite"))
+# archaeo7 <- road_get_archaeology(countries = "France", miscellaneous_finds_material = "glass")
+# archaeo8 <- road_get_archaeology(feature_interpretation = "footprints")
+# archaeo9 <- road_get_archaeology(organic_tools_interpretation = "retoucher", countries = "France")
 
 #
 paleofauna0 <- road_get_paleofauna()

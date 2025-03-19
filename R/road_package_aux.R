@@ -151,7 +151,7 @@ road_get_dates <- function (continents = NULL, subcontinents = NULL, countries =
 
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, localities = localities)
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories) #localities = localities)
   assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
   # calculate output extention
   assemblage_info_for_output <- get_output_extention_assemblage(assemblages)
@@ -311,8 +311,8 @@ road_get_lithic_typology <- function(continents = NULL, subcontinents = NULL, co
                                                                 categories = categories, 
                                                                 locality_types = locality_types,
                                                                 cultural_periods = cultural_periods,
-                                                                age_min = age_min, age_max = age_max, 
-                                                                localities = localities)
+                                                                age_min = age_min, age_max = age_max) 
+                                                                #localities = localities)
   assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
   # calculate output extention
   assemblage_info_for_output <- get_output_extention_assemblage(assemblages = assemblages)
@@ -385,8 +385,8 @@ road_get_lithic_raw_material <- function(continents = NULL, subcontinents = NULL
                                                                 categories = categories, 
                                                                 locality_types = locality_types,
                                                                 cultural_periods = cultural_periods,
-                                                                age_min = age_min, age_max = age_max, 
-                                                                localities = localities)
+                                                                age_min = age_min, age_max = age_max) 
+                                                                #localities = localities)
   assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
   # calculate output extention
   assemblage_info_for_output <- get_output_extention_assemblage(assemblages = assemblages)
@@ -460,8 +460,8 @@ road_get_organic_tools <- function(continents = NULL, subcontinents = NULL, coun
                                                                 categories = categories, 
                                                                 locality_types = locality_types,
                                                                 cultural_periods = cultural_periods,
-                                                                age_min = age_min, age_max = age_max, 
-                                                                localities = localities)
+                                                                age_min = age_min, age_max = age_max) 
+                                                                #localities = localities)
   assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
   # calculate output extention
   assemblage_info_for_output <- get_output_extention_assemblage(assemblages = assemblages)
@@ -538,8 +538,8 @@ road_get_symbolic_artifacts <- function(continents = NULL, subcontinents = NULL,
                                                                 categories = categories, 
                                                                 locality_types = locality_types,
                                                                 cultural_periods = cultural_periods,
-                                                                age_min = age_min, age_max = age_max, 
-                                                                localities = localities)
+                                                                age_min = age_min, age_max = age_max) 
+                                                                #localities = localities)
   assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
   # calculate output extention
   assemblage_info_for_output <- get_output_extention_assemblage(assemblages = assemblages)
@@ -617,9 +617,9 @@ road_get_feature <- function(continents = NULL, subcontinents = NULL, countries 
                                                                 categories = categories, 
                                                                 locality_types = locality_types,
                                                                 cultural_periods = cultural_periods,
-                                                                age_min = age_min, age_max = age_max, 
-                                                                localities = localities)
-  assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
+                                                                age_min = age_min, age_max = age_max) 
+                                                                #localities = localities)
+  assemblage_condition <- get_assemblage_condition(query_start = " AND ", assemblages = assemblages)
   # calculate output extention
   assemblage_info_for_output <- get_output_extention_assemblage(assemblages = assemblages)
   
@@ -692,8 +692,8 @@ road_get_miscellaneous_finds <- function(continents = NULL, subcontinents = NULL
                                                                 categories = categories, 
                                                                 locality_types = locality_types,
                                                                 cultural_periods = cultural_periods,
-                                                                age_min = age_min, age_max = age_max, 
-                                                                localities = localities)
+                                                                age_min = age_min, age_max = age_max) 
+                                                                #localities = localities)
   assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
   # calculate output extention
   assemblage_info_for_output <- get_output_extention_assemblage(assemblages = assemblages)
@@ -886,8 +886,8 @@ road_get_paleofauna <- function(continents = NULL, subcontinents = NULL, countri
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
   if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
-                                                                age_min = age_min, age_max = age_max, 
-                                                                localities = localities)
+                                                                age_min = age_min, age_max = age_max)
+                                                                #localities = localities)
   assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
   # calculate output extention
   assemblage_info_for_output <- get_output_extention_assemblage(assemblages)

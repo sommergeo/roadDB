@@ -62,9 +62,9 @@ road_get_archaeology <- function(continents = NULL, subcontinents = NULL, countr
                                                                 categories = categories, 
                                                                 locality_types = locality_types,
                                                                 cultural_periods = cultural_periods,
-                                                                age_min = age_min, age_max = age_max, 
-                                                                localities = localities)
-  assemblage_condition <- get_assemblage_condition(assemblages = assemblages)
+                                                                age_min = age_min, age_max = age_max) 
+                                                                #localities = localities)
+  assemblage_condition <- get_assemblage_condition(" AND ", assemblages = assemblages)
   # calculate output extention
   assemblage_info_for_output <- get_output_extention_assemblage(assemblages = assemblages)
   
