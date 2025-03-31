@@ -40,7 +40,7 @@ localities7 <- road_get_localities(countries = "Ukraine", cultural_periods = "Mi
 
 # road_get_assemblages()
 localities0 <- c("Bacho Kiro")
-#assemblages2 <- road_get_assemblages(localities = localities5)
+assemblages2 <- road_get_assemblages(countries = c("Germany", "France"), cultural_periods = "Middle Paleolithic")
 #assemblages3 <- road_get_assemblages(localities = localities2, age_min = 80000L, age_max = 120000L)
 #assemblages3 <- road_get_assemblages(localities = localities2, age_min = 80000L, age_max = 120000L)
 #assemblages4 <- road_get_assemblages(localities = localities2, categories = c("typology", "paleofauna"), age_max = 100000L)
