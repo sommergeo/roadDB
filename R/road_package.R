@@ -39,6 +39,8 @@ cm_paleoflora_plant_remains <- "plant_remains"
 cm_plant_taxonomy_family <- "plant_family"
 cm_plant_taxonomy_genus <- "plant_genus"
 cm_plant_taxonomy_species <- "plant_species"
+cm_fauna_genus <- "fauna_genus"
+cm_fauna_species <- "fauna_species"
 cm_tool_list <- "tool_list"
 cm_typology <- "typology"
 cm_raw_material_list <- "raw_material_list"
@@ -327,9 +329,14 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
 
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
-                                                                age_min = age_min, age_max = age_max, 
-                                                                localities = localities)
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents, 
+                                                                subcontinents = subcontinents, 
+                                                                countries = countries, 
+                                                                locality_types = locality_types, 
+                                                                cultural_periods = cultural_periods,
+                                                                categories = categories, 
+                                                                age_min = age_min, 
+                                                                age_max = age_max)
   assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
   # calculate output extention
   assemblage_info_for_output <- get_output_extention_assemblage(assemblages)

@@ -68,13 +68,6 @@ dates10 <- road_get_dates(technocomplex = "EP/ Epipaleolithic")
 #dates11 <- road_get_dates(localities=localities5) #, technocomplex = "UP/ Upper Paleolithic - Eurasia")
 dates12 <- road_get_dates(assemblages=assemblages2, technocomplex = "UP/ Upper Paleolithic - Eurasia")
 
-#road_get_archaeology()
-
-archaeo0 <- road_get_archaeology()
-archaeo1 <- road_get_archaeology(continents = "Europe")
-archaeo2 <- road_get_archaeology(continents = "Europe", archaeological_category = "feature")
-archaeo3 <- road_get_archaeology(continents = "Europe", archaeological_category = c("feature", "symbolic artefacts"))
-
 # road_get_lithic_typology()
 lithic_typology1 <- road_get_lithic_typology(continents = "Europe", tool_list = "biface")
 
@@ -107,3 +100,7 @@ summary2 <- road_summerize_archaeology(term = "ochre")
 paleofauna0 <- road_get_paleofauna()
 paleofauna1 <- road_get_paleofauna(continents = "Asia")
 paleofauna2 <- road_get_paleofauna(countries = c("Germany", "France"))
+paleofauna3 <- road_get_paleofauna(countries = c("Germany", "France"), fauna_genus = "Canis")
+paleofauna4 <- road_get_paleofauna(countries = c("Germany", "France"), fauna_genus = "Canis", fauna_species = c("lupus", "vulpes"))
+paleofauna5 <- road_get_paleofauna(countries = c("Germany", "France"), fauna_genus = c("Canis", "Lepus"), fauna_species = c("lupus", "vulpes"))
+
