@@ -26,7 +26,6 @@
 #' @param miscellaneous_finds_material string (one item) or vector of strings
 #' 
 #' @return Database search result as list of archaeological finds.
-#' @export
 #'
 #' @examples road_get_archaeology(continents = "Europe")
 #' @examples road_get_archaeology(continents = "Europe", archaeological_category = "feature")
@@ -256,7 +255,6 @@ road_get_archaeology_ <- function(continents = NULL, subcontinents = NULL, count
 #' @param localities list of localities; return value from function `road_get_localities`.
 #' 
 #' @return Database search result as list of archaeological finds.
-#' @export
 #'
 #' @examples road_get_paleofauna(continents = "Europe")
 #' @examples road_get_paleofauna(continents = "Europe", archaeological_category = "feature")
