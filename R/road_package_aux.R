@@ -1,23 +1,54 @@
 library(assertthat)
 library(RPostgres)
-# library(stringr)
 
-tables <- list("feature", "locality", "geopolitical_units", "geopolitical_units", "locality",  
-            "assemblage", "archaeological_stratigraphy", "attr_values/ex.txt", 
-            c("geological_layer_age", "archaeological_layer_age", "assemblage_age"), 
-            c("geological_layer_age", "archaeological_layer_age", "assemblage_age"),
-            "archaeological_stratigraphy", "miscellaneous_finds", "publication_desc_humanremains", 
-            "symbolic_artifacts",
-            "publication_desc_humanremains", "organic_tools", "raw_material", 
-            "symbolic_artifacts", "typology")
-attributes <- c("feature:interpretation", "type", "continent", "continent_region", 
-                "country", "category", 
-                "cultural_period", "example", "dating_method", "material_dated", 
-                "technocomplex","miscellaneous_finds:material", "humanremains:genus", 
-                "symbolic_artifacts:interpretation",
-                "humanremains:species", "organic_tools:interpretation", "raw_material_list", 
-                "symbolic_artifacts:interpretation", "tool_list")
-
+tables <- list("geopolitical_units", 
+               "geopolitical_units", 
+               "locality", 
+               "locality", 
+               "archaeological_stratigraphy", 
+               "assemblage", 
+               "attr_values/ex.txt", 
+               c("geological_layer_age", "archaeological_layer_age", "assemblage_age"), 
+               c("geological_layer_age", "archaeological_layer_age", "assemblage_age"),
+               "archaeological_stratigraphy", 
+               "typology",
+               "raw_material",
+               "organic_tools",                     # rethink
+               "feature",                           # rethink
+               "miscellaneous_finds",               # rethink
+               "symbolic_artifacts",                # rethink
+               "publication_desc_humanremains", 
+               "publication_desc_humanremains",
+               "plantremains",
+               "plant_taxonomy", 
+               "plant_taxonomy",
+               "plant_taxonomy", 
+               "taxonomical_classification", 
+               "paleofauna")
+attributes <- c("continent", 
+                "continent_region", 
+                "country", 
+                "type", 
+                "cultural_period",
+                "category", 
+                "example", 
+                "dating_method", 
+                "material_dated", 
+                "technocomplex", 
+                "tool_list",
+                "raw_material_list",
+                "organic_tools:interpretation",       # rethink
+                "feature:interpretation",             # rethink
+                "miscellaneous_finds:material",       # rethink
+                "symbolic_artifacts:interpretation",  # rethink
+                "humanremains:genus", 
+                "humanremains:species", 
+                "plant_remains",
+                "plant:family",
+                "plant:genus", 
+                "plant:species",
+                "fauna:genus",
+                "fauna:species")
 
 #' Get attribute value from ROAD Database
 #'
@@ -75,7 +106,9 @@ road_list_values <- function (attribute_name = NULL)
     sapply(table, function(x) paste0(q, x)), 
     collapse = " UNION "
   )
-  query <- paste0(q_extension, que, ") AS foo ORDER BY ", cm_attribute_name)
+  query <- paste0(q_extension, que, ") AS foo ORDER BY ", cm_attribute_name, "")
+  
+  message(query)
   
   # message(query)
   

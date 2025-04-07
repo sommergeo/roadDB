@@ -28,6 +28,7 @@ values14 <- road_list_values("raw_material_list")
 values15 <- road_list_values("miscellaneous_finds:material")
 values16 <- road_list_values("feature:interpretation")
 values17 <- road_list_values("organic_tools:interpretation")
+values18 <- road_list_values("plant_taxonomy:family")
 
 # road_get_localities()
 localities2 <- road_get_localities(continents = c("Europe"), countries = c("Germany", "France"))
