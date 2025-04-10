@@ -14,8 +14,7 @@ road_get_organic_tools(
   age_min = NULL,
   age_max = NULL,
   organic_tools_interpretation = NULL,
-  assemblages = NULL,
-  localities = NULL
+  assemblages = NULL
 )
 }
 \arguments{
@@ -38,8 +37,6 @@ road_get_organic_tools(
 \item{organic_tools_interpretation}{string (one item) or vector of strings}
 
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
-
-\item{localities}{list of localities; return value from function `road_get_localities`.}
 }
 \value{
 Database search result as list of organic tools.

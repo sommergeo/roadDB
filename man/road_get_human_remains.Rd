@@ -16,8 +16,7 @@ road_get_human_remains(
   genus = NULL,
   species = NULL,
   genus_species = NULL,
-  assemblages = NULL,
-  localities = NULL
+  assemblages = NULL
 )
 }
 \arguments{

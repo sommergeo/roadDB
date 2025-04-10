@@ -14,8 +14,7 @@ road_get_feature(
   age_min = NULL,
   age_max = NULL,
   feature_interpretation = NULL,
-  assemblages = NULL,
-  localities = NULL
+  assemblages = NULL
 )
 }
 \arguments{
@@ -38,8 +37,6 @@ road_get_feature(
 \item{feature_interpretation}{string (one item) or vector of strings}
 
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
-
-\item{localities}{list of localities; return value from function `road_get_localities`.}
 }
 \value{
 Database search result as list of feature finds.

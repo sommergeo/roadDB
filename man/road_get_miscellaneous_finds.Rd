@@ -14,8 +14,7 @@ road_get_miscellaneous_finds(
   age_min = NULL,
   age_max = NULL,
   miscellaneous_finds_material = NULL,
-  assemblages = NULL,
-  localities = NULL
+  assemblages = NULL
 )
 }
 \arguments{
@@ -38,8 +37,6 @@ road_get_miscellaneous_finds(
 \item{miscellaneous_finds_material}{string (one item) or vector of strings}
 
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
-
-\item{localities}{list of localities; return value from function `road_get_localities`.}
 }
 \value{
 Database search result as list of miscellaneous finds.

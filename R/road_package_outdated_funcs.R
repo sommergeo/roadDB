@@ -1,35 +1,35 @@
-#' Get archaeology from ROAD database
-#'
-#' `road_get_archaeology_` fetches data of archaeological finds from ROAD database.
-#'
-#' Archaeological finds are often part of an assemblage which means the function needs a list of
-#' assemblages (return value of function `road_get_assemblages`) as its parameter.
-#'
-#' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param localities list of localities; return value from function `road_get_localities`.
-#' @param categories string (one item) or vector of strings (one or more items).
-#' @param age_min integer; minimum age of assemblage.
-#' @param age_max integer; maximum age of assemblage.
-#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
-#' 
-#' @param archaeological_category string (one item) or 
-#'        vector of strings ('lithics', 'organic tools', 'symbolic artefacts', 'miscellaneous finds', 'feature')
-#' @param tool_list string (one item) or vector of strings
-#' @param raw_material_list string (one item) or vector of strings
-#' @param organic_tools_interpretation string (one item) or vector of strings
-#' @param symbolic_artefacts_interpretation string (one item) or vector of strings
-#' @param feature_interpretation string (one item) or vector of strings
-#' @param miscellaneous_finds_material string (one item) or vector of strings
-#' 
-#' @return Database search result as list of archaeological finds.
-#'
-#' @examples road_get_archaeology(continents = "Europe")
-#' @examples road_get_archaeology(continents = "Europe", archaeological_category = "feature")
-#' @examples road_get_archaeology(continents = "Europe", archaeological_category = c("feature", "symbolic artefacts"))
+# Get archaeology from ROAD database
+#
+# `road_get_archaeology_` fetches data of archaeological finds from ROAD database.
+#
+# Archaeological finds are often part of an assemblage which means the function needs a list of
+# assemblages (return value of function `road_get_assemblages`) as its parameter.
+#
+# @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
+# @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
+# @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
+# @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
+# @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
+# @param localities list of localities; return value from function `road_get_localities`.
+# @param categories string (one item) or vector of strings (one or more items).
+# @param age_min integer; minimum age of assemblage.
+# @param age_max integer; maximum age of assemblage.
+# @param assemblages list of assemblages; return value from function `road_get_assemblages`.
+# 
+# @param archaeological_category string (one item) or 
+#        vector of strings ('lithics', 'organic tools', 'symbolic artefacts', 'miscellaneous finds', 'feature')
+# @param tool_list string (one item) or vector of strings
+# @param raw_material_list string (one item) or vector of strings
+# @param organic_tools_interpretation string (one item) or vector of strings
+# @param symbolic_artefacts_interpretation string (one item) or vector of strings
+# @param feature_interpretation string (one item) or vector of strings
+# @param miscellaneous_finds_material string (one item) or vector of strings
+# 
+# @return Database search result as list of archaeological finds.
+#
+# @examples road_get_archaeology(continents = "Europe")
+# @examples road_get_archaeology(continents = "Europe", archaeological_category = "feature")
+# @examples road_get_archaeology(continents = "Europe", archaeological_category = c("feature", "symbolic artefacts"))
 road_get_archaeology_ <- function(continents = NULL, subcontinents = NULL, countries = NULL, 
                                  locality_types = NULL, cultural_periods = NULL, 
                                  categories = NULL, age_min = NULL, age_max = NULL, 
@@ -234,31 +234,31 @@ road_get_archaeology_ <- function(continents = NULL, subcontinents = NULL, count
   
 }
 
-#' Get paleofauna finds from ROAD database
-#'
-#' `road_get_paleofauna_` fetches data of paleofauna finds from ROAD database.
-#'
-#' Paleofauna finds are often part of an assemblage which means the function needs a list of
-#' assemblages (return value of function `road_get_assemblages`) as its parameter.
-#'
-#' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param categories string (one item) or vector of strings (one or more items).
-#' @param age_min integer; minimum age of assemblage.
-#' @param age_max integer; maximum age of assemblage.
-#' @param fauna_genus string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param fauna_species string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
-#' @param localities list of localities; return value from function `road_get_localities`.
-#' 
-#' @return Database search result as list of archaeological finds.
-#'
-#' @examples road_get_paleofauna(continents = "Europe")
-#' @examples road_get_paleofauna(continents = "Europe", archaeological_category = "feature")
-#' @examples road_get_paleofauna(continents = "Europe", archaeological_category = c("feature", "symbolic artefacts"))
+# Get paleofauna finds from ROAD database
+#
+# `road_get_paleofauna_` fetches data of paleofauna finds from ROAD database.
+#
+# Paleofauna finds are often part of an assemblage which means the function needs a list of
+# assemblages (return value of function `road_get_assemblages`) as its parameter.
+#
+# @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
+# @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
+# @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
+# @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
+# @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
+# @param categories string (one item) or vector of strings (one or more items).
+# @param age_min integer; minimum age of assemblage.
+# @param age_max integer; maximum age of assemblage.
+# @param fauna_genus string (one item) or vector of strings (one or more items); defaults to NULL.
+# @param fauna_species string (one item) or vector of strings (one or more items); defaults to NULL.
+# @param assemblages list of assemblages; return value from function `road_get_assemblages`.
+# @param localities list of localities; return value from function `road_get_localities`.
+# 
+# @return Database search result as list of archaeological finds.
+#
+# @examples road_get_paleofauna(continents = "Europe")
+# @examples road_get_paleofauna(continents = "Europe", archaeological_category = "feature")
+# @examples road_get_paleofauna(continents = "Europe", archaeological_category = c("feature", "symbolic artefacts"))
 road_get_paleofauna_ <- function(
     continents = NULL, 
     subcontinents = NULL, 

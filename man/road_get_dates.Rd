@@ -16,8 +16,7 @@ road_get_dates(
   age_max = NULL,
   technocomplex = NULL,
   categories = NULL,
-  assemblages = NULL,
-  localities = NULL
+  assemblages = NULL
 )
 }
 \arguments{
@@ -44,8 +43,6 @@ road_get_dates(
 \item{categories}{string (one item) or vector of strings (one or more items).}
 
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
-
-\item{localities}{list of localities; return value from function `road_get_localities`.}
 }
 \value{
 date records
