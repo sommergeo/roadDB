@@ -1,6 +1,6 @@
 source("./R/login.R")
-library(assertthat)
-library(RPostgres)
+#library(assertthat)
+#library(RPostgres)
 
 # column names
 cm_locality_idlocality <- "locality_id"
