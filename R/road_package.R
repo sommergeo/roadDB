@@ -177,7 +177,7 @@ road_get_assemblages <- function(
   categories = NULL,
   age_min = NULL,
   age_max = NULL
-)
+) 
 {
   if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
     stop("Parameters 'min_age' and 'max_age' have to be integers.")
@@ -306,27 +306,21 @@ road_get_assemblages <- function(
 #' @examples road_get_human_remains(assemblages = assemblages, genus = 'Homo', species = 'neanderthalensis')
 #' @examples road_get_human_remains(assemblages = assemblages, genus = 'Homo')
 #' @examples road_get_human_remains(assemblages = assemblages, genus_species = 'Homo neanderthalensis')
-road_get_human_remains <- function(continents = NULL, subcontinents = NULL, countries = NULL, 
-                                   locality_types = NULL, cultural_periods = NULL, 
-                                   categories = NULL, age_min = NULL, age_max = NULL, 
-                                   genus = NULL, species = NULL, genus_species = NULL, 
-                                   assemblages = NULL, localities = NULL)
+road_get_human_remains <- function(
+  continents = NULL, 
+  subcontinents = NULL, 
+  countries = NULL, 
+  locality_types = NULL, 
+  cultural_periods = NULL, 
+  categories = NULL, 
+  age_min = NULL, 
+  age_max = NULL, 
+  genus = NULL, 
+  species = NULL, 
+  genus_species = NULL, 
+  assemblages = NULL
+)
 {
-  # calculate locality_condition
-  # To do: !is.null(one of localities parameters) AND !is.null(localities)  ---> Warnung an den Benutzer
-  if (is.null(localities)) localities <- road_get_localities(continents = continents, 
-                                                             subcontinents = subcontinents, 
-                                                             countries = countries, 
-                                                             locality_types = locality_types, 
-                                                             cultural_periods = cultural_periods)
-  # locality_condition <- get_locality_condition(localities = localities)
-  query_localities <- paste(
-   sapply(localities$locality_id, function(x) paste0("'", x, "'")),
-    collapse = ", "
-  )
-  # calculate output extention
-  locality_info_for_output <- get_output_extention_locality(localities=localities)
-
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
   if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents, 
@@ -338,8 +332,6 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
                                                                 age_min = age_min, 
                                                                 age_max = age_max)
   assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
-  # calculate output extention
-  assemblage_info_for_output <- get_output_extention_assemblage(assemblages)
 
   if (!is.null(genus_species) && (!is.null(genus) || !is.null(species)))
     stop("Parameter 'genus_species' can't be used in combination with 'genus' or 'species'.")
@@ -386,8 +378,7 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
     "SELECT DISTINCT * FROM ( SELECT ",
     paste(select_fields, collapse = ", "), 
     " FROM publication_desc_humanremains) as foo  
-    WHERE ", cm_locality_idlocality," IN (",
-    query_localities, ")",
+    WHERE TRUE ",
     assemblage_condition,
     genus_species_condition,
     "ORDER BY ", cm_locality_idlocality, ", ", cm_assemblages_idassemblage 
@@ -395,17 +386,9 @@ road_get_human_remains <- function(continents = NULL, subcontinents = NULL, coun
 
   data <- road_run_query(query)
 
-  data$genus[data$genus == ""] <- NA
-  data$species[data$species == ""] <- NA
-  data$age[data$age == ""] <- NA
-  data$sex[data$sex == ""] <- NA
-  data$genus_species_str[data$genus_species_str == ""] <- NA
-
-  data_plus_assemblage_info <- merge(x = data, y = assemblage_info_for_output, 
-                                     by = c(cm_locality_idlocality, cm_assemblages_idassemblage))
-
-  return(merge(x = data_plus_assemblage_info, y = locality_info_for_output, by = cm_locality_idlocality))
-
+  data <- add_locality_columns(data, assemblages = assemblages)
+  
+  return(data)
 }
 
 
@@ -451,7 +434,8 @@ road_get_paleobotany <- function(
   plant_genus = NULL,
   plant_species = NULL,
   assemblages = NULL
-) {
+) 
+{
   if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
     stop("Parameters 'min_age' and 'max_age' have to be integers.")
 
@@ -484,7 +468,6 @@ road_get_paleobotany <- function(
 
   # combine query parts
   query <- paste(
-    # SELECT
     "SELECT DISTINCT",
     paste0("paleoflora.plantremains_idlocality AS ", cm_locality_idlocality, ", "),
     paste0("paleoflora.plantremains_idassemblage AS ", cm_assemblages_idassemblage, ", "),
@@ -492,10 +475,8 @@ road_get_paleobotany <- function(
     paste0("plant_taxonomy.family AS ", cm_plant_taxonomy_family, ", "),
     paste0("plant_taxonomy.genus AS ", cm_plant_taxonomy_genus, ", "),
     paste0("plant_taxonomy.species AS ", cm_plant_taxonomy_species),
-    # FROM
     "FROM paleoflora",
     "INNER JOIN plant_taxonomy ON paleoflora.plant_taxonomy_taxon = plant_taxonomy.taxon",
-    # WHERE
     "WHERE",
     assemblage_condition,
     parameter_to_query("AND paleoflora.plantremains_plant_remains IN (", plant_remains, ")"),

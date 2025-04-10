@@ -108,10 +108,6 @@ road_list_values <- function (attribute_name = NULL)
   )
   query <- paste0(q_extension, que, ") AS foo ORDER BY ", cm_attribute_name, "")
   
-  message(query)
-  
-  # message(query)
-  
   # query <- paste( "SELECT DISTINCT ", attribute_name, " FROM (select distinct(unnest(string_to_array(
   # string_agg(", attribute_name, ", ', '),', '))) as ",
   # attribute_name, ", 'dummy' as dummy from ", table,  " GROUP BY dummy) as foo ", 
@@ -166,7 +162,8 @@ road_get_dates <- function (
   technocomplex = NULL, 
   categories = NULL, 
   assemblages = NULL
-) {
+) 
+{
   if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
     stop("Parameters 'min_age' and 'max_age' have to be integers.")
   
@@ -315,10 +312,18 @@ road_get_dates <- function (
 #' @examples road_get_lithic_typology(continents = "Europe")
 #' @examples road_get_lithic_typology(continents = "Europe",)
 #' @examples road_get_lithic_typology(continents = "Europe",)
-road_get_lithic_typology <- function(continents = NULL, subcontinents = NULL, countries = NULL, 
-                                 locality_types = NULL, cultural_periods = NULL, categories = NULL, 
-                                 age_min = NULL, age_max = NULL, tool_list = NULL,
-                                 assemblages = NULL, localities = NULL)
+road_get_lithic_typology <- function(
+  continents = NULL, 
+  subcontinents = NULL, 
+  countries = NULL, 
+  locality_types = NULL, 
+  cultural_periods = NULL, 
+  categories = NULL, 
+  age_min = NULL, 
+  age_max = NULL, 
+  tool_list = NULL,
+  assemblages = NULL
+)
 {
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
@@ -386,10 +391,18 @@ road_get_lithic_typology <- function(continents = NULL, subcontinents = NULL, co
 #' @examples road_get_lithic_typology(continents = "Europe")
 #' @examples road_get_lithic_typology(continents = "Europe", )
 #' @examples road_get_lithic_typology(continents = "Europe", ))
-road_get_lithic_raw_material <- function(continents = NULL, subcontinents = NULL, countries = NULL, 
-                                     locality_types = NULL, cultural_periods = NULL, categories = NULL, 
-                                     age_min = NULL, age_max = NULL, raw_material_list = NULL,
-                                     assemblages = NULL, localities = NULL)
+road_get_lithic_raw_material <- function(
+  continents = NULL, 
+  subcontinents = NULL, 
+  countries = NULL, 
+  locality_types = NULL, 
+  cultural_periods = NULL, 
+  categories = NULL, 
+  age_min = NULL, 
+  age_max = NULL, 
+  raw_material_list = NULL,
+  assemblages = NULL
+)
 {
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
@@ -402,8 +415,6 @@ road_get_lithic_raw_material <- function(continents = NULL, subcontinents = NULL
                                                                 age_min = age_min, age_max = age_max) 
                                                                 #localities = localities)
   assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
-  # calculate output extention
-  assemblage_info_for_output <- get_output_extention_assemblage(assemblages = assemblages)
   
   # select fields
   select_fields <- c(
@@ -470,7 +481,8 @@ road_get_organic_tools <- function(
   age_max = NULL, 
   organic_tools_interpretation = NULL,
   assemblages = NULL
-) {
+) 
+{
   
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
