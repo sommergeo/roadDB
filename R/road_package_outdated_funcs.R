@@ -324,3 +324,43 @@ road_get_paleofauna_ <- function(
   return(data)
   
 }
+
+get_output_extention_locality <- function(localities = NULL)
+{
+  if (is.null(localities)) return(NULL)
+  
+  locality_info_for_output <- list()
+  locality_info_for_output$locality_id <- localities$locality_id
+  locality_info_for_output$continent <- localities$continent
+  locality_info_for_output$subcontinent <- localities$subcontinent
+  locality_info_for_output$country <- localities$country
+  locality_info_for_output$locality_types <- localities$locality_types
+  locality_info_for_output$coord_x <- localities$coord_x
+  locality_info_for_output$coord_y <- localities$coord_y
+  locality_info_for_output$cultural_period <- localities$cultural_period
+  
+  return(locality_info_for_output)
+}
+
+
+get_output_extention_assemblage <- function(assemblages = NULL)
+{
+  if (is.null(assemblages)) return(NULL)
+  
+  assemblage_info_for_output <- list()
+  
+  assemblage_info_for_output$locality_id <- assemblages$locality_id
+  assemblage_info_for_output$assemblage_id <- assemblages$assemblage_id
+  assemblage_info_for_output$categories <- assemblages$categories
+  assemblage_info_for_output$age_min <- assemblages$age_min
+  assemblage_info_for_output$age_max <- assemblages$age_max
+  assemblage_info_for_output$continent <- assemblages$continent.y
+  assemblage_info_for_output$subcontinent <- assemblages$subcontinent.y
+  assemblage_info_for_output$country <- assemblages$country.y
+  assemblage_info_for_output$locality_types <- assemblages$locality_types.y
+  assemblage_info_for_output$cultural_period <- assemblages$cultural_period
+  assemblage_info_for_output$coord_x <- assemblages$coord_x.y
+  assemblage_info_for_output$coord_y <- assemblages$coord_y.y
+  
+  return(assemblage_info_for_output)
+}
