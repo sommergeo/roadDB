@@ -1,0 +1,55 @@
+test_that("multiplication works", {
+  expect_equal(2 * 2, 4)
+})
+
+test_that("road_get_dates() returns the correct data types", {
+  # Call the function
+  result <- road_get_dates()
+  
+  # Check if the column types match the expected types
+  expect_equal(class(result$locality_id), "character")
+  expect_equal(class(result$assemblage_id), "integer")
+  expect_equal(class(result$continent), "character")
+  expect_equal(class(result$subcontinent), "character")
+  expect_equal(class(result$country), "character")
+  expect_equal(class(result$locality_types), "character")
+  expect_equal(class(result$coord_x), "numeric")
+  expect_equal(class(result$coord_y), "numeric")
+  expect_equal(class(result$assemblage_name), "character")
+  expect_equal(class(result$categories), "character")
+  expect_equal(class(result$age_min), "integer")
+  expect_equal(class(result$age_max), "integer")
+  expect_equal(class(result$cultural_periods), "character")
+  expect_equal(class(result$geolayer), "character")
+  expect_equal(class(result$archlayer), "character")
+  expect_equal(class(result$age), "integer")
+  expect_equal(class(result$negative_standard_deviation), "integer")
+  expect_equal(class(result$positive_standard_deviation), "integer")
+  expect_equal(class(result$material_dated), "character")
+  expect_equal(class(result$dating_method), "character")
+  expect_equal(class(result$laboratory_idlaboratory), "character")
+  expect_equal(class(result$technocomplex), "character")
+  
+  # Check if the result is a data frame and has the expected number of rows and columns
+  expect_s3_class(result, "data.frame")
+  expect_equal(ncol(result), 22)
+  expect_true(nrow(road_get_dates()) > 0)
+})
+
+
+test_that("road_get_dates() returns sane age results", {
+  # Call the function
+  result <- road_get_dates()
+  
+  # Check that the age column is within the expected range
+  expect_true(all(result$age >= 0 & result$age <= 7000000), 
+              info = "Some values in the age column are outside the expected range (0 to 7 million).")
+  # Check that all values in the 'age' column are positive
+  expect_true(all(result$age > 0), info = "Some values in the 'age' column are non-positive.")
+  
+  # Check that all values in the 'negative_standard_deviation' column are positive
+  expect_true(all(result$negative_standard_deviation > 0), info = "Some values in the 'negative_standard_deviation' column are non-positive.")
+  
+  # Check that all values in the 'positive_standard_deviation' column are positive
+  expect_true(all(result$positive_standard_deviation > 0), info = "Some values in the 'positive_standard_deviation' column are non-positive.")
+})
