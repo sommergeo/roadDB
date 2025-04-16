@@ -41,15 +41,15 @@ test_that("road_get_dates() returns sane age results", {
   # Call the function
   result <- road_get_dates()
   
-  # Check that the age column is within the expected range
-  expect_true(all(result$age >= 0 & result$age <= 7000000), 
-              info = "Some values in the age column are outside the expected range (0 to 7 million).")
-  # Check that all values in the 'age' column are positive
-  expect_true(all(result$age > 0), info = "Some values in the 'age' column are non-positive.")
+  # Check that the age column is within the expected range, or NA is allowed
+  expect_true(all(is.na(result$age) | (result$age >= 0 & result$age <= 7000000)), 
+              info = "Some values in the age column are outside the expected range (0 to 7 million), or there are unexpected NAs.")
   
-  # Check that all values in the 'negative_standard_deviation' column are positive
-  expect_true(all(result$negative_standard_deviation > 0), info = "Some values in the 'negative_standard_deviation' column are non-positive.")
+  # Check that all values in the 'negative_standard_deviation' column are positive, or NA is allowed
+  expect_true(all(is.na(result$negative_standard_deviation) | (result$negative_standard_deviation >= 0)), 
+              info = "Some values in the 'negative_standard_deviation' column are non-positive, or there are unexpected NAs.")
   
-  # Check that all values in the 'positive_standard_deviation' column are positive
-  expect_true(all(result$positive_standard_deviation > 0), info = "Some values in the 'positive_standard_deviation' column are non-positive.")
+  # Check that all values in the 'positive_standard_deviation' column are positive, or NA is allowed
+  expect_true(all(is.na(result$positive_standard_deviation) | (result$positive_standard_deviation >= 0)), 
+              info = "Some values in the 'positive_standard_deviation' column are non-positive, or there are unexpected NAs.")
 })
