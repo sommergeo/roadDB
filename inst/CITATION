@@ -1,11 +1,28 @@
+citHeader("To cite package stars in publications, please use:")
+
 bibentry(
   bibtype  = "Article",
-  title = {The ROCEEH Out of Africa Database (ROAD): A large-scale research database serves as an indispensable tool for human evolutionary studies},
-  author = {Kandel, A. W. and Sommer, C. and Kanaeva, Z. and Bolus, M. and Bruch, A. A. and Groth, C. and Haidle, M. N. and Hertler, C. and Heß, J. and Malina, M. and Märker, M. and Hochschild, V. and Mosbrugger, V. and Schrenk, F. and Conard, N. J.},
-  journal = {PLOS ONE},
-  year = {2023},
-  volume = {18},
-  number = {8},
-  pages = {e0289513},
-  doi = {10.1371/journal.pone.0289513}
+  title = "The ROCEEH Out of Africa Database (ROAD): A large-scale research database serves as an indispensable tool for human evolutionary studies",
+  author=c(
+  person(c("A.", "W."), "Kandel"),
+  person(c("C."), "Sommer"),
+  person(c("Z."), "Kanaeva"),
+  person(c("M."), "Bolus"),
+  person(c("A.", "A."), "Bruch"),
+  person(c("C."), "Groth"),
+  person(c("M.", "N."), "Haidle"),
+  person(c("C."), "Hertler"),
+  person(c("J."), "Heß"),
+  person(c("M."), "Malina"),
+  person(c("M."), "Märker"),
+  person(c("V."), "Hochschild"),
+  person(c("V."), "Mosbrugger"),
+  person(c("F."), "Schrenk"),
+  person(c("N.", "J."), "Conard")),
+  journal = "PLOS ONE",
+  year = "2023",
+  volume = "18",
+  number = "8",
+  pages = "e0289513",
+  doi = "10.1371/journal.pone.0289513"
 )
