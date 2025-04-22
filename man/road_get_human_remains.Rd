@@ -43,8 +43,6 @@ road_get_human_remains(
 \item{genus_species}{string (one item) or vector of strings (one or more items); can not be used in combination with `genus` or `species`.}
 
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
-
-\item{localities}{list of localities; return value from function `road_get_localities`.}
 }
 \value{
 Database search result as list of human remains.
@@ -61,7 +59,8 @@ Mode 1: either one or both of `genus` and `species` is used (not NULL), then `ge
 Mode 2: `genus_species` is used (not NULL), then `genus` and `species` can't be used and have to be set to NULL.
 }
 \examples{
-road_get_human_remains(assemblages = assemblages, genus = 'Homo', species = 'neanderthalensis')
-road_get_human_remains(assemblages = assemblages, genus = 'Homo')
-road_get_human_remains(assemblages = assemblages, genus_species = 'Homo neanderthalensis')
+road_get_human_remains(genus = 'Homo', species = 'neanderthalensis')
+road_get_human_remains(genus = 'Homo')
+road_get_human_remains(species = 'neanderthalensis')
+road_get_human_remains(genus_species = 'Homo neanderthalensis')
 }
