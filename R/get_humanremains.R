@@ -14,7 +14,6 @@
 #' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param localities list of localities; return value from function `road_get_localities`.
 #' @param categories string (one item) or vector of strings (one or more items).
 #' @param age_min integer; minimum age of assemblage.
 #' @param age_max integer; maximum age of assemblage.
@@ -26,9 +25,10 @@
 #' @return Database search result as list of human remains.
 #' @export
 #'
-#' @examples road_get_human_remains(assemblages = assemblages, genus = 'Homo', species = 'neanderthalensis')
-#' @examples road_get_human_remains(assemblages = assemblages, genus = 'Homo')
-#' @examples road_get_human_remains(assemblages = assemblages, genus_species = 'Homo neanderthalensis')
+#' @examples road_get_human_remains(genus = 'Homo', species = 'neanderthalensis')
+#' @examples road_get_human_remains(genus = 'Homo')
+#' @examples road_get_human_remains(species = 'neanderthalensis')
+#' @examples road_get_human_remains(genus_species = 'Homo neanderthalensis')
 road_get_human_remains <- function(
     continents = NULL, 
     subcontinents = NULL, 
@@ -78,10 +78,11 @@ road_get_human_remains <- function(
       genus_species_condition <- paste(
         genus_species_condition,
         species_conjucton,
-        parameter_to_query("species IN (", species, ") )")
+        parameter_to_query("species IN (", species, ")")
       )
+  
     }
-    else genus_species_condition <- genus_species_condition
+    else genus_species_condition <- paste(genus_species_condition, ")")
   }
   
   # select fields
