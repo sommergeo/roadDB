@@ -1,3 +1,61 @@
+road_list_values <- function (attribute_name = NULL)
+{
+  if (is.null(attribute_name))
+    return("No attribute name is given.")
+  
+  table <- NULL
+  
+  # computing length of attributes array
+  size = length(attributes)
+  # iterating over elements of attributes to get table list
+  for (i in 1:size){
+    if(attribute_name == attributes[i]) {
+      table = tables[i]
+    }
+  }  
+  # table <- c("geological_layer_age", "archaeological_layer_age", "assemblage_age")
+  if (is.null(table))
+    return(paste("No data source for parameter ", attribute_name, " was not found."))
+  
+  if (grepl(".txt", table, fixed = TRUE) && grepl("/", table, fixed = TRUE)) {
+    data <- read.csv(toString(table))
+    return(data)
+  }
+  
+  x <- strsplit(attribute_name, ":")
+  
+  if (length(x[[1]]) > 1) cm_attribute_name <- x[[1]][2]
+  else cm_attribute_name <- attribute_name
+  
+  # if we use tables <- list(...), all elements of the list are vectors
+  q_extension <- paste( "SELECT DISTINCT regexp_replace(", cm_attribute_name,", '.+[1234567890 ]+', '') AS ",
+                        cm_attribute_name,
+                        " FROM ( ")
+  
+  q <- paste( "SELECT 
+              DISTINCT(unnest(regexp_split_to_array(", cm_attribute_name, ",',[ ]*'))) AS ",
+              cm_attribute_name,
+              " from ")
+  que <- paste(
+    sapply(table, function(x) paste0(q, x)), 
+    collapse = " UNION "
+  )
+  query <- paste0(q_extension, que, ") AS foo ORDER BY ", cm_attribute_name, "")
+  
+  # query <- paste( "SELECT DISTINCT ", attribute_name, " FROM (select distinct(unnest(string_to_array(
+  # string_agg(", attribute_name, ", ', '),', '))) as ",
+  # attribute_name, ", 'dummy' as dummy from ", table,  " GROUP BY dummy) as foo ", 
+  # " ORDER BY ", attribute_name)
+  
+  
+  
+  data <- road_run_query(query)
+  
+  #data_d <- data.frame(lapply(data, function(x) {gsub("1|2|3|5|6|7<89|0", "", x)}))
+  
+  return(data)
+}
+
 # Get archaeology from ROAD database
 #
 # `road_get_archaeology_` fetches data of archaeological finds from ROAD database.
