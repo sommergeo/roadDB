@@ -51,8 +51,3 @@ Database search result as list of archaeological finds.
 Paleofauna finds are often part of an assemblage which means the function needs a list of
 assemblages (return value of function `road_get_assemblages`) as its parameter.
 }
-\examples{
-road_get_paleofauna(continents = "Europe")
-road_get_paleofauna(continents = "Europe", archaeological_category = "feature")
-road_get_paleofauna(continents = "Europe", archaeological_category = c("feature", "symbolic artefacts"))
-}

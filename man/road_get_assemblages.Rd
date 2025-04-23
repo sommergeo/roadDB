@@ -43,8 +43,3 @@ Assembalges are articulated archeological finds inside in a locality. One locali
 can host multiple assemblages which can for example be associated with certain
 geological layers or historical time periods.
 }
-\examples{
-road_get_assemblages(countries = c("Germany", "France"), age_min = 100000L)
-road_get_assemblages(categories = "human remains", age_max = 100000L)
-road_get_assemblages(subcontinents = "Central Asia", cultural_periods = "Middle Paleolithic")
-}

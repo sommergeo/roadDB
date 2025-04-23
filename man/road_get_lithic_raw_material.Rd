@@ -44,8 +44,3 @@ Database search result as list of lithic finds with info about raw material.
 \description{
 `road_get_lithic_raw_material` fetches data of lithic finds from ROAD database.
 }
-\examples{
-road_get_lithic_typology(continents = "Europe")
-road_get_lithic_typology(continents = "Europe", )
-road_get_lithic_typology(continents = "Europe", ))
-}

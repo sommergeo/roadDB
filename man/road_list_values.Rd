@@ -7,7 +7,7 @@
 road_list_values(attribute_name = NULL)
 }
 \arguments{
-\item{attribute_name}{name of an attribute; defaults to NULL.}
+\item{attribute_name}{name of an attribute.}
 }
 \value{
 List of attribute values.
@@ -15,11 +15,4 @@ List of attribute values.
 \description{
 `road_list_values` fetches values of a given attribute in the database or 
 read values from file
-}
-\details{
-#' All parameters are optional and should be omitted or set to NULL when not used.
-}
-\examples{
-road_list_values("category")
-road_list_values("cultural_period")
 }

@@ -44,8 +44,3 @@ Database search result as list of miscellaneous finds.
 \description{
 `road_get_miscellaneous_finds` fetches data of feature finds from ROAD database.
 }
-\examples{
-road_get_miscellaneous_finds(continents = "Europe")
-road_get_miscellaneous_finds(continents = "Europe", )
-road_get_miscellaneous_finds(continents = "Europe", )
-}
