@@ -46,28 +46,72 @@ attributes <- c("continent",
                 "plant:species",
                 "fauna:genus",
                 "fauna:species")
+#' Get parameter value from ROAD Database
+#'
+#' `road_list_parameter_values` fetches values of a given parameter in the database or 
+#' read values from file
+#'
+#' @param function_name name of a function
+#' @param function_parameter name of a function parameter
+#'
+#' @return List of attribute values.
+#' @export
+#'
+# @examples road_list_parameter_values("road_get_localities", "locality_types")
+road_list_parameter_values <- function (function_name, function_parameter)
+{
+  attribute_name = case_when(
+    #(function_name == "road_get_localities" | 
+    #  function_name == "road_get_assemblages") & 
+      function_parameter == "continents"
+        ~ "continent",
+    #function_name == "road_get_localities" & 
+      function_parameter == "subcontinents"
+        ~ "continent_region",
+    #function_name == "road_get_localities" & 
+      function_parameter == "countries"
+        ~ "country",
+    #function_name == "road_get_localities" & 
+      function_parameter == "locality_types"
+        ~ "type",
+    #function_name == "road_get_localities" & 
+      function_parameter == "cultural_periods"
+        ~ "cultural_period",
+    #function_name == "road_get_assemblages" &
+      function_parameter == "categories" 
+        ~ "category",
+      function_parameter == "dating_methods" 
+        ~ "dating_method",
+      function_parameter == "material_dated" 
+        ~ "material_dated",
+    TRUE  ~ function_parameter
+  )
+  
+  data <- road_list_values(attribute_name)
+  
+  return(data)
+  
+}
 
 #' Get attribute value from ROAD Database
 #'
 #' `road_list_values` fetches values of a given attribute in the database or 
 #' read values from file
 #'
-#'#' All parameters are optional and should be omitted or set to NULL when not used.
-#'
-#' @param attribute_name name of an attribute; defaults to NULL.
+#' @param attribute_name name of an attribute.
 #'
 #' @return List of attribute values.
 #' @export
 #'
-#' @examples road_list_values("category")
-#' @examples road_list_values("cultural_period")
-road_list_values <- function (attribute_name = NULL)
-{
+# @examples road_list_values("category")
+# @examples road_list_values("cultural_period")
+road_list_values <- function (attribute_name)
+{ 
   if (is.null(attribute_name))
     return("No attribute name is given.")
   
   table <- NULL
-  
+
   # computing length of attributes array
   size = length(attributes)
   # iterating over elements of attributes to get table list
@@ -91,7 +135,7 @@ road_list_values <- function (attribute_name = NULL)
   else cm_attribute_name <- attribute_name
   
   # if we use tables <- list(...), all elements of the list are vectors
-  q_extension <- paste( "SELECT DISTINCT regexp_replace(", cm_attribute_name,", '.+[1234567890 ]+', '') AS ",
+  q_extension <- paste( "SELECT DISTINCT regexp_replace(", cm_attribute_name,", '.+[1234567890]+', '') AS ",
                         cm_attribute_name,
                         " FROM ( ")
   
@@ -109,8 +153,6 @@ road_list_values <- function (attribute_name = NULL)
   # string_agg(", attribute_name, ", ', '),', '))) as ",
   # attribute_name, ", 'dummy' as dummy from ", table,  " GROUP BY dummy) as foo ", 
   # " ORDER BY ", attribute_name)
-  
-  
   
   data <- road_run_query(query)
   
