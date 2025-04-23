@@ -5,5 +5,6 @@
 #' @importFrom assertthat is.string
 #' @importFrom RPostgres dbConnect
 #' @importFrom RPostgres dbGetQuery
+#' @importFrom utils read.csv
 ## usethis namespace: end
 NULL
