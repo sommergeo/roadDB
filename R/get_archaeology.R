@@ -17,9 +17,8 @@
 #' @return Database search result as list of lithic finds with info about typology.
 #' @export
 #'
-#' @examples road_get_lithic_typology(continents = "Europe")
-#' @examples road_get_lithic_typology(continents = "Europe",)
-#' @examples road_get_lithic_typology(continents = "Europe",)
+# @examples road_get_lithic_typology(continents = "Europe")
+# @examples road_get_lithic_typology(continents = "Europe", tool_list = "biface")
 road_get_lithic_typology <- function(
     continents = NULL, 
     subcontinents = NULL, 
@@ -96,9 +95,7 @@ road_get_lithic_typology <- function(
 #' @return Database search result as list of lithic finds with info about raw material.
 #' @export
 #'
-#' @examples road_get_lithic_typology(continents = "Europe")
-#' @examples road_get_lithic_typology(continents = "Europe", )
-#' @examples road_get_lithic_typology(continents = "Europe", ))
+# @examples road_get_lithic_raw_material(continents = "Europe")
 road_get_lithic_raw_material <- function(
     continents = NULL, 
     subcontinents = NULL, 
@@ -175,9 +172,7 @@ road_get_lithic_raw_material <- function(
 #' @return Database search result as list of organic tools.
 #' @export
 #'
-#' @examples road_get_organic_tools(continents = "Europe")
-#' @examples road_get_organic_tools(continents = "Europe", )
-#' @examples road_get_organic_tools(continents = "Europe", )
+# @examples road_get_organic_tools(continents = "Europe")
 road_get_organic_tools <- function(
     continents = NULL, 
     subcontinents = NULL, 
@@ -259,9 +254,7 @@ road_get_organic_tools <- function(
 #' @return Database search result as list of symbolic artifacts with info about symbolic.
 #' @export
 #'
-#' @examples road_get_symbolic_artifacts(continents = "Europe")
-#' @examples road_get_symbolic_artifacts(continents = "Europe", )
-#' @examples road_get_symbolic_artifacts(continents = "Europe", )
+# @examples road_get_symbolic_artifacts(continents = "Europe")
 road_get_symbolic_artifacts <- function(
     continents = NULL, 
     subcontinents = NULL, 
@@ -343,9 +336,7 @@ road_get_symbolic_artifacts <- function(
 #' @return Database search result as list of feature finds.
 #' @export
 #'
-#' @examples road_get_feature(continents = "Europe")
-#' @examples road_get_feature(continents = "Europe", )
-#' @examples road_get_feature(continents = "Europe", )
+# @examples road_get_feature(continents = "Europe")
 road_get_feature <- function(
     continents = NULL, 
     subcontinents = NULL, 
@@ -421,9 +412,7 @@ road_get_feature <- function(
 #' @return Database search result as list of miscellaneous finds.
 #' @export
 #'
-#' @examples road_get_miscellaneous_finds(continents = "Europe")
-#' @examples road_get_miscellaneous_finds(continents = "Europe", )
-#' @examples road_get_miscellaneous_finds(continents = "Europe", )
+# @examples road_get_miscellaneous_finds(continents = "Europe")
 road_get_miscellaneous_finds <- function(
     continents = NULL, 
     subcontinents = NULL, 

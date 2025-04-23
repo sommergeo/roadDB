@@ -14,12 +14,10 @@
 #' @return Database search result as list of localities.
 #' @export
 #'
-#' @examples road_get_localities()
-#' @examples road_get_localities(continents = c("Europe"), countries = c("Germany", "France"))
-#' @examples road_get_localities(continents = "Europe", countries = c("Germany", "France"))
-#' @examples road_get_localities(countries = c("Germany", "France"), locality_type = "cave")
-#' @examples road_get_localities(NULL, NULL, "Germany")
-#' @examples road_get_localities(countries = c("Germany", "France"), cultural_periods = "Middle Paleolithic")
+# @examples road_get_localities(continents = c("Europe"), countries = c("Germany", "France"))
+# @examples road_get_localities(continents = "Europe", countries = c("Germany", "France"))
+# @examples road_get_localities(countries = c("Germany", "France"), locality_type = "cave")
+# @examples road_get_localities(countries = c("Germany", "France"), cultural_periods = "Middle Paleolithic")
 road_get_localities <- function(
     continents = NULL,
     subcontinents = NULL,
