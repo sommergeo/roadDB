@@ -63,27 +63,57 @@ road_list_parameter_values <- function (function_name, function_parameter)
   attribute_name = case_when(
     #(function_name == "road_get_localities" | 
     #  function_name == "road_get_assemblages") & 
-      function_parameter == "continents"
-        ~ "continent",
+    function_parameter == "continents"
+      ~ "continent",
     #function_name == "road_get_localities" & 
-      function_parameter == "subcontinents"
-        ~ "continent_region",
+    function_parameter == "subcontinents"
+      ~ "continent_region",
     #function_name == "road_get_localities" & 
-      function_parameter == "countries"
-        ~ "country",
+    function_parameter == "countries"
+      ~ "country",
     #function_name == "road_get_localities" & 
-      function_parameter == "locality_types"
-        ~ "type",
+    function_parameter == "locality_types"
+      ~ "type",
     #function_name == "road_get_localities" & 
-      function_parameter == "cultural_periods"
-        ~ "cultural_period",
+    function_parameter == "cultural_periods"
+      ~ "cultural_period",
     #function_name == "road_get_assemblages" &
-      function_parameter == "categories" 
-        ~ "category",
-      function_parameter == "dating_methods" 
-        ~ "dating_method",
-      function_parameter == "material_dated" 
-        ~ "material_dated",
+    function_parameter == "categories" 
+      ~ "category",
+    function_parameter == "dating_methods" 
+      ~ "dating_method",
+    function_parameter == "material_dated" 
+      ~ "material_dated",
+    function_parameter == "technocomplex" 
+      ~ "technocomplex",
+    function_parameter == "tool_list" 
+      ~ "tool_list",
+    function_parameter == "raw_material_list" 
+      ~ "raw_material_list",
+    function_parameter == "organic_tools_interpretation" 
+      ~ "organic_tools:interpretation",
+    function_parameter == "symbolic_artifacts_interpretation" 
+      ~ "symbolic_artifacts:interpretation",
+    function_parameter == "feature_interpretation" 
+      ~ "feature:interpretation",
+    function_parameter == "miscellaneous_finds_material" 
+      ~ "miscellaneous_finds:material",
+    function_parameter == "genus" 
+      ~ "humanremains:genus",
+    function_parameter == "species" 
+      ~ "humanremains:species",
+    function_parameter == "fauna_genus" 
+      ~ "fauna:genus",
+    function_parameter == "fauna_species" 
+      ~ "fauna:species",
+    function_parameter == "plant_remains" 
+      ~ "plant_remains",
+    function_parameter == "plant_family" 
+      ~ "plant:family",
+    function_parameter == "plant_genus" 
+      ~ "plant:genus",
+    function_parameter == "plant_species" 
+      ~ "plant:species",
     TRUE  ~ function_parameter
   )
   
