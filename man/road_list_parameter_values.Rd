@@ -4,12 +4,12 @@
 \alias{road_list_parameter_values}
 \title{Get parameter value from ROAD Database}
 \usage{
-road_list_parameter_values(function_name, function_parameter)
+road_list_parameter_values(function_parameter, function_name = NULL)
 }
 \arguments{
-\item{function_name}{name of a function}
-
 \item{function_parameter}{name of a function parameter}
+
+\item{function_name}{name of a function}
 }
 \value{
 List of attribute values.

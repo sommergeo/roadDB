@@ -179,6 +179,8 @@ road_list_values <- function (attribute_name)
   )
   query <- paste0(q_extension, que, ") AS foo ORDER BY ", cm_attribute_name, "")
   
+  # message(query)
+  
   # query <- paste( "SELECT DISTINCT ", attribute_name, " FROM (select distinct(unnest(string_to_array(
   # string_agg(", attribute_name, ", ', '),', '))) as ",
   # attribute_name, ", 'dummy' as dummy from ", table,  " GROUP BY dummy) as foo ", 

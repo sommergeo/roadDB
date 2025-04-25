@@ -3,6 +3,7 @@
 
 ## usethis namespace: start
 #' @importFrom assertthat is.string
+#' @importFrom dplyr case_when
 #' @importFrom RPostgres dbConnect
 #' @importFrom RPostgres dbGetQuery
 #' @importFrom utils read.csv
