@@ -58,7 +58,7 @@ attributes <- c("continent",
 #' @export
 #'
 # @examples road_list_parameter_values("road_get_localities", "locality_types")
-road_list_parameter_values <- function (function_name, function_parameter)
+road_list_parameter_values <- function (function_parameter, function_name = NULL)
 {
   attribute_name = case_when(
     #(function_name == "road_get_localities" | 
