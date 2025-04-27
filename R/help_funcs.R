@@ -77,6 +77,7 @@ road_run_query <- function(query)
   result[result == ""] <- NA
   result[result == -1] <- NA
   result[result == "undefined"] <- NA
+  result[result == "unknown"] <- NA
 
   return(result)
 }
