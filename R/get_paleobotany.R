@@ -40,21 +40,21 @@ road_get_paleobotany <- function(
     plant_genus = NULL,
     plant_species = NULL,
     assemblages = NULL
-) 
+)
 {
   if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
     stop("Parameters 'min_age' and 'max_age' have to be integers.")
-  
+
   if (!is.null(age_min) && !is.null(age_max) && age_min > age_max)
     stop("Parameter 'min_age' can not be bigger than 'max_age'.")
-  
+
   if (is.null(assemblages))
   {
     # run `road_get_assemblages` else preselected list of assemblages is used
     assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
   }
   assemblage_condition <- get_assemblage_condition(assemblages = assemblages, locality_id_column_name = "paleoflora.plantremains_idlocality", assemblage_id_column_name = "paleoflora.plantremains_idassemblage")
-  
+
   plant_genus_conjuction <- ""
   plant_species_conjuction <- ""
   if (!is.null(plant_genus))
@@ -71,7 +71,7 @@ road_get_paleobotany <- function(
     else
       plant_species_conjuction <- "OR"
   }
-  
+
   # combine query parts
   query <- paste(
     "SELECT DISTINCT",
@@ -88,15 +88,15 @@ road_get_paleobotany <- function(
     parameter_to_query("AND paleoflora.plantremains_plant_remains IN (", plant_remains, ")"),
     parameter_to_query("AND plant_taxonomy.family IN (", plant_family, ")"),
     plant_genus_conjuction,
-    parameter_to_query("plant_taxonomy.family IN (", plant_genus, ")"),
+    parameter_to_query("plant_taxonomy.genus IN (", plant_genus, ")"),
     plant_species_conjuction,
     parameter_to_query("plant_taxonomy.species IN (", plant_species, ")"),
     "ORDER BY paleoflora.plantremains_idlocality ASC"
   )
-  
+
   data <- road_run_query(query)
-  
+
   data <- add_locality_columns(data, assemblages = assemblages)
-  
+
   return(data)
 }
