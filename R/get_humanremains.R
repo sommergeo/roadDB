@@ -73,16 +73,16 @@ road_get_human_remains <- function(
       genus_species_condition <- parameter_to_query("AND ( genus IN (", genus, ")")
       species_conjucton <- "OR"
     }
-    if (!is.null(species) && is.null(genus))
-    {
-      genus_species_condition <- paste(
-        genus_species_condition,
-        species_conjucton,
-        parameter_to_query("species IN (", species, ")")
-      )
-  
-    }
-    else genus_species_condition <- paste(genus_species_condition, ")")
+    else
+      if (!is.null(species)) 
+      {
+        genus_species_condition <- paste(
+          genus_species_condition,
+          species_conjucton,
+          parameter_to_query("species IN (", species, ")")
+        )
+      }
+    if (!is.null(genus)) genus_species_condition <- paste(genus_species_condition, ")")
   }
   
   # select fields
