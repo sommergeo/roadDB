@@ -51,8 +51,8 @@
 #' `road_list_parameter_values` fetches values of a given parameter in the database or 
 #' read values from file
 #'
-#' @param function_name name of a function
 #' @param function_parameter name of a function parameter
+#' @param function_name name of a function
 #'
 #' @return List of attribute values.
 #' @export
@@ -60,6 +60,9 @@
 # @examples road_list_parameter_values("road_get_localities", "locality_types")
 road_list_parameter_values <- function (function_parameter, function_name = NULL)
 {
+  if (is.null(function_parameter))
+    stop("No parameter name is given.")
+  
   attribute_name = case_when(
     #(function_name == "road_get_localities" | 
     #  function_name == "road_get_assemblages") & 
@@ -114,8 +117,10 @@ road_list_parameter_values <- function (function_parameter, function_name = NULL
       ~ "plant:genus",
     function_parameter == "plant_species" 
       ~ "plant:species",
-    TRUE  ~ function_parameter
+    TRUE  ~ "NULL"
   )
+  
+  if (attribute_name == "NULL") stop("No such function parameter.")
   
   data <- road_list_values_(attribute_name)
   
@@ -188,7 +193,7 @@ road_list_values_ <- function (attribute_name)
   
   
   if (is.null(attribute_name))
-    return("No attribute name is given.")
+    stop("No attribute name is given.")
   
   table <- NULL
 
@@ -202,7 +207,10 @@ road_list_values_ <- function (attribute_name)
   }  
   # table <- c("geological_layer_age", "archaeological_layer_age", "assemblage_age")
   if (is.null(table))
-    return(paste("No data source for parameter ", attribute_name, " was found."))
+  {
+    warning(paste("No data source for parameter ", attribute_name, " was found."))
+    return(table)
+  }
   
   if (grepl(".txt", table, fixed = TRUE) && grepl("/", table, fixed = TRUE)) {
     data <- read.csv(toString(table))
@@ -228,17 +236,8 @@ road_list_values_ <- function (attribute_name)
     collapse = " UNION "
   )
   query <- paste0(q_extension, que, ") AS foo ORDER BY ", cm_attribute_name, "")
-  
-  # message(query)
-  
-  # query <- paste( "SELECT DISTINCT ", attribute_name, " FROM (select distinct(unnest(string_to_array(
-  # string_agg(", attribute_name, ", ', '),', '))) as ",
-  # attribute_name, ", 'dummy' as dummy from ", table,  " GROUP BY dummy) as foo ", 
-  # " ORDER BY ", attribute_name)
    
   data <- road_run_query(query)
-  
-  #data_d <- data.frame(lapply(data, function(x) {gsub("1|2|3|5|6|7<89|0", "", x)}))
   
   return(data)
 }
@@ -257,7 +256,7 @@ road_list_values_ <- function (attribute_name)
 road_summerize_archaeology <- function(term = NULL)
 {
   if (is.null(term))
-    return("No term is given.")
+    stop("No term is given.")
   else
     query <- paste0("SELECT * FROM ( ",
                     "SELECT '", term, "' AS term, 'typology' AS table_, 'typology' AS attribute, count(*) AS hit_number 
