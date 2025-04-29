@@ -58,3 +58,6 @@ Paleobotanical remains are plant remains found in archaeological contexts. This 
 paleobotanical data based on various parameters such as geographical location, cultural periods, plant taxonomy,
 and assemblages. Use the parameters to filter the results or omit them to retrieve broader results.
 }
+\examples{
+road_get_paleobotany(categories = "plant remains", age_min = 5000L, age_max = 10000L)
+}
