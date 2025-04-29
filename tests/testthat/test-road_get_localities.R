@@ -6,11 +6,11 @@ test_that("multiplication works", {
 # Testing whether the information about the function is helpful
 help(road_get_localities)
 
-road_list_values("continent") # Works
-road_list_values("subcontinent") # when running this it returns nothing
-road_list_values("country") # Works, but very last on list is "the"
-road_list_values("locality_type") # when running this it returns nothing
-road_list_values("cultural_period") # the very first row here is "Age", also, there is no "Middle Paleolithic" as used in one of the examples?
+road_list_values_("continent") # Works
+road_list_values_("subcontinent") # when running this it returns nothing
+road_list_values_("country") # Works, but very last on list is "the"
+road_list_values_("locality_type") # when running this it returns nothing
+road_list_values_("cultural_period") # the very first row here is "Age", also, there is no "Middle Paleolithic" as used in one of the examples?
 
 
 # testing examples
