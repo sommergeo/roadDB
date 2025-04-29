@@ -25,7 +25,7 @@
 #'
 # @examples road_get_paleobotany(countries = c("Germany", "France"), plant_family = "Poaceae")
 # @examples road_get_paleobotany(continents = "Europe", cultural_periods = "Neolithic", plant_genus = "Triticum")
-# @examples road_get_paleobotany(categories = "plant remains", age_min = 5000L, age_max = 10000L)
+#' @examples road_get_paleobotany(categories = "plant remains", age_min = 5000L, age_max = 10000L)
 road_get_paleobotany <- function(
     continents = NULL,
     subcontinents = NULL,
