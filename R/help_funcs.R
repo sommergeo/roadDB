@@ -140,6 +140,35 @@ query_check_intersection <- function(query_start = "", parameter, column)
 }
 
 
+# build query to check if parameters occur in database string value
+query_values_in_string <- function(query_start = "", parameter, column)
+{
+  query <- ""
+  if (!is.null(parameter))
+  {
+    parameter <- parameter_to_vector(parameter)
+
+    if (is.vector(parameter))
+    {
+      query <- paste(
+        sapply(parameter, function(x) paste0("OR ", column, " LIKE '%", x, "%'")),
+        collapse = " "
+      )
+      query <- paste0(
+        query_start,
+        "(",
+        sub("OR ", "", query),
+        ")"
+      )
+    }
+    else
+      stop(paste("Wrong input for '", deparse(substitute(parameter)), "'."))
+  }
+
+  return(query)
+}
+
+
 # convert non-vector parameter to vector
 parameter_to_vector <- function(parameter)
 {

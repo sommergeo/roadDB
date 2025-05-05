@@ -30,21 +30,21 @@ road_get_assemblages <- function(
     categories = NULL,
     age_min = NULL,
     age_max = NULL
-) 
+)
 {
   if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
     stop("Parameters 'min_age' and 'max_age' have to be integers.")
-  
+
   if (!is.null(age_min) && !is.null(age_max) && age_min > age_max)
     stop("Parameter 'min_age' can not be bigger than 'max_age'.")
-  
+
   localities <- road_get_localities(continents, subcontinents, countries, locality_types, cultural_periods)
-  
+
   query_localities <- paste(
     sapply(localities[cm_locality_idlocality], function(x) paste0("'", x, "'")),
     collapse = ", "
   )
-  
+
   # select fields
   select_fields <- c(
     paste0("assemblage.locality_idlocality AS ", cm_assemblages_locality_idlocality),
@@ -57,7 +57,7 @@ road_get_assemblages <- function(
     paste0("STRING_AGG(DISTINCT assemblage_in_archlayer.archlayer_name, ', ') AS ", cm_assemblage_in_archlayer_archlayer_name),
     paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.cultural_period, ', ') AS ", cm_cultural_periods)
   )
-  
+
   # combine query parts
   query <- paste(
     # SELECT
@@ -119,10 +119,10 @@ road_get_assemblages <- function(
     "GROUP BY assemblage.locality_idlocality, assemblage.idassemblage, assemblage.name, assemblage.category, geological_stratigraphy.age_min, geological_stratigraphy.age_max",
     "ORDER BY assemblage.locality_idlocality ASC, assemblage.idassemblage ASC"
   )
-  
+
   data <- road_run_query(query)
-  
+
   data <- add_locality_columns(data, localities = localities)
-  
+
   return(data)
 }
