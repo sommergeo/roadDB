@@ -4,7 +4,7 @@
 \alias{road_summerize_archaeology}
 \title{Get table and attribute overview of ROAD database}
 \usage{
-road_summerize_archaeology(term = NULL)
+road_summerize_archaeology(term)
 }
 \arguments{
 \item{term}{string (one item)}
