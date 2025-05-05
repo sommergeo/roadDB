@@ -94,6 +94,7 @@ road_get_paleobotany <- function(
     "ORDER BY paleoflora.plantremains_idlocality ASC"
   )
 
+  
   data <- road_run_query(query)
 
   data <- add_locality_columns(data, assemblages = assemblages)
