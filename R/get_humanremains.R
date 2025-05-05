@@ -4,10 +4,10 @@
 #'
 #' Human remains are always part of an assemblage which means the function needs a list of
 #' assemblages (return value of function `road_get_assemblages`) as its first parameter.
-#' The parameter `genus_species` can't be used in combination with `genus' or `species`. Use this function
+#' Use this function
 #' in one of the two modes depending on which parameters you use:
-#' Mode 1: either one or both of `genus` and `species` is used (not NULL), then `genus_species` can't be used and has to be set to NULL.
-#' Mode 2: `genus_species` is used (not NULL), then `genus` and `species` can't be used and have to be set to NULL.
+#' Mode 1: either one or both of `genus` and `species` is used (not NULL)
+#' Mode 2: 
 #'
 #' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
@@ -20,7 +20,6 @@
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #' @param genus string (one item) or vector of strings (one or more items); can not be used in combination with `genus_species`.
 #' @param species string (one item) or vector of strings (one or more items); can not be used in combination with `genus_species`.
-#' @param genus_species string (one item) or vector of strings (one or more items); can not be used in combination with `genus` or `species`.
 #' 
 #' @return Database search result as list of human remains.
 #' @export
@@ -28,7 +27,7 @@
 #' @examples road_get_human_remains(genus = 'Homo', species = 'neanderthalensis')
 #' @examples road_get_human_remains(genus = 'Homo')
 #' @examples road_get_human_remains(species = 'neanderthalensis')
-#' @examples road_get_human_remains(genus_species = 'Homo neanderthalensis')
+
 road_get_human_remains <- function(
     continents = NULL, 
     subcontinents = NULL, 
@@ -40,12 +39,12 @@ road_get_human_remains <- function(
     age_max = NULL, 
     genus = NULL, 
     species = NULL, 
-    genus_species = NULL, 
     assemblages = NULL
 )
 {
   # calculate assemblage_condition
-  # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
+  if (!is.null(categories) && !is.null(assemblages)) warning("No assemblage search for categories is performed because a non-empty assemblage list was passed")
+
   if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents, 
                                                                 subcontinents = subcontinents, 
                                                                 countries = countries, 
@@ -56,35 +55,35 @@ road_get_human_remains <- function(
                                                                 age_max = age_max)
   assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
   
-  if (!is.null(genus_species) && (!is.null(genus) || !is.null(species)))
-    stop("Parameter 'genus_species' can't be used in combination with 'genus' or 'species'.")
-  
   # build genus/species selection
-  genus_species_condition = ""
-  if (!is.null(genus_species))
+  if (is.vector(genus) && is.vector(species))
   {
-    genus_species_condition <- parameter_to_query("AND genus_species_str IN (", genus_species, ")")
+    cp <- expand.grid(genus = genus, species = species)
+    
+    cp <- cp %>% mutate(genus_species=paste(genus, species, sep=" "))
+    s <- paste(cp$genus_species, collapse=" OR ")
+    warning(paste("If no of the following genus and species combinations 
+                  ", s, "
+                  are in the database, 
+                  the search results will be empty"))
   }
-  else
-  {
-    species_conjucton <- "AND"
-    if (!is.null(genus))
-    {
-      genus_species_condition <- parameter_to_query("AND ( genus IN (", genus, ")")
-      species_conjucton <- "OR"
-    }
-    else
-      if (!is.null(species)) 
-      {
-        genus_species_condition <- paste(
-          genus_species_condition,
-          species_conjucton,
-          parameter_to_query("species IN (", species, ")")
-        )
-      }
-    if (!is.null(genus)) genus_species_condition <- paste(genus_species_condition, ")")
-  }
+  genus_condition <- ""
+  species_condition <- ""
   
+  if (!is.null(genus))
+  {
+    genus_condition <- query_check_intersection("AND ", genus, cm_humanremains_genus)
+  }
+  if (!is.null(species))
+  {
+    species_condition <- query_check_intersection("", species, cm_humanremains_species)
+  }
+  genus_species_condition <- paste(
+    genus_condition,
+    "AND",
+    species_condition
+  )
+
   # select fields
   select_fields <- c(
     paste0("humanremains_idlocality AS ", cm_locality_idlocality),
