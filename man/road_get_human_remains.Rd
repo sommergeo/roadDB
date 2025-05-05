@@ -15,7 +15,6 @@ road_get_human_remains(
   age_max = NULL,
   genus = NULL,
   species = NULL,
-  genus_species = NULL,
   assemblages = NULL
 )
 }
@@ -40,8 +39,6 @@ road_get_human_remains(
 
 \item{species}{string (one item) or vector of strings (one or more items); can not be used in combination with `genus_species`.}
 
-\item{genus_species}{string (one item) or vector of strings (one or more items); can not be used in combination with `genus` or `species`.}
-
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
 }
 \value{
@@ -53,14 +50,13 @@ Database search result as list of human remains.
 \details{
 Human remains are always part of an assemblage which means the function needs a list of
 assemblages (return value of function `road_get_assemblages`) as its first parameter.
-The parameter `genus_species` can't be used in combination with `genus' or `species`. Use this function
+Use this function
 in one of the two modes depending on which parameters you use:
-Mode 1: either one or both of `genus` and `species` is used (not NULL), then `genus_species` can't be used and has to be set to NULL.
-Mode 2: `genus_species` is used (not NULL), then `genus` and `species` can't be used and have to be set to NULL.
+Mode 1: either one or both of `genus` and `species` is used (not NULL)
+Mode 2:
 }
 \examples{
 road_get_human_remains(genus = 'Homo', species = 'neanderthalensis')
 road_get_human_remains(genus = 'Homo')
 road_get_human_remains(species = 'neanderthalensis')
-road_get_human_remains(genus_species = 'Homo neanderthalensis')
 }
