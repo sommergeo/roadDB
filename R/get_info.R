@@ -253,7 +253,7 @@ road_list_values_ <- function (attribute_name)
 #' @export
 #'
 #' @examples road_summerize_archaeology(term = "Cores")
-road_summerize_archaeology <- function(term = NULL)
+road_summerize_archaeology <- function(term)
 {
   if (is.null(term))
     stop("No term is given.")
@@ -341,10 +341,8 @@ road_summerize_archaeology <- function(term = NULL)
                    FROM feature WHERE comments ILIKE '%", term, "%'",
                     " ) as foo ORDER BY hit_number DESC,table_, attribute "
     )
-  #else query <- "SELECT null AS term, null AS table, null AS attribute, null AS hit_number"
-  
+
   data <- road_run_query(query)
-  #colnames(data)
   
   return(data)
 }
