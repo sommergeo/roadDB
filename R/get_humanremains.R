@@ -107,7 +107,7 @@ road_get_human_remains <- function(
     genus_species_condition,
     "ORDER BY ", cm_locality_idlocality, ", ", cm_assemblages_idassemblage 
   )
-  message(query)
+
   data <- road_run_query(query)
   
   data <- add_locality_columns(data, assemblages = assemblages)
