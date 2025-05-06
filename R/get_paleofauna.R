@@ -5,6 +5,7 @@
 #' Paleofauna finds are often part of an assemblage which means the function needs a list of
 #' assemblages (return value of function `road_get_assemblages`) as its parameter.
 #'
+#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
@@ -15,7 +16,6 @@
 #' @param age_max integer; maximum age of assemblage.
 #' @param fauna_genus string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param fauna_species string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #' 
 #' @return Database search result as list of archaeological finds.
 #' @export
@@ -24,6 +24,7 @@
 # @examples road_get_paleofauna(continents = "Europe", archaeological_category = "feature")
 # @examples road_get_paleofauna(continents = "Europe", archaeological_category = c("feature", "symbolic artefacts"))
 road_get_paleofauna <- function(
+    assemblages = NULL,
     continents = NULL, 
     subcontinents = NULL, 
     countries = NULL, 
@@ -33,8 +34,7 @@ road_get_paleofauna <- function(
     age_min = NULL, 
     age_max = NULL,
     fauna_genus = NULL,
-    fauna_species = NULL,
-    assemblages = NULL
+    fauna_species = NULL
 ) {
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
@@ -49,21 +49,32 @@ road_get_paleofauna <- function(
   
   assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
   
+  # build genus/species condition
+  if (is.vector(fauna_genus) && is.vector(fauna_species))
+  {
+    cp <- expand.grid(genus = fauna_genus, species = fauna_species)
+    
+    cp <- cp %>% mutate(genus_species=paste(genus, species, sep=" "))
+    s <- paste(cp$genus_species, collapse="; ")
+    warning(paste("If none of the following fauna_genus and fauna_species combinations 
+                  ", s, "
+                  are in the database, 
+                  the search results will be empty"))
+  }
+  
+  fauna_genus_condition <- ""
+  fauna_species_condition <- ""
   
   if (!is.null(fauna_genus)) 
     fauna_genus_condition <- query_check_intersection("AND ", 
                                                       fauna_genus, 
                                                       cm_fauna_genus)
-  else 
-    fauna_genus_condition <- ""
   
   if (!is.null(fauna_species)) 
     fauna_species_condition <- query_check_intersection("AND ", 
                                                         fauna_species, 
                                                         cm_fauna_species)
-  else 
-    fauna_species_condition <- ""
-  
+
   # select fields
   select_fields <- c(
     paste0(" assemblage_idlocality AS ", cm_locality_idlocality),
