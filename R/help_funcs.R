@@ -237,10 +237,9 @@ get_assemblage_condition <- function(query_start = "", assemblages = NULL, local
   #if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
   #                                                             age_min = age_min, age_max = age_max, localities = localities)
 
+  if (nrow(assemblages) == 0) return(paste0(query_start, " FALSE "))
+  
   locality_assemblage_list <- paste(assemblages$locality_id, assemblages$assemblage_id, sep = ", ")
-
-  # selected_cols <- c(1, 2)
-  # locality_assemblage_list <- do.call(paste, c(assemblages2[selected_cols], sep = ", "))
 
   query_locality_assemblage_list_str <- ""
   query_locality_assemblage_list_str <- paste(
@@ -261,7 +260,7 @@ get_assemblage_condition <- function(query_start = "", assemblages = NULL, local
       ")"
     )
   }
-  if (assemblage_condition == "") assemblage_condition <- paste0(query_start, " FALSE ")
+  
   return(assemblage_condition)
 }
 
