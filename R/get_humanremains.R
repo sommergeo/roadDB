@@ -42,7 +42,8 @@ road_get_human_remains <- function(
 )
 {
   # calculate assemblage_condition
-  if (!is.null(categories) && !is.null(assemblages)) warning("No assemblage search for categories is performed because a non-empty assemblage list was passed")
+  if ((!is.null(categories) | !is.null(age_min) | !is.null(age_max)) & !is.null(assemblages)) 
+    warning("No assemblage search for categories or age_min/age_max is performed because a non-empty assemblage list was passed")
 
   if (is.null(assemblages))  assemblages <- road_get_assemblages(continents = continents, 
                                                                 subcontinents = subcontinents, 
@@ -106,7 +107,7 @@ road_get_human_remains <- function(
     genus_species_condition,
     "ORDER BY ", cm_locality_idlocality, ", ", cm_assemblages_idassemblage 
   )
-  
+  message(query)
   data <- road_run_query(query)
   
   data <- add_locality_columns(data, assemblages = assemblages)
