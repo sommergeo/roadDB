@@ -261,7 +261,7 @@ get_assemblage_condition <- function(query_start = "", assemblages = NULL, local
       ")"
     )
   }
-
+  if (assemblage_condition == "") assemblage_condition <- paste0(query_start, " FALSE ")
   return(assemblage_condition)
 }
 
