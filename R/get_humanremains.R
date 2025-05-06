@@ -4,11 +4,9 @@
 #'
 #' Human remains are always part of an assemblage which means the function needs a list of
 #' assemblages (return value of function `road_get_assemblages`) as its first parameter.
-#' Use this function
-#' in one of the two modes depending on which parameters you use:
-#' Mode 1: either one or both of `genus` and `species` is used (not NULL)
-#' Mode 2: 
+#' If you will search for genus AND species use this function with `genus` AND `species` as parameter
 #'
+#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
@@ -17,18 +15,20 @@
 #' @param categories string (one item) or vector of strings (one or more items).
 #' @param age_min integer; minimum age of assemblage.
 #' @param age_max integer; maximum age of assemblage.
-#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
-#' @param genus string (one item) or vector of strings (one or more items); can not be used in combination with `genus_species`.
-#' @param species string (one item) or vector of strings (one or more items); can not be used in combination with `genus_species`.
+#' @param genus string (one item) or vector of strings (one or more items).
+#' @param species string (one item) or vector of strings (one or more items).
 #' 
 #' @return Database search result as list of human remains.
 #' @export
 #'
 #' @examples road_get_human_remains(genus = 'Homo', species = 'neanderthalensis')
 #' @examples road_get_human_remains(genus = 'Homo')
+#' @examples road_get_human_remains(continents = "Europe", genus = c('Homo', 'Paranthropus'))
 #' @examples road_get_human_remains(species = 'neanderthalensis')
+#' @examples road_get_human_remains(species = c('neanderthalensis', 'erectus'))
 
 road_get_human_remains <- function(
+    assemblages = NULL,
     continents = NULL, 
     subcontinents = NULL, 
     countries = NULL, 
@@ -38,14 +38,13 @@ road_get_human_remains <- function(
     age_min = NULL, 
     age_max = NULL, 
     genus = NULL, 
-    species = NULL, 
-    assemblages = NULL
+    species = NULL 
 )
 {
   # calculate assemblage_condition
   if (!is.null(categories) && !is.null(assemblages)) warning("No assemblage search for categories is performed because a non-empty assemblage list was passed")
 
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents, 
+  if (is.null(assemblages))  assemblages <- road_get_assemblages(continents = continents, 
                                                                 subcontinents = subcontinents, 
                                                                 countries = countries, 
                                                                 locality_types = locality_types, 
@@ -53,16 +52,17 @@ road_get_human_remains <- function(
                                                                 categories = categories, 
                                                                 age_min = age_min, 
                                                                 age_max = age_max)
+
   assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
   
-  # build genus/species selection
+  # build genus/species condition
   if (is.vector(genus) && is.vector(species))
   {
     cp <- expand.grid(genus = genus, species = species)
     
     cp <- cp %>% mutate(genus_species=paste(genus, species, sep=" "))
-    s <- paste(cp$genus_species, collapse=" OR ")
-    warning(paste("If no of the following genus and species combinations 
+    s <- paste(cp$genus_species, collapse="; ")
+    warning(paste("If none of the following genus and species combinations 
                   ", s, "
                   are in the database, 
                   the search results will be empty"))
@@ -76,11 +76,11 @@ road_get_human_remains <- function(
   }
   if (!is.null(species))
   {
-    species_condition <- query_check_intersection("", species, cm_humanremains_species)
+    species_condition <- query_check_intersection("AND ", species, cm_humanremains_species)
   }
+   
   genus_species_condition <- paste(
     genus_condition,
-    "AND",
     species_condition
   )
 
