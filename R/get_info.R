@@ -122,7 +122,7 @@ road_list_parameter_values <- function (function_parameter, function_name = NULL
   
   if (attribute_name == "NULL") stop("No such function parameter.")
   
-  data <- road_list_values_(attribute_name)
+  data <- road_list_values(attribute_name)
   
   return(data)
   
@@ -130,7 +130,7 @@ road_list_parameter_values <- function (function_parameter, function_name = NULL
 
 #' Get attribute value from ROAD Database
 #'
-#' `road_list_values_` fetches values of a given attribute in the database or 
+#' `road_list_values` fetches values of a given attribute in the database or 
 #' read values from file
 #'
 #' @param attribute_name name of an attribute.
@@ -138,9 +138,9 @@ road_list_parameter_values <- function (function_parameter, function_name = NULL
 #' @return List of attribute values.
 #' @export
 #'
-# @examples road_list_values_("category")
-# @examples road_list_values_("cultural_period")
-road_list_values_ <- function (attribute_name)
+# @examples road_list_values("category")
+# @examples road_list_values("cultural_period")
+road_list_values <- function (attribute_name)
 { 
   tables <- list("geopolitical_units", 
                  "geopolitical_units", 
@@ -190,7 +190,6 @@ road_list_values_ <- function (attribute_name)
                   "plant:species",
                   "fauna:genus",
                   "fauna:species")
-  
   
   if (is.null(attribute_name))
     stop("No attribute name is given.")
