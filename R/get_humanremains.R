@@ -19,6 +19,9 @@
 #' @param species string (one item) or vector of strings (one or more items).
 #' 
 #' @return Database search result as list of human remains.
+#' @importFrom dplyr %>%
+#' @importFrom dplyr mutate
+#' 
 #' @export
 #'
 #' @examples road_get_human_remains(genus = 'Homo', species = 'neanderthalensis')
