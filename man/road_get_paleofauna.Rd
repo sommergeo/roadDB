@@ -5,6 +5,7 @@
 \title{Get paleofauna finds from ROAD database}
 \usage{
 road_get_paleofauna(
+  assemblages = NULL,
   continents = NULL,
   subcontinents = NULL,
   countries = NULL,
@@ -14,11 +15,12 @@ road_get_paleofauna(
   age_min = NULL,
   age_max = NULL,
   fauna_genus = NULL,
-  fauna_species = NULL,
-  assemblages = NULL
+  fauna_species = NULL
 )
 }
 \arguments{
+\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
+
 \item{continents}{string (one item) or vector of strings (one or more items); defaults to NULL.}
 
 \item{subcontinents}{string (one item) or vector of strings (one or more items); defaults to NULL.}
@@ -38,8 +40,6 @@ road_get_paleofauna(
 \item{fauna_genus}{string (one item) or vector of strings (one or more items); defaults to NULL.}
 
 \item{fauna_species}{string (one item) or vector of strings (one or more items); defaults to NULL.}
-
-\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
 }
 \value{
 Database search result as list of archaeological finds.
@@ -50,4 +50,7 @@ Database search result as list of archaeological finds.
 \details{
 Paleofauna finds are often part of an assemblage which means the function needs a list of
 assemblages (return value of function `road_get_assemblages`) as its parameter.
+}
+\examples{
+road_get_paleofauna(continents = "Europe")
 }

@@ -77,6 +77,7 @@ road_run_query <- function(query)
   result[result == ""] <- NA
   result[result == -1] <- NA
   result[result == "undefined"] <- NA
+  result[result == "unknown"] <- NA
 
   return(result)
 }
@@ -122,6 +123,35 @@ query_check_intersection <- function(query_start = "", parameter, column)
       query <- paste(
         #sapply(parameter, function(x) paste0("OR '", x, "' = ANY(STRING_TO_ARRAY(", column, ", ', '))")),
         sapply(parameter, function(x) paste0("OR '", x, "' = ANY(regexp_split_to_array(", column, ", ',\\s*'))")),
+        collapse = " "
+      )
+      query <- paste0(
+        query_start,
+        "(",
+        sub("OR ", "", query),
+        ")"
+      )
+    }
+    else
+      stop(paste("Wrong input for '", deparse(substitute(parameter)), "'."))
+  }
+
+  return(query)
+}
+
+
+# build query to check if parameters occur in database string value
+query_values_in_string <- function(query_start = "", parameter, column)
+{
+  query <- ""
+  if (!is.null(parameter))
+  {
+    parameter <- parameter_to_vector(parameter)
+
+    if (is.vector(parameter))
+    {
+      query <- paste(
+        sapply(parameter, function(x) paste0("OR ", column, " LIKE '%", x, "%'")),
         collapse = " "
       )
       query <- paste0(
@@ -207,10 +237,9 @@ get_assemblage_condition <- function(query_start = "", assemblages = NULL, local
   #if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
   #                                                             age_min = age_min, age_max = age_max, localities = localities)
 
+  if (nrow(assemblages) == 0) return(paste0(query_start, " FALSE "))
+  
   locality_assemblage_list <- paste(assemblages$locality_id, assemblages$assemblage_id, sep = ", ")
-
-  # selected_cols <- c(1, 2)
-  # locality_assemblage_list <- do.call(paste, c(assemblages2[selected_cols], sep = ", "))
 
   query_locality_assemblage_list_str <- ""
   query_locality_assemblage_list_str <- paste(
@@ -231,7 +260,7 @@ get_assemblage_condition <- function(query_start = "", assemblages = NULL, local
       ")"
     )
   }
-
+  
   return(assemblage_condition)
 }
 

@@ -4,7 +4,7 @@
 \alias{road_list_values}
 \title{Get attribute value from ROAD Database}
 \usage{
-road_list_values(attribute_name = NULL)
+road_list_values(attribute_name)
 }
 \arguments{
 \item{attribute_name}{name of an attribute.}

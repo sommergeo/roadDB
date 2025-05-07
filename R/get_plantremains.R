@@ -1,11 +1,12 @@
 #' Get paleobotany data from ROAD database
 #'
-#' `road_get_paleobotany` fetches data of paleobotanical remains from the ROAD database.
+#' `road_get_plantremains` fetches data of paleobotanical remains from the ROAD database.
 #'
 #' Paleobotanical remains are plant remains found in archaeological contexts. This function allows you to query
 #' paleobotanical data based on various parameters such as geographical location, cultural periods, plant taxonomy,
 #' and assemblages. Use the parameters to filter the results or omit them to retrieve broader results.
 #'
+#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
@@ -18,15 +19,15 @@
 #' @param plant_family string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param plant_genus string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param plant_species string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #'
 #' @return Database search result as a list of assemblages with paleobotanical remains.
 #' @export
 #'
-# @examples road_get_paleobotany(countries = c("Germany", "France"), plant_family = "Poaceae")
-# @examples road_get_paleobotany(continents = "Europe", cultural_periods = "Neolithic", plant_genus = "Triticum")
-# @examples road_get_paleobotany(categories = "plant remains", age_min = 5000L, age_max = 10000L)
-road_get_paleobotany <- function(
+#' @examples road_get_plantremains(countries = c("Germany", "France"), plant_family = "Poaceae")
+#' @examples road_get_plantremains(continents = "Europe", cultural_periods = "Neolithic", plant_genus = "Triticum")
+#' @examples road_get_plantremains(categories = "plant remains", age_min = 5000L, age_max = 10000L)
+road_get_plantremains <- function(
+    assemblages = NULL,
     continents = NULL,
     subcontinents = NULL,
     countries = NULL,
@@ -38,23 +39,27 @@ road_get_paleobotany <- function(
     plant_remains = NULL,
     plant_family = NULL,
     plant_genus = NULL,
-    plant_species = NULL,
-    assemblages = NULL
-) 
-{
-  if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
-    stop("Parameters 'min_age' and 'max_age' have to be integers.")
-  
-  if (!is.null(age_min) && !is.null(age_max) && age_min > age_max)
-    stop("Parameter 'min_age' can not be bigger than 'max_age'.")
-  
+    plant_species = NULL
+)
+{  
+  # calculate assemblage_condition
+  if ((!is.null(categories) | !is.null(age_min) | !is.null(age_max)) & !is.null(assemblages)) 
+    warning("No assemblage search for categories or age_min/age_max is performed because a non-empty assemblage list was passed")
+
   if (is.null(assemblages))
   {
     # run `road_get_assemblages` else preselected list of assemblages is used
-    assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
+    assemblages <- road_get_assemblages(continents,
+                                        subcontinents, 
+                                        countries, 
+                                        locality_types, 
+                                        cultural_periods, 
+                                        categories, 
+                                        age_min, 
+                                        age_max)
   }
   assemblage_condition <- get_assemblage_condition(assemblages = assemblages, locality_id_column_name = "paleoflora.plantremains_idlocality", assemblage_id_column_name = "paleoflora.plantremains_idassemblage")
-  
+
   plant_genus_conjuction <- ""
   plant_species_conjuction <- ""
   if (!is.null(plant_genus))
@@ -71,15 +76,15 @@ road_get_paleobotany <- function(
     else
       plant_species_conjuction <- "OR"
   }
-  
+
   # combine query parts
   query <- paste(
     "SELECT DISTINCT",
-    paste0("paleoflora.plantremains_idlocality AS ", cm_locality_idlocality, ", "),
-    paste0("paleoflora.plantremains_idassemblage AS ", cm_assemblages_idassemblage, ", "),
-    paste0("paleoflora.plantremains_plant_remains AS ", cm_paleoflora_plant_remains, ", "),
-    paste0("plant_taxonomy.family AS ", cm_plant_taxonomy_family, ", "),
-    paste0("plant_taxonomy.genus AS ", cm_plant_taxonomy_genus, ", "),
+    paste0("paleoflora.plantremains_idlocality AS ", cm_locality_idlocality, ","),
+    paste0("paleoflora.plantremains_idassemblage AS ", cm_assemblages_idassemblage, ","),
+    paste0("paleoflora.plantremains_plant_remains AS ", cm_paleoflora_plant_remains, ","),
+    paste0("plant_taxonomy.family AS ", cm_plant_taxonomy_family, ","),
+    paste0("plant_taxonomy.genus AS ", cm_plant_taxonomy_genus, ","),
     paste0("plant_taxonomy.species AS ", cm_plant_taxonomy_species),
     "FROM paleoflora",
     "INNER JOIN plant_taxonomy ON paleoflora.plant_taxonomy_taxon = plant_taxonomy.taxon",
@@ -88,15 +93,16 @@ road_get_paleobotany <- function(
     parameter_to_query("AND paleoflora.plantremains_plant_remains IN (", plant_remains, ")"),
     parameter_to_query("AND plant_taxonomy.family IN (", plant_family, ")"),
     plant_genus_conjuction,
-    parameter_to_query("plant_taxonomy.family IN (", plant_genus, ")"),
+    parameter_to_query("plant_taxonomy.genus IN (", plant_genus, ")"),
     plant_species_conjuction,
     parameter_to_query("plant_taxonomy.species IN (", plant_species, ")"),
     "ORDER BY paleoflora.plantremains_idlocality ASC"
   )
+
   
   data <- road_run_query(query)
-  
+
   data <- add_locality_columns(data, assemblages = assemblages)
-  
+
   return(data)
 }

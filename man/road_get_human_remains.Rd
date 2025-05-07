@@ -5,6 +5,7 @@
 \title{Get human remains from ROAD database}
 \usage{
 road_get_human_remains(
+  assemblages = NULL,
   continents = NULL,
   subcontinents = NULL,
   countries = NULL,
@@ -14,12 +15,12 @@ road_get_human_remains(
   age_min = NULL,
   age_max = NULL,
   genus = NULL,
-  species = NULL,
-  genus_species = NULL,
-  assemblages = NULL
+  species = NULL
 )
 }
 \arguments{
+\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
+
 \item{continents}{string (one item) or vector of strings (one or more items); defaults to NULL.}
 
 \item{subcontinents}{string (one item) or vector of strings (one or more items); defaults to NULL.}
@@ -36,13 +37,9 @@ road_get_human_remains(
 
 \item{age_max}{integer; maximum age of assemblage.}
 
-\item{genus}{string (one item) or vector of strings (one or more items); can not be used in combination with `genus_species`.}
+\item{genus}{string (one item) or vector of strings (one or more items).}
 
-\item{species}{string (one item) or vector of strings (one or more items); can not be used in combination with `genus_species`.}
-
-\item{genus_species}{string (one item) or vector of strings (one or more items); can not be used in combination with `genus` or `species`.}
-
-\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
+\item{species}{string (one item) or vector of strings (one or more items).}
 }
 \value{
 Database search result as list of human remains.
@@ -53,14 +50,12 @@ Database search result as list of human remains.
 \details{
 Human remains are always part of an assemblage which means the function needs a list of
 assemblages (return value of function `road_get_assemblages`) as its first parameter.
-The parameter `genus_species` can't be used in combination with `genus' or `species`. Use this function
-in one of the two modes depending on which parameters you use:
-Mode 1: either one or both of `genus` and `species` is used (not NULL), then `genus_species` can't be used and has to be set to NULL.
-Mode 2: `genus_species` is used (not NULL), then `genus` and `species` can't be used and have to be set to NULL.
+If you will search for genus AND species use this function with `genus` AND `species` as parameter
 }
 \examples{
 road_get_human_remains(genus = 'Homo', species = 'neanderthalensis')
 road_get_human_remains(genus = 'Homo')
+road_get_human_remains(continents = "Europe", genus = c('Homo', 'Paranthropus'))
 road_get_human_remains(species = 'neanderthalensis')
-road_get_human_remains(genus_species = 'Homo neanderthalensis')
+road_get_human_remains(species = c('neanderthalensis', 'erectus'))
 }

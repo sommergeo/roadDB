@@ -6,11 +6,11 @@ test_that("multiplication works", {
 # Testing whether the information about the function is helpful
 help(road_get_localities)
 
-road_list_values("continent") # Works
-road_list_values("subcontinent") # when running this it returns nothing
-road_list_values("country") # Works, but very last on list is "the"
-road_list_values("locality_type") # when running this it returns nothing
-road_list_values("cultural_period") # the very first row here is "Age", also, there is no "Middle Paleolithic" as used in one of the examples?
+road_list_parameter_values("continents") # Works
+road_list_parameter_values("subcontinents") # when running this it returns nothing
+road_list_parameter_values("countries") # Works, but very last on list is "the"
+road_list_parameter_values("locality_types") # when running this it returns nothing
+road_list_parameter_values("cultural_periods") # the very first row here is "Age", also, there is no "Middle Paleolithic" as used in one of the examples?
 
 
 # testing examples
@@ -51,12 +51,12 @@ df_counts <- as.data.frame(table(all_periods))
 colnames(df_counts) <- c("Cultural_Period", "Count")
 
 # Barplot
-ggplot(df_counts, aes(x = Cultural_Period, y = Count)) +
-  geom_bar(stat = "identity", fill = "skyblue") +
-  labs(title = "Site Frequency",
-       x = "Cultural Period",
-       y = "Site") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+# ggplot(df_counts, aes(x = Cultural_Period, y = Count)) +
+#   geom_bar(stat = "identity", fill = "skyblue") +
+#   labs(title = "Site Frequency",
+#        x = "Cultural Period",
+#        y = "Site") +
+#   theme_minimal() +
+#   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 
 # There is a mismatch between the cultural periods provided by the road_list_values("cultural_period") function and the data itself (cf. plot above)

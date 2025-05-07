@@ -13,65 +13,53 @@
 #' @param age_max integer; maximum age of assemblage.
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #' @param tool_list string (one item) or vector of strings
-#' 
+#'
 #' @return Database search result as list of lithic finds with info about typology.
 #' @export
 #'
 # @examples road_get_lithic_typology(continents = "Europe")
 # @examples road_get_lithic_typology(continents = "Europe", tool_list = "biface")
 road_get_lithic_typology <- function(
-    continents = NULL, 
-    subcontinents = NULL, 
-    countries = NULL, 
-    locality_types = NULL, 
-    cultural_periods = NULL, 
-    categories = NULL, 
-    age_min = NULL, 
-    age_max = NULL, 
+    continents = NULL,
+    subcontinents = NULL,
+    countries = NULL,
+    locality_types = NULL,
+    cultural_periods = NULL,
+    categories = NULL,
+    age_min = NULL,
+    age_max = NULL,
     tool_list = NULL,
     assemblages = NULL
 )
 {
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents,
-                                                                subcontinents = subcontinents,
-                                                                countries = countries,
-                                                                categories = categories, 
-                                                                locality_types = locality_types,
-                                                                cultural_periods = cultural_periods,
-                                                                age_min = age_min, age_max = age_max) 
-  
-  assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
-  
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
+  assemblage_condition <- get_assemblage_condition(assemblages = assemblages, locality_id_column_name = "typology.assemblage_idlocality", assemblage_id_column_name = "typology.assemblage_idassemblage")
+
   # select fields
   select_fields <- c(
-    paste0(" assemblage_idlocality AS ", cm_locality_idlocality),
-    paste0(" assemblage_idassemblage AS ", cm_assemblages_idassemblage),
-    paste0(" tool_list AS ", cm_tool_list),
-    paste0(" typology AS ", cm_typology),
+    paste0("assemblage_idlocality AS ", cm_locality_idlocality),
+    paste0("assemblage_idassemblage AS ", cm_assemblages_idassemblage),
+    paste0("tool_list AS ", cm_tool_list),
+    paste0("typology AS ", cm_typology),
     "percentage",
     "comments"
   )
-  
-  if (!is.null(tool_list)) 
-    tool_list_condition <- query_check_intersection("AND ", tool_list, cm_tool_list)
-  else 
-    tool_list_condition <- ""
-  
+
   query <- paste(
-    "SELECT DISTINCT * FROM (",
-    "SELECT DISTINCT ",
+    "SELECT DISTINCT",
     paste(select_fields, collapse = ", "),
-    " FROM typology) as foo WHERE true ",
+    "FROM typology",
+    "WHERE",
     assemblage_condition,
-    tool_list_condition
+    query_values_in_string("AND ", tool_list, "tool_list")
   )
-  
+
   data <- road_run_query(query)
-  
+
   data <- add_locality_columns(data, assemblages = assemblages)
-  
+
   return(data)
 }
 
@@ -91,64 +79,52 @@ road_get_lithic_typology <- function(
 #' @param age_max integer; maximum age of assemblage.
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #' @param raw_material_list string (one item) or vector of strings
-#' 
+#'
 #' @return Database search result as list of lithic finds with info about raw material.
 #' @export
 #'
 # @examples road_get_lithic_raw_material(continents = "Europe")
 road_get_lithic_raw_material <- function(
-    continents = NULL, 
-    subcontinents = NULL, 
-    countries = NULL, 
-    locality_types = NULL, 
-    cultural_periods = NULL, 
-    categories = NULL, 
-    age_min = NULL, 
-    age_max = NULL, 
+    continents = NULL,
+    subcontinents = NULL,
+    countries = NULL,
+    locality_types = NULL,
+    cultural_periods = NULL,
+    categories = NULL,
+    age_min = NULL,
+    age_max = NULL,
     raw_material_list = NULL,
     assemblages = NULL
 )
 {
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents,
-                                                                subcontinents = subcontinents,
-                                                                countries = countries,
-                                                                categories = categories, 
-                                                                locality_types = locality_types,
-                                                                cultural_periods = cultural_periods,
-                                                                age_min = age_min, age_max = age_max) 
-  #localities = localities)
-  assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
-  
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
+  assemblage_condition <- get_assemblage_condition(assemblages = assemblages, locality_id_column_name = "raw_material.assemblage_idlocality", assemblage_id_column_name = "raw_material.assemblage_idassemblage")
+
   # select fields
   select_fields <- c(
-    paste0(" assemblage_idlocality AS ", cm_locality_idlocality),
-    paste0(" assemblage_idassemblage AS ", cm_assemblages_idassemblage),
-    paste0(" raw_material_list AS ", cm_raw_material_list),
-    paste0(" transport_distance AS ", cm_transport_distance),
+    paste0("assemblage_idlocality AS ", cm_locality_idlocality),
+    paste0("assemblage_idassemblage AS ", cm_assemblages_idassemblage),
+    paste0("raw_material_list AS ", cm_raw_material_list),
+    paste0("transport_distance AS ", cm_transport_distance),
     "percentage",
     "comments"
   )
-  
-  if (!is.null(raw_material_list)) 
-    raw_material_condition <- query_check_intersection("AND ", raw_material_list, cm_raw_material_list)
-  else 
-    raw_material_condition <- ""
-  
+
   query <- paste(
-    "SELECT DISTINCT * FROM (",
-    "SELECT DISTINCT ",
+    "SELECT DISTINCT",
     paste(select_fields, collapse = ", "),
-    " FROM raw_material) as foo WHERE true ",
+    "FROM raw_material",
+    "WHERE",
     assemblage_condition,
-    raw_material_condition
+    query_values_in_string("AND ", raw_material_list, "raw_material_list")
   )
-  
+
   data <- road_run_query(query)
-  
+
   data <- add_locality_columns(data, assemblages = assemblages)
-  
+
   return(data)
 }
 
@@ -168,69 +144,54 @@ road_get_lithic_raw_material <- function(
 #' @param age_max integer; maximum age of assemblage.
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #' @param organic_tools_interpretation string (one item) or vector of strings
-#' 
+#'
 #' @return Database search result as list of organic tools.
 #' @export
 #'
 # @examples road_get_organic_tools(continents = "Europe")
 road_get_organic_tools <- function(
-    continents = NULL, 
-    subcontinents = NULL, 
-    countries = NULL, 
-    locality_types = NULL, 
-    cultural_periods = NULL, 
-    categories = NULL, 
-    age_min = NULL, 
-    age_max = NULL, 
+    continents = NULL,
+    subcontinents = NULL,
+    countries = NULL,
+    locality_types = NULL,
+    cultural_periods = NULL,
+    categories = NULL,
+    age_min = NULL,
+    age_max = NULL,
     organic_tools_interpretation = NULL,
     assemblages = NULL
-) 
+)
 {
-  
+
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents,
-                                                                subcontinents = subcontinents,
-                                                                countries = countries,
-                                                                categories = categories, 
-                                                                locality_types = locality_types,
-                                                                cultural_periods = cultural_periods,
-                                                                age_min = age_min, 
-                                                                age_max = age_max) 
-  
-  assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
-  
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
+  assemblage_condition <- get_assemblage_condition(assemblages = assemblages, locality_id_column_name = "organic_tools.assemblage_idlocality", assemblage_id_column_name = "organic_tools.assemblage_idassemblage")
+
   # select fields
   select_fields <- c(
-    paste0(" assemblage_idlocality AS ", cm_locality_idlocality),
-    paste0(" assemblage_idassemblage AS ", cm_assemblages_idassemblage),
-    paste0(" interpretation AS ", cm_organic_tools_interpretation),
-    paste0(" organic_raw_material AS ", cm_organic_raw_material),
-    paste0(" technology AS ", cm_organic_tools_technology),
+    paste0("assemblage_idlocality AS ", cm_locality_idlocality),
+    paste0("assemblage_idassemblage AS ", cm_assemblages_idassemblage),
+    paste0("interpretation AS ", cm_organic_tools_interpretation),
+    paste0("organic_raw_material AS ", cm_organic_raw_material),
+    paste0("technology AS ", cm_organic_tools_technology),
     "number",
     "comments"
   )
-  
-  if (!is.null(organic_tools_interpretation)) 
-    organic_tools_interpretation_condition <- query_check_intersection("AND ", 
-                                                                       organic_tools_interpretation, 
-                                                                       cm_organic_tools_interpretation)
-  else 
-    organic_tools_interpretation_condition <- ""
-  
+
   query <- paste(
-    "SELECT DISTINCT * FROM (",
-    "SELECT DISTINCT ",
+    "SELECT DISTINCT",
     paste(select_fields, collapse = ", "),
-    " FROM organic_tools) as foo WHERE true ",
+    "FROM organic_tools",
+    "WHERE",
     assemblage_condition,
-    organic_tools_interpretation_condition
+    query_values_in_string("AND ", organic_tools_interpretation, "interpretation")
   )
-  
+
   data <- road_run_query(query)
-  
+
   data <- add_locality_columns(data, assemblages = assemblages)
-  
+
   return(data)
 }
 
@@ -250,70 +211,54 @@ road_get_organic_tools <- function(
 #' @param age_max integer; maximum age of assemblage.
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #' @param symbolic_artifacts_interpretation string (one item) or vector of strings
-#' 
+#'
 #' @return Database search result as list of symbolic artifacts with info about symbolic.
 #' @export
 #'
 # @examples road_get_symbolic_artifacts(continents = "Europe")
 road_get_symbolic_artifacts <- function(
-    continents = NULL, 
-    subcontinents = NULL, 
-    countries = NULL, 
-    locality_types = NULL, 
-    cultural_periods = NULL, 
-    categories = NULL, 
-    age_min = NULL, 
-    age_max = NULL, 
+    continents = NULL,
+    subcontinents = NULL,
+    countries = NULL,
+    locality_types = NULL,
+    cultural_periods = NULL,
+    categories = NULL,
+    age_min = NULL,
+    age_max = NULL,
     symbolic_artifacts_interpretation = NULL,
     assemblages = NULL
 ) {
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents,
-                                                                subcontinents = subcontinents,
-                                                                countries = countries,
-                                                                categories = categories, 
-                                                                locality_types = locality_types,
-                                                                cultural_periods = cultural_periods,
-                                                                age_min = age_min, 
-                                                                age_max = age_max) 
-  
-  assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
-  
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
+  assemblage_condition <- get_assemblage_condition(assemblages = assemblages, locality_id_column_name = "symbolic_artifacts.assemblage_idlocality", assemblage_id_column_name = "symbolic_artifacts.assemblage_idassemblage")
+
   # select fields
   select_fields <- c(
-    paste0(" assemblage_idlocality AS ", cm_locality_idlocality),
-    paste0(" assemblage_idassemblage AS ", cm_assemblages_idassemblage),
-    paste0(" interpretation AS ", cm_symbolic_artifacts_interpretation),
-    paste0(" category AS ", cm_symbolic_artifacts_category),
-    paste0(" material AS ", cm_symbolic_artifacts_material),
-    paste0(" technology AS ", cm_symbolic_artifacts_technology),
-    paste0(" raw_material_source AS ", cm_symbolic_artifacts_raw_material_source),
+    paste0("assemblage_idlocality AS ", cm_locality_idlocality),
+    paste0("assemblage_idassemblage AS ", cm_assemblages_idassemblage),
+    paste0("interpretation AS ", cm_symbolic_artifacts_interpretation),
+    paste0("category AS ", cm_symbolic_artifacts_category),
+    paste0("material AS ", cm_symbolic_artifacts_material),
+    paste0("technology AS ", cm_symbolic_artifacts_technology),
+    paste0("raw_material_source AS ", cm_symbolic_artifacts_raw_material_source),
     "comments"
   )
-  
-  if (!is.null(symbolic_artifacts_interpretation)) 
-    symbolic_artifacts_interpretation_condition <- query_check_intersection("AND ", 
-                                                                            symbolic_artifacts_interpretation, 
-                                                                            cm_symbolic_artifacts_interpretation)
-  else 
-    symbolic_artifacts_interpretation_condition <- ""
-  
+
   query <- paste(
-    "SELECT DISTINCT * FROM (",
-    "SELECT DISTINCT ",
+    "SELECT DISTINCT",
     paste(select_fields, collapse = ", "),
-    " FROM symbolic_artifacts) as foo WHERE true ",
+    "FROM symbolic_artifacts",
+    "WHERE",
     assemblage_condition,
-    symbolic_artifacts_interpretation_condition
+    query_values_in_string("AND ", symbolic_artifacts_interpretation, "interpretation")
   )
-  
-  # message(query)
+
   data <- road_run_query(query)
-  
+
   data <- add_locality_columns(data, assemblages = assemblages)
-  
-  return(data)  
+
+  return(data)
 }
 
 
@@ -332,64 +277,50 @@ road_get_symbolic_artifacts <- function(
 #' @param age_max integer; maximum age of assemblage.
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #' @param feature_interpretation string (one item) or vector of strings
-#' 
+#'
 #' @return Database search result as list of feature finds.
 #' @export
 #'
 # @examples road_get_feature(continents = "Europe")
 road_get_feature <- function(
-    continents = NULL, 
-    subcontinents = NULL, 
-    countries = NULL, 
-    locality_types = NULL, 
-    cultural_periods = NULL, 
-    categories = NULL, 
-    age_min = NULL, 
-    age_max = NULL, 
+    continents = NULL,
+    subcontinents = NULL,
+    countries = NULL,
+    locality_types = NULL,
+    cultural_periods = NULL,
+    categories = NULL,
+    age_min = NULL,
+    age_max = NULL,
     feature_interpretation = NULL,
     assemblages = NULL
 ) {
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents,
-                                                                subcontinents = subcontinents,
-                                                                countries = countries,
-                                                                categories = categories, 
-                                                                locality_types = locality_types,
-                                                                cultural_periods = cultural_periods,
-                                                                age_min = age_min, age_max = age_max) 
-  
-  assemblage_condition <- get_assemblage_condition(query_start = " AND ", assemblages = assemblages)
-  
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
+  assemblage_condition <- get_assemblage_condition(assemblages = assemblages, locality_id_column_name = "feature.assemblage_idlocality", assemblage_id_column_name = "feature.assemblage_idassemblage")
+
   # select fields
   select_fields <- c(
-    paste0(" assemblage_idlocality AS ", cm_locality_idlocality),
-    paste0(" assemblage_idassemblage AS ", cm_assemblages_idassemblage),
-    paste0(" interpretation AS ", cm_feature_interpretation),
+    paste0("assemblage_idlocality AS ", cm_locality_idlocality),
+    paste0("assemblage_idassemblage AS ", cm_assemblages_idassemblage),
+    paste0("interpretation AS ", cm_feature_interpretation),
     "comments"
   )
-  
-  if (!is.null(feature_interpretation)) 
-    feature_interpretation_condition <- query_check_intersection("AND ", 
-                                                                 feature_interpretation, 
-                                                                 cm_feature_interpretation)
-  else 
-    feature_interpretation_condition <- ""
-  
+
   query <- paste(
-    "SELECT DISTINCT * FROM (",
-    "SELECT DISTINCT ",
+    "SELECT DISTINCT",
     paste(select_fields, collapse = ", "),
-    " FROM feature) as foo WHERE true ",
+    "FROM feature",
+    "WHERE",
     assemblage_condition,
-    feature_interpretation_condition
+    parameter_to_query("AND interpretation IN (", feature_interpretation, ")")
   )
-  
+
   data <- road_run_query(query)
-  
+
   data <- add_locality_columns(data, assemblages = assemblages)
-  
-  return(data)  
+
+  return(data)
 }
 
 
@@ -408,64 +339,50 @@ road_get_feature <- function(
 #' @param age_max integer; maximum age of assemblage.
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
 #' @param miscellaneous_finds_material string (one item) or vector of strings
-#' 
+#'
 #' @return Database search result as list of miscellaneous finds.
 #' @export
 #'
 # @examples road_get_miscellaneous_finds(continents = "Europe")
 road_get_miscellaneous_finds <- function(
-    continents = NULL, 
-    subcontinents = NULL, 
-    countries = NULL, 
-    locality_types = NULL, 
-    cultural_periods = NULL, 
-    categories = NULL, 
-    age_min = NULL, 
-    age_max = NULL, 
+    continents = NULL,
+    subcontinents = NULL,
+    countries = NULL,
+    locality_types = NULL,
+    cultural_periods = NULL,
+    categories = NULL,
+    age_min = NULL,
+    age_max = NULL,
     miscellaneous_finds_material = NULL,
     assemblages = NULL
 ) {
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents,
-                                                                subcontinents = subcontinents,
-                                                                countries = countries,
-                                                                categories = categories, 
-                                                                locality_types = locality_types,
-                                                                cultural_periods = cultural_periods,
-                                                                age_min = age_min, age_max = age_max) 
-  
-  assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
-  
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
+  assemblage_condition <- get_assemblage_condition(assemblages = assemblages, locality_id_column_name = "miscellaneous_finds.assemblage_idlocality", assemblage_id_column_name = "miscellaneous_finds.assemblage_idassemblage")
+
   # select fields
   select_fields <- c(
-    paste0(" assemblage_idlocality AS ", cm_locality_idlocality),
-    paste0(" assemblage_idassemblage AS ", cm_assemblages_idassemblage),
-    paste0(" material AS ", cm_miscellaneous_finds_material),
-    paste0(" raw_material_source AS ", cm_miscellaneous_finds_raw_material_source),
+    paste0("assemblage_idlocality AS ", cm_locality_idlocality),
+    paste0("assemblage_idassemblage AS ", cm_assemblages_idassemblage),
+    paste0("material AS ", cm_miscellaneous_finds_material),
+    paste0("raw_material_source AS ", cm_miscellaneous_finds_raw_material_source),
     "number",
     "comments"
   )
-  
-  if (!is.null(miscellaneous_finds_material)) 
-    miscellaneous_finds_material_condition <- query_check_intersection("AND ", 
-                                                                       miscellaneous_finds_material, 
-                                                                       cm_miscellaneous_finds_material)
-  else 
-    miscellaneous_finds_material_condition <- ""
-  
+
   query <- paste(
-    "SELECT DISTINCT * FROM (",
-    "SELECT DISTINCT ",
+    "SELECT DISTINCT",
     paste(select_fields, collapse = ", "),
-    " FROM miscellaneous_finds) as foo WHERE true ",
+    "FROM miscellaneous_finds",
+    "WHERE",
     assemblage_condition,
-    miscellaneous_finds_material_condition
+    parameter_to_query("AND material IN (", miscellaneous_finds_material, ")")
   )
-  
+
   data <- road_run_query(query)
-  
+
   data <- add_locality_columns(data, assemblages = assemblages)
-  
+
   return(data)
 }
