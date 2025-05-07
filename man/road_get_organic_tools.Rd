@@ -44,3 +44,6 @@ Database search result as list of organic tools.
 \description{
 `road_get_organic_tools` fetches data of organic tools from ROAD database.
 }
+\examples{
+road_get_organic_tools(continents = "Europe")
+}

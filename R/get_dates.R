@@ -19,10 +19,11 @@
 #' @return date records
 #' @export
 #'
-# @examples road_get_dates(dating_methods = c("geology", "biostratigraphy"))
-# @examples road_get_dates(material_dated = c("coprolite", "glass", "ivory"), age_min = 10000L, 
-#                          age_max = 100000L, dating_methods = c("geology", "biostratigraphy"))
-# @examples road_get_dates(countries = c("Germany", "France"), cultural_periods = "Middle Paleolithic")                         
+#' @examples 
+#' road_get_dates(dating_methods = c("geology", "biostratigraphy"))
+#' road_get_dates(material_dated = c("coprolite", "glass", "ivory"), age_min = 10000L, 
+#'                          age_max = 100000L, dating_methods = c("geology", "biostratigraphy"))
+#' road_get_dates(countries = c("Germany", "France"), cultural_periods = "Middle Paleolithic")                         
 road_get_dates <- function (
     continents = NULL, 
     subcontinents = NULL, 

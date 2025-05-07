@@ -59,5 +59,8 @@ paleobotanical data based on various parameters such as geographical location, c
 and assemblages. Use the parameters to filter the results or omit them to retrieve broader results.
 }
 \examples{
+road_get_plantremains(countries = c("Germany", "France"), plant_family = "Poaceae")
+road_get_plantremains(continents = "Europe", cultural_periods = "Neolithic", 
+plant_genus = "Triticum")
 road_get_plantremains(categories = "plant remains", age_min = 5000L, age_max = 10000L)
 }

@@ -44,3 +44,6 @@ Database search result as list of feature finds.
 \description{
 `road_get_feature` fetches data of feature finds from ROAD database.
 }
+\examples{
+road_get_feature(continents = "Europe")
+}

@@ -53,3 +53,9 @@ date records
 \details{
 All parameters are optional and should be omitted or set to NULL when not used.
 }
+\examples{
+road_get_dates(dating_methods = c("geology", "biostratigraphy"))
+road_get_dates(material_dated = c("coprolite", "glass", "ivory"), age_min = 10000L, 
+                         age_max = 100000L, dating_methods = c("geology", "biostratigraphy"))
+road_get_dates(countries = c("Germany", "France"), cultural_periods = "Middle Paleolithic")                         
+}

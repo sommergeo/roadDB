@@ -44,3 +44,7 @@ Database search result as list of lithic finds with info about typology.
 \description{
 `road_get_lithic_typology` fetches data of lithic finds from ROAD database.
 }
+\examples{
+road_get_lithic_typology(continents = "Europe")
+road_get_lithic_typology(continents = "Europe", tool_list = "biface")
+}

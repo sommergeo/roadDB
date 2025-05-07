@@ -53,7 +53,6 @@ assemblages (return value of function `road_get_assemblages`) as its first param
 If you will search for genus AND species use this function with `genus` AND `species` as parameter
 }
 \examples{
-road_get_human_remains(genus = 'Homo', species = 'neanderthalensis')
 road_get_human_remains(genus = 'Homo')
 road_get_human_remains(continents = "Europe", genus = c('Homo', 'Paranthropus'))
 road_get_human_remains(species = 'neanderthalensis')

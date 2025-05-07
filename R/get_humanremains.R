@@ -24,11 +24,12 @@
 #' 
 #' @export
 #'
-#' @examples road_get_human_remains(genus = 'Homo', species = 'neanderthalensis')
-#' @examples road_get_human_remains(genus = 'Homo')
-#' @examples road_get_human_remains(continents = "Europe", genus = c('Homo', 'Paranthropus'))
-#' @examples road_get_human_remains(species = 'neanderthalensis')
-#' @examples road_get_human_remains(species = c('neanderthalensis', 'erectus'))
+#'
+#' @examples
+#' road_get_human_remains(genus = 'Homo')
+#' road_get_human_remains(continents = "Europe", genus = c('Homo', 'Paranthropus'))
+#' road_get_human_remains(species = 'neanderthalensis')
+#' road_get_human_remains(species = c('neanderthalensis', 'erectus'))
 
 road_get_human_remains <- function(
     assemblages = NULL,

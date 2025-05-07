@@ -33,3 +33,9 @@ Database search result as list of localities.
 Use parameters to spatially delimit search results or omit them to have a broader radius.
 All parameters are optional and should be omitted or set to NULL when not used.
 }
+\examples{
+road_get_localities(continents = c("Europe"), countries = c("Germany", "France"))
+road_get_localities(continents = "Europe", countries = c("Germany", "France"))
+road_get_localities(countries = c("Germany", "France"), locality_type = "cave")
+road_get_localities(countries = c("Germany", "France"), cultural_periods = "Middle Paleolithic")
+}

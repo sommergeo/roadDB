@@ -16,3 +16,7 @@ List of attribute values.
 `road_list_values` fetches values of a given attribute in the database or 
 read values from file
 }
+\examples{
+road_list_values("category")
+road_list_values("cultural_period")
+}

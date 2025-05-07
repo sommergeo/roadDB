@@ -138,8 +138,9 @@ road_list_parameter_values <- function (function_parameter, function_name = NULL
 #' @return List of attribute values.
 #' @export
 #'
-# @examples road_list_values("category")
-# @examples road_list_values("cultural_period")
+#' @examples
+#' road_list_values("category")
+#' road_list_values("cultural_period")
 road_list_values <- function (attribute_name)
 { 
   tables <- list("geopolitical_units", 
@@ -251,7 +252,8 @@ road_list_values <- function (attribute_name)
 #' @return Database search result as list of lithic finds with info about typology.
 #' @export
 #'
-#' @examples road_summerize_archaeology(term = "Cores")
+#' @examples 
+#' road_summerize_archaeology(term = "Cores")
 road_summerize_archaeology <- function(term)
 {
   if (is.null(term))

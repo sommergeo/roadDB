@@ -44,3 +44,6 @@ Database search result as list of symbolic artifacts with info about symbolic.
 \description{
 `road_get_symbolic_artifacts` fetches data of symbolic artifacts from ROAD database.
 }
+\examples{
+road_get_symbolic_artifacts(continents = "Europe")
+}
