@@ -58,7 +58,7 @@ road_get_human_remains <- function(
                                                                 age_min = age_min, 
                                                                 age_max = age_max)
 
-  assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
+  assemblage_condition <- get_assemblage_condition(query_start = " AND ", assemblages = assemblages)
   
   # build genus/species condition
   if (is.vector(genus) && is.vector(species))
