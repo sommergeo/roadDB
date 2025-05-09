@@ -50,7 +50,7 @@ road_get_paleofauna <- function(
                                                                 age_min = age_min, 
                                                                 age_max = age_max)
   
-  assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
+  assemblage_condition <- get_assemblage_condition(query_start = " AND ", assemblages = assemblages)
   
   # build genus/species condition
   if (is.vector(fauna_genus) && is.vector(fauna_species))
@@ -69,17 +69,10 @@ road_get_paleofauna <- function(
   fauna_species_condition <- ""
   
   if (!is.null(fauna_genus)) 
-    #fauna_genus_condition <- query_check_intersection("AND ", 
-     #                                                 fauna_genus, 
-    #                                                  cm_fauna_genus)
-  
-    parameter_to_query("AND genus IN (",fauna_genus, ")")
+    fauna_genus_condition <- parameter_to_query("AND genus IN (",fauna_genus, ")")
   
   if (!is.null(fauna_species)) 
-    #fauna_species_condition <- query_check_intersection("AND ", 
-     #                                                   fauna_species, 
-     #                                                   cm_fauna_species)
-    parameter_to_query("AND species IN (",fauna_species, ")")
+    fauna_species_condition <- parameter_to_query("AND species IN (",fauna_species, ")")
 
   # select fields
   select_fields <- c(
