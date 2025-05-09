@@ -58,28 +58,59 @@ road_get_plantremains <- function(
                                                                 age_min = age_min, 
                                                                 age_max = age_max)
 
-  assemblage_condition <- get_assemblage_condition(assemblages = assemblages, locality_id_column_name = "paleoflora.plantremains_idlocality", assemblage_id_column_name = "paleoflora.plantremains_idassemblage")
+  assemblage_condition <- get_assemblage_condition(query_start = " AND ", assemblages = assemblages, locality_id_column_name = cm_locality_idlocality, assemblage_id_column_name = cm_assemblages_idassemblage)
+  
+  # build remains/family/genus/species conditions
+  if (is.vector(plant_remains) && is.vector(plant_family) && is.vector(plant_genus) && is.vector(plant_species))
+  {
+    cp <- expand.grid(remains = plant_remains, family = plant_family, genus = plant_genus, species = plant_species)
+    
+    cp <- cp %>% mutate(remains_family_genus_species=paste(remains, family, genus, species, sep=" "))
+    s <- paste(cp$remains_family_genus_species, collapse="; ")
+    warning(paste("If none of the following plant_remains, plant_family, plant_genus and plant_species combinations 
+                  ", s, "
+                  are in the database, 
+                  the search results will be empty"))
+  }
+  
+  #plant_genus_conjuction <- ""
+  #plant_species_conjuction <- ""
+  
+  plant_remains_condition <- ""
+  plant_family_condition <- ""
+  plant_genus_condition <- ""
+  plant_species_condition <- ""
+  
+  if (!is.null(plant_remains))
+  {
+    plant_remains_condition <- parameter_to_query("AND plant_remains IN (", plant_remains, ")")
+  }
 
-  plant_genus_conjuction <- ""
-  plant_species_conjuction <- ""
+  if (!is.null(plant_family))
+  {
+    plant_family_condition <- parameter_to_query("AND plant_family IN (", plant_family, ")")
+  }
+    
   if (!is.null(plant_genus))
   {
-    if (is.null(plant_family))
-      plant_genus_conjuction <- "AND"
-    else
-      plant_genus_conjuction <- "OR"
+    plant_genus_condition <- parameter_to_query("AND plant_genus IN (", plant_genus, ")")
+    # if (is.null(plant_family))
+    #   plant_genus_conjuction <- "AND"
+    # else
+    #   plant_genus_conjuction <- "OR"
   }
   if (!is.null(plant_species))
   {
-    if (is.null(plant_family) && is.null(plant_genus))
-      plant_species_conjuction <- "AND"
-    else
-      plant_species_conjuction <- "OR"
+    plant_species_condition <- parameter_to_query("AND plant_species IN (", plant_species, ")")
+    # if (is.null(plant_family) && is.null(plant_genus))
+    #   plant_species_conjuction <- "AND"
+    # else
+    #   plant_species_conjuction <- "OR"
   }
 
   # combine query parts
   query <- paste(
-    "SELECT DISTINCT",
+    "SELECT DISTINCT * FROM ( SELECT DISTINCT",
     paste0("paleoflora.plantremains_idlocality AS ", cm_locality_idlocality, ","),
     paste0("paleoflora.plantremains_idassemblage AS ", cm_assemblages_idassemblage, ","),
     paste0("paleoflora.plantremains_plant_remains AS ", cm_paleoflora_plant_remains, ","),
@@ -88,15 +119,21 @@ road_get_plantremains <- function(
     paste0("plant_taxonomy.species AS ", cm_plant_taxonomy_species),
     "FROM paleoflora",
     "INNER JOIN plant_taxonomy ON paleoflora.plant_taxonomy_taxon = plant_taxonomy.taxon",
-    "WHERE",
+    ") as foo WHERE TRUE ",
     assemblage_condition,
-    parameter_to_query("AND paleoflora.plantremains_plant_remains IN (", plant_remains, ")"),
-    parameter_to_query("AND plant_taxonomy.family IN (", plant_family, ")"),
-    plant_genus_conjuction,
-    parameter_to_query("plant_taxonomy.genus IN (", plant_genus, ")"),
-    plant_species_conjuction,
-    parameter_to_query("plant_taxonomy.species IN (", plant_species, ")"),
-    "ORDER BY paleoflora.plantremains_idlocality ASC"
+    plant_remains_condition,
+    plant_family_condition,
+    plant_genus_condition,
+    plant_species_condition,
+    # parameter_to_query("AND paleoflora.plantremains_plant_remains IN (", plant_remains, ")"),
+    # parameter_to_query("AND plant_taxonomy.family IN (", plant_family, ")"),
+    # plant_genus_conjuction,
+    # parameter_to_query("plant_taxonomy.genus IN (", plant_genus, ")"),
+    # plant_species_conjuction,
+    # parameter_to_query("plant_taxonomy.species IN (", plant_species, ")"),
+    "ORDER BY ",
+    cm_locality_idlocality,
+    " ASC"
   )
   
   data <- road_run_query(query)
