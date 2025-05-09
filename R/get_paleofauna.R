@@ -69,10 +69,10 @@ road_get_paleofauna <- function(
   fauna_species_condition <- ""
   
   if (!is.null(fauna_genus)) 
-    fauna_genus_condition <- parameter_to_query("AND genus IN (",fauna_genus, ")")
+    fauna_genus_condition <- parameter_to_query("AND fauna_genus IN (",fauna_genus, ")")
   
   if (!is.null(fauna_species)) 
-    fauna_species_condition <- parameter_to_query("AND species IN (",fauna_species, ")")
+    fauna_species_condition <- parameter_to_query("AND fauna_species IN (",fauna_species, ")")
 
   # select fields
   select_fields <- c(
