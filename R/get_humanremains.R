@@ -83,17 +83,11 @@ road_get_human_remains <- function(
   {
     species_condition <-parameter_to_query("AND species IN (",species, ")")
   }
-   
-  genus_species_condition <- paste(
-    genus_condition,
-    species_condition
-  )
 
   # select fields
   select_fields <- c(
     paste0("humanremains_idlocality AS ", cm_locality_idlocality),
     paste0("humanremains_idassemblage AS ", cm_assemblages_idassemblage),
-    paste0("genus || ' ' || species AS ", cm_humanremains_genus_species_str),
     paste0("genus AS ", cm_humanremains_genus),
     paste0("species AS ", cm_humanremains_species),
     paste0("age AS ", cm_humanremains_age),
@@ -108,7 +102,8 @@ road_get_human_remains <- function(
     " FROM publication_desc_humanremains) as foo  
     WHERE TRUE ",
     assemblage_condition,
-    genus_species_condition,
+    genus_condition,
+    species_condition,
     "ORDER BY ", cm_locality_idlocality, ", ", cm_assemblages_idassemblage 
   )
 

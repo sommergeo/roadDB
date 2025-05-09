@@ -125,12 +125,6 @@ road_get_plantremains <- function(
     plant_family_condition,
     plant_genus_condition,
     plant_species_condition,
-    # parameter_to_query("AND paleoflora.plantremains_plant_remains IN (", plant_remains, ")"),
-    # parameter_to_query("AND plant_taxonomy.family IN (", plant_family, ")"),
-    # plant_genus_conjuction,
-    # parameter_to_query("plant_taxonomy.genus IN (", plant_genus, ")"),
-    # plant_species_conjuction,
-    # parameter_to_query("plant_taxonomy.species IN (", plant_species, ")"),
     "ORDER BY ",
     cm_locality_idlocality,
     " ASC"
