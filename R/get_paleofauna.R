@@ -69,14 +69,17 @@ road_get_paleofauna <- function(
   fauna_species_condition <- ""
   
   if (!is.null(fauna_genus)) 
-    fauna_genus_condition <- query_check_intersection("AND ", 
-                                                      fauna_genus, 
-                                                      cm_fauna_genus)
+    #fauna_genus_condition <- query_check_intersection("AND ", 
+     #                                                 fauna_genus, 
+    #                                                  cm_fauna_genus)
+  
+    parameter_to_query("AND genus IN (",fauna_genus, ")")
   
   if (!is.null(fauna_species)) 
-    fauna_species_condition <- query_check_intersection("AND ", 
-                                                        fauna_species, 
-                                                        cm_fauna_species)
+    #fauna_species_condition <- query_check_intersection("AND ", 
+     #                                                   fauna_species, 
+     #                                                   cm_fauna_species)
+    parameter_to_query("AND species IN (",fauna_species, ")")
 
   # select fields
   select_fields <- c(

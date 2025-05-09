@@ -77,11 +77,11 @@ road_get_human_remains <- function(
   
   if (!is.null(genus))
   {
-    genus_condition <- query_check_intersection("AND ", genus, cm_humanremains_genus)
+    genus_condition <- parameter_to_query("AND genus IN (",genus, ")")
   }
   if (!is.null(species))
   {
-    species_condition <- query_check_intersection("AND ", species, cm_humanremains_species)
+    species_condition <-parameter_to_query("AND species IN (",species, ")")
   }
    
   genus_species_condition <- paste(
