@@ -38,7 +38,9 @@ road_get_paleofauna <- function(
     fauna_species = NULL
 ) {
   # calculate assemblage_condition
-  # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
+  if ((!is.null(categories) | !is.null(age_min) | !is.null(age_max)) & !is.null(assemblages)) 
+    warning("No assemblage search for categories or age_min/age_max is performed because a non-empty assemblage list was passed")
+  
   if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents, 
                                                                 subcontinents = subcontinents, 
                                                                 countries = countries, 

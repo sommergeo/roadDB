@@ -69,7 +69,6 @@ road_get_lithic_typology <- function(
 #'
 #' `road_get_lithic_raw_material` fetches data of lithic finds from ROAD database.
 #'
-#'
 #' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
