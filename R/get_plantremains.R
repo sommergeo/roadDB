@@ -83,7 +83,10 @@ road_get_plantremains <- function(
   
   if (!is.null(plant_remains))
   {
-    plant_remains_condition <- parameter_to_query("AND plant_remains IN (", plant_remains, ")")
+    if (is.character(plant_remains) && length(plant_remains) == 1)
+      plant_remains_condition <- paste0(" AND plant_remains ILIKE '%", plant_remains, "%' " )
+    else 
+      plant_remains_condition <- parameter_to_query("AND plant_remains IN (", plant_remains, ")")
   }
 
   if (!is.null(plant_family))

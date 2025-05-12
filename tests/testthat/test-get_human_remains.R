@@ -1,10 +1,11 @@
-test_that("road_get_plantremains() returns the correct data types", {
+test_that("road_get_human_remains() returns the correct data types", {
   # Call the function
-  result <- road_get_plantremains()
+  result <- road_get_human_remains()
   
   # Check if the column types match the expected types
   expect_equal(class(result$locality_id), "character")
   expect_equal(class(result$assemblage_id), "integer")
+  expect_equal(class(result$humanremains_id), "integer")
   expect_equal(class(result$continent), "character")
   expect_equal(class(result$subcontinent), "character")
   expect_equal(class(result$country), "character")
@@ -16,21 +17,21 @@ test_that("road_get_plantremains() returns the correct data types", {
   expect_equal(class(result$categories), "character")
   expect_equal(class(result$age_min), "integer")
   expect_equal(class(result$age_max), "integer")
-  expect_equal(class(result$plant_remains), "character")
-  expect_equal(class(result$plant_family), "character")
-  expect_equal(class(result$plant_genus), "character")
-  expect_equal(class(result$plant_species), "character")
+  expect_equal(class(result$genus), "character")
+  expect_equal(class(result$species), "character")
+  expect_equal(class(result$age), "character")
+  expect_equal(class(result$sex), "character")
   
   # Check if the result is a data frame and has the expected number of rows 
   # and columns
   expect_s3_class(result, "data.frame")
-  expect_equal(ncol(result), 17)
-  expect_true(nrow(road_get_plantremains()) > 0)
+  expect_equal(ncol(result), 18)
+  expect_true(nrow(road_get_human_remains()) > 0)
 })
 
-test_that("road_get_plantremains() returns sane age results", {
+test_that("road_get_human_remains() returns sane age results", {
   # Call the function
-  result <- road_get_plantremains()
+  result <- road_get_human_remains()
   
   # Check that the age column is within the expected range, or NA is allowed
   expect_true(all(is.na(result$age) | (result$age >= 0 & result$age <= 7000000)), 
@@ -44,4 +45,3 @@ test_that("road_get_plantremains() returns sane age results", {
   expect_true(all(is.na(result$positive_standard_deviation) | (result$positive_standard_deviation >= 0)), 
               info = "Some values in the 'positive_standard_deviation' column are non-positive, or there are unexpected NAs.")
 })
-  

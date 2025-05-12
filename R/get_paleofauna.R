@@ -23,7 +23,6 @@
 #' @examples 
 #' road_get_paleofauna(continents = "Europe")
 #' road_get_paleofauna(continents = "Europe", categories = "feature")
-#' road_get_paleofauna(continents = "Europe", categories = c("feature", "symbolic artefacts"))
 road_get_paleofauna <- function(
     assemblages = NULL,
     continents = NULL, 
