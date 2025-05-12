@@ -61,5 +61,5 @@ and assemblages. Use the parameters to filter the results or omit them to retrie
 \examples{
 p <- road_get_plantremains(continents = "Europe", cultural_periods = "Neolithic", 
 plant_genus = "Triticum")
-print(p)
+p
 }
