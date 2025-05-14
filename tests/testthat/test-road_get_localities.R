@@ -1,7 +1,23 @@
-test_that("multiplication works", {
-  expect_equal(2 * 2, 4)
+test_that("road_get_localities() returns the correct data types", {
+  # Call the function
+  result <- road_get_localities()
+  
+  # Check if the column types match the expected types
+  expect_equal(class(result$locality_id), "character")
+  expect_equal(class(result$continent), "character")
+  expect_equal(class(result$subcontinent), "character")
+  expect_equal(class(result$country), "character")
+  expect_equal(class(result$locality_types), "character")
+  expect_equal(class(result$coord_x), "numeric")
+  expect_equal(class(result$coord_y), "numeric")
+  expect_equal(class(result$cultural_periods), "character")
+  
+  # Check if the result is a data frame and has the expected number of rows 
+  # and columns
+  expect_s3_class(result, "data.frame")
+  expect_equal(ncol(result), 8)
+  expect_true(nrow(road_get_localities()) > 0)
 })
-
 
 # Testing whether the information about the function is helpful
 help(road_get_localities)

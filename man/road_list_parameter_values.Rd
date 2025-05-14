@@ -18,3 +18,6 @@ List of attribute values.
 `road_list_parameter_values` fetches values of a given parameter in the database or 
 read values from file
 }
+\examples{
+road_list_parameter_values("locality_types")
+}

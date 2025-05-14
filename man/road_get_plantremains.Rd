@@ -59,7 +59,5 @@ paleobotanical data based on various parameters such as geographical location, c
 and assemblages. Use the parameters to filter the results or omit them to retrieve broader results.
 }
 \examples{
-p <- road_get_plantremains(continents = "Europe", cultural_periods = "Neolithic", 
-plant_genus = "Triticum")
-p
+p <- road_get_plantremains(plant_genus = "Triticum")
 }
