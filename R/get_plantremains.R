@@ -21,14 +21,12 @@
 #' @param plant_species string (one item) or vector of strings (one or more items); defaults to NULL.
 #'
 #' @return Database search result as a list of assemblages with paleobotanical remains.
-#' @export
 #'
-#' @examples 
-#' p <- road_get_plantremains(continents = "Europe", cultural_periods = "Neolithic", 
-#' plant_genus = "Triticum")
-#' p
-# road_get_plantremains(categories = "plant remains", age_min = 5000L, age_max = 10000L)
-# road_get_plantremains(countries = c("Germany", "France"), plant_family = "Poaceae")
+#' @examples
+#' p <- road_get_plantremains(plant_genus = "Triticum")
+#' @export
+#' road_get_plantremains(categories = "plant remains", age_min = 5000L, age_max = 10000L)
+#' road_get_plantremains(countries = c("Germany", "France"), plant_family = "Poaceae")
 road_get_plantremains <- function(
     assemblages = NULL,
     continents = NULL,
@@ -61,8 +59,23 @@ road_get_plantremains <- function(
   assemblage_condition <- get_assemblage_condition(query_start = " AND ", assemblages = assemblages, locality_id_column_name = cm_locality_idlocality, assemblage_id_column_name = cm_assemblages_idassemblage)
   
   # build remains/family/genus/species conditions
-  if (is.vector(plant_remains) && is.vector(plant_family) && is.vector(plant_genus) && is.vector(plant_species))
+  if ((is.vector(plant_remains) && is.vector(plant_family) && is.vector(plant_genus) && is.vector(plant_species))
+       || (is.vector(plant_remains) && is.vector(plant_family) && is.vector(plant_genus))
+       || (is.vector(plant_family) && is.vector(plant_genus) && is.vector(plant_species))
+       || (is.vector(plant_remains) && is.vector(plant_family) && is.vector(plant_species))
+       || (is.vector(plant_remains) && is.vector(plant_genus) && is.vector(plant_species))
+       || (is.vector(plant_remains) && is.vector(plant_family))
+       || (is.vector(plant_family) && is.vector(plant_genus))
+       || (is.vector(plant_genus) && is.vector(plant_species))
+       || (is.vector(plant_remains) && is.vector(plant_genus))
+       || (is.vector(plant_family) && is.vector(plant_species))
+       || (is.vector(plant_remains) && is.vector(plant_species))
+      )
   {
+    if (is.null(plant_remains)) plant_remains <- c("")
+    if (is.null(plant_family)) plant_family <- c("")
+    if (is.null(plant_genus)) plant_genus <- c("")
+    if (is.null(plant_species)) plant_species <- c("")
     cp <- expand.grid(remains = plant_remains, family = plant_family, genus = plant_genus, species = plant_species)
     
     cp <- cp %>% mutate(remains_family_genus_species=paste(remains, family, genus, species, sep=" "))
