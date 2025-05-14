@@ -72,16 +72,36 @@ road_get_plantremains <- function(
        || (is.vector(plant_remains) && is.vector(plant_species))
       )
   {
-    if (is.null(plant_remains)) plant_remains <- c("")
-    if (is.null(plant_family)) plant_family <- c("")
-    if (is.null(plant_genus)) plant_genus <- c("")
-    if (is.null(plant_species)) plant_species <- c("")
+    if (is.null(plant_remains))
+    {
+      plant_remains <- c("")
+      pr <- ""
+    }
+    else pr <- "plant_remains"
+    if (is.null(plant_family))
+    {
+      plant_family <- c("")
+      pf <- ""
+    }
+    else pf <- "plant_family"
+    if (is.null(plant_genus))
+    {
+      plant_genus <- c("")
+      pg <- ""
+    }
+    else pg <- "plant_genus"
+    if (is.null(plant_species))
+    {
+      plant_species <- c("")
+      ps <- ""
+    }
+    else ps <- "plant_species"
     cp <- expand.grid(remains = plant_remains, family = plant_family, genus = plant_genus, species = plant_species)
     
     cp <- cp %>% mutate(remains_family_genus_species=paste(remains, family, genus, species, sep=" "))
     s <- paste(cp$remains_family_genus_species, collapse="; ")
-    warning(paste("If none of the following plant_remains, plant_family, plant_genus and plant_species combinations 
-                  ", s, "
+    warning(paste("If none of the following", pr, pf, pg, ps, " combinations 
+                  ", s, " 
                   are in the database, 
                   the search results will be empty"))
   }
@@ -96,10 +116,10 @@ road_get_plantremains <- function(
   
   if (!is.null(plant_remains))
   {
-    if (is.character(plant_remains) && length(plant_remains) == 1)
-      plant_remains_condition <- paste0(" AND plant_remains ILIKE '%", plant_remains, "%' " )
-    else 
-      plant_remains_condition <- parameter_to_query("AND plant_remains IN (", plant_remains, ")")
+    #if (is.character(plant_remains) && length(plant_remains) == 1)
+    #  plant_remains_condition <- paste0(" AND plant_remains ILIKE '%", plant_remains, "%' " )
+    #else 
+    plant_remains_condition <- parameter_to_query("AND plant_remains IN (", plant_remains, ")")
   }
 
   if (!is.null(plant_family))
@@ -110,18 +130,10 @@ road_get_plantremains <- function(
   if (!is.null(plant_genus))
   {
     plant_genus_condition <- parameter_to_query("AND plant_genus IN (", plant_genus, ")")
-    # if (is.null(plant_family))
-    #   plant_genus_conjuction <- "AND"
-    # else
-    #   plant_genus_conjuction <- "OR"
   }
   if (!is.null(plant_species))
   {
     plant_species_condition <- parameter_to_query("AND plant_species IN (", plant_species, ")")
-    # if (is.null(plant_family) && is.null(plant_genus))
-    #   plant_species_conjuction <- "AND"
-    # else
-    #   plant_species_conjuction <- "OR"
   }
 
   # combine query parts
