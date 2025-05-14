@@ -57,7 +57,7 @@
 #' @return List of attribute values.
 #' @export
 #'
-# @examples road_list_parameter_values("road_get_localities", "locality_types")
+#' @examples road_list_parameter_values("locality_types")
 road_list_parameter_values <- function (function_parameter, function_name = NULL)
 {
   if (is.null(function_parameter))
