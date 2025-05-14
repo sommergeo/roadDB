@@ -81,7 +81,7 @@ road_get_human_remains <- function(
   }
   if (!is.null(species))
   {
-    species_condition <-parameter_to_query("AND species IN (",species, ")")
+    species_condition <- parameter_to_query("AND species IN (",species, ")")
   }
 
   # select fields
