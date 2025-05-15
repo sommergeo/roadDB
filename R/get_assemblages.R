@@ -122,7 +122,22 @@ road_get_assemblages <- function(
   )
 
   data <- road_run_query(query)
-
+  
+  if (nrow(data) == 0 & nrow(localities) > 0)
+  {
+    categories_str <- ifelse(is.null(categories), "", paste("categories =", toString(categories)))
+    age_min_str <- ifelse(is.null(age_min), "", paste("age_min =", age_min))
+    age_max_str <- ifelse(is.null(age_max), "", paste("age_max =", age_max))
+    
+    message(paste("One or more of the following used parameters caused the empty result set
+                  :",
+                  categories_str,
+                  age_min_str,
+                  age_max_str,
+                  "
+Please keep in mind, the data search needs exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
+  }
+  
   data <- add_locality_columns(data, localities = localities)
 
   return(data)

@@ -159,6 +159,23 @@ road_get_plantremains <- function(
   )
   
   data <- road_run_query(query)
+  
+  if (nrow(data) == 0 & nrow(assemblages) > 0)
+  {
+    plant_remains_str <- ifelse(is.null(plant_remains), "", paste("plant_remains =", toString(plant_remains)))
+    plant_family_str <- ifelse(is.null(plant_family), "", paste("plant_family =", toString(plant_family)))
+    plant_genus_str <- ifelse(is.null(plant_genus), "", paste("plant_genus =", toString(plant_genus)))
+    plant_species_str <- ifelse(is.null(plant_species), "", paste("plant_species =", toString(plant_species)))
+    
+    message(paste("One or more of the following used parameters caused the empty result set:
+                  ",
+                  plant_remains_str,
+                  plant_family_str,
+                  plant_genus_str,
+                  plant_species_str,
+                  "
+Please keep in mind, the data search needs exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
+  }
 
   data <- add_locality_columns(data, assemblages = assemblages)
 

@@ -109,6 +109,19 @@ road_get_human_remains <- function(
 
   data <- road_run_query(query)
   
+  if (nrow(data) == 0 & nrow(assemblages) > 0)
+  {
+    genus_str <- ifelse(is.null(genus), "", paste("genus =", toString(genus)))
+    species_str <- ifelse(is.null(species), "", paste("species =", toString(species)))
+    
+    message(paste("One or more of the following used parameters caused the empty result set:
+                  ",
+                  genus_str,
+                  species_str,
+                  "
+Please keep in mind, the data search needs exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
+  }
+  
   data <- add_locality_columns(data, assemblages = assemblages)
   
   return(data)

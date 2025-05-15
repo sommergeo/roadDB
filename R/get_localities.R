@@ -77,5 +77,21 @@ road_get_localities <- function(
   
   data <- road_run_query(query)
   
+  continents_str <- ifelse(is.null(continents), "", paste("continents =", toString(continents)))
+  subcontinents_str <- ifelse(is.null(subcontinents), "", paste("subcontinents =", toString(subcontinents)))
+  countries_str <- ifelse(is.null(countries), "", paste("countries =", toString(countries)))
+  locality_types_str <- ifelse(is.null(locality_types), "", paste("locality_types =", toString(locality_types)))
+  cultural_periods_str <- ifelse(is.null(cultural_periods), "", paste("cultural_periods =", toString(cultural_periods)))
+    
+  if (nrow(data) == 0) message(paste("One or more of the following used parameters caused the empty result set:
+                                     ",
+                                     continents_str,
+                                     subcontinents_str,
+                                     countries_str,
+                                     locality_types_str,
+                                     cultural_periods_str,
+                                     "
+Please keep in mind, the data search needs exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
+  
   return(data)
 }

@@ -97,6 +97,19 @@ road_get_paleofauna <- function(
   
   data <- road_run_query(query)
   
+  if (nrow(data) == 0 & nrow(assemblages) > 0)
+  {
+    fauna_genus_str <- ifelse(is.null(fauna_genus), "", paste("fauna_genus =", toString(fauna_genus)))
+    fauna_species_str <- ifelse(is.null(fauna_species), "", paste("fauna_species =", toString(fauna_species)))
+    
+    message(paste("One or more of the following parameters caused the empty result set:
+                  ",
+                  fauna_genus_str,
+                  fauna_species_str,
+                  "
+Please keep in mind, the data search needs exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
+  }
+  
   data <- add_locality_columns(data, assemblages = assemblages)
   
   return(data)
