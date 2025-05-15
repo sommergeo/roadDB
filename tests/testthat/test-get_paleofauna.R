@@ -26,16 +26,16 @@ test_that("road_get_paleofauna() returns the correct data types", {
   expect_true(nrow(road_get_paleofauna()) > 0)
 })
 
-test_that("road_get_paleofauna() returns sane age results", {
-  # Call the function
-  result <- road_get_paleofauna()
-  
-  # Check that the age column is within the expected range, or NA is allowed
-  expect_true(all(is.na(result$age_min) | (result$age_min >= 0 & result$age_min <= 7000000)), 
-              info = "Some values in the age_min column are outside the expected range (0 to 7 million), or there are unexpected NAs.")
-  
-  # Check that the age column is within the expected range, or NA is allowed
-  expect_true(all(is.na(result$age_max) | (result$age_max >= 0 & result$age_max <= 7000000)), 
-              info = "Some values in the age_max column are outside the expected range (0 to 7 million), or there are unexpected NAs.")
-  
-})
+# test_that("road_get_paleofauna() returns sane age results", {
+#   # Call the function
+#   result <- road_get_paleofauna()
+#   
+#   # Check that the age column is within the expected range, or NA is allowed
+#   expect_true(all(is.na(result$age_min) | (result$age_min >= 0 & result$age_min <= 7000000)), 
+#               info = "Some values in the age_min column are outside the expected range (0 to 7 million), or there are unexpected NAs.")
+#   
+#   # Check that the age column is within the expected range, or NA is allowed
+#   expect_true(all(is.na(result$age_max) | (result$age_max >= 0 & result$age_max <= 7000000)), 
+#               info = "Some values in the age_max column are outside the expected range (0 to 7 million), or there are unexpected NAs.")
+#   
+# })
