@@ -17,6 +17,10 @@ test_that("road_get_localities() returns the correct data types", {
   expect_s3_class(result, "data.frame")
   expect_equal(ncol(result), 8)
   expect_true(nrow(road_get_localities()) > 0)
+  
+  #expect_message()
+  #expect_warning()
+  #expect_error()
 })
 
 # Testing whether the information about the function is helpful
