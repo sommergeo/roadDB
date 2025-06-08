@@ -2,10 +2,14 @@
 #'
 #' `road_get_lithic_typology` fetches data of lithic finds from ROAD database.
 #'
+#' Lithic typology refers to the classification of stone tools based on their shape, technology, and function.
+#' This function enables you to query lithic typology data from the ROAD database using various parameters such as
+#' geographical location, cultural periods, tool types, and assemblages. Use the parameters to filter the results
+#' according to your research needs, or omit them to retrieve a broader dataset.
 #'
 #' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param countries string (one item) or vector of strings (one or more items); defaults to NULL. 
 #' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param categories string (one item) or vector of strings (one or more items).
@@ -17,9 +21,9 @@
 #' @return Database search result as list of lithic finds with info about typology.
 #' @export
 #'
-#' @examples 
+#' @examples
 #' road_get_lithic_typology(continents = "Europe")
-#' road_get_lithic_typology(continents = "Europe", tool_list = "biface")
+#' road_get_lithic_typology(continents = "Europe", tool_list = "flake")
 road_get_lithic_typology <- function(
     continents = NULL,
     subcontinents = NULL,
@@ -69,6 +73,11 @@ road_get_lithic_typology <- function(
 #'
 #' `road_get_lithic_raw_material` fetches data of lithic finds from ROAD database.
 #'
+#' Lithic raw material refers to the types of stone used for tool production in archaeological contexts.
+#' This function allows you to query lithic raw material data from the ROAD database using parameters such as
+#' geographical location, cultural periods, raw material types, and assemblages. Use the parameters to filter
+#' the results or omit them to retrieve a broader dataset.
+#'
 #' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
@@ -83,8 +92,9 @@ road_get_lithic_typology <- function(
 #' @return Database search result as list of lithic finds with info about raw material.
 #' @export
 #'
-#' @examples 
+#' @examples
 #' road_get_lithic_raw_material(continents = "Europe")
+#' road_get_lithic_raw_material(continents = "Europe", raw_material_list = "flint")
 road_get_lithic_raw_material <- function(
     continents = NULL,
     subcontinents = NULL,
@@ -134,6 +144,9 @@ road_get_lithic_raw_material <- function(
 #'
 #' `road_get_organic_tools` fetches data of organic tools from ROAD database.
 #'
+#' Organic tools are artifacts made from organic materials such as bone, antler, or wood, found in archaeological contexts.
+#' This function enables you to query organic tool data from the ROAD database based on parameters like geographical location,
+#' cultural periods, tool interpretation, and assemblages. Use the parameters to filter the results or omit them for broader results.
 #'
 #' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
@@ -149,8 +162,9 @@ road_get_lithic_raw_material <- function(
 #' @return Database search result as list of organic tools.
 #' @export
 #'
-#' @examples 
+#' @examples
 #' road_get_organic_tools(continents = "Europe")
+#' road_get_organic_tools(continents = "Europe", organic_tools_interpretation = "abrader/polisher")
 road_get_organic_tools <- function(
     continents = NULL,
     subcontinents = NULL,
@@ -202,6 +216,9 @@ road_get_organic_tools <- function(
 #'
 #' `road_get_symbolic_artifacts` fetches data of symbolic artifacts from ROAD database.
 #'
+#' Symbolic artifacts are objects interpreted as having symbolic or cultural significance in archaeological contexts.
+#' This function allows you to query symbolic artifact data from the ROAD database using parameters such as geographical location,
+#' cultural periods, artifact interpretation, and assemblages. Use the parameters to filter the results or omit them to retrieve a broader dataset.
 #'
 #' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
@@ -217,8 +234,9 @@ road_get_organic_tools <- function(
 #' @return Database search result as list of symbolic artifacts with info about symbolic.
 #' @export
 #'
-#' @examples 
+#' @examples
 #' road_get_symbolic_artifacts(continents = "Europe")
+#' road_get_symbolic_artifacts(continents = "Europe", symbolic_artifacts_interpretation = "abstract")
 road_get_symbolic_artifacts <- function(
     continents = NULL,
     subcontinents = NULL,
@@ -269,6 +287,9 @@ road_get_symbolic_artifacts <- function(
 #'
 #' `road_get_feature` fetches data of feature finds from ROAD database.
 #'
+#' Feature assemblages refer to archaeological features such as hearths, pits, or structures found at a site.
+#' This function enables you to query feature data from the ROAD database using parameters like geographical location,
+#' cultural periods, feature interpretation, and assemblages. Use the parameters to filter the results or omit them for broader results.
 #'
 #' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
@@ -284,8 +305,9 @@ road_get_symbolic_artifacts <- function(
 #' @return Database search result as list of feature finds.
 #' @export
 #'
-#' @examples 
+#' @examples
 #' road_get_feature(continents = "Europe")
+#' road_get_feature(continents = "Europe", feature_interpretation = "bedding")
 road_get_feature <- function(
     continents = NULL,
     subcontinents = NULL,
@@ -332,6 +354,9 @@ road_get_feature <- function(
 #'
 #' `road_get_miscellaneous_finds` fetches data of feature finds from ROAD database.
 #'
+#' Miscellaneous finds are archaeological objects that do not fit into other specific categories.
+#' This function allows you to query miscellaneous finds data from the ROAD database using parameters such as geographical location,
+#' cultural periods, material types, and assemblages. Use the parameters to filter the results or omit them to retrieve a broader dataset.
 #'
 #' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
@@ -347,8 +372,9 @@ road_get_feature <- function(
 #' @return Database search result as list of miscellaneous finds.
 #' @export
 #'
-#' @examples 
+#' @examples
 #' road_get_miscellaneous_finds(continents = "Europe")
+#' road_get_miscellaneous_finds(continents = "Europe", miscellaneous_finds_material = "wood fossil")
 road_get_miscellaneous_finds <- function(
     continents = NULL,
     subcontinents = NULL,

@@ -21,10 +21,10 @@
 #' @param plant_species string (one item) or vector of strings (one or more items); defaults to NULL.
 #'
 #' @return Database search result as a list of assemblages with paleobotanical remains.
+#' @export
 #'
 #' @examples
-#' p <- road_get_plantremains(plant_genus = "Triticum")
-#' @export
+#' road_get_plantremains(plant_genus = "Triticum")
 #' road_get_plantremains(categories = "plant remains", age_min = 5000L, age_max = 10000L)
 #' road_get_plantremains(countries = c("Germany", "France"), plant_family = "Poaceae")
 road_get_plantremains <- function(
@@ -42,22 +42,15 @@ road_get_plantremains <- function(
     plant_genus = NULL,
     plant_species = NULL
 )
-{  
+{
   # calculate assemblage_condition
-  if ((!is.null(categories) | !is.null(age_min) | !is.null(age_max)) & !is.null(assemblages)) 
+  if ((!is.null(categories) || !is.null(age_min) || !is.null(age_max)) && !is.null(assemblages))
     warning("No assemblage search for categories or age_min/age_max is performed because a non-empty assemblage list was passed")
 
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents, 
-                                                                subcontinents = subcontinents, 
-                                                                countries = countries, 
-                                                                locality_types = locality_types, 
-                                                                cultural_periods = cultural_periods,
-                                                                categories = categories, 
-                                                                age_min = age_min, 
-                                                                age_max = age_max)
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
 
   assemblage_condition <- get_assemblage_condition(query_start = " AND ", assemblages = assemblages, locality_id_column_name = cm_locality_idlocality, assemblage_id_column_name = cm_assemblages_idassemblage)
-  
+
   # build remains/family/genus/species conditions
   if ((is.vector(plant_remains) && is.vector(plant_family) && is.vector(plant_genus) && is.vector(plant_species))
        || (is.vector(plant_remains) && is.vector(plant_family) && is.vector(plant_genus))
@@ -97,23 +90,23 @@ road_get_plantremains <- function(
     }
     else ps <- "plant_species"
     cp <- expand.grid(remains = plant_remains, family = plant_family, genus = plant_genus, species = plant_species)
-    
-    cp <- cp %>% mutate(remains_family_genus_species=paste(remains, family, genus, species, sep=" "))
-    s <- paste(cp$remains_family_genus_species, collapse="; ")
+
+    cp <- cp %>% mutate(remains_family_genus_species = paste(remains, family, genus, species, sep = " "))
+    s <- paste(cp$remains_family_genus_species, collapse = "; ")
     warning(paste("If none of the following", pr, pf, pg, ps, " combinations 
                   ", s, " 
                   are in the database, 
                   the search results will be empty"))
   }
-  
+
   #plant_genus_conjuction <- ""
   #plant_species_conjuction <- ""
-  
+
   plant_remains_condition <- ""
   plant_family_condition <- ""
   plant_genus_condition <- ""
   plant_species_condition <- ""
-  
+
   if (!is.null(plant_remains))
   {
     #if (is.character(plant_remains) && length(plant_remains) == 1)
@@ -126,7 +119,7 @@ road_get_plantremains <- function(
   {
     plant_family_condition <- parameter_to_query("AND plant_family IN (", plant_family, ")")
   }
-    
+
   if (!is.null(plant_genus))
   {
     plant_genus_condition <- parameter_to_query("AND plant_genus IN (", plant_genus, ")")
@@ -157,16 +150,16 @@ road_get_plantremains <- function(
     cm_locality_idlocality,
     " ASC"
   )
-  
+
   data <- road_run_query(query)
-  
+
   if (nrow(data) == 0 & nrow(assemblages) > 0)
   {
     plant_remains_str <- ifelse(is.null(plant_remains), "", paste("plant_remains =", toString(plant_remains)))
     plant_family_str <- ifelse(is.null(plant_family), "", paste("plant_family =", toString(plant_family)))
     plant_genus_str <- ifelse(is.null(plant_genus), "", paste("plant_genus =", toString(plant_genus)))
     plant_species_str <- ifelse(is.null(plant_species), "", paste("plant_species =", toString(plant_species)))
-    
+
     message(paste("One or more of the following used parameters caused the empty result set:
                   ",
                   plant_remains_str,

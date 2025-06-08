@@ -18,7 +18,7 @@
 #' @return Database search result as list of assemblages.
 #' @export
 #'
-#' @examples 
+#' @examples
 #' road_get_assemblages(countries = c("Germany", "France"), age_min = 100000L)
 #' road_get_assemblages(categories = "human remains", age_max = 100000L)
 #' road_get_assemblages(subcontinents = "Central Asia", cultural_periods = "Middle Paleolithic")

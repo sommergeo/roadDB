@@ -44,6 +44,13 @@ Database search result as list of lithic finds with info about raw material.
 \description{
 `road_get_lithic_raw_material` fetches data of lithic finds from ROAD database.
 }
+\details{
+Lithic raw material refers to the types of stone used for tool production in archaeological contexts.
+This function allows you to query lithic raw material data from the ROAD database using parameters such as
+geographical location, cultural periods, raw material types, and assemblages. Use the parameters to filter
+the results or omit them to retrieve a broader dataset.
+}
 \examples{
 road_get_lithic_raw_material(continents = "Europe")
+road_get_lithic_raw_material(continents = "Europe", raw_material_list = "flint")
 }

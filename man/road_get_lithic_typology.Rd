@@ -44,7 +44,13 @@ Database search result as list of lithic finds with info about typology.
 \description{
 `road_get_lithic_typology` fetches data of lithic finds from ROAD database.
 }
+\details{
+Lithic typology refers to the classification of stone tools based on their shape, technology, and function.
+This function enables you to query lithic typology data from the ROAD database using various parameters such as
+geographical location, cultural periods, tool types, and assemblages. Use the parameters to filter the results
+according to your research needs, or omit them to retrieve a broader dataset.
+}
 \examples{
 road_get_lithic_typology(continents = "Europe")
-road_get_lithic_typology(continents = "Europe", tool_list = "biface")
+road_get_lithic_typology(continents = "Europe", tool_list = "flake")
 }

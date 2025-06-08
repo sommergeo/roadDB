@@ -44,6 +44,12 @@ Database search result as list of miscellaneous finds.
 \description{
 `road_get_miscellaneous_finds` fetches data of feature finds from ROAD database.
 }
+\details{
+Miscellaneous finds are archaeological objects that do not fit into other specific categories.
+This function allows you to query miscellaneous finds data from the ROAD database using parameters such as geographical location,
+cultural periods, material types, and assemblages. Use the parameters to filter the results or omit them to retrieve a broader dataset.
+}
 \examples{
 road_get_miscellaneous_finds(continents = "Europe")
+road_get_miscellaneous_finds(continents = "Europe", miscellaneous_finds_material = "wood fossil")
 }

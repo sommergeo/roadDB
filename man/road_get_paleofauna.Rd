@@ -53,5 +53,5 @@ assemblages (return value of function `road_get_assemblages`) as its parameter.
 }
 \examples{
 road_get_paleofauna(continents = "Europe")
-road_get_paleofauna(continents = "Europe", categories = "feature")
+road_get_paleofauna(continents = "Europe", fauna_genus = "Vulpes", fauna_species = "vulpes")
 }

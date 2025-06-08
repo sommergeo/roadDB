@@ -44,6 +44,12 @@ Database search result as list of organic tools.
 \description{
 `road_get_organic_tools` fetches data of organic tools from ROAD database.
 }
+\details{
+Organic tools are artifacts made from organic materials such as bone, antler, or wood, found in archaeological contexts.
+This function enables you to query organic tool data from the ROAD database based on parameters like geographical location,
+cultural periods, tool interpretation, and assemblages. Use the parameters to filter the results or omit them for broader results.
+}
 \examples{
 road_get_organic_tools(continents = "Europe")
+road_get_organic_tools(continents = "Europe", organic_tools_interpretation = "abrader/polisher")
 }

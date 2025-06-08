@@ -14,7 +14,7 @@
 #' @return Database search result as list of localities.
 #' @export
 #'
-#' @examples 
+#' @examples
 #' road_get_localities(continents = c("Europe"), countries = c("Germany", "France"))
 #' road_get_localities(continents = "Europe", countries = c("Germany", "France"))
 #' road_get_localities(countries = c("Germany", "France"), locality_type = "cave")

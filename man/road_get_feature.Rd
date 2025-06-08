@@ -44,6 +44,12 @@ Database search result as list of feature finds.
 \description{
 `road_get_feature` fetches data of feature finds from ROAD database.
 }
+\details{
+Feature assemblages refer to archaeological features such as hearths, pits, or structures found at a site.
+This function enables you to query feature data from the ROAD database using parameters like geographical location,
+cultural periods, feature interpretation, and assemblages. Use the parameters to filter the results or omit them for broader results.
+}
 \examples{
 road_get_feature(continents = "Europe")
+road_get_feature(continents = "Europe", feature_interpretation = "bedding")
 }

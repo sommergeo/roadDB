@@ -44,6 +44,12 @@ Database search result as list of symbolic artifacts with info about symbolic.
 \description{
 `road_get_symbolic_artifacts` fetches data of symbolic artifacts from ROAD database.
 }
+\details{
+Symbolic artifacts are objects interpreted as having symbolic or cultural significance in archaeological contexts.
+This function allows you to query symbolic artifact data from the ROAD database using parameters such as geographical location,
+cultural periods, artifact interpretation, and assemblages. Use the parameters to filter the results or omit them to retrieve a broader dataset.
+}
 \examples{
 road_get_symbolic_artifacts(continents = "Europe")
+road_get_symbolic_artifacts(continents = "Europe", symbolic_artifacts_interpretation = "abstract")
 }
