@@ -1,8 +1,6 @@
 #' Get assemblages from ROAD database
 #'
-#' `road_get_assemblages` fetches data of archeological assemblages from ROAD database.
-#'
-#' Assembalges are articulated archeological finds inside in a locality. One locality
+#' `road_get_assemblages` fetches data of archeological assemblages from ROAD database. Assembalges are articulated archeological finds inside in a locality. One locality
 #' can host multiple assemblages which can for example be associated with certain
 #' geological layers or historical time periods.
 #'

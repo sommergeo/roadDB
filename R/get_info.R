@@ -155,10 +155,10 @@ road_list_values <- function (attribute_name)
                  "archaeological_stratigraphy", 
                  "typology",
                  "raw_material",
-                 "organic_tools",                     # rethink
-                 "feature",                           # rethink
-                 "miscellaneous_finds",               # rethink
-                 "symbolic_artifacts",                # rethink
+                 "organic_tools",
+                 "feature", 
+                 "miscellaneous_finds",
+                 "symbolic_artifacts",
                  "publication_desc_humanremains", 
                  "publication_desc_humanremains",
                  "plantremains",

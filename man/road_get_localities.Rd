@@ -19,15 +19,22 @@ road_get_localities(
 
 \item{countries}{string (one item) or vector of strings (one or more items); defaults to NULL.}
 
-\item{locality_types}{string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{locality_types}{string (one item) or vector of strings (one or more items); defaults to NULL.
+The parameter locality_type(s) specifies the type of locality (e.g. cave, rockshelter, open air, profile, outcrop,
+mine, quarry, boring).}
 
-\item{cultural_periods}{string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{cultural_periods}{string (one item) or vector of strings (one or more items); defaults to NULL. The parameter cultural_period(s) specifies the main cultural epoch and includes the Eurasian
+Paleolithic (Lower, Middle, Upper, Epi) and the African Stone Age (Earlier, Middle, Later).}
 }
 \value{
 Database search result as list of localities.
 }
 \description{
 `road_get_localities` fetches data of archaeological sites (localities) from ROAD database.
+The primary table locality provides basic information about each place where an assemblage of
+archaeological, paleoanthropological, paleontological, paleobotanical or other relevant materials
+was described, recorded, sampled or collected. Every locality (site) is situated in a specific
+country within a given geographic region. The name of every locality is unique.
 }
 \details{
 Use parameters to spatially delimit search results or omit them to have a broader radius.
