@@ -13,25 +13,25 @@ road_get_localities(
 )
 }
 \arguments{
-\item{continents}{string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{continents}{specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. The parameter continents is a string (one item) or vector of strings (one or more items); defaults to NULL.}
 
-\item{subcontinents}{string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{subcontinents}{specifies the continental region(s) of the country , e.g. Southern Europe. The parameter subcontinents is a string (one item) or vector of strings (one or more items); defaults to NULL.}
 
-\item{countries}{string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{countries}{specifies the name of the country where a locality is situated (e.g. China,
+Germany, Kenya, Saudi Arabia). The parameter countries is a string (one item) or vector of strings (one or more items); defaults to NULL.}
 
-\item{locality_types}{string (one item) or vector of strings (one or more items); defaults to NULL.
-The parameter locality_type(s) specifies the type of locality (e.g. cave, rockshelter, open air, profile, outcrop,
-mine, quarry, boring).}
+\item{locality_types}{specifies the type of locality (e.g. cave, rockshelter, open air, profile, outcrop,
+mine, quarry, boring). The parameter locality_types is a string (one item) or vector of strings (one or more items); defaults to NULL.}
 
-\item{cultural_periods}{string (one item) or vector of strings (one or more items); defaults to NULL. The parameter cultural_period(s) specifies the main cultural epoch and includes the Eurasian
-Paleolithic (Lower, Middle, Upper, Epi) and the African Stone Age (Earlier, Middle, Later).}
+\item{cultural_periods}{specifies the main cultural epoch(s) and includes the Eurasian
+Paleolithic (Lower, Middle, Upper, Epi) and the African Stone Age (Earlier, Middle, Later). The parameter cultural_periods is a string (one item) or vector of strings (one or more items); defaults to NULL.}
 }
 \value{
 Database search result as list of localities.
 }
 \description{
 `road_get_localities` fetches data of archaeological sites (localities) from ROAD database.
-The primary table locality provides basic information about each place where an assemblage of
+The ROAD table locality provides basic information about each place where an assemblage of
 archaeological, paleoanthropological, paleontological, paleobotanical or other relevant materials
 was described, recorded, sampled or collected. Every locality (site) is situated in a specific
 country within a given geographic region. The name of every locality is unique.
