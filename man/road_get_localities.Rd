@@ -17,8 +17,8 @@ road_get_localities(
 
 \item{subcontinents}{specifies the continental region(s) of the country , e.g. Southern Europe. The parameter subcontinents is a string (one item) or vector of strings (one or more items); defaults to NULL.}
 
-\item{countries}{specifies the name of the country where a locality is situated (e.g. China,
-Germany, Kenya, Saudi Arabia). The parameter countries is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{countries}{specifies the name of the country where a locality is situated (e.g.
+Germany, Kenya, Saudi Arabia, China). The parameter countries is a string (one item) or vector of strings (one or more items); defaults to NULL.}
 
 \item{locality_types}{specifies the type of locality (e.g. cave, rockshelter, open air, profile, outcrop,
 mine, quarry, boring). The parameter locality_types is a string (one item) or vector of strings (one or more items); defaults to NULL.}
@@ -37,7 +37,7 @@ was described, recorded, sampled or collected. Every locality (site) is situated
 country within a given geographic region. The name of every locality is unique.
 }
 \details{
-Use parameters to spatially delimit search results or omit them to have a broader radius.
+Use parameters to filter search results by location, type, or culture or omit them to have a broader result set.
 All parameters are optional and should be omitted or set to NULL when not used.
 }
 \examples{
