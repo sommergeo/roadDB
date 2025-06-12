@@ -1,19 +1,31 @@
 #' Get assemblages from ROAD database
 #'
-#' `road_get_assemblages` fetches data of archeological assemblages from ROAD database. Assembalges are articulated archeological finds inside in a locality. One locality
-#' can host multiple assemblages which can for example be associated with certain
-#' geological layers or historical time periods.
+#' `road_get_assemblages` fetches data of assemblages from ROAD database. The ROAD table assemblage contains information about classes of finds. An assemblage is
+#' defined as a collected find consisting of grouped classes of materials, for example:
+#' archaeological finds (including raw material, typology, technology, function, organic tools,
+#' symbolic artifacts, feature and miscellaneous finds), human remains, faunal remains or
+#' botanical remains. An assemblage comes from a single geological layer or several geological layers of a locality, whether
+#' the nature of the locality is geological, archaeological or paleontological. Each physical object
+#' contained in any assemblage can appear only once in this table.
 #'
-#' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param categories string (one item) or vector of strings (one or more items).
-#' @param age_min integer; minimum age of assemblage.
-#' @param age_max integer; maximum age of assemblage.
+#' @param continents specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. The parameter continents is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param subcontinents specifies the continental region(s) of the country , e.g. Southern Europe. The parameter subcontinents is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param countries specifies the name of the country where a locality is situated (e.g.
+#' Germany, Kenya, Saudi Arabia, China). The parameter countries is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param locality_types specifies the type of locality (e.g. cave, rockshelter, open air, profile, outcrop,
+#' mine, quarry, boring). The parameter locality_types is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param cultural_periods specifies the main cultural epoch(s) and includes the Eurasian
+#' Paleolithic (Lower, Middle, Upper, Epi) and the African Stone Age (Earlier, Middle, Later). The parameter cultural_periods is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param categories specifies the assemblage category/categories. For an assemblage consisting of human remains category includes the entry “human
+#' remains”. In the case of archaeological assemblages, multiple categories are the norm and may
+#' include “raw material, typology, technology, function, organic tools, symbolic artifacts, feature,
+#' miscellaneous finds”. A faunal assemblage can also contain multiple entries including
+#' “paleofauna, animal remains”, while a botanical assemblage can only include the entry “plant
+#' remains”.The parameter categories is a string (one item) or vector of strings (one or more items).
+#' @param age_min specifies the minimum age of assemblage. The parameter age_min is an integer.
+#' @param age_max specifies the maximum age of assemblage. The parameter age_max is an integer.
 #'
-#' @return Database search result as list of assemblages.
+#' @return Database search result as list of assemblages and their geographic information, cultural period, locality type, category and dating.
 #' @export
 #'
 #' @examples
