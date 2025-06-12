@@ -27,7 +27,7 @@ mine, quarry, boring). The parameter locality_types is a string (one item) or ve
 Paleolithic (Lower, Middle, Upper, Epi) and the African Stone Age (Earlier, Middle, Later). The parameter cultural_periods is a string (one item) or vector of strings (one or more items); defaults to NULL.}
 }
 \value{
-Database search result as list of localities.
+Database search result as list of localities with their geographic information, cultural period and type.
 }
 \description{
 `road_get_localities` fetches data of archaeological sites (localities) from ROAD database.
@@ -41,8 +41,6 @@ Use parameters to filter search results by location, type, or culture or omit th
 All parameters are optional and should be omitted or set to NULL when not used.
 }
 \examples{
-road_get_localities(continents = c("Europe"), countries = c("Germany", "France"))
-road_get_localities(continents = "Europe", countries = c("Germany", "France"))
-road_get_localities(countries = c("Germany", "France"), locality_type = "cave")
-road_get_localities(countries = c("Germany", "France"), cultural_periods = "Middle Paleolithic")
+road_get_localities(continents = "Europe", countries = c("Germany"), locality_type = c("basin", "quarry"))
+road_get_localities(countries = c("Germany", "France"), cultural_periods = "Epipaleolithic")
 }

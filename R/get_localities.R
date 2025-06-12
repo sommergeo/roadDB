@@ -18,14 +18,12 @@
 #' @param cultural_periods specifies the main cultural epoch(s) and includes the Eurasian
 #' Paleolithic (Lower, Middle, Upper, Epi) and the African Stone Age (Earlier, Middle, Later). The parameter cultural_periods is a string (one item) or vector of strings (one or more items); defaults to NULL.
 #' 
-#' @return Database search result as list of localities.
+#' @return Database search result as list of localities with their geographic information, cultural period and type.
 #' @export
 #'
 #' @examples
-#' road_get_localities(continents = c("Europe"), countries = c("Germany", "France"))
-#' road_get_localities(continents = "Europe", countries = c("Germany", "France"))
-#' road_get_localities(countries = c("Germany", "France"), locality_type = "cave")
-#' road_get_localities(countries = c("Germany", "France"), cultural_periods = "Middle Paleolithic")
+#' road_get_localities(continents = "Europe", countries = c("Germany"), locality_type = c("basin", "quarry"))
+#' road_get_localities(countries = c("Germany", "France"), cultural_periods = "Epipaleolithic")
 road_get_localities <- function(
     continents = NULL,
     subcontinents = NULL,
