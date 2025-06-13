@@ -29,9 +29,10 @@
 #' @export
 #'
 #' @examples
-#' road_get_assemblages(countries = c("Germany", "France"), age_min = 100000L)
-#' road_get_assemblages(categories = "human remains", age_max = 100000L)
-#' road_get_assemblages(subcontinents = "Central Asia", cultural_periods = "Middle Paleolithic")
+#' road_get_assemblages(countries = c("Germany", "France"), age_min = 300000L, 
+#' categories = c("miscellaneous finds"))
+#' road_get_assemblages(subcontinents = c("Caucasus"), categories = "human remains", 
+#' age_max = 100000L)
 road_get_assemblages <- function(
     continents = NULL,
     subcontinents = NULL,
@@ -130,7 +131,7 @@ road_get_assemblages <- function(
     "GROUP BY assemblage.locality_idlocality, assemblage.idassemblage, assemblage.name, assemblage.category, geological_stratigraphy.age_min, geological_stratigraphy.age_max",
     "ORDER BY assemblage.locality_idlocality ASC, assemblage.idassemblage ASC"
   )
-
+  
   data <- road_run_query(query)
   
   if (nrow(data) == 0 & nrow(localities) > 0)

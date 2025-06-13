@@ -41,6 +41,7 @@ Use parameters to filter search results by location, type, or culture or omit th
 All parameters are optional and should be omitted or set to NULL when not used.
 }
 \examples{
-road_get_localities(continents = "Europe", countries = c("Germany"), locality_type = c("basin", "quarry"))
+road_get_localities(continents = "Europe", countries = c("Germany"), 
+locality_type = c("basin", "quarry"))
 road_get_localities(countries = c("Germany", "France"), cultural_periods = "Epipaleolithic")
 }

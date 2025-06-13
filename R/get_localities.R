@@ -22,7 +22,8 @@
 #' @export
 #'
 #' @examples
-#' road_get_localities(continents = "Europe", countries = c("Germany"), locality_type = c("basin", "quarry"))
+#' road_get_localities(continents = "Europe", countries = c("Germany"), 
+#' locality_type = c("basin", "quarry"))
 #' road_get_localities(countries = c("Germany", "France"), cultural_periods = "Epipaleolithic")
 road_get_localities <- function(
     continents = NULL,

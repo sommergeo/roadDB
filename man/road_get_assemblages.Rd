@@ -53,7 +53,8 @@ the nature of the locality is geological, archaeological or paleontological. Eac
 contained in any assemblage can appear only once in this table.
 }
 \examples{
-road_get_assemblages(countries = c("Germany", "France"), age_min = 100000L)
-road_get_assemblages(categories = "human remains", age_max = 100000L)
-road_get_assemblages(subcontinents = "Central Asia", cultural_periods = "Middle Paleolithic")
+road_get_assemblages(countries = c("Germany", "France"), age_min = 300000L, 
+categories = c("miscellaneous finds"))
+road_get_assemblages(subcontinents = c("Caucasus"), categories = "human remains", 
+age_max = 100000L)
 }
