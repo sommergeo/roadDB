@@ -42,12 +42,16 @@ remains”.The parameter categories is a string (one item) or vector of strings 
 
 \item{age_max}{specifies the maximum age of assemblage. The parameter age_max is an integer.}
 
-\item{feature_interpretation}{string (one item) or vector of strings}
+\item{feature_interpretation}{specifies feature present in the archaeological assemblage. 
+Feature can be: bedding, burial, butchering event, combustion feature, cupule, dumping area,
+dwelling, impact feature, mine, pit, post hole, shell midden, stone construction, 
+windbreak, etc. The parameter feature_interpretation is a string (one item) or vector of strings.}
 
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
 }
 \value{
-Database search result as list of feature finds with their geographic information, cultural period, locality type, category, dating and .
+Database search result as list of feature finds with their geographic information, 
+cultural period, locality type, category, dating and .
 }
 \description{
 `road_get_feature` fetches data of feature finds from ROAD database.
