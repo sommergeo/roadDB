@@ -50,7 +50,10 @@ or vector of strings}
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
 }
 \value{
-Database search result as list of symbolic artifacts with their geographic information, cultural period, locality type, category, dating and info about symbolic.
+Database search result as list of symbolic artifacts with their geographic information, 
+cultural period, locality type, category, dating and info about symbolic artifacts 
+interpretation, symbolic artifacts category, symbolic artifacts technology, 
+symbolic artifacts material, symbolic artifacts raw material source.
 }
 \description{
 `road_get_symbolic_artifacts` fetches data of symbolic artifacts from ROAD database. 
@@ -61,6 +64,6 @@ cultural periods, artifact interpretation, and assemblages. Use the parameters
 to filter the results or omit them to retrieve a broader dataset.
 }
 \examples{
-road_get_symbolic_artifacts(continents = "Europe")
-road_get_symbolic_artifacts(continents = "Europe", symbolic_artifacts_interpretation = "abstract")
+road_get_symbolic_artifacts(symbolic_artifacts_interpretation = c("instrument"))
+road_get_symbolic_artifacts(continents = "Africa", symbolic_artifacts_interpretation = "zoomorphic")
 }

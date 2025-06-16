@@ -50,7 +50,9 @@ The parameter raw_material_list is a string (one item) or vector of strings}
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
 }
 \value{
-Database search result as list of lithic finds with their geographic information, cultural period, locality type, category, dating and info about raw material.
+Database search result as list of lithic finds with their geographic information, 
+cultural period, locality type, category, dating and info about raw material like 
+transport distance, percentage, raw material list.
 }
 \description{
 `road_get_lithic_raw_material` fetches data of lithic finds from ROAD database. 
@@ -61,6 +63,8 @@ cultural periods, raw material types, and assemblages. Use the parameters to fil
 the results or omit them to retrieve a broader dataset.
 }
 \examples{
-road_get_lithic_raw_material(continents = "Europe")
-road_get_lithic_raw_material(continents = "Europe", raw_material_list = "flint")
+
+road_get_lithic_raw_material(subcontinents = "South Asia", raw_material_list = c("limestone"))
+road_get_lithic_raw_material(subcontinents = "Caucasus", locality_types = "cave", 
+                             raw_material_list = c("chalcedony", "limestone"))
 }

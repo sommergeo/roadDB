@@ -53,7 +53,8 @@ The parameter tool_list is a string (one item) or vector of strings}
 }
 \value{
 Database search result as list of lithic finds with their geographic 
-information, cultural period, locality type, category, dating and info about typology.
+information, cultural period, locality type, assemblage category, dating, typology, percentage, 
+tool list.
 }
 \description{
 `road_get_lithic_typology` fetches data of lithic finds from ROAD database.
@@ -63,6 +64,6 @@ geographical location, cultural periods, tool types, and assemblages. Use the pa
 according to your research needs, or omit them to retrieve a broader dataset.
 }
 \examples{
-road_get_lithic_typology(continents = "Europe")
-road_get_lithic_typology(continents = "Europe", tool_list = "flake")
+road_get_lithic_typology(continents = "Asia", tool_list = "adze")
+road_get_lithic_typology(subcontinents = "Eastern Europe", tool_list = "bladelet burin spall")
 }

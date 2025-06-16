@@ -31,12 +31,13 @@
 #' The parameter tool_list is a string (one item) or vector of strings
 #'
 #' @return Database search result as list of lithic finds with their geographic 
-#' information, cultural period, locality type, category, dating and info about typology.
+#' information, cultural period, locality type, assemblage category, dating, typology, percentage, 
+#' tool list.
 #' @export
 #'
 #' @examples
-#' road_get_lithic_typology(continents = "Europe")
-#' road_get_lithic_typology(continents = "Europe", tool_list = "flake")
+#' road_get_lithic_typology(continents = "Asia", tool_list = "adze")
+#' road_get_lithic_typology(subcontinents = "Eastern Europe", tool_list = "bladelet burin spall")
 road_get_lithic_typology <- function(
     continents = NULL,
     subcontinents = NULL,
@@ -113,12 +114,16 @@ road_get_lithic_typology <- function(
 #' radiolarite, basalt, granite, obsidian, unknown, etc.
 #' The parameter raw_material_list is a string (one item) or vector of strings
 #'
-#' @return Database search result as list of lithic finds with their geographic information, cultural period, locality type, category, dating and info about raw material.
+#' @return Database search result as list of lithic finds with their geographic information, 
+#' cultural period, locality type, category, dating and info about raw material like 
+#' transport distance, percentage, raw material list.
 #' @export
 #'
 #' @examples
-#' road_get_lithic_raw_material(continents = "Europe")
-#' road_get_lithic_raw_material(continents = "Europe", raw_material_list = "flint")
+#'
+#' road_get_lithic_raw_material(subcontinents = "South Asia", raw_material_list = c("limestone"))
+#' road_get_lithic_raw_material(subcontinents = "Caucasus", locality_types = "cave", 
+#'                              raw_material_list = c("chalcedony", "limestone"))
 road_get_lithic_raw_material <- function(
     continents = NULL,
     subcontinents = NULL,
@@ -196,12 +201,13 @@ road_get_lithic_raw_material <- function(
 #' shaftstring (one item) or vector of strings
 #'
 #' @return Database search result as list of organic tools with their geographic information, 
-#' cultural period, locality type, category, dating and information about.
+#' cultural period, locality type, category, dating, information about 
+#' organic tools interpretation, organic raw material, organic tools technology and number.
 #' @export
 #'
 #' @examples
-#' road_get_organic_tools(continents = "Europe")
-#' road_get_organic_tools(continents = "Europe", organic_tools_interpretation = "abrader/polisher")
+#' road_get_organic_tools(continents = "Europe", organic_tools_interpretation = "fishhook")
+#' road_get_organic_tools(continents = "Africa", organic_tools_interpretation = "fishhook")
 road_get_organic_tools <- function(
     continents = NULL,
     subcontinents = NULL,
@@ -280,12 +286,15 @@ road_get_organic_tools <- function(
 #' zoomorphic, etc. The parameter symbolic_artifacts_interpretation is a string (one item) 
 #' or vector of strings
 #'
-#' @return Database search result as list of symbolic artifacts with their geographic information, cultural period, locality type, category, dating and info about symbolic.
+#' @return Database search result as list of symbolic artifacts with their geographic information, 
+#' cultural period, locality type, category, dating and info about symbolic artifacts 
+#' interpretation, symbolic artifacts category, symbolic artifacts technology, 
+#' symbolic artifacts material, symbolic artifacts raw material source.
 #' @export
 #'
 #' @examples
-#' road_get_symbolic_artifacts(continents = "Europe")
-#' road_get_symbolic_artifacts(continents = "Europe", symbolic_artifacts_interpretation = "abstract")
+#' road_get_symbolic_artifacts(symbolic_artifacts_interpretation = c("instrument"))
+#' road_get_symbolic_artifacts(continents = "Africa", symbolic_artifacts_interpretation = "zoomorphic")
 road_get_symbolic_artifacts <- function(
     continents = NULL,
     subcontinents = NULL,

@@ -51,7 +51,8 @@ shaftstring (one item) or vector of strings}
 }
 \value{
 Database search result as list of organic tools with their geographic information, 
-cultural period, locality type, category, dating and information about.
+cultural period, locality type, category, dating, information about 
+organic tools interpretation, organic raw material, organic tools technology and number.
 }
 \description{
 `road_get_organic_tools` fetches data of organic tools from ROAD database.Organic 
@@ -62,6 +63,6 @@ cultural periods, tool interpretation, and assemblages. Use the parameters
 to filter the results or omit them for broader results.
 }
 \examples{
-road_get_organic_tools(continents = "Europe")
-road_get_organic_tools(continents = "Europe", organic_tools_interpretation = "abrader/polisher")
+road_get_organic_tools(continents = "Europe", organic_tools_interpretation = "fishhook")
+road_get_organic_tools(continents = "Africa", organic_tools_interpretation = "fishhook")
 }
