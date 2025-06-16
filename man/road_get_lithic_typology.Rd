@@ -42,17 +42,21 @@ remains”.The parameter categories is a string (one item) or vector of strings 
 
 \item{age_max}{specifies the maximum age of assemblage. The parameter age_max is an integer.}
 
-\item{tool_list}{string (one item) or vector of strings}
+\item{tool_list}{specifies values that can be entered for various tool types. Tool types
+can contain 1) chipped tool types like scraper end, scraper side, scraper carinated, burin, handaxe, chopper,
+cleaver, point, point unifacial, segment, unknown; 2) non-chipped tool types 
+like grindstone upper, hammerstone, anvil, retoucher; 3) non-tools like core, debitage, 
+flake, point; 4) unknown like cobble, block, manuport. 
+The parameter tool_list is a string (one item) or vector of strings}
 
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
 }
 \value{
-Database search result as list of lithic finds with their geographic information, cultural period, locality type, category, dating and info about typology.
+Database search result as list of lithic finds with their geographic 
+information, cultural period, locality type, category, dating and info about typology.
 }
 \description{
 `road_get_lithic_typology` fetches data of lithic finds from ROAD database.
-}
-\details{
 Lithic typology refers to the classification of stone tools based on their shape, technology, and function.
 This function enables you to query lithic typology data from the ROAD database using various parameters such as
 geographical location, cultural periods, tool types, and assemblages. Use the parameters to filter the results

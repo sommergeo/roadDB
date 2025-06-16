@@ -42,7 +42,10 @@ remains”.The parameter categories is a string (one item) or vector of strings 
 
 \item{age_max}{specifies the maximum age of assemblage. The parameter age_max is an integer.}
 
-\item{raw_material_list}{string (one item) or vector of strings}
+\item{raw_material_list}{specifies raw materials like quartz, quartzite, chert, 
+chert jurassic, chert cretaceous, tabular flint, flint baltic, flint tertiary, 
+radiolarite, basalt, granite, obsidian, unknown, etc.
+The parameter raw_material_list is a string (one item) or vector of strings}
 
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
 }
@@ -50,12 +53,11 @@ remains”.The parameter categories is a string (one item) or vector of strings 
 Database search result as list of lithic finds with their geographic information, cultural period, locality type, category, dating and info about raw material.
 }
 \description{
-`road_get_lithic_raw_material` fetches data of lithic finds from ROAD database.
-}
-\details{
-Lithic raw material refers to the types of stone used for tool production in archaeological contexts.
-This function allows you to query lithic raw material data from the ROAD database using parameters such as
-geographical location, cultural periods, raw material types, and assemblages. Use the parameters to filter
+`road_get_lithic_raw_material` fetches data of lithic finds from ROAD database. 
+Lithic raw material refers to the types of stone used for tool production in 
+archaeological contexts. This function allows you to query lithic raw material 
+data from the ROAD database using parameters such as geographical location, 
+cultural periods, raw material types, and assemblages. Use the parameters to filter
 the results or omit them to retrieve a broader dataset.
 }
 \examples{

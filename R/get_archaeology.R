@@ -1,7 +1,6 @@
 #' Get lithic typology from ROAD database
 #'
 #' `road_get_lithic_typology` fetches data of lithic finds from ROAD database.
-#'
 #' Lithic typology refers to the classification of stone tools based on their shape, technology, and function.
 #' This function enables you to query lithic typology data from the ROAD database using various parameters such as
 #' geographical location, cultural periods, tool types, and assemblages. Use the parameters to filter the results
@@ -24,9 +23,15 @@
 #' @param age_min specifies the minimum age of assemblage. The parameter age_min is an integer.
 #' @param age_max specifies the maximum age of assemblage. The parameter age_max is an integer.
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
-#' @param tool_list string (one item) or vector of strings
+#' @param tool_list specifies values that can be entered for various tool types. Tool types
+#' can contain 1) chipped tool types like scraper end, scraper side, scraper carinated, burin, handaxe, chopper,
+#' cleaver, point, point unifacial, segment, unknown; 2) non-chipped tool types 
+#' like grindstone upper, hammerstone, anvil, retoucher; 3) non-tools like core, debitage, 
+#' flake, point; 4) unknown like cobble, block, manuport. 
+#' The parameter tool_list is a string (one item) or vector of strings
 #'
-#' @return Database search result as list of lithic finds with their geographic information, cultural period, locality type, category, dating and info about typology.
+#' @return Database search result as list of lithic finds with their geographic 
+#' information, cultural period, locality type, category, dating and info about typology.
 #' @export
 #'
 #' @examples
@@ -79,11 +84,11 @@ road_get_lithic_typology <- function(
 
 #' Get lithic raw material from ROAD database
 #'
-#' `road_get_lithic_raw_material` fetches data of lithic finds from ROAD database.
-#'
-#' Lithic raw material refers to the types of stone used for tool production in archaeological contexts.
-#' This function allows you to query lithic raw material data from the ROAD database using parameters such as
-#' geographical location, cultural periods, raw material types, and assemblages. Use the parameters to filter
+#' `road_get_lithic_raw_material` fetches data of lithic finds from ROAD database. 
+#' Lithic raw material refers to the types of stone used for tool production in 
+#' archaeological contexts. This function allows you to query lithic raw material 
+#' data from the ROAD database using parameters such as geographical location, 
+#' cultural periods, raw material types, and assemblages. Use the parameters to filter
 #' the results or omit them to retrieve a broader dataset.
 #'
 #' @param continents specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. The parameter continents is a string (one item) or vector of strings (one or more items); defaults to NULL.
@@ -103,7 +108,10 @@ road_get_lithic_typology <- function(
 #' @param age_min specifies the minimum age of assemblage. The parameter age_min is an integer.
 #' @param age_max specifies the maximum age of assemblage. The parameter age_max is an integer.
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
-#' @param raw_material_list string (one item) or vector of strings
+#' @param raw_material_list specifies raw materials like quartz, quartzite, chert, 
+#' chert jurassic, chert cretaceous, tabular flint, flint baltic, flint tertiary, 
+#' radiolarite, basalt, granite, obsidian, unknown, etc.
+#' The parameter raw_material_list is a string (one item) or vector of strings
 #'
 #' @return Database search result as list of lithic finds with their geographic information, cultural period, locality type, category, dating and info about raw material.
 #' @export
@@ -158,11 +166,12 @@ road_get_lithic_raw_material <- function(
 
 #' Get organic tools from ROAD database
 #'
-#' `road_get_organic_tools` fetches data of organic tools from ROAD database.
-#'
-#' Organic tools are artifacts made from organic materials such as bone, antler, or wood, found in archaeological contexts.
-#' This function enables you to query organic tool data from the ROAD database based on parameters like geographical location,
-#' cultural periods, tool interpretation, and assemblages. Use the parameters to filter the results or omit them for broader results.
+#' `road_get_organic_tools` fetches data of organic tools from ROAD database.Organic 
+#' tools are artifacts made from organic materials such as bone, antler, or wood, 
+#' found in archaeological contexts. This function enables you to query organic tool 
+#' data from the ROAD database based on parameters like geographical location,
+#' cultural periods, tool interpretation, and assemblages. Use the parameters 
+#' to filter the results or omit them for broader results.
 #'
 #' @param continents specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. The parameter continents is a string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents specifies the continental region(s) of the country , e.g. Southern Europe. The parameter subcontinents is a string (one item) or vector of strings (one or more items); defaults to NULL.
@@ -181,9 +190,13 @@ road_get_lithic_raw_material <- function(
 #' @param age_min specifies the minimum age of assemblage. The parameter age_min is an integer.
 #' @param age_max specifies the maximum age of assemblage. The parameter age_max is an integer.
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
-#' @param organic_tools_interpretation string (one item) or vector of strings
+#' @param organic_tools_interpretation specifies interpreted organic tool types. Possible values for the
+#' interpretation are: lance/spear, needle eyed, percussor, pin, point, point barbed, 
+#' point split based, pointed artifact, punch, retoucher, rod, scraper, 
+#' shaftstring (one item) or vector of strings
 #'
-#' @return Database search result as list of organic tools with their geographic information, cultural period, locality type, category, dating and information about.
+#' @return Database search result as list of organic tools with their geographic information, 
+#' cultural period, locality type, category, dating and information about.
 #' @export
 #'
 #' @examples
@@ -238,11 +251,12 @@ road_get_organic_tools <- function(
 
 #' Get symbolic artifacts from ROAD database
 #'
-#' `road_get_symbolic_artifacts` fetches data of symbolic artifacts from ROAD database.
-#'
-#' Symbolic artifacts are objects interpreted as having symbolic or cultural significance in archaeological contexts.
-#' This function allows you to query symbolic artifact data from the ROAD database using parameters such as geographical location,
-#' cultural periods, artifact interpretation, and assemblages. Use the parameters to filter the results or omit them to retrieve a broader dataset.
+#' `road_get_symbolic_artifacts` fetches data of symbolic artifacts from ROAD database. 
+#' Symbolic artifacts are objects interpreted as having symbolic or cultural significance 
+#' in archaeological contexts. This function allows you to query symbolic artifact 
+#' data from the ROAD database using parameters such as geographical location,
+#' cultural periods, artifact interpretation, and assemblages. Use the parameters 
+#' to filter the results or omit them to retrieve a broader dataset.
 #'
 #' @param continents specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. The parameter continents is a string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents specifies the continental region(s) of the country , e.g. Southern Europe. The parameter subcontinents is a string (one item) or vector of strings (one or more items); defaults to NULL.
@@ -261,7 +275,10 @@ road_get_organic_tools <- function(
 #' @param age_min specifies the minimum age of assemblage. The parameter age_min is an integer.
 #' @param age_max specifies the maximum age of assemblage. The parameter age_max is an integer.
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
-#' @param symbolic_artifacts_interpretation string (one item) or vector of strings
+#' @param symbolic_artifacts_interpretation specifies symbolic artifacts. Possible values for the
+#' interpretation can be abstract, anthropomorphic, instrument, ornament, therianthropic, 
+#' zoomorphic, etc. The parameter symbolic_artifacts_interpretation is a string (one item) 
+#' or vector of strings
 #'
 #' @return Database search result as list of symbolic artifacts with their geographic information, cultural period, locality type, category, dating and info about symbolic.
 #' @export
@@ -340,9 +357,13 @@ road_get_symbolic_artifacts <- function(
 #' @param age_min specifies the minimum age of assemblage. The parameter age_min is an integer.
 #' @param age_max specifies the maximum age of assemblage. The parameter age_max is an integer.
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
-#' @param feature_interpretation string (one item) or vector of strings
+#' @param feature_interpretation specifies feature present in the archaeological assemblage. 
+#' Feature can be: bedding, burial, butchering event, combustion feature, cupule, dumping area,
+#' dwelling, impact feature, mine, pit, post hole, shell midden, stone construction, 
+#' windbreak, etc. The parameter feature_interpretation is a string (one item) or vector of strings.
 #'
-#' @return Database search result as list of feature finds with their geographic information, cultural period, locality type, category, dating and .
+#' @return Database search result as list of feature finds with their geographic information, 
+#' cultural period, locality type, category, dating and .
 #' @export
 #'
 #' @examples
@@ -389,14 +410,15 @@ road_get_feature <- function(
   return(data)
 }
 
-
 #' Get miscellaneous finds from ROAD database
 #'
 #' `road_get_miscellaneous_finds` fetches data of feature finds from ROAD database.
-#'
-#' Miscellaneous finds are archaeological objects that do not fit into other specific categories.
-#' This function allows you to query miscellaneous finds data from the ROAD database using parameters such as geographical location,
-#' cultural periods, material types, and assemblages. Use the parameters to filter the results or omit them to retrieve a broader dataset.
+#' Miscellaneous finds are archaeological objects that do not fit into other specific categories. 
+#' Miscellaneous finds are classified by their material.
+#' This function allows you to query miscellaneous finds data from the ROAD database 
+#' using parameters such as geographical location,
+#' cultural periods, material types, and assemblages. Use the parameters to filter the results 
+#' or omit them to retrieve a broader dataset.
 #'
 #' @param continents specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. The parameter continents is a string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents specifies the continental region(s) of the country , e.g. Southern Europe. The parameter subcontinents is a string (one item) or vector of strings (one or more items); defaults to NULL.
@@ -415,7 +437,12 @@ road_get_feature <- function(
 #' @param age_min specifies the minimum age of assemblage. The parameter age_min is an integer.
 #' @param age_max specifies the maximum age of assemblage. The parameter age_max is an integer.
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
-#' @param miscellaneous_finds_material string (one item) or vector of strings
+#' @param miscellaneous_finds_material specifies material of the miscellaneous find 
+#' and may include: beeswax, bitumen, clay, flax fiber, fossil, mineral diverse 
+#' (materials such as crystals), mineral pigment (colorants such as ochre, hematite, 
+#' limonite, goethite, specularite, etc.) ostrich eggshell, shell,
+#' stone, etc.  The parameter miscellaneous_finds_material is 
+#' a string (one item) or vector of strings
 #'
 #' @return Database search result as list of miscellaneous finds with their geographic information, cultural period, locality type, category, dating and .
 #' @export
