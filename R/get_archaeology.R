@@ -36,8 +36,8 @@
 #' @export
 #'
 #' @examples
-#' road_get_lithic_typology(continents = "Asia", tool_list = "adze")
-#' road_get_lithic_typology(subcontinents = "Eastern Europe", tool_list = "bladelet burin spall")
+#' road_get_lithic_typology(continents = c("Asia"), tool_list = "adze")
+#' road_get_lithic_typology(subcontinents = "Eastern Europe", tool_list = c("bladelet burin spall"))
 road_get_lithic_typology <- function(
     continents = NULL,
     subcontinents = NULL,
@@ -122,7 +122,7 @@ road_get_lithic_typology <- function(
 #' @examples
 #'
 #' road_get_lithic_raw_material(subcontinents = "South Asia", raw_material_list = c("limestone"))
-#' road_get_lithic_raw_material(subcontinents = "Caucasus", locality_types = "cave", 
+#' road_get_lithic_raw_material(subcontinents = c("Caucasus"), locality_types = "cave", 
 #'                              raw_material_list = c("chalcedony", "limestone"))
 road_get_lithic_raw_material <- function(
     continents = NULL,
@@ -206,8 +206,8 @@ road_get_lithic_raw_material <- function(
 #' @export
 #'
 #' @examples
-#' road_get_organic_tools(continents = "Europe", organic_tools_interpretation = "fishhook")
-#' road_get_organic_tools(continents = "Africa", organic_tools_interpretation = "fishhook")
+#' road_get_organic_tools(continents = c("Europe"), organic_tools_interpretation = "fishhook")
+#' road_get_organic_tools(continents = "Africa", organic_tools_interpretation = c("fishhook"))
 road_get_organic_tools <- function(
     continents = NULL,
     subcontinents = NULL,
@@ -309,8 +309,12 @@ road_get_symbolic_artifacts <- function(
 ) {
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
-  assemblage_condition <- get_assemblage_condition(assemblages = assemblages, locality_id_column_name = "symbolic_artifacts.assemblage_idlocality", assemblage_id_column_name = "symbolic_artifacts.assemblage_idassemblage")
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, 
+                                                                countries, locality_types, 
+                                                                cultural_periods, categories, age_min, age_max)
+  assemblage_condition <- get_assemblage_condition(assemblages = assemblages, 
+                                                   locality_id_column_name = "symbolic_artifacts.assemblage_idlocality", 
+                                                   assemblage_id_column_name = "symbolic_artifacts.assemblage_idassemblage")
 
   # select fields
   select_fields <- c(
@@ -343,9 +347,7 @@ road_get_symbolic_artifacts <- function(
 
 #' Get feature assemblages from ROAD database
 #'
-#' `road_get_feature` fetches data of feature finds from ROAD database.
-#'
-#' Feature assemblages refer to archaeological features such as hearths, pits, or structures found at a site.
+#' `road_get_feature` fetches data of feature finds from ROAD database. Feature assemblages refer to archaeological features such as hearths, pits, or structures found at a site.
 #' This function enables you to query feature data from the ROAD database using parameters like geographical location,
 #' cultural periods, feature interpretation, and assemblages. Use the parameters to filter the results or omit them for broader results.
 #'
@@ -372,12 +374,13 @@ road_get_symbolic_artifacts <- function(
 #' windbreak, etc. The parameter feature_interpretation is a string (one item) or vector of strings.
 #'
 #' @return Database search result as list of feature finds with their geographic information, 
-#' cultural period, locality type, category, dating and .
+#' cultural period, locality type, category, dating and interpretations.
 #' @export
 #'
 #' @examples
-#' road_get_feature(continents = "Europe")
-#' road_get_feature(continents = "Europe", feature_interpretation = "bedding")
+#' road_get_feature(continents = c("Europe", "Africa"), feature_interpretation = "textile imprints")
+#' road_get_feature(continents = "Africa", locality_types = c("cave"), 
+#'                  feature_interpretation = "bedding")
 road_get_feature <- function(
     continents = NULL,
     subcontinents = NULL,
@@ -453,12 +456,15 @@ road_get_feature <- function(
 #' stone, etc.  The parameter miscellaneous_finds_material is 
 #' a string (one item) or vector of strings
 #'
-#' @return Database search result as list of miscellaneous finds with their geographic information, cultural period, locality type, category, dating and .
+#' @return Database search result as list of miscellaneous finds with their geographic information, 
+#' cultural period, locality type, category, dating, miscellaneous finds material, 
+#' miscellaneous finds material source (local, regional, supra-regional, unknown) and number.
 #' @export
 #'
 #' @examples
-#' road_get_miscellaneous_finds(continents = "Europe")
-#' road_get_miscellaneous_finds(continents = "Europe", miscellaneous_finds_material = "wood fossil")
+#' road_get_miscellaneous_finds(miscellaneous_finds_material = "wood fossil")
+#' road_get_miscellaneous_finds(continents = c("Africa"), locality_types = "open air",  
+#'                              miscellaneous_finds_material = "shell")
 road_get_miscellaneous_finds <- function(
     continents = NULL,
     subcontinents = NULL,

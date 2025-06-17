@@ -64,6 +64,6 @@ geographical location, cultural periods, tool types, and assemblages. Use the pa
 according to your research needs, or omit them to retrieve a broader dataset.
 }
 \examples{
-road_get_lithic_typology(continents = "Asia", tool_list = "adze")
-road_get_lithic_typology(subcontinents = "Eastern Europe", tool_list = "bladelet burin spall")
+road_get_lithic_typology(continents = c("Asia"), tool_list = "adze")
+road_get_lithic_typology(subcontinents = "Eastern Europe", tool_list = c("bladelet burin spall"))
 }

@@ -63,6 +63,6 @@ cultural periods, tool interpretation, and assemblages. Use the parameters
 to filter the results or omit them for broader results.
 }
 \examples{
-road_get_organic_tools(continents = "Europe", organic_tools_interpretation = "fishhook")
-road_get_organic_tools(continents = "Africa", organic_tools_interpretation = "fishhook")
+road_get_organic_tools(continents = c("Europe"), organic_tools_interpretation = "fishhook")
+road_get_organic_tools(continents = "Africa", organic_tools_interpretation = c("fishhook"))
 }

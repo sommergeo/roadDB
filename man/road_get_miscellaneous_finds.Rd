@@ -52,7 +52,9 @@ a string (one item) or vector of strings}
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
 }
 \value{
-Database search result as list of miscellaneous finds with their geographic information, cultural period, locality type, category, dating and .
+Database search result as list of miscellaneous finds with their geographic information, 
+cultural period, locality type, category, dating, miscellaneous finds material, 
+miscellaneous finds material source (local, regional, supra-regional, unknown) and number.
 }
 \description{
 `road_get_miscellaneous_finds` fetches data of feature finds from ROAD database.
@@ -64,6 +66,7 @@ cultural periods, material types, and assemblages. Use the parameters to filter 
 or omit them to retrieve a broader dataset.
 }
 \examples{
-road_get_miscellaneous_finds(continents = "Europe")
-road_get_miscellaneous_finds(continents = "Europe", miscellaneous_finds_material = "wood fossil")
+road_get_miscellaneous_finds(miscellaneous_finds_material = "wood fossil")
+road_get_miscellaneous_finds(continents = c("Africa"), locality_types = "open air",  
+                             miscellaneous_finds_material = "shell")
 }

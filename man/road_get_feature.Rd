@@ -51,17 +51,15 @@ windbreak, etc. The parameter feature_interpretation is a string (one item) or v
 }
 \value{
 Database search result as list of feature finds with their geographic information, 
-cultural period, locality type, category, dating and .
+cultural period, locality type, category, dating and interpretations.
 }
 \description{
-`road_get_feature` fetches data of feature finds from ROAD database.
-}
-\details{
-Feature assemblages refer to archaeological features such as hearths, pits, or structures found at a site.
+`road_get_feature` fetches data of feature finds from ROAD database. Feature assemblages refer to archaeological features such as hearths, pits, or structures found at a site.
 This function enables you to query feature data from the ROAD database using parameters like geographical location,
 cultural periods, feature interpretation, and assemblages. Use the parameters to filter the results or omit them for broader results.
 }
 \examples{
-road_get_feature(continents = "Europe")
-road_get_feature(continents = "Europe", feature_interpretation = "bedding")
+road_get_feature(continents = c("Europe", "Africa"), feature_interpretation = "textile imprints")
+road_get_feature(continents = "Africa", locality_types = c("cave"), 
+                 feature_interpretation = "bedding")
 }

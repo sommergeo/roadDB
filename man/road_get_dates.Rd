@@ -45,10 +45,14 @@ road_get_dates(
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
 }
 \value{
-date records
+Database search result as dataframe with absolute dates as rows, and columns representing dating-specific information such as minimal age,  maximal age, dating method and material, as well as auxiliary information on geographic information, locality type, cultural period, technocomplex, assemblage and category.
 }
 \description{
-`road_get_dates` fetches records of the age tables in ROAD
+`road_get_dates` fetches records of absolute dating results and is intended for users who analyse time series.
+The function combines queries from the ROAD tables “assemblage_age”, “geological_layer_age” and “archaeological_layer_age” and allows the results to be filtered according to a series of criteria. The results are published values for minimum and maximum age, as well as the dating method and material.
+Background on dating context: Finds cannot always be dated directly due to the potential destruction of the object during sampling or because the materials do not meet the prerequisites for absolute dating. In such cases, the surrounding sediment or other objects, made from more suitable materials, are dated instead and associated with the find. For this reason, absolute dates are stored and linked across three different tables in ROAD: The ‘geological_layer_age’ and ‘archaeological_layer_age’ tables refer to samples from stratigraphic units, while the ‘assemblage_age’ table contains sample results taken directly from objects.
+Background on multiple dates: It may happen that several dates are available for one object. For example, if the top and bottom of a stratigraphic unit were sampled to bracket a find contained therein. In addition, finds are sometimes sampled using different methods to obtain robust results. This can sometimes lead to significant differences in the estimated age, especially when earlier dating results are updated using more modern and advanced methods. We therefore recommend that all results are thoroughly checked against the literature. In addition, ROCEEH has developed its own model that aggregates the many absolute and relative dating methods and derives the variable “age_min” and “age_max” from them. However, these aggregated ages are not explicitly included in the “road_get_dates” function, but rather the original raw data.
+Background on radiocarbon dating: C14 dates are uncalibrated. Please use one of the manx calibration tools provided as R libraries for further analysis (e.g. https://cran.r-project.org/web/packages/rcarbon/index.html).
 }
 \details{
 All parameters are optional and should be omitted or set to NULL when not used.

@@ -65,6 +65,6 @@ the results or omit them to retrieve a broader dataset.
 \examples{
 
 road_get_lithic_raw_material(subcontinents = "South Asia", raw_material_list = c("limestone"))
-road_get_lithic_raw_material(subcontinents = "Caucasus", locality_types = "cave", 
+road_get_lithic_raw_material(subcontinents = c("Caucasus"), locality_types = "cave", 
                              raw_material_list = c("chalcedony", "limestone"))
 }
