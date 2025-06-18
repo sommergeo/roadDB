@@ -2,18 +2,32 @@
 % Please edit documentation in R/get_info.R
 \name{road_summerize_archaeology}
 \alias{road_summerize_archaeology}
-\title{Get table and attribute overview of ROAD database}
+\title{Get an Overview of the ROAD Archaeology Database}
 \usage{
 road_summerize_archaeology(term)
 }
 \arguments{
-\item{term}{string (one item)}
+\item{term}{A string containing the search term (one item).}
 }
 \value{
 Database search result as list of lithic finds with info about typology.
 }
 \description{
-`road_summerize_archaeology` fetches archaeological tables and their attributes from ROAD database.
+The `road_summarize_archaeology` function provides a quick overview of the presence of a given search term across archaeology-related `road_get_*` functions in the ROAD database.
+It queries all relevant functions and returns a list indicating whether each function contains the search term. This helps you identify the appropriate `road_get_*` functions for your query.
+Once identified, you can further query these functions to retrieve the relevant assemblages.
+}
+\details{
+Background: The ROAD archaeology database is rich in categorized data, where archaeological findings are grouped according to their characteristics. These categories can be accessed using a variety of `road_get_*` functions, such as:
+
+- `road_get_lithic_typology()`
+- `road_get_lithic_raw_material()`
+- `road_get_organic_tools()`
+- `road_get_symbolic_artifacts()`
+- `road_get_feature()`
+- `road_get_miscellaneous_finds()`
+
+Some search terms may not be easily categorized, while others may appear across multiple categories depending on contextual interpretations. This function assists in identifying the most relevant categories for your search.
 }
 \examples{
 road_summerize_archaeology(term = "Cores")

@@ -128,10 +128,11 @@ road_list_parameter_values <- function (function_parameter, function_name = NULL
   
 }
 
-#' Get attribute value from ROAD Database
+#' Retrieve Attribute Values from the ROAD Database
 #'
-#' `road_list_values` fetches values of a given attribute in the database or 
-#' read values from file
+#' The `road_list_values` function allows you to find valid attribute values for a given attribute name. 
+#' You can search for attribute names from any `road_get_*` function, and the function will return a list of all possible attribute values used in the associated tables.
+#' This is particularly useful when you need to specify an attribute but are unsure of its exact spelling or available values.
 #'
 #' @param attribute_name name of an attribute.
 #'
@@ -242,12 +243,24 @@ road_list_values <- function (attribute_name)
   return(data)
 }
 
-#' Get table and attribute overview of ROAD database
+#' Get an Overview of the ROAD Archaeology Database
 #'
-#' `road_summerize_archaeology` fetches archaeological tables and their attributes from ROAD database.
+#' The `road_summarize_archaeology` function provides a quick overview of the presence of a given search term across archaeology-related `road_get_*` functions in the ROAD database.
+#' It queries all relevant functions and returns a list indicating whether each function contains the search term. This helps you identify the appropriate `road_get_*` functions for your query.
+#' Once identified, you can further query these functions to retrieve the relevant assemblages.
+#' 
+#' Background: The ROAD archaeology database is rich in categorized data, where archaeological findings are grouped according to their characteristics. These categories can be accessed using a variety of `road_get_*` functions, such as:
+#' 
+#' - `road_get_lithic_typology()`
+#' - `road_get_lithic_raw_material()`
+#' - `road_get_organic_tools()`
+#' - `road_get_symbolic_artifacts()`
+#' - `road_get_feature()`
+#' - `road_get_miscellaneous_finds()`
+#' 
+#' Some search terms may not be easily categorized, while others may appear across multiple categories depending on contextual interpretations. This function assists in identifying the most relevant categories for your search.
 #'
-#'
-#' @param term string (one item)
+#' @param term A string containing the search term (one item).
 #' 
 #' @return Database search result as list of lithic finds with info about typology.
 #' @export
