@@ -67,10 +67,8 @@ road_get_human_remains <- function(
     
     cp <- cp %>% mutate(genus_species=paste(genus, species, sep=" "))
     s <- paste(cp$genus_species, collapse="; ")
-    warning(paste("If none of the following genus and species combinations 
-                  ", s, "
-                  are in the database, 
-                  the search results will be empty"))
+    warning(paste("If none of the following combinations (genus and species) are in the database, the search results will be empty
+                  ", s))
   }
   genus_condition <- ""
   species_condition <- ""
@@ -114,12 +112,12 @@ road_get_human_remains <- function(
     genus_str <- ifelse(is.null(genus), "", paste("genus =", toString(genus)))
     species_str <- ifelse(is.null(species), "", paste("species =", toString(species)))
     
-    message(paste("One or more of the following used parameters caused the empty result set:
-                  ",
-                  genus_str,
-                  species_str,
-                  "
-Please keep in mind, the data search needs exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
+#     message(paste("One or more of the following used parameters caused the empty result set:
+#                   ",
+#                   genus_str,
+#                   species_str,
+#                   "
+# Please keep in mind, the data search needs exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
   }
   
   data <- add_locality_columns(data, assemblages = assemblages)

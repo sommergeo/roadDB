@@ -44,18 +44,16 @@ road_get_paleofauna <- function(
 
   assemblage_condition <- get_assemblage_condition(query_start = " AND ", assemblages = assemblages)
 
-  # build genus/species condition
-  # if (is.vector(fauna_genus) && is.vector(fauna_species))
-  # {
-  #   cp <- expand.grid(genus = fauna_genus, species = fauna_species)
-  # 
-  #   cp <- cp %>% mutate(genus_species = paste(fauna_genus, fauna_species, sep = " "))
-  #   s <- paste(cp$genus_species, collapse = "; ")
-  #   warning(paste("If none of the following fauna_genus and fauna_species combinations 
-  #                 ", s, "
-  #                 are in the database, 
-  #                 the search results will be empty"))
-  # }
+  #build genus/species condition
+  if (is.vector(fauna_genus) && is.vector(fauna_species))
+  {
+    cp <- expand.grid(genus = fauna_genus, species = fauna_species)
+
+    cp <- cp %>% mutate(genus_species = paste(fauna_genus, fauna_species, sep = " "))
+    s <- paste(cp$genus_species, collapse = "; ")
+    warning(paste("If none of the following combinations (fauna_genus fauna_species) are in the database, the search results will be empty
+                  ", s))
+  }
 
   fauna_genus_condition <- ""
   fauna_species_condition <- ""
@@ -95,12 +93,12 @@ road_get_paleofauna <- function(
     fauna_genus_str <- ifelse(is.null(fauna_genus), "", paste("fauna_genus =", toString(fauna_genus)))
     fauna_species_str <- ifelse(is.null(fauna_species), "", paste("fauna_species =", toString(fauna_species)))
 
-    message(paste("One or more of the following parameters caused the empty result set:
-                  ",
-                  fauna_genus_str,
-                  fauna_species_str,
-                  "
-Please keep in mind, the data search needs exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
+#     message(paste("One or more of the following parameters caused the empty result set:
+#                   ",
+#                   fauna_genus_str,
+#                   fauna_species_str,
+#                   "
+# Please keep in mind, the data search needs exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
   }
 
   data <- add_locality_columns(data, assemblages = assemblages)
