@@ -1,21 +1,7 @@
 #' Retrieve Dating Information for Assemblages, Geolayers, and Archlayers from the ROAD Database
 #'
-#' The `road_get_dates` function retrieves records of absolute dating results for assemblages, geological layers, and archaeological layers from the ROAD database. 
-#' It is designed for users analyzing time series and allows for filtering results based on various criteria. The function returns published values for minimum and maximum age, dating method, and material.
-#'
-#' **Background on Dating Context**: Not all finds can be directly dated, either due to potential damage during sampling or because the materials are unsuitable for absolute dating. In such cases, the surrounding sediment or other objects—made from more suitable materials—are dated and associated with the find. As a result, absolute dates are stored in three different tables within ROAD: 
+#' The `road_get_dates` function retrieves temporal dating records for assemblages, geological layers, and archaeological layers from the ROAD database. 
 #' 
-#' - `geological_layer_age`: Dates from samples taken from geological layers.
-#' - `archaeological_layer_age`: Dates from samples taken from archaeological layers.
-#' - `assemblage_age`: Dates from samples taken directly from objects.
-#'
-#' **Background on Multiple Dates**: Multiple dates may be available for a single object. For example, both the top and bottom of a stratigraphic unit may be sampled to bracket the age of a find. Different dating methods might also be used to obtain robust results, which can lead to varying age estimates. This is especially true when earlier dating methods are updated with more modern techniques. It is recommended to cross-check all results against relevant literature. 
-#'
-#' **Background on Aggregated Ages**: The ROCEEH project has developed its own model to aggregate both absolute and relative dating methods to derive the variables `age_min` and `age_max`. These aggregated ages are not included in the `road_get_dates` function, which only returns raw data.
-#'
-#' **Background on Radiocarbon Dating**: Please note that C14 dates are uncalibrated. For further analysis, use one of the available calibration tools, such as the `rcarbon` package available on CRAN (see: https://cran.r-project.org/web/packages/rcarbon/index.html).
-#'
-#' All Parameters are optional. If not used, omit them or set them to `NULL`.
 #' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
@@ -29,9 +15,32 @@
 #' @param age_max integer; defaults to NULL.
 #' @param technocomplex string (one item) or vector of strings (one or more items); defaults to NULL.
 #'
-#' @return A data frame with absolute dating results, where each row represents a date, and the columns contain information such as minimum age, maximum age, dating method, material, and auxiliary information on geographic location, locality type, cultural period, technocomplex, assemblage, and category.
-#' @export
+#' @details
+#' The function is designed for users analyzing time series and allows for 
+#' filtering results based on various criteria.
 #'
+#' @details
+#' Background on Dating Context:
+#' Not all finds can be directly dated, either due to potential damage during
+#' sampling or because the materials are unsuitable for absolute dating. In such
+#' cases, the surrounding sediment or other objects—made from more suitable
+#' materials—are dated and associated with the find. As a result, absolute dates
+#' are stored in three different tables within ROAD: 
+#' * `geological_layer_age`: Dates from samples taken from geological layers.
+#' * `archaeological_layer_age`: Dates from samples taken from archaeological layers.
+#' * `assemblage_age`: Dates from samples taken directly from objects.
+#'
+#' Background on Multiple Dates: Multiple dates may be available for a single object. For example, both the top and bottom of a stratigraphic unit may be sampled to bracket the age of a find. Different dating methods might also be used to obtain robust results, which can lead to varying age estimates. This is especially true when earlier dating methods are updated with more modern techniques. It is recommended to cross-check all results against relevant literature. 
+#'
+#' Background on Aggregated Ages: The ROCEEH project has developed its own model to aggregate both absolute and relative dating methods to derive the variables `age_min` and `age_max`. These aggregated ages are not included in the `road_get_dates` function, which only returns raw data.
+#'
+#' Background on Radiocarbon Dating: Please note that C14 dates are uncalibrated. For further analysis, use one of the available calibration tools, such as the `rcarbon` package available on CRAN (see: https://cran.r-project.org/web/packages/rcarbon/index.html).
+#'
+#' All Parameters are optional. If not used, omit them or set them to `NULL`.
+#'
+#' @return A data frame with absolute dating results. Rows represent dates, columns contain details about minimum and maximum ages, dating method, and material.
+#' @export
+#' 
 #' @examples 
 #' road_get_dates(dating_methods = c("geology", "biostratigraphy"))
 #' road_get_dates(material_dated = c("coprolite", "glass", "ivory"), age_min = 10000L, 
