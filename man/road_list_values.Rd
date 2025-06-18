@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_info.R
 \name{road_list_values}
 \alias{road_list_values}
-\title{Get attribute value from ROAD Database}
+\title{Retrieve Attribute Values from the ROAD Database}
 \usage{
 road_list_values(attribute_name)
 }
@@ -13,8 +13,9 @@ road_list_values(attribute_name)
 List of attribute values.
 }
 \description{
-`road_list_values` fetches values of a given attribute in the database or 
-read values from file
+The `road_list_values` function allows you to find valid attribute values for a given attribute name. 
+You can search for attribute names from any `road_get_*` function, and the function will return a list of all possible attribute values used in the associated tables.
+This is particularly useful when you need to specify an attribute but are unsure of its exact spelling or available values.
 }
 \examples{
 road_list_values("category")
