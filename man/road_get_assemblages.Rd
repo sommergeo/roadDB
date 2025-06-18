@@ -41,7 +41,8 @@ remains”.The parameter categories is a string (one item) or vector of strings 
 \item{age_max}{specifies the maximum age of assemblage. The parameter age_max is an integer.}
 }
 \value{
-Database search result as list of assemblages and their geographic information, cultural period, locality type, category and dating.
+Database search result as list of assemblages and their geographic information, 
+cultural period, locality type, category and dating.
 }
 \description{
 `road_get_assemblages` fetches data of assemblages from ROAD database. The ROAD table assemblage contains information about classes of finds. An assemblage is
@@ -54,7 +55,7 @@ contained in any assemblage can appear only once in this table.
 }
 \examples{
 road_get_assemblages(countries = c("Germany", "France"), age_min = 300000L, 
-categories = c("miscellaneous finds"))
+                     categories = c("miscellaneous finds"))
 road_get_assemblages(subcontinents = c("Caucasus"), categories = "human remains", 
-age_max = 100000L)
+                     age_max = 100000L)
 }

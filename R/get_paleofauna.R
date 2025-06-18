@@ -45,17 +45,17 @@ road_get_paleofauna <- function(
   assemblage_condition <- get_assemblage_condition(query_start = " AND ", assemblages = assemblages)
 
   # build genus/species condition
-  if (is.vector(fauna_genus) && is.vector(fauna_species))
-  {
-    cp <- expand.grid(genus = fauna_genus, species = fauna_species)
-
-    cp <- cp %>% mutate(genus_species = paste(fauna_genus, fauna_species, sep = " "))
-    s <- paste(cp$genus_species, collapse = "; ")
-    warning(paste("If none of the following fauna_genus and fauna_species combinations 
-                  ", s, "
-                  are in the database, 
-                  the search results will be empty"))
-  }
+  # if (is.vector(fauna_genus) && is.vector(fauna_species))
+  # {
+  #   cp <- expand.grid(genus = fauna_genus, species = fauna_species)
+  # 
+  #   cp <- cp %>% mutate(genus_species = paste(fauna_genus, fauna_species, sep = " "))
+  #   s <- paste(cp$genus_species, collapse = "; ")
+  #   warning(paste("If none of the following fauna_genus and fauna_species combinations 
+  #                 ", s, "
+  #                 are in the database, 
+  #                 the search results will be empty"))
+  # }
 
   fauna_genus_condition <- ""
   fauna_species_condition <- ""

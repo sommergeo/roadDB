@@ -25,14 +25,15 @@
 #' @param age_min specifies the minimum age of assemblage. The parameter age_min is an integer.
 #' @param age_max specifies the maximum age of assemblage. The parameter age_max is an integer.
 #'
-#' @return Database search result as list of assemblages and their geographic information, cultural period, locality type, category and dating.
+#' @return Database search result as list of assemblages and their geographic information, 
+#' cultural period, locality type, category and dating.
 #' @export
 #'
 #' @examples
 #' road_get_assemblages(countries = c("Germany", "France"), age_min = 300000L, 
-#' categories = c("miscellaneous finds"))
+#'                      categories = c("miscellaneous finds"))
 #' road_get_assemblages(subcontinents = c("Caucasus"), categories = "human remains", 
-#' age_max = 100000L)
+#'                      age_max = 100000L)
 road_get_assemblages <- function(
     continents = NULL,
     subcontinents = NULL,
@@ -128,7 +129,8 @@ road_get_assemblages <- function(
         WHERE archaeological_stratigraphy.cultural_period IN (", cultural_periods, "))"
     ),
     # GROUP and ORDER
-    "GROUP BY assemblage.locality_idlocality, assemblage.idassemblage, assemblage.name, assemblage.category, geological_stratigraphy.age_min, geological_stratigraphy.age_max",
+    "GROUP BY assemblage.locality_idlocality, assemblage.idassemblage, assemblage.name, 
+              assemblage.category, geological_stratigraphy.age_min, geological_stratigraphy.age_max",
     "ORDER BY assemblage.locality_idlocality ASC, assemblage.idassemblage ASC"
   )
   

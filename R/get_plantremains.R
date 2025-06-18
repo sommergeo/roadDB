@@ -49,7 +49,8 @@ road_get_plantremains <- function(
 
   if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
 
-  assemblage_condition <- get_assemblage_condition(query_start = " AND ", assemblages = assemblages, locality_id_column_name = cm_locality_idlocality, assemblage_id_column_name = cm_assemblages_idassemblage)
+  assemblage_condition <- get_assemblage_condition(query_start = " AND ", assemblages = assemblages, 
+                                                   locality_id_column_name = cm_locality_idlocality, assemblage_id_column_name = cm_assemblages_idassemblage)
 
   # build remains/family/genus/species conditions
   if ((is.vector(plant_remains) && is.vector(plant_family) && is.vector(plant_genus) && is.vector(plant_species))
