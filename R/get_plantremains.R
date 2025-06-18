@@ -24,7 +24,7 @@
 #' @export
 #'
 #' @examples
-#' road_get_plantremains(plant_genus = "Triticum")
+#' road_get_plantremains(plant_family = "Poaceae", plant_genus = c("Setaria"))
 #' road_get_plantremains(categories = "plant remains", age_min = 5000L, age_max = 10000L)
 #' road_get_plantremains(countries = c("Germany", "France"), plant_family = "Poaceae")
 road_get_plantremains <- function(
@@ -68,29 +68,45 @@ road_get_plantremains <- function(
   {
     if (is.null(plant_remains))
     {
-      plant_remains <- c("")
+      plant_remains_out <- c("")
       pr <- ""
     }
-    else pr <- "plant_remains"
+    else
+    {
+      pr <- "plant_remains"
+      plant_remains_out <- plant_remains
+    }
     if (is.null(plant_family))
     {
-      plant_family <- c("")
+      plant_family_out <- c("")
       pf <- ""
     }
-    else pf <- "plant_family"
+    else
+    {
+      plant_family_out <- plant_family
+      pf <- "plant_family"
+    }
     if (is.null(plant_genus))
     {
-      plant_genus <- c("")
+      plant_genus_out <- c("")
       pg <- ""
     }
-    else pg <- "plant_genus"
+    else
+    {
+      plant_genus_out <- plant_genus
+      pg <- "plant_genus"
+    }
     if (is.null(plant_species))
     {
-      plant_species <- c("")
+      plant_species_out <- c("")
       ps <- ""
     }
-    else ps <- "plant_species"
-    cp <- expand.grid(remains = plant_remains, family = plant_family, genus = plant_genus, species = plant_species)
+    else
+    {
+      plant_species_out <- plant_species
+      ps <- "plant_species"
+    }
+    cp <- expand.grid(remains = plant_remains_out, family = plant_family_out, genus = plant_genus_out, species = plant_species_out)
 
     cp <- cp %>% mutate(remains_family_genus_species = paste(remains, family, genus, species, sep = " "))
     s <- paste(cp$remains_family_genus_species, collapse = "; ")
@@ -108,7 +124,7 @@ road_get_plantremains <- function(
   plant_genus_condition <- ""
   plant_species_condition <- ""
 
-  if (!is.null(plant_remains))
+  if (!is.null(plant_remains) && length(plant_remains) != 0)
   {
     #if (is.character(plant_remains) && length(plant_remains) == 1)
     #  plant_remains_condition <- paste0(" AND plant_remains ILIKE '%", plant_remains, "%' " )
@@ -116,16 +132,16 @@ road_get_plantremains <- function(
     plant_remains_condition <- parameter_to_query("AND plant_remains IN (", plant_remains, ")")
   }
 
-  if (!is.null(plant_family))
+  if (!is.null(plant_family) && length(plant_family) != 0)
   {
     plant_family_condition <- parameter_to_query("AND plant_family IN (", plant_family, ")")
   }
 
-  if (!is.null(plant_genus))
+  if (!is.null(plant_genus) && length(plant_genus) != 0)
   {
     plant_genus_condition <- parameter_to_query("AND plant_genus IN (", plant_genus, ")")
   }
-  if (!is.null(plant_species))
+  if (!is.null(plant_species) && length(plant_species) != 0)
   {
     plant_species_condition <- parameter_to_query("AND plant_species IN (", plant_species, ")")
   }
