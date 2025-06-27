@@ -58,12 +58,8 @@ A data frame with absolute dating information. Rows represent individual dates, 
 \code{laboratory_idlaboratory}: The attribute is the official abbreviation for the designated analytical laboratory.
 }
 \description{
-<<<<<<< HEAD
-The `road_get_dates` function retrieves temporal dating records for assemblages, geological layers, and archaeological layers from the ROAD database.
-=======
 The \code{road_get_dates} function retrieves absolute dating records for 
 assemblages, geological layers, and archaeological layers from the ROAD database.
->>>>>>> f437dba927d8ebd46b0cf88fde2881989e0222f0
 }
 \details{
 The function is designed for users analyzing time series and allows for 
