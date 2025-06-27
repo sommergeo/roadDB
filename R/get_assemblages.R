@@ -138,12 +138,23 @@ road_get_assemblages <- function(
   
   if (nrow(data) == 0 & nrow(localities) > 0)
   {
+    continents_str <- ifelse(is.null(continents), "", paste("continents =", toString(continents)))
+    subcontinents_str <- ifelse(is.null(subcontinents), "", paste("subcontinents =", toString(subcontinents)))
+    countries_str <- ifelse(is.null(countries), "", paste("countries =", toString(countries)))
+    locality_types_str <- ifelse(is.null(locality_types), "", paste("locality_types =", toString(locality_types)))
+    cultural_periods_str <- ifelse(is.null(cultural_periods), "", paste("cultural_periods =", toString(cultural_periods)))
+    
     categories_str <- ifelse(is.null(categories), "", paste("categories =", toString(categories)))
     age_min_str <- ifelse(is.null(age_min), "", paste("age_min =", age_min))
     age_max_str <- ifelse(is.null(age_max), "", paste("age_max =", age_max))
     
     message(paste("One or more of the following used parameters caused the empty result set
                   :",
+                  continents_str,
+                  subcontinents_str,
+                  countries_str,
+                  locality_types_str,
+                  cultural_periods_str,
                   categories_str,
                   age_min_str,
                   age_max_str,
