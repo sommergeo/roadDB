@@ -48,7 +48,7 @@ road_get_dates(
 A data frame with absolute dating results. Rows represent dates, columns contain details about minimum and maximum ages, dating method, and material.
 }
 \description{
-The `road_get_dates` function retrieves absolute dating records for assemblages, geological layers, and archaeological layers from the ROAD database.
+The `road_get_dates` function retrieves temporal dating records for assemblages, geological layers, and archaeological layers from the ROAD database.
 }
 \details{
 The function is designed for users analyzing time series and allows for 
