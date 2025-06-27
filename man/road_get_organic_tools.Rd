@@ -43,23 +43,24 @@ remains”.The parameter categories is a string (one item) or vector of strings 
 \item{age_max}{specifies the maximum age of assemblage. The parameter age_max is an integer.}
 
 \item{organic_tools_interpretation}{specifies interpreted organic tool types. Possible values for the
-interpretation are: lance/spear, needle eyed, percussor, pin, point, point barbed, 
-point split based, pointed artifact, punch, retoucher, rod, scraper, 
+interpretation are: lance/spear, needle eyed, percussor, pin, point, point barbed,
+point split based, pointed artifact, punch, retoucher, rod, scraper,
 shaftstring (one item) or vector of strings}
 
-\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
+\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
+Can be used instead of the other locality and assemblage parameters to filter the results.}
 }
 \value{
-Database search result as list of organic tools with their geographic information, 
-cultural period, locality type, category, dating, information about 
+Database search result as list of organic tools with their geographic information,
+cultural period, locality type, category, dating, information about
 organic tools interpretation, organic raw material, organic tools technology and number.
 }
 \description{
-`road_get_organic_tools` fetches data of organic tools from ROAD database.Organic 
-tools are artifacts made from organic materials such as bone, antler, or wood, 
-found in archaeological contexts. This function enables you to query organic tool 
+`road_get_organic_tools` fetches data of organic tools from ROAD database.Organic
+tools are artifacts made from organic materials such as bone, antler, or wood,
+found in archaeological contexts. This function enables you to query organic tool
 data from the ROAD database based on parameters like geographical location,
-cultural periods, tool interpretation, and assemblages. Use the parameters 
+cultural periods, tool interpretation, and assemblages. Use the parameters
 to filter the results or omit them for broader results.
 }
 \examples{

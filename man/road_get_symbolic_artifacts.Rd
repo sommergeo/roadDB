@@ -43,24 +43,25 @@ remains”.The parameter categories is a string (one item) or vector of strings 
 \item{age_max}{specifies the maximum age of assemblage. The parameter age_max is an integer.}
 
 \item{symbolic_artifacts_interpretation}{specifies symbolic artifacts. Possible values for the
-interpretation can be abstract, anthropomorphic, instrument, ornament, therianthropic, 
-zoomorphic, etc. The parameter symbolic_artifacts_interpretation is a string (one item) 
+interpretation can be abstract, anthropomorphic, instrument, ornament, therianthropic,
+zoomorphic, etc. The parameter symbolic_artifacts_interpretation is a string (one item)
 or vector of strings}
 
-\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
+\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
+Can be used instead of the other locality and assemblage parameters to filter the results.}
 }
 \value{
-Database search result as list of symbolic artifacts with their geographic information, 
-cultural period, locality type, category, dating and info about symbolic artifacts 
-interpretation, symbolic artifacts category, symbolic artifacts technology, 
+Database search result as list of symbolic artifacts with their geographic information,
+cultural period, locality type, category, dating and info about symbolic artifacts
+interpretation, symbolic artifacts category, symbolic artifacts technology,
 symbolic artifacts material, symbolic artifacts raw material source.
 }
 \description{
-`road_get_symbolic_artifacts` fetches data of symbolic artifacts from ROAD database. 
-Symbolic artifacts are objects interpreted as having symbolic or cultural significance 
-in archaeological contexts. This function allows you to query symbolic artifact 
+`road_get_symbolic_artifacts` fetches data of symbolic artifacts from ROAD database.
+Symbolic artifacts are objects interpreted as having symbolic or cultural significance
+in archaeological contexts. This function allows you to query symbolic artifact
 data from the ROAD database using parameters such as geographical location,
-cultural periods, artifact interpretation, and assemblages. Use the parameters 
+cultural periods, artifact interpretation, and assemblages. Use the parameters
 to filter the results or omit them to retrieve a broader dataset.
 }
 \examples{

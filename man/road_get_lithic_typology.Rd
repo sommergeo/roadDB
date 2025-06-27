@@ -44,16 +44,17 @@ remains”.The parameter categories is a string (one item) or vector of strings 
 
 \item{tool_list}{specifies values that can be entered for various tool types. Tool types
 can contain 1) chipped tool types like scraper end, scraper side, scraper carinated, burin, handaxe, chopper,
-cleaver, point, point unifacial, segment, unknown; 2) non-chipped tool types 
-like grindstone upper, hammerstone, anvil, retoucher; 3) non-tools like core, debitage, 
-flake, point; 4) unknown like cobble, block, manuport. 
+cleaver, point, point unifacial, segment, unknown; 2) non-chipped tool types
+like grindstone upper, hammerstone, anvil, retoucher; 3) non-tools like core, debitage,
+flake, point; 4) unknown like cobble, block, manuport.
 The parameter tool_list is a string (one item) or vector of strings}
 
-\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
+\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
+Can be used instead of the other locality and assemblage parameters to filter the results.}
 }
 \value{
-Database search result as list of lithic finds with their geographic 
-information, cultural period, locality type, assemblage category, dating, typology, percentage, 
+Database search result as list of lithic finds with their geographic
+information, cultural period, locality type, assemblage category, dating, typology, percentage,
 tool list.
 }
 \description{

@@ -42,31 +42,32 @@ remains”.The parameter categories is a string (one item) or vector of strings 
 
 \item{age_max}{specifies the maximum age of assemblage. The parameter age_max is an integer.}
 
-\item{miscellaneous_finds_material}{specifies material of the miscellaneous find 
-and may include: beeswax, bitumen, clay, flax fiber, fossil, mineral diverse 
-(materials such as crystals), mineral pigment (colorants such as ochre, hematite, 
+\item{miscellaneous_finds_material}{specifies material of the miscellaneous find
+and may include: beeswax, bitumen, clay, flax fiber, fossil, mineral diverse
+(materials such as crystals), mineral pigment (colorants such as ochre, hematite,
 limonite, goethite, specularite, etc.) ostrich eggshell, shell,
-stone, etc.  The parameter miscellaneous_finds_material is 
+stone, etc.  The parameter miscellaneous_finds_material is
 a string (one item) or vector of strings}
 
-\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.}
+\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
+Can be used instead of the other locality and assemblage parameters to filter the results.}
 }
 \value{
-Database search result as list of miscellaneous finds with their geographic information, 
-cultural period, locality type, category, dating, miscellaneous finds material, 
+Database search result as list of miscellaneous finds with their geographic information,
+cultural period, locality type, category, dating, miscellaneous finds material,
 miscellaneous finds material source (local, regional, supra-regional, unknown) and number.
 }
 \description{
 `road_get_miscellaneous_finds` fetches data of feature finds from ROAD database.
-Miscellaneous finds are archaeological objects that do not fit into other specific categories. 
+Miscellaneous finds are archaeological objects that do not fit into other specific categories.
 Miscellaneous finds are classified by their material.
-This function allows you to query miscellaneous finds data from the ROAD database 
+This function allows you to query miscellaneous finds data from the ROAD database
 using parameters such as geographical location,
-cultural periods, material types, and assemblages. Use the parameters to filter the results 
+cultural periods, material types, and assemblages. Use the parameters to filter the results
 or omit them to retrieve a broader dataset.
 }
 \examples{
 road_get_miscellaneous_finds(miscellaneous_finds_material = "wood fossil")
-road_get_miscellaneous_finds(continents = c("Africa"), locality_types = "open air",  
+road_get_miscellaneous_finds(continents = c("Africa"), locality_types = "open air",
                              miscellaneous_finds_material = "shell")
 }
