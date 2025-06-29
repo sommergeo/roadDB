@@ -2,33 +2,51 @@
 #'
 #' `road_get_plantremains` fetches data of paleobotanical remains from the ROAD database.
 #'
-#' Paleobotanical remains are plant remains found in archaeological contexts. This function allows you to query
-#' paleobotanical data based on various parameters such as geographical location, cultural periods, plant taxonomy,
-#' and assemblages. Use the parameters to filter the results or omit them to retrieve broader results.
+#' Paleobotanical remains are plant remains found in archaeological contexts and are associated with
+#' assemblages. This function allows you to query paleobotanical data based on
+#' various parameters such as geographical location, cultural periods, plant taxonomy,
+#' and assemblages. Use the parameters to filter the results or omit them to retrieve a broader dataset.
+#' Genus and species parameters can be entered as a vector of strings to search for multiple entries.
+#' If genus and species are both specified, most of the time it's more sensible to enter them as
+#' single strings and not as vectors with multiple search words to recieve useful results.
 #'
+#' @param continents specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. The parameter continents is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param subcontinents specifies the continental region(s) of the country , e.g. Southern Europe. The parameter subcontinents is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param countries specifies the name of the country where a locality is situated (e.g.
+#' Germany, Kenya, Saudi Arabia, China). The parameter countries is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param locality_types specifies the type of locality (e.g. cave, rockshelter, open air, profile, outcrop,
+#' mine, quarry, boring). The parameter locality_types is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param cultural_periods specifies the main cultural epoch(s) and includes the Eurasian
+#' Paleolithic (Lower, Middle, Upper, Epi) and the African Stone Age (Earlier, Middle, Later). The parameter cultural_periods is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param categories specifies the assemblage category/categories. For an assemblage consisting of human remains category includes the entry “human
+#' remains”. In the case of archaeological assemblages, multiple categories are the norm and may
+#' include “raw material, typology, technology, function, organic tools, symbolic artifacts, feature,
+#' miscellaneous finds”. A faunal assemblage can also contain multiple entries including
+#' “paleofauna, animal remains”, while a botanical assemblage can only include the entry “plant
+#' remains”.The parameter categories is a string (one item) or vector of strings (one or more items).
+#' @param age_min specifies the minimum age of assemblage. The parameter age_min is an integer.
+#' @param age_max specifies the maximum age of assemblage. The parameter age_max is an integer.
 #' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
-#' @param continents string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param subcontinents string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param countries string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param locality_types string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param cultural_periods string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param categories string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param age_min integer; minimum age of paleobotanical remains.
-#' @param age_max integer; maximum age of paleobotanical remains.
-#' @param plant_remains string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param plant_family string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param plant_genus string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param plant_species string (one item) or vector of strings (one or more items); defaults to NULL.
+#' Can be used instead of the other locality and assemblage parameters to filter the results.
+#' @param plant_remains specifies the type of plant remains. Possible entries include: "pollen", "plant macroremains" etc.
+#' The parameter family is a string (one item) or vector of strings (one or more items).
+#' @param plant_family specifies the family to which the described plant remains is attributed to.
+#' Possible entries include: "Poaceae", "Typhaceae" etc.
+#' The parameter family is a string (one item) or vector of strings (one or more items).
+#' @param fauna_genus specifies the genus to which the described faunal remains is attributed to.
+#' Possible entries include: "Setaria", "Typha" etc.
+#' The parameter genus is a string (one item) or vector of strings (one or more items).
+#' @param fauna_species specifies the species to which the described faunal remains is attributed. Possible entries include:
+#' "Setaria pumila (Poir.) Roem. & Schult.", "Typha angustifolia L." etc.
+#' The parameter species is a string (one item) or vector of strings (one or more items).
 #'
 #' @return Database search result as a list of assemblages with paleobotanical remains.
 #' @export
 #'
 #' @examples
-#' road_get_plantremains(plant_family = "Poaceae", plant_genus = c("Setaria"))
-#' road_get_plantremains(categories = "plant remains", age_min = 5000L, age_max = 10000L)
-#' road_get_plantremains(countries = c("Germany", "France"), plant_family = "Poaceae")
+#' road_get_plantremains(plant_family = "Poaceae", plant_genus = "Setaria")
+#' road_get_plantremains(countries = c("Germany", "France"), plant_remains = "pollen")
 road_get_plantremains <- function(
-    assemblages = NULL,
     continents = NULL,
     subcontinents = NULL,
     countries = NULL,
@@ -37,6 +55,7 @@ road_get_plantremains <- function(
     categories = NULL,
     age_min = NULL,
     age_max = NULL,
+    assemblages = NULL,
     plant_remains = NULL,
     plant_family = NULL,
     plant_genus = NULL,
