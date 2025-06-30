@@ -264,3 +264,152 @@ get_assemblage_condition <- function(query_start = "", assemblages = NULL, local
   return(assemblage_condition)
 }
 
+# 
+print_null_result_message <- function(
+    continents = NULL,
+    subcontinents = NULL,
+    countries = NULL,
+    locality_types = NULL,
+    cultural_periods = NULL,
+    categories = NULL,
+    age_min = NULL,
+    age_max = NULL,
+    genus = NULL,
+    species = NULL,
+    plant_remains = NULL,
+    plant_family = NULL,
+    plant_genus = NULL,
+    plant_species = NULL,
+    fauna_genus = NULL,
+    fauna_species = NULL
+)
+{
+  continents_str <- ifelse(is.null(continents), "", paste("continents = (", toString(continents), ")"))
+  subcontinents_str <- ifelse(is.null(subcontinents), "", paste("subcontinents = (", toString(subcontinents), ")"))
+  countries_str <- ifelse(is.null(countries), "", paste("countries = (", toString(countries), ")"))
+  locality_types_str <- ifelse(is.null(locality_types), "", paste("locality_types = (", toString(locality_types), ")"))
+  cultural_periods_str <- ifelse(is.null(cultural_periods), "", paste("cultural_periods = (", toString(cultural_periods), ")"))
+  
+  categories_str <- ifelse(is.null(categories), "", paste("categories = (", toString(categories), ")"))
+  age_min_str <- ifelse(is.null(age_min), "", paste("age_min = (", age_min, ")"))
+  age_max_str <- ifelse(is.null(age_max), "", paste("age_max = (", age_max, ")"))
+  
+  genus_str <- ifelse(is.null(genus), "", paste("genus = (", toString(genus), ")"))
+  species_str <- ifelse(is.null(species), "", paste("species = (", toString(species), ")"))
+
+  plant_remains_str <- ifelse(is.null(plant_remains), "", paste("plant_remains = (", toString(plant_remains), ")"))
+  plant_family_str <- ifelse(is.null(plant_family), "", paste("plant_family = (", toString(plant_family), ")"))
+  plant_genus_str <- ifelse(is.null(plant_genus), "", paste("plant_genus = (", toString(plant_genus), ")"))
+  plant_species_str <- ifelse(is.null(plant_species), "", paste("plant_species = (", toString(plant_species), ")"))
+  
+  fauna_genus_str <- ifelse(is.null(fauna_genus), "", paste("fauna_genus = (", toString(fauna_genus), ")"))
+  fauna_species_str <- ifelse(is.null(fauna_species), "", paste("fauna_species = (", toString(fauna_species), ")"))
+  
+  message(paste("One or more of the following parameters caused the empty result set:
+                  ",
+                continents_str,
+                subcontinents_str,
+                countries_str,
+                locality_types_str,
+                cultural_periods_str,
+                categories_str,
+                age_min_str,
+                age_max_str,
+                genus_str,
+                species_str,
+                plant_remains_str,
+                plant_family_str,
+                plant_genus_str,
+                plant_species_str,
+                fauna_genus_str,
+                fauna_species_str,
+                "
+      Please keep in mind, the data search needs exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
+
+  if (is.vector(genus) && is.vector(species))
+  {
+    cp <- expand.grid(genus = genus, species = species)
+    
+    cp <- cp %>% mutate(genus_species = paste(genus, species, sep = " "))
+    s <- paste(cp$genus_species, collapse = "; ")
+    message(paste("
+      Please keep in mind at least one of the the following combinations (fauna_genus fauna_species) have to be in the database:
+                  ", s))
+  }
+
+  if ((is.vector(plant_remains) && is.vector(plant_family) && is.vector(plant_genus) && is.vector(plant_species))
+      || (is.vector(plant_remains) && is.vector(plant_family) && is.vector(plant_genus))
+      || (is.vector(plant_family) && is.vector(plant_genus) && is.vector(plant_species))
+      || (is.vector(plant_remains) && is.vector(plant_family) && is.vector(plant_species))
+      || (is.vector(plant_remains) && is.vector(plant_genus) && is.vector(plant_species))
+      || (is.vector(plant_remains) && is.vector(plant_family))
+      || (is.vector(plant_family) && is.vector(plant_genus))
+      || (is.vector(plant_genus) && is.vector(plant_species))
+      || (is.vector(plant_remains) && is.vector(plant_genus))
+      || (is.vector(plant_family) && is.vector(plant_species))
+      || (is.vector(plant_remains) && is.vector(plant_species))
+  )
+  {
+    if (is.null(plant_remains))
+    {
+      plant_remains_out <- c("")
+      pr <- ""
+    }
+    else
+    {
+      pr <- "plant_remains "
+      plant_remains_out <- plant_remains
+    }
+    if (is.null(plant_family))
+    {
+      plant_family_out <- c("")
+      pf <- ""
+    }
+    else
+    {
+      plant_family_out <- plant_family
+      pf <- "plant_family "
+    }
+    if (is.null(plant_genus))
+    {
+      plant_genus_out <- c("")
+      pg <- ""
+    }
+    else
+    {
+      plant_genus_out <- plant_genus
+      pg <- "plant_genus "
+    }
+    if (is.null(plant_species))
+    {
+      plant_species_out <- c("")
+      ps <- ""
+    }
+    else
+    {
+      plant_species_out <- plant_species
+      ps <- "plant_species"
+    }
+    cp <- expand.grid(remains = plant_remains_out, family = plant_family_out, genus = plant_genus_out, species = plant_species_out)
+    
+    cp <- cp %>% mutate(remains_family_genus_species = paste(remains, family, genus, species, sep = " "))
+    s <- paste(cp$remains_family_genus_species, collapse = "); (")
+    message(paste0("
+      Please keep in mind at least one of the the following combinations (", pr, pf, pg, ps, ")"," have to be in the database:
+                  ", "(", s, ")"))
+  }
+  
+  if (is.vector(fauna_genus) && is.vector(fauna_species))
+  {
+    genus <- ""
+    cp <- expand.grid(genus = fauna_genus, species = fauna_species)
+    
+    cp <- cp %>% mutate(genus_species = paste(genus, species, sep = " "))
+    s <- paste(cp$genus_species, collapse = "; ")
+    message(paste("
+      Please keep in mind at least one of the the following combinations (fauna_genus fauna_species) have to be in the database:
+                  ", s))
+  }
+  
+}
+  

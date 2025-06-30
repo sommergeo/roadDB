@@ -69,15 +69,6 @@ road_get_human_remains <- function(
   assemblage_condition <- get_assemblage_condition(query_start = " AND ", assemblages = assemblages)
 
   # build genus/species condition
-  if (is.vector(genus) && is.vector(species))
-  {
-    cp <- expand.grid(genus = genus, species = species)
-
-    cp <- cp %>% mutate(genus_species = paste(genus, species, sep = " "))
-    s <- paste(cp$genus_species, collapse = "; ")
-    warning(paste("If none of the following combinations (genus and species) are in the database, the search results will be empty
-                  ", s))
-  }
   genus_condition <- ""
   species_condition <- ""
 
@@ -117,15 +108,18 @@ road_get_human_remains <- function(
 
   if (nrow(data) == 0 && nrow(assemblages) > 0)
   {
-    genus_str <- ifelse(is.null(genus), "", paste("genus =", toString(genus)))
-    species_str <- ifelse(is.null(species), "", paste("species =", toString(species)))
-
-#     message(paste("One or more of the following used parameters caused the empty result set:
-#                   ",
-#                   genus_str,
-#                   species_str,
-#                   "
-# Please keep in mind, the data search needs exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
+    print_null_result_message(  continents,
+                                subcontinents,
+                                countries,
+                                locality_types,
+                                cultural_periods,
+                                categories,
+                                age_min,
+                                age_max,
+                                genus,
+                                species
+    )
+      
   }
 
   data <- add_locality_columns(data, assemblages = assemblages)
