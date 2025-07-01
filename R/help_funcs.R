@@ -274,6 +274,12 @@ print_null_result_message <- function(
     categories = NULL,
     age_min = NULL,
     age_max = NULL,
+    tool_list = NULL,
+    raw_material_list = NULL,
+    organic_tools_interpretation = NULL,
+    symbolic_artifacts_interpretation = NULL,
+    feature_interpretation = NULL,
+    miscellaneous_finds_material = NULL,
     genus = NULL,
     species = NULL,
     plant_remains = NULL,
@@ -293,6 +299,13 @@ print_null_result_message <- function(
   categories_str <- ifelse(is.null(categories), "", paste("categories = (", toString(categories), ")"))
   age_min_str <- ifelse(is.null(age_min), "", paste("age_min = (", age_min, ")"))
   age_max_str <- ifelse(is.null(age_max), "", paste("age_max = (", age_max, ")"))
+  
+  tool_list_str <- ifelse(is.null(tool_list), "", paste("tool_list = (", toString(tool_list), ")"))
+  raw_material_list_str <- ifelse(is.null(raw_material_list), "", paste("raw_material_list = (", toString(raw_material_list), ")"))
+  organic_tools_interpretation_str <- ifelse(is.null(organic_tools_interpretation), "", paste("organic_tools_interpretation = (", toString(organic_tools_interpretation), ")"))
+  symbolic_artifacts_interpretation_str <- ifelse(is.null(symbolic_artifacts_interpretation), "", paste("symbolic_artifacts_interpretation = (", toString(symbolic_artifacts_interpretation), ")"))
+  feature_interpretation_str <- ifelse(is.null(feature_interpretation), "", paste("feature_interpretation = (", toString(feature_interpretation), ")"))
+  miscellaneous_finds_material_str <- ifelse(is.null(miscellaneous_finds_material), "", paste("miscellaneous_finds_material = (", toString(miscellaneous_finds_material), ")"))
   
   genus_str <- ifelse(is.null(genus), "", paste("genus = (", toString(genus), ")"))
   species_str <- ifelse(is.null(species), "", paste("species = (", toString(species), ")"))
@@ -315,6 +328,12 @@ print_null_result_message <- function(
                 categories_str,
                 age_min_str,
                 age_max_str,
+                tool_list_str,
+                raw_material_list_str,
+                organic_tools_interpretation_str,
+                symbolic_artifacts_interpretation_str,
+                feature_interpretation_str,
+                miscellaneous_finds_material_str,
                 genus_str,
                 species_str,
                 plant_remains_str,
@@ -324,7 +343,7 @@ print_null_result_message <- function(
                 fauna_genus_str,
                 fauna_species_str,
                 "
-      Please keep in mind, the data search needs exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
+      Please keep in mind, the data search needs for most parameters exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
 
   if (is.vector(genus) && is.vector(species))
   {

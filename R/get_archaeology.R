@@ -77,7 +77,22 @@ road_get_lithic_typology <- function(
   )
 
   data <- road_run_query(query)
-
+  
+  if (nrow(data) == 0 && nrow(assemblages) > 0)
+  {
+    
+    print_null_result_message(  continents,
+                                subcontinents,
+                                countries,
+                                locality_types,
+                                cultural_periods,
+                                categories,
+                                age_min,
+                                age_max,
+                                tool_list
+    )
+  }
+  
   data <- add_locality_columns(data, assemblages = assemblages)
 
   return(data)
@@ -164,7 +179,22 @@ road_get_lithic_raw_material <- function(
   )
 
   data <- road_run_query(query)
-
+  
+  if (nrow(data) == 0 && nrow(assemblages) > 0)
+  {
+    
+    print_null_result_message(  continents,
+                                subcontinents,
+                                countries,
+                                locality_types,
+                                cultural_periods,
+                                categories,
+                                age_min,
+                                age_max,
+                                raw_material_list
+    )
+  }
+  
   data <- add_locality_columns(data, assemblages = assemblages)
 
   return(data)
@@ -251,6 +281,21 @@ road_get_organic_tools <- function(
   )
 
   data <- road_run_query(query)
+  
+  if (nrow(data) == 0 && nrow(assemblages) > 0)
+  {
+    
+    print_null_result_message(  continents,
+                                subcontinents,
+                                countries,
+                                locality_types,
+                                cultural_periods,
+                                categories,
+                                age_min,
+                                age_max,
+                                organic_tools_interpretation
+    )
+  }
 
   data <- add_locality_columns(data, assemblages = assemblages)
 
@@ -342,6 +387,21 @@ road_get_symbolic_artifacts <- function(
   )
 
   data <- road_run_query(query)
+  
+  if (nrow(data) == 0 && nrow(assemblages) > 0)
+  {
+    
+    print_null_result_message(  continents,
+                                subcontinents,
+                                countries,
+                                locality_types,
+                                cultural_periods,
+                                categories,
+                                age_min,
+                                age_max,
+                                symbolic_artifacts_interpretation
+    )
+  }
 
   data <- add_locality_columns(data, assemblages = assemblages)
 
@@ -421,7 +481,22 @@ road_get_feature <- function(
   )
 
   data <- road_run_query(query)
-
+  
+  if (nrow(data) == 0 && nrow(assemblages) > 0)
+  {
+    
+    print_null_result_message(  continents,
+                                subcontinents,
+                                countries,
+                                locality_types,
+                                cultural_periods,
+                                categories,
+                                age_min,
+                                age_max,
+                                feature_interpretation
+    )
+  }
+  
   data <- add_locality_columns(data, assemblages = assemblages)
 
   return(data)
@@ -508,7 +583,22 @@ road_get_miscellaneous_finds <- function(
   )
 
   data <- road_run_query(query)
-
+  
+  if (nrow(data) == 0 && nrow(assemblages) > 0)
+  {
+    
+    print_null_result_message(  continents,
+                                subcontinents,
+                                countries,
+                                locality_types,
+                                cultural_periods,
+                                categories,
+                                age_min,
+                                age_max,
+                                miscellaneous_finds_material
+    )
+  }
+  
   data <- add_locality_columns(data, assemblages = assemblages)
 
   return(data)

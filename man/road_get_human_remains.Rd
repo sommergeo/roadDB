@@ -47,15 +47,15 @@ remains”.The parameter categories is a string (one item) or vector of strings 
 Can be used instead of the other locality and assemblage parameters to filter the results.}
 
 \item{genus}{specifies the genus to which the described fossil is attributed to.
-Possible entries include: Australopithecus, Homo, indet, etc.
+Possible entries include: "Australopithecus", "Homo", "indet", etc.
 The parameter genus is a string (one item) or vector of strings (one or more items).}
 
 \item{species}{specifies the species to which the described fossil is attributed. Possible entries include:
-afarensis, sapiens, erectus or sp. for unidentified species.
+"afarensis", "sapiens", "erectus" or "sp." for unidentified species.
 The parameter species is a string (one item) or vector of strings (one or more items).}
 }
 \value{
-Database search result as list of human remains.
+Database search result as list of assemblages with human remains.
 }
 \description{
 `road_get_human_remains` fetches data of human remains from ROAD database.
@@ -69,7 +69,7 @@ The dataset may also include indirect evidence such as fossil endocasts and foot
 Use the parameters to filter the results or omit them to retrieve a broader dataset.
 Genus and species parameters can be entered as a vector of strings to search for multiple entries.
 If genus and species are both specified, most of the time it's more sensible to enter them as
-single strings and not as vectors with multiple search words.
+single strings and not as vectors with multiple search words to recieve useful results.
 }
 \examples{
 road_get_human_remains(genus = c('Homo', 'Paranthropus'))
