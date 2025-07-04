@@ -58,7 +58,7 @@ information, cultural period, locality type, assemblage category, dating, typolo
 tool list.
 }
 \description{
-`road_get_lithic_typology` fetches data of lithic finds from ROAD database.
+The \code{\strong{road_get_lithic_typology}} fetches data of lithic finds from ROAD database.
 Lithic typology refers to the classification of stone tools based on their shape, technology, and function.
 This function enables you to query lithic typology data from the ROAD database using various parameters such as
 geographical location, cultural periods, tool types, and assemblages. Use the parameters to filter the results

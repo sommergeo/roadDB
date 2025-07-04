@@ -1,6 +1,6 @@
 #' Get lithic typology from ROAD database
 #'
-#' `road_get_lithic_typology` fetches data of lithic finds from ROAD database.
+#' The \code{\strong{road_get_lithic_typology}} fetches data of lithic finds from ROAD database.
 #' Lithic typology refers to the classification of stone tools based on their shape, technology, and function.
 #' This function enables you to query lithic typology data from the ROAD database using various parameters such as
 #' geographical location, cultural periods, tool types, and assemblages. Use the parameters to filter the results
@@ -101,7 +101,7 @@ road_get_lithic_typology <- function(
 
 #' Get lithic raw material from ROAD database
 #'
-#' `road_get_lithic_raw_material` fetches data of lithic finds from ROAD database.
+#' The \code{\strong{road_get_lithic_raw_material}} fetches data of lithic finds from ROAD database.
 #' Lithic raw material refers to the types of stone used for tool production in
 #' archaeological contexts. This function allows you to query lithic raw material
 #' data from the ROAD database using parameters such as geographical location,
@@ -141,11 +141,13 @@ road_get_lithic_typology <- function(
 #' intervals of transport for the raw materials present in an assemblage. When more 
 #' than one type of transport distance is present, then each of the transport distances 
 #' must be entered as a unique dataset. The five fixed types of transport distance are:
-#' 1. local (0-5 km)
-#' 2. regional (6-20 km)
-#' 3. supra-regional (21-100 km)
-#' 4. distant (>100 km)
-#' 5. unknown
+#' \itemize{
+#'   \item local (0-5 km) 
+#'   \item regional (6-20 km)
+#'   \item supra-regional (21-100 km)
+#'   \item distant (>100 km)
+#'   \item unknown
+#' }
 #' The parameter transport_distance is a string (one item) or vector of strings; defaults to NULL.
 #'
 #' @return Database search result as list of lithic finds with their geographic information,

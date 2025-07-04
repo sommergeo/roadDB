@@ -59,11 +59,13 @@ The parameter raw_material_list is a string (one item) or vector of strings.}
 intervals of transport for the raw materials present in an assemblage. When more 
 than one type of transport distance is present, then each of the transport distances 
 must be entered as a unique dataset. The five fixed types of transport distance are:
-1. local (0-5 km)
-2. regional (6-20 km)
-3. supra-regional (21-100 km)
-4. distant (>100 km)
-5. unknown
+\itemize{
+  \item local (0-5 km) 
+  \item regional (6-20 km)
+  \item supra-regional (21-100 km)
+  \item distant (>100 km)
+  \item unknown
+}
 The parameter transport_distance is a string (one item) or vector of strings; defaults to NULL.}
 
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
@@ -75,7 +77,7 @@ cultural period, locality type, category, dating and info about raw material lik
 transport distance, percentage, raw material list.
 }
 \description{
-`road_get_lithic_raw_material` fetches data of lithic finds from ROAD database.
+The \code{\strong{road_get_lithic_raw_material}} fetches data of lithic finds from ROAD database.
 Lithic raw material refers to the types of stone used for tool production in
 archaeological contexts. This function allows you to query lithic raw material
 data from the ROAD database using parameters such as geographical location,
