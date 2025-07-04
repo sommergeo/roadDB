@@ -73,11 +73,22 @@ road_run_query <- function(query)
   # run query
   result <- dbGetQuery(con, query)
 
+  #message(str(result$transport_distance))
+  #message(str(result))
+  
   # replace all possible "NULL" values with NA
   result[result == ""] <- NA
   result[result == -1] <- NA
+  
+  #'unknown' is a correct value of 'transport_distance', we dont want replace it.
+  if ("transport_distance" %in% colnames(result))
+    result['transport_distance'][result['transport_distance'] == 'unknown'] <- 'unknownunknown'
+  
   result[result == "undefined"] <- NA
   result[result == "unknown"] <- NA
+  
+  if ("transport_distance" %in% colnames(result))
+    result['transport_distance'][result['transport_distance'] == 'unknownunknown'] <- 'unknown'
 
   return(result)
 }
@@ -276,6 +287,7 @@ print_null_result_message <- function(
     age_max = NULL,
     tool_list = NULL,
     raw_material_list = NULL,
+    transport_distance = NULL,
     organic_tools_interpretation = NULL,
     symbolic_artifacts_interpretation = NULL,
     feature_interpretation = NULL,
@@ -301,6 +313,7 @@ print_null_result_message <- function(
   age_max_str <- ifelse(is.null(age_max), "", paste("age_max = (", age_max, ")"))
   
   tool_list_str <- ifelse(is.null(tool_list), "", paste("tool_list = (", toString(tool_list), ")"))
+  transport_distance_str <- ifelse(is.null(transport_distance), "", paste("transport_distance = (", toString(transport_distance), ")"))
   raw_material_list_str <- ifelse(is.null(raw_material_list), "", paste("raw_material_list = (", toString(raw_material_list), ")"))
   organic_tools_interpretation_str <- ifelse(is.null(organic_tools_interpretation), "", paste("organic_tools_interpretation = (", toString(organic_tools_interpretation), ")"))
   symbolic_artifacts_interpretation_str <- ifelse(is.null(symbolic_artifacts_interpretation), "", paste("symbolic_artifacts_interpretation = (", toString(symbolic_artifacts_interpretation), ")"))
@@ -330,6 +343,7 @@ print_null_result_message <- function(
                 age_max_str,
                 tool_list_str,
                 raw_material_list_str,
+                transport_distance_str,
                 organic_tools_interpretation_str,
                 symbolic_artifacts_interpretation_str,
                 feature_interpretation_str,
@@ -344,7 +358,18 @@ print_null_result_message <- function(
                 fauna_species_str,
                 "
       Please keep in mind, the data search needs for most parameters exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
-
+  
+  if (is.vector(raw_material_list) && is.vector(transport_distance))
+  {
+    cp <- expand.grid(raw_material_list = raw_material_list, transport_distance = transport_distance)
+    
+    cp <- cp %>% mutate(raw_material_list_transport_distance = paste(raw_material_list, transport_distance, sep = " "))
+    s <- paste(cp$raw_material_list_transport_distance, collapse = "; ")
+    message(paste("
+      Please keep in mind at least one of the the following combinations (fauna_genus fauna_species) have to be in the database:
+                  ", s))
+  }
+  
   if (is.vector(genus) && is.vector(species))
   {
     cp <- expand.grid(genus = genus, species = species)
