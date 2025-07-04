@@ -133,7 +133,7 @@ road_get_assemblages <- function(
               assemblage.category, geological_stratigraphy.age_min, geological_stratigraphy.age_max",
     "ORDER BY assemblage.locality_idlocality ASC, assemblage.idassemblage ASC"
   )
-  
+ 
   data <- road_run_query(query)
   
   if (nrow(data) == 0 & nrow(localities) > 0)
