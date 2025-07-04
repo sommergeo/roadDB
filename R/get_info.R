@@ -241,7 +241,7 @@ road_list_values <- function (attribute_name)
     collapse = " UNION "
   )
   query <- paste0(q_extension, que, ") AS foo ORDER BY ", cm_attribute_name, "")
-   message(query)
+
   data <- road_run_query(query)
   
   return(data)
