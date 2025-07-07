@@ -72,12 +72,13 @@ The parameter transport_distance is a string (one item) or vector of strings; de
 Can be used instead of the other locality and assemblage parameters to filter the results.}
 }
 \value{
-Database search result as list of lithic finds with their geographic information,
-cultural period, locality type, category, dating and info about raw material like
+Database search result as a data frame with the information about 
+lithic finds like their geographic information,
+cultural period, locality type, assemblage category, dating and info about raw material like
 transport distance, percentage, raw material list.
 }
 \description{
-The \code{\strong{road_get_lithic_raw_material}} fetches data of lithic finds from ROAD database.
+The \strong{\code{road_get_lithic_raw_material}} fetches data of lithic finds from ROAD database.
 Lithic raw material refers to the types of stone used for tool production in
 archaeological contexts. This function allows you to query lithic raw material
 data from the ROAD database using parameters such as geographical location,

@@ -53,12 +53,13 @@ a string (one item) or vector of strings}
 Can be used instead of the other locality and assemblage parameters to filter the results.}
 }
 \value{
-Database search result as list of miscellaneous finds with their geographic information,
+Database search result as a data frame with the information about 
+miscellaneous finds like their geographic information,
 cultural period, locality type, category, dating, miscellaneous finds material,
 miscellaneous finds material source (local, regional, supra-regional, unknown) and number.
 }
 \description{
-`road_get_miscellaneous_finds` fetches data of feature finds from ROAD database.
+The \strong{\code{road_get_miscellaneous_finds}} fetches data of feature finds from ROAD database.
 Miscellaneous finds are archaeological objects that do not fit into other specific categories.
 Miscellaneous finds are classified by their material.
 This function allows you to query miscellaneous finds data from the ROAD database
