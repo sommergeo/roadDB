@@ -51,12 +51,13 @@ shaftstring (one item) or vector of strings}
 Can be used instead of the other locality and assemblage parameters to filter the results.}
 }
 \value{
-Database search result as list of organic tools with their geographic information,
+Database search result as a data frame with the information about 
+organic tools like their geographic information,
 cultural period, locality type, category, dating, information about
 organic tools interpretation, organic raw material, organic tools technology and number.
 }
 \description{
-`road_get_organic_tools` fetches data of organic tools from ROAD database.Organic
+The \strong{\code{road_get_organic_tools}} fetches data of organic tools from ROAD database.Organic
 tools are artifacts made from organic materials such as bone, antler, or wood,
 found in archaeological contexts. This function enables you to query organic tool
 data from the ROAD database based on parameters like geographical location,
