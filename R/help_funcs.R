@@ -1,4 +1,4 @@
-source("./R/login.R")
+# source("./R/login.R")
 
 # column names
 cm_locality_idlocality <- "locality_id"
@@ -67,8 +67,11 @@ road_run_query <- function(query)
     stop("Query can not be empty.")
   }
 
-  #con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host="134.2.216.14", port=5432, user=rstudioapi::askForPassword("Database username"), password=rstudioapi::askForPassword("Database password"))
-  con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host = "134.2.216.14", port = 5432, user = user_name, password = user_password)
+  con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host="134.2.216.14", 
+                   port=5432, user=rstudioapi::askForPassword("Database username"), 
+                   password=rstudioapi::askForPassword("Database password"))
+  #con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host = "134.2.216.14", 
+  #port = 5432, user = user_name, password = user_password)
 
   # run query
   result <- dbGetQuery(con, query)
