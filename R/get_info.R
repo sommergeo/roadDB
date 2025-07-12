@@ -93,6 +93,8 @@ road_list_parameter_values <- function (function_parameter, function_name = NULL
       ~ "tool_list",
     function_parameter == "raw_material_list" 
       ~ "raw_material_list",
+    function_parameter == "transport_distance" 
+      ~ "transport_distance",
     function_parameter == "organic_tools_interpretation" 
       ~ "organic_tools:interpretation",
     function_parameter == "symbolic_artifacts_interpretation" 
@@ -156,6 +158,7 @@ road_list_values <- function (attribute_name)
                  "archaeological_stratigraphy", 
                  "typology",
                  "raw_material",
+                 "raw_material",
                  "organic_tools",
                  "feature", 
                  "miscellaneous_finds",
@@ -180,10 +183,11 @@ road_list_values <- function (attribute_name)
                   "technocomplex", 
                   "tool_list",
                   "raw_material_list",
-                  "organic_tools:interpretation",       # rethink
-                  "feature:interpretation",             # rethink
-                  "miscellaneous_finds:material",       # rethink
-                  "symbolic_artifacts:interpretation",  # rethink
+                  "transport_distance",
+                  "organic_tools:interpretation",
+                  "feature:interpretation", 
+                  "miscellaneous_finds:material", 
+                  "symbolic_artifacts:interpretation",
                   "humanremains:genus", 
                   "humanremains:species", 
                   "plant_remains",
@@ -237,7 +241,7 @@ road_list_values <- function (attribute_name)
     collapse = " UNION "
   )
   query <- paste0(q_extension, que, ") AS foo ORDER BY ", cm_attribute_name, "")
-   
+
   data <- road_run_query(query)
   
   return(data)

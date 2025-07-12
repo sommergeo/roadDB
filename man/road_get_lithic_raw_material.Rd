@@ -14,24 +14,32 @@ road_get_lithic_raw_material(
   age_min = NULL,
   age_max = NULL,
   raw_material_list = NULL,
+  transport_distance = NULL,
   assemblages = NULL
 )
 }
 \arguments{
-\item{continents}{specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. The parameter continents is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{continents}{specifies the continent(s) of the country/countries, 
+e.g. Africa, Europe, Asia. The parameter continents is a string (one item) or vector 
+of strings (one or more items); defaults to NULL.}
 
-\item{subcontinents}{specifies the continental region(s) of the country , e.g. Southern Europe. The parameter subcontinents is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{subcontinents}{specifies the continental region(s) of the country , 
+e.g. Southern Europe. The parameter subcontinents is a string (one item) or 
+vector of strings (one or more items); defaults to NULL.}
 
 \item{countries}{specifies the name of the country where a locality is situated (e.g.
-Germany, Kenya, Saudi Arabia, China). The parameter countries is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+Germany, Kenya, Saudi Arabia, China). The parameter countries is a string (one item) 
+or vector of strings (one or more items); defaults to NULL.}
 
 \item{locality_types}{specifies the type of locality (e.g. cave, rockshelter, open air, profile, outcrop,
 mine, quarry, boring). The parameter locality_types is a string (one item) or vector of strings (one or more items); defaults to NULL.}
 
 \item{cultural_periods}{specifies the main cultural epoch(s) and includes the Eurasian
-Paleolithic (Lower, Middle, Upper, Epi) and the African Stone Age (Earlier, Middle, Later). The parameter cultural_periods is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+Paleolithic (Lower, Middle, Upper, Epi) and the African Stone Age (Earlier, Middle, Later). 
+The parameter cultural_periods is a string (one item) or vector of strings (one or more items); defaults to NULL.}
 
-\item{categories}{specifies the assemblage category/categories. For an assemblage consisting of human remains category includes the entry “human
+\item{categories}{specifies the assemblage category/categories. For an assemblage 
+consisting of human remains category includes the entry “human
 remains”. In the case of archaeological assemblages, multiple categories are the norm and may
 include “raw material, typology, technology, function, organic tools, symbolic artifacts, feature,
 miscellaneous finds”. A faunal assemblage can also contain multiple entries including
@@ -45,18 +53,32 @@ remains”.The parameter categories is a string (one item) or vector of strings 
 \item{raw_material_list}{specifies raw materials like quartz, quartzite, chert,
 chert jurassic, chert cretaceous, tabular flint, flint baltic, flint tertiary,
 radiolarite, basalt, granite, obsidian, unknown, etc.
-The parameter raw_material_list is a string (one item) or vector of strings}
+The parameter raw_material_list is a string (one item) or vector of strings.}
+
+\item{transport_distance}{specifies one or more of the five categories, each distinguished by specific 
+intervals of transport for the raw materials present in an assemblage. When more 
+than one type of transport distance is present, then each of the transport distances 
+must be entered as a unique dataset. The five fixed types of transport distance are:
+\itemize{
+  \item local (0-5 km) 
+  \item regional (6-20 km)
+  \item supra-regional (21-100 km)
+  \item distant (>100 km)
+  \item unknown
+}
+The parameter transport_distance is a string (one item) or vector of strings; defaults to NULL.}
 
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
 Can be used instead of the other locality and assemblage parameters to filter the results.}
 }
 \value{
-Database search result as list of lithic finds with their geographic information,
-cultural period, locality type, category, dating and info about raw material like
+Database search result as a data frame with the information about 
+lithic finds like their geographic information,
+cultural period, locality type, assemblage category, dating and info about raw material like
 transport distance, percentage, raw material list.
 }
 \description{
-`road_get_lithic_raw_material` fetches data of lithic finds from ROAD database.
+The \strong{\code{road_get_lithic_raw_material}} fetches data of lithic finds from ROAD database.
 Lithic raw material refers to the types of stone used for tool production in
 archaeological contexts. This function allows you to query lithic raw material
 data from the ROAD database using parameters such as geographical location,

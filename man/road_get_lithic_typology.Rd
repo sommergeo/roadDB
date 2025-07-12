@@ -53,12 +53,12 @@ The parameter tool_list is a string (one item) or vector of strings}
 Can be used instead of the other locality and assemblage parameters to filter the results.}
 }
 \value{
-Database search result as list of lithic finds with their geographic
-information, cultural period, locality type, assemblage category, dating, typology, percentage,
-tool list.
+Database search result as a data frame with the information about 
+lithic finds like their geographic information, cultural period, locality type, 
+assemblage category, dating, typology, percentage, tool list.
 }
 \description{
-`road_get_lithic_typology` fetches data of lithic finds from ROAD database.
+The \strong{\code{road_get_lithic_typology}} fetches data of lithic finds from ROAD database.
 Lithic typology refers to the classification of stone tools based on their shape, technology, and function.
 This function enables you to query lithic typology data from the ROAD database using various parameters such as
 geographical location, cultural periods, tool types, and assemblages. Use the parameters to filter the results

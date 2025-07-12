@@ -41,11 +41,12 @@ remains”.The parameter categories is a string (one item) or vector of strings 
 \item{age_max}{specifies the maximum age of assemblage. The parameter age_max is an integer.}
 }
 \value{
-Database search result as list of assemblages and their geographic information, 
-cultural period, locality type, category and dating.
+Database search result as a data frame with the information about 
+assemblages like their geographic information, cultural period, locality type, 
+assemblage category and dating.
 }
 \description{
-`road_get_assemblages` fetches data of assemblages from ROAD database. The ROAD table assemblage contains information about classes of finds. An assemblage is
+The \strong{\code{road_get_assemblages}} fetches data of assemblages from ROAD database. The ROAD table assemblage contains information about classes of finds. An assemblage is
 defined as a collected find consisting of grouped classes of materials, for example:
 archaeological finds (including raw material, typology, technology, function, organic tools,
 symbolic artifacts, feature and miscellaneous finds), human remains, faunal remains or

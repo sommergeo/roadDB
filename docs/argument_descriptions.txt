@@ -1,0 +1,87 @@
+General arguments
+
+#' @param continents specifies the continent(s) (e.g. Africa, Europe, Asia).
+#' Run \code{road_list_parameter_values("continents")} to display possible values.
+#' The parameter \code{continents} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+
+#' @param subcontinents specifies the continental region(s) (e.g. Southern Europe). 
+#' Run \code{road_list_parameter_values("subcontinents")} to display possible values.
+#' The parameter \code{subcontinents} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+
+#' @param countries specifies the name of the country where a locality is situated (e.g. Germany, Kenya, Saudi Arabia).
+#' Run \code{road_list_parameter_values("countries")} to display possible values.
+#' The parameter \code{countries} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+
+#' @param locality_types specifies the type of locality (e.g. cave, rockshelter, open air).
+#' Run \code{road_list_parameter_values("locality_types")} to display possible values.
+#' The parameter \code{locality_types} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+
+#' @param cultural_periods specifies the main cultural epoch(s) and includes the Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age (Earlier, Middle, Later).
+#' #' Run \code{road_list_parameter_values("cultural_periods")} to display possible values.
+#' The parameter \code{cultural_periods} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+
+#' @param technocomplex specifies an archaeological culture or named stone tool industry (e.g. Oldowan, Acheulean, Mousterian).
+#' Run \code{road_list_parameter_values("technocomplex")} to display possible values.
+#' The parameter \code{technocomplex} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+
+#' @param categories specifies the assemblage category/categories with the classes human remains, raw material, typology, technology, function, organic tools, symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains, plant remains.
+#' The parameter \code{categories} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+
+#' @param age_min specifies the minimum age in years before present, using 1950 CE as the baseline.
+#' The parameter \code{age_min} is an integer; defaults to NULL.
+
+#' @param age_max specifies the maximum age in years before present, using 1950 CE as the baseline.
+#' The parameter \code{age_max} is an integer; defaults to NULL.
+
+
+Specific arguments
+
+#' @param dating_methods specifies the method of temporal analysis (e.g. 14C, OSL, IRSL).
+#' Run \code{road_list_parameter_values("dating_methods")} to display possible values.
+#' The parameter \code{dating_methods} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+
+#' @param material_dated (string) specifies the material used for temporal analysis (e.g. bone, tooth, antler).
+#' Run \code{road_list_parameter_values("material_dated")} to display possible values.
+#' The parameter \code{datied_material} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+
+#' @param tool_list specifies values that can be entered for various tool types. Tool types
+#' can contain 1) chipped tool types like scraper end, scraper side, scraper carinated, burin, handaxe, chopper,
+#' cleaver, point, point unifacial, segment, unknown; 2) non-chipped tool types
+#' like grindstone upper, hammerstone, anvil, retoucher; 3) non-tools like core, debitage,
+#' flake, point; 4) unknown like cobble, block, manuport.
+#' Run \code{road_list_parameter_values("tool_list")} to display possible values.
+#' The parameter \code{tool_list} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+
+#' @param raw_material_list specifies lithic raw materials (e.g. quartz, chert, flint). Consider the function \code{road_get_organic_tools()} for non-lithic raw materials.
+#' Run \code{road_list_parameter_values("raw_material_list")} to display possible values.
+#' The parameter \code{raw_material_list} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+
+#' @param transport_distance specifies one or more of the five categories, each distinguished by specific 
+#' intervals of transport for the raw materials present in an assemblage. When more 
+#' than one type of transport distance is present, then each of the transport distances 
+#' must be entered as a unique dataset. The five classes of transport distance are:
+#' \itemize{
+#'   \item local (0-5 km) 
+#'   \item regional (6-20 km)
+#'   \item supra-regional (21-100 km)
+#'   \item distant (>100 km)
+#'   \item unknown
+#' }
+#' Run \code{road_list_parameter_values("transport_distance")} to display possible values.
+#' The parameter \code{transport_distance} is a string (one item) or vector of strings; defaults to NULL.
+
+#' @param organic_tools_interpretation specifies interpreted organic tool types (e.g. lance/spear, point, retoucher).
+#' Run \code{road_list_parameter_values("organic_tools_interpretation")} to display possible values.
+#' The parameter \code{organic_tools_interpretation} is a string (one item) or vector of strings; defaults to NULL.
+
+#' @param symbolic_artifacts_interpretation specifies the interpretation of symbolic artifacts (e.g. abstract, anthropomorphic, zoomorphic, instrument, ornament).
+#' Run \code{road_list_parameter_values("symbolic_artifacts_interpretation")} to display possible values.
+#' The parameter \code{symbolic_artifacts_interpretation} is a string (one item) or vector of strings; defaults to NULL.
+
+#' @param feature_interpretation specifies archaeological features present in the archaeological assemblage (e.g. bedding, burial, butchering event).
+#' Run \code{road_list_parameter_values("feature_interpretation")} to display possible values.
+#' The parameter \code{feature_interpretation} is a string (one item) or vector of strings; defaults to NULL.
+
+#' @param miscellaneous_finds_material specifies material of the miscellaneous finds (e.g. shell, ochre, ostrich eggshell).
+#' Run \code{road_list_parameter_values("miscellaneous_finds_material")} to display possible values.
+#' The parameter \code{miscellaneous_finds_material} is a string (one item) or vector of strings; defaults to NULL.

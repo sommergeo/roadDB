@@ -1,6 +1,6 @@
 #' Get localities from ROAD Database
 #'
-#' `road_get_localities` fetches data of archaeological sites (localities) from ROAD database.
+#' The \strong{\code{road_get_localities}} fetches data of archaeological sites (localities) from ROAD database.
 #' The ROAD table locality provides basic information about each place where an assemblage of
 #' archaeological, paleoanthropological, paleontological, paleobotanical or other relevant materials
 #' was described, recorded, sampled or collected. Every locality (site) is situated in a specific
@@ -9,22 +9,28 @@
 #' Use parameters to filter search results by location, type, or culture or omit them to have a broader result set.
 #' All parameters are optional and should be omitted or set to NULL when not used.
 #'
-#' @param continents specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. The parameter continents is a string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param subcontinents specifies the continental region(s) of the country , e.g. Southern Europe. The parameter subcontinents is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param continents specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. 
+#' The parameter continents is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param subcontinents specifies the continental region(s) of the country , e.g. Southern Europe. 
+#' The parameter subcontinents is a string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param countries specifies the name of the country where a locality is situated (e.g.
-#' Germany, Kenya, Saudi Arabia, China). The parameter countries is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' Germany, Kenya, Saudi Arabia, China). The parameter countries is a string (one item) 
+#' or vector of strings (one or more items); defaults to NULL.
 #' @param locality_types specifies the type of locality (e.g. cave, rockshelter, open air, profile, outcrop,
-#' mine, quarry, boring). The parameter locality_types is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' mine, quarry, boring). The parameter locality_types is a string (one item) or 
+#' vector of strings (one or more items); defaults to NULL.
 #' @param cultural_periods specifies the main cultural epoch(s) and includes the Eurasian
-#' Paleolithic (Lower, Middle, Upper, Epi) and the African Stone Age (Earlier, Middle, Later). The parameter cultural_periods is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' Paleolithic (Lower, Middle, Upper, Epi) and the African Stone Age (Earlier, Middle, Later). 
+#' The parameter cultural_periods is a string (one item) or vector of strings (one or more items); defaults to NULL.
 #' 
-#' @return Database search result as list of localities with their geographic information, cultural period and type.
+#' @return Database search result as a data frame with the information about localities 
+#' like their geographic information, cultural period and type.
 #' @export
 #'
 #' @examples
-#' road_get_localities(continents = "Europe", countries = c("Germany"), 
+#' df <- road_get_localities(continents = "Europe", countries = c("Germany"), 
 #'                     locality_type = c("basin", "quarry"))
-#' road_get_localities(countries = c("Germany", "France"), cultural_periods = "Epipaleolithic")
+#' df <- road_get_localities(countries = c("Germany", "France"), cultural_periods = "Epipaleolithic")
 road_get_localities <- function(
     continents = NULL,
     subcontinents = NULL,

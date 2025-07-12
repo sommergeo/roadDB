@@ -1,6 +1,6 @@
 #' Get lithic typology from ROAD database
 #'
-#' `road_get_lithic_typology` fetches data of lithic finds from ROAD database.
+#' The \strong{\code{road_get_lithic_typology}} fetches data of lithic finds from ROAD database.
 #' Lithic typology refers to the classification of stone tools based on their shape, technology, and function.
 #' This function enables you to query lithic typology data from the ROAD database using various parameters such as
 #' geographical location, cultural periods, tool types, and assemblages. Use the parameters to filter the results
@@ -31,9 +31,9 @@
 #' flake, point; 4) unknown like cobble, block, manuport.
 #' The parameter tool_list is a string (one item) or vector of strings
 #'
-#' @return Database search result as list of lithic finds with their geographic
-#' information, cultural period, locality type, assemblage category, dating, typology, percentage,
-#' tool list.
+#' @return Database search result as a data frame with the information about 
+#' lithic finds like their geographic information, cultural period, locality type, 
+#' assemblage category, dating, typology, percentage, tool list.
 #' @export
 #'
 #' @examples
@@ -101,22 +101,29 @@ road_get_lithic_typology <- function(
 
 #' Get lithic raw material from ROAD database
 #'
-#' `road_get_lithic_raw_material` fetches data of lithic finds from ROAD database.
+#' The \strong{\code{road_get_lithic_raw_material}} fetches data of lithic finds from ROAD database.
 #' Lithic raw material refers to the types of stone used for tool production in
 #' archaeological contexts. This function allows you to query lithic raw material
 #' data from the ROAD database using parameters such as geographical location,
 #' cultural periods, raw material types, and assemblages. Use the parameters to filter
 #' the results or omit them to retrieve a broader dataset.
 #'
-#' @param continents specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. The parameter continents is a string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param subcontinents specifies the continental region(s) of the country , e.g. Southern Europe. The parameter subcontinents is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param continents specifies the continent(s) of the country/countries, 
+#' e.g. Africa, Europe, Asia. The parameter continents is a string (one item) or vector 
+#' of strings (one or more items); defaults to NULL.
+#' @param subcontinents specifies the continental region(s) of the country , 
+#' e.g. Southern Europe. The parameter subcontinents is a string (one item) or 
+#' vector of strings (one or more items); defaults to NULL.
 #' @param countries specifies the name of the country where a locality is situated (e.g.
-#' Germany, Kenya, Saudi Arabia, China). The parameter countries is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' Germany, Kenya, Saudi Arabia, China). The parameter countries is a string (one item) 
+#' or vector of strings (one or more items); defaults to NULL.
 #' @param locality_types specifies the type of locality (e.g. cave, rockshelter, open air, profile, outcrop,
 #' mine, quarry, boring). The parameter locality_types is a string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param cultural_periods specifies the main cultural epoch(s) and includes the Eurasian
-#' Paleolithic (Lower, Middle, Upper, Epi) and the African Stone Age (Earlier, Middle, Later). The parameter cultural_periods is a string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param categories specifies the assemblage category/categories. For an assemblage consisting of human remains category includes the entry “human
+#' Paleolithic (Lower, Middle, Upper, Epi) and the African Stone Age (Earlier, Middle, Later). 
+#' The parameter cultural_periods is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param categories specifies the assemblage category/categories. For an assemblage 
+#' consisting of human remains category includes the entry “human
 #' remains”. In the case of archaeological assemblages, multiple categories are the norm and may
 #' include “raw material, typology, technology, function, organic tools, symbolic artifacts, feature,
 #' miscellaneous finds”. A faunal assemblage can also contain multiple entries including
@@ -129,10 +136,23 @@ road_get_lithic_typology <- function(
 #' @param raw_material_list specifies raw materials like quartz, quartzite, chert,
 #' chert jurassic, chert cretaceous, tabular flint, flint baltic, flint tertiary,
 #' radiolarite, basalt, granite, obsidian, unknown, etc.
-#' The parameter raw_material_list is a string (one item) or vector of strings
+#' The parameter raw_material_list is a string (one item) or vector of strings.
+#' @param transport_distance specifies one or more of the five categories, each distinguished by specific 
+#' intervals of transport for the raw materials present in an assemblage. When more 
+#' than one type of transport distance is present, then each of the transport distances 
+#' must be entered as a unique dataset. The five fixed types of transport distance are:
+#' \itemize{
+#'   \item local (0-5 km) 
+#'   \item regional (6-20 km)
+#'   \item supra-regional (21-100 km)
+#'   \item distant (>100 km)
+#'   \item unknown
+#' }
+#' The parameter transport_distance is a string (one item) or vector of strings; defaults to NULL.
 #'
-#' @return Database search result as list of lithic finds with their geographic information,
-#' cultural period, locality type, category, dating and info about raw material like
+#' @return Database search result as a data frame with the information about 
+#' lithic finds like their geographic information,
+#' cultural period, locality type, assemblage category, dating and info about raw material like
 #' transport distance, percentage, raw material list.
 #' @export
 #'
@@ -151,6 +171,7 @@ road_get_lithic_raw_material <- function(
     age_min = NULL,
     age_max = NULL,
     raw_material_list = NULL,
+    transport_distance = NULL,
     assemblages = NULL
 )
 {
@@ -175,7 +196,9 @@ road_get_lithic_raw_material <- function(
     "FROM raw_material",
     "WHERE",
     assemblage_condition,
-    query_values_in_string("AND ", raw_material_list, "raw_material_list")
+    query_values_in_string("AND ", raw_material_list, "raw_material_list"),
+    parameter_to_query("AND transport_distance IN (", transport_distance, ")")
+    # query_values_in_string("AND ", transport_distance, "transport_distance")
   )
 
   data <- road_run_query(query)
@@ -191,7 +214,8 @@ road_get_lithic_raw_material <- function(
                                 categories,
                                 age_min,
                                 age_max,
-                                raw_material_list
+                                raw_material_list,
+                                transport_distance
     )
   }
   
@@ -203,7 +227,7 @@ road_get_lithic_raw_material <- function(
 
 #' Get organic tools from ROAD database
 #'
-#' `road_get_organic_tools` fetches data of organic tools from ROAD database.Organic
+#' The \strong{\code{road_get_organic_tools}} fetches data of organic tools from ROAD database.Organic
 #' tools are artifacts made from organic materials such as bone, antler, or wood,
 #' found in archaeological contexts. This function enables you to query organic tool
 #' data from the ROAD database based on parameters like geographical location,
@@ -233,7 +257,8 @@ road_get_lithic_raw_material <- function(
 #' point split based, pointed artifact, punch, retoucher, rod, scraper,
 #' shaftstring (one item) or vector of strings
 #'
-#' @return Database search result as list of organic tools with their geographic information,
+#' @return Database search result as a data frame with the information about 
+#' organic tools like their geographic information,
 #' cultural period, locality type, category, dating, information about
 #' organic tools interpretation, organic raw material, organic tools technology and number.
 #' @export
@@ -305,7 +330,7 @@ road_get_organic_tools <- function(
 
 #' Get symbolic artifacts from ROAD database
 #'
-#' `road_get_symbolic_artifacts` fetches data of symbolic artifacts from ROAD database.
+#' The \strong{\code{road_get_symbolic_artifacts}} fetches data of symbolic artifacts from ROAD database.
 #' Symbolic artifacts are objects interpreted as having symbolic or cultural significance
 #' in archaeological contexts. This function allows you to query symbolic artifact
 #' data from the ROAD database using parameters such as geographical location,
@@ -335,10 +360,10 @@ road_get_organic_tools <- function(
 #' zoomorphic, etc. The parameter symbolic_artifacts_interpretation is a string (one item)
 #' or vector of strings
 #'
-#' @return Database search result as list of symbolic artifacts with their geographic information,
-#' cultural period, locality type, category, dating and info about symbolic artifacts
-#' interpretation, symbolic artifacts category, symbolic artifacts technology,
-#' symbolic artifacts material, symbolic artifacts raw material source.
+#' @return Database search result as a data frame with the information about symbolic artifacts 
+#' like their geographic information, cultural period, locality type, assemblage category, 
+#' dating and info about symbolic artifacts interpretation, symbolic artifacts 
+#' category, symbolic artifacts technology, symbolic artifacts material, symbolic artifacts raw material source.
 #' @export
 #'
 #' @examples
@@ -411,7 +436,7 @@ road_get_symbolic_artifacts <- function(
 
 #' Get feature assemblages from ROAD database
 #'
-#' `road_get_feature` fetches data of feature finds from ROAD database. Feature assemblages refer to archaeological features such as hearths, pits, or structures found at a site.
+#' The \strong{\code{road_get_feature}} fetches data of feature finds from ROAD database. Feature assemblages refer to archaeological features such as hearths, pits, or structures found at a site.
 #' This function enables you to query feature data from the ROAD database using parameters like geographical location,
 #' cultural periods, feature interpretation, and assemblages. Use the parameters to filter the results or omit them for broader results.
 #'
@@ -438,8 +463,9 @@ road_get_symbolic_artifacts <- function(
 #' dwelling, impact feature, mine, pit, post hole, shell midden, stone construction,
 #' windbreak, etc. The parameter feature_interpretation is a string (one item) or vector of strings.
 #'
-#' @return Database search result as list of feature finds with their geographic information,
-#' cultural period, locality type, category, dating and interpretations.
+#' @return Database search result as a data frame with the information about feature finds 
+#' like their geographic information, cultural period, locality type, assemblage category, 
+#' dating and interpretations.
 #' @export
 #'
 #' @examples
@@ -504,7 +530,7 @@ road_get_feature <- function(
 
 #' Get miscellaneous finds from ROAD database
 #'
-#' `road_get_miscellaneous_finds` fetches data of feature finds from ROAD database.
+#' The \strong{\code{road_get_miscellaneous_finds}} fetches data of feature finds from ROAD database.
 #' Miscellaneous finds are archaeological objects that do not fit into other specific categories.
 #' Miscellaneous finds are classified by their material.
 #' This function allows you to query miscellaneous finds data from the ROAD database
@@ -537,7 +563,8 @@ road_get_feature <- function(
 #' stone, etc.  The parameter miscellaneous_finds_material is
 #' a string (one item) or vector of strings
 #'
-#' @return Database search result as list of miscellaneous finds with their geographic information,
+#' @return Database search result as a data frame with the information about 
+#' miscellaneous finds like their geographic information,
 #' cultural period, locality type, category, dating, miscellaneous finds material,
 #' miscellaneous finds material source (local, regional, supra-regional, unknown) and number.
 #' @export

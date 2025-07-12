@@ -51,13 +51,13 @@ or vector of strings}
 Can be used instead of the other locality and assemblage parameters to filter the results.}
 }
 \value{
-Database search result as list of symbolic artifacts with their geographic information,
-cultural period, locality type, category, dating and info about symbolic artifacts
-interpretation, symbolic artifacts category, symbolic artifacts technology,
-symbolic artifacts material, symbolic artifacts raw material source.
+Database search result as a data frame with the information about symbolic artifacts 
+like their geographic information, cultural period, locality type, assemblage category, 
+dating and info about symbolic artifacts interpretation, symbolic artifacts 
+category, symbolic artifacts technology, symbolic artifacts material, symbolic artifacts raw material source.
 }
 \description{
-`road_get_symbolic_artifacts` fetches data of symbolic artifacts from ROAD database.
+The \strong{\code{road_get_symbolic_artifacts}} fetches data of symbolic artifacts from ROAD database.
 Symbolic artifacts are objects interpreted as having symbolic or cultural significance
 in archaeological contexts. This function allows you to query symbolic artifact
 data from the ROAD database using parameters such as geographical location,
