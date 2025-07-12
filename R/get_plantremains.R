@@ -1,6 +1,6 @@
 #' Get paleobotany data from ROAD database
 #'
-#' `road_get_plantremains` fetches data of paleobotanical remains from the ROAD database.
+#' The function \code{road_get_plantremains} fetches data of paleobotanical remains from the ROAD database.
 #'
 #' Paleobotanical remains are plant remains found in archaeological contexts and are associated with
 #' assemblages. This function allows you to query paleobotanical data based on
@@ -24,9 +24,9 @@
 #' miscellaneous finds”. A faunal assemblage can also contain multiple entries including
 #' “paleofauna, animal remains”, while a botanical assemblage can only include the entry “plant
 #' remains”.The parameter categories is a string (one item) or vector of strings (one or more items).
-#' @param age_min specifies the minimum age of assemblage. The parameter age_min is an integer.
-#' @param age_max specifies the maximum age of assemblage. The parameter age_max is an integer.
-#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
+#' @param age_min specifies the minimum age of assemblage. The parameter \code{age_min} is an integer.
+#' @param age_max specifies the maximum age of assemblage. The parameter \code{age_max} is an integer.
+#' @param assemblages list of assemblages; return value from function \code{road_get_assemblages}.
 #' Can be used instead of the other locality and assemblage parameters to filter the results.
 #' @param plant_remains specifies the type of plant remains. Possible entries include: "pollen", "plant macroremains" etc.
 #' The parameter family is a string (one item) or vector of strings (one or more items).

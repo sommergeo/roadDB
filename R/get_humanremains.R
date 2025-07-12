@@ -1,6 +1,6 @@
 #' Get human remains from ROAD database
 #'
-#' `road_get_human_remains` fetches data of human remains from ROAD database.
+#' The function \code{road_get_human_remains} fetches data of human remains from ROAD database.
 #'
 #' Human remains are human fossil finds and always associated with an assemblage. A human remain is
 #' a direct and substantial piece of evidence for the presence of fossil hominids at a particular locality.
@@ -26,9 +26,9 @@
 #' miscellaneous finds”. A faunal assemblage can also contain multiple entries including
 #' “paleofauna, animal remains”, while a botanical assemblage can only include the entry “plant
 #' remains”.The parameter categories is a string (one item) or vector of strings (one or more items).
-#' @param age_min specifies the minimum age of assemblage. The parameter age_min is an integer.
-#' @param age_max specifies the maximum age of assemblage. The parameter age_max is an integer.
-#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
+#' @param age_min specifies the minimum age of assemblage. The parameter \code{age_min} is an integer.
+#' @param age_max specifies the maximum age of assemblage. The parameter \code{age_max} is an integer.
+#' @param assemblages list of assemblages; return value from function \code{road_get_assemblages}.
 #' Can be used instead of the other locality and assemblage parameters to filter the results.
 #' @param genus specifies the genus to which the described fossil is attributed to.
 #' Possible entries include: "Australopithecus", "Homo", "indet", etc.

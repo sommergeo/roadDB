@@ -1,6 +1,6 @@
 #' Get paleofauna finds from ROAD database
 #'
-#' `road_get_paleofauna` fetches data of paleofauna finds from the ROAD database.
+#' The \code{road_get_paleofauna} fucntion fetches data of paleofauna finds from the ROAD database.
 #'
 #' Paleofauna finds are animal fossil remains discovered in archaeological contexts and are always associated with an assemblage.
 #' These finds provide direct evidence for the presence of animal species at a particular locality and time.
@@ -24,9 +24,9 @@
 #' miscellaneous finds”. A faunal assemblage can also contain multiple entries including
 #' “paleofauna, animal remains”, while a botanical assemblage can only include the entry “plant
 #' remains”.The parameter categories is a string (one item) or vector of strings (one or more items).
-#' @param age_min specifies the minimum age of assemblage. The parameter age_min is an integer.
-#' @param age_max specifies the maximum age of assemblage. The parameter age_max is an integer.
-#' @param assemblages list of assemblages; return value from function `road_get_assemblages`.
+#' @param age_min specifies the minimum age of assemblage. The parameter \code{age_min} is an integer.
+#' @param age_max specifies the maximum age of assemblage. The parameter \code{age_max} is an integer.
+#' @param assemblages list of assemblages; return value from function \code{road_get_assemblages}.
 #' Can be used instead of the other locality and assemblage parameters to filter the results.
 #' @param fauna_genus specifies the genus to which the described faunal remains is attributed to.
 #' Possible entries include: "Mammuthus", "Vulpes" etc.
