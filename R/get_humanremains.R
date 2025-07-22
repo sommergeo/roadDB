@@ -1,17 +1,18 @@
 #' Get human remains from ROAD database
 #'
-#' The function \code{road_get_human_remains} fetches data of human remains from ROAD database.
-#'
+#' The \strong{\code{road_get_human_remains}} function fetches data of human remains from ROAD database.
 #' Human remains are human fossil finds and always associated with an assemblage. A human remain is
 #' a direct and substantial piece of evidence for the presence of fossil hominids at a particular locality.
 #' Next to the assemblage information the function returns genus, species, age and sex if available
 #' and further information regarding the remains.
 #' The dataset may also include indirect evidence such as fossil endocasts and footprints.
+#' 
+#' @details
 #' Use the parameters to filter the results or omit them to retrieve a broader dataset.
 #' Genus and species parameters can be entered as a vector of strings to search for multiple entries.
 #' If genus and species are both specified, most of the time it's more sensible to enter them as
 #' single strings and not as vectors with multiple search words to recieve useful results.
-#'
+#' 
 #' @param continents specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. The parameter continents is a string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param subcontinents specifies the continental region(s) of the country , e.g. Southern Europe. The parameter subcontinents is a string (one item) or vector of strings (one or more items); defaults to NULL.
 #' @param countries specifies the name of the country where a locality is situated (e.g.

@@ -39,11 +39,11 @@ miscellaneous finds”. A faunal assemblage can also contain multiple entries in
 “paleofauna, animal remains”, while a botanical assemblage can only include the entry “plant
 remains”.The parameter categories is a string (one item) or vector of strings (one or more items).}
 
-\item{age_min}{specifies the minimum age of assemblage. The parameter age_min is an integer.}
+\item{age_min}{specifies the minimum age of assemblage. The parameter \code{age_min} is an integer.}
 
-\item{age_max}{specifies the maximum age of assemblage. The parameter age_max is an integer.}
+\item{age_max}{specifies the maximum age of assemblage. The parameter \code{age_max} is an integer.}
 
-\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
+\item{assemblages}{list of assemblages; return value from function \code{road_get_assemblages}.
 Can be used instead of the other locality and assemblage parameters to filter the results.}
 
 \item{fauna_genus}{specifies the genus to which the described faunal remains is attributed to.
@@ -55,15 +55,15 @@ The parameter genus is a string (one item) or vector of strings (one or more ite
 The parameter species is a string (one item) or vector of strings (one or more items).}
 }
 \value{
-Database search result as list of assemblages with paleofauna finds.
+Database search result as list of assemblages with paleofauna information.
 }
 \description{
-`road_get_paleofauna` fetches data of paleofauna finds from the ROAD database.
-}
-\details{
+The  \strong{\code{road_get_paleofauna}} function fetches data of paleofauna finds from the ROAD database.
 Paleofauna finds are animal fossil remains discovered in archaeological contexts and are always associated with an assemblage.
 These finds provide direct evidence for the presence of animal species at a particular locality and time.
 The function returns information about the assemblage in which certain faunal remains were found as well as their genus and species.
+}
+\details{
 Use the parameters to filter the results or omit them to retrieve a broader dataset.
 Genus and species parameters can be entered as a vector of strings to search for multiple entries.
 If genus and species are both specified, most of the time it's more sensible to enter them as

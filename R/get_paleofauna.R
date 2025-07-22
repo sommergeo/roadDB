@@ -1,10 +1,11 @@
 #' Get paleofauna finds from ROAD database
 #'
-#' The \code{road_get_paleofauna} fucntion fetches data of paleofauna finds from the ROAD database.
-#'
+#' The  \strong{\code{road_get_paleofauna}} function fetches data of paleofauna finds from the ROAD database.
 #' Paleofauna finds are animal fossil remains discovered in archaeological contexts and are always associated with an assemblage.
 #' These finds provide direct evidence for the presence of animal species at a particular locality and time.
 #' The function returns information about the assemblage in which certain faunal remains were found as well as their genus and species.
+#' 
+#' @details
 #' Use the parameters to filter the results or omit them to retrieve a broader dataset.
 #' Genus and species parameters can be entered as a vector of strings to search for multiple entries.
 #' If genus and species are both specified, most of the time it's more sensible to enter them as
@@ -35,7 +36,7 @@
 #' "primigenius", "vulpes" or "sp." for unidentified species.
 #' The parameter species is a string (one item) or vector of strings (one or more items).
 #'
-#' @return Database search result as list of assemblages with paleofauna finds.
+#' @return Database search result as list of assemblages with paleofauna information.
 #' @export
 #'
 #' @examples

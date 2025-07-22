@@ -39,11 +39,11 @@ miscellaneous finds”. A faunal assemblage can also contain multiple entries in
 “paleofauna, animal remains”, while a botanical assemblage can only include the entry “plant
 remains”.The parameter categories is a string (one item) or vector of strings (one or more items).}
 
-\item{age_min}{specifies the minimum age of assemblage. The parameter age_min is an integer.}
+\item{age_min}{specifies the minimum age of assemblage. The parameter \code{age_min} is an integer.}
 
-\item{age_max}{specifies the maximum age of assemblage. The parameter age_max is an integer.}
+\item{age_max}{specifies the maximum age of assemblage. The parameter \code{age_max} is an integer.}
 
-\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
+\item{assemblages}{list of assemblages; return value from function \code{road_get_assemblages}.
 Can be used instead of the other locality and assemblage parameters to filter the results.}
 
 \item{genus}{specifies the genus to which the described fossil is attributed to.
@@ -58,14 +58,14 @@ The parameter species is a string (one item) or vector of strings (one or more i
 Database search result as list of assemblages with human remains.
 }
 \description{
-`road_get_human_remains` fetches data of human remains from ROAD database.
-}
-\details{
+The \strong{\code{road_get_human_remains}} function fetches data of human remains from ROAD database.
 Human remains are human fossil finds and always associated with an assemblage. A human remain is
 a direct and substantial piece of evidence for the presence of fossil hominids at a particular locality.
 Next to the assemblage information the function returns genus, species, age and sex if available
 and further information regarding the remains.
 The dataset may also include indirect evidence such as fossil endocasts and footprints.
+}
+\details{
 Use the parameters to filter the results or omit them to retrieve a broader dataset.
 Genus and species parameters can be entered as a vector of strings to search for multiple entries.
 If genus and species are both specified, most of the time it's more sensible to enter them as

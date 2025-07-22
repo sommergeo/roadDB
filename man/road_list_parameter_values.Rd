@@ -15,7 +15,7 @@ road_list_parameter_values(function_parameter, function_name = NULL)
 List of attribute values.
 }
 \description{
-`road_list_parameter_values` fetches values of a given parameter in the database or 
+The  \strong{\code{road_list_parameter_values}} function fetches values of a given parameter in the database or 
 read values from file
 }
 \examples{

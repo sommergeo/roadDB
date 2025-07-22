@@ -48,7 +48,7 @@
 #                 "fauna:species")
 #' Get parameter value from ROAD Database
 #'
-#' `road_list_parameter_values` fetches values of a given parameter in the database or 
+#' The  \strong{\code{road_list_parameter_values}} function fetches values of a given parameter in the database or 
 #' read values from file
 #'
 #' @param function_parameter name of a function parameter
@@ -132,7 +132,7 @@ road_list_parameter_values <- function (function_parameter, function_name = NULL
 
 #' Retrieve Attribute Values from the ROAD Database
 #'
-#' The `road_list_values` function allows you to find valid attribute values for a given attribute name. 
+#' The  \strong{\code{road_list_values}} function allows you to find valid attribute values for a given attribute name. 
 #' You can search for attribute names from any `road_get_*` function, and the function will return a list of all possible attribute values used in the associated tables.
 #' This is particularly useful when you need to specify an attribute but are unsure of its exact spelling or available values.
 #'

@@ -41,11 +41,11 @@ miscellaneous finds”. A faunal assemblage can also contain multiple entries in
 “paleofauna, animal remains”, while a botanical assemblage can only include the entry “plant
 remains”.The parameter categories is a string (one item) or vector of strings (one or more items).}
 
-\item{age_min}{specifies the minimum age of assemblage. The parameter age_min is an integer.}
+\item{age_min}{specifies the minimum age of assemblage. The parameter \code{age_min} is an integer.}
 
-\item{age_max}{specifies the maximum age of assemblage. The parameter age_max is an integer.}
+\item{age_max}{specifies the maximum age of assemblage. The parameter \code{age_max} is an integer.}
 
-\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
+\item{assemblages}{list of assemblages; return value from function \code{road_get_assemblages}.
 Can be used instead of the other locality and assemblage parameters to filter the results.}
 
 \item{plant_remains}{specifies the type of plant remains. Possible entries include: "pollen", "plant macroremains" etc.
@@ -64,14 +64,15 @@ The parameter genus is a string (one item) or vector of strings (one or more ite
 The parameter species is a string (one item) or vector of strings (one or more items).}
 }
 \value{
-Database search result as a list of assemblages with paleobotanical remains.
+Database search result as a list of assemblages with information about paleobotanical remains.
 }
 \description{
-`road_get_plantremains` fetches data of paleobotanical remains from the ROAD database.
+The function  \strong{\code{road_get_plantremains}} fetches data of paleobotanical remains from the ROAD database.
+Paleobotanical remains are plant remains found in archaeological contexts and are associated with
+assemblages.
 }
 \details{
-Paleobotanical remains are plant remains found in archaeological contexts and are associated with
-assemblages. This function allows you to query paleobotanical data based on
+This function allows you to query paleobotanical data based on
 various parameters such as geographical location, cultural periods, plant taxonomy,
 and assemblages. Use the parameters to filter the results or omit them to retrieve a broader dataset.
 Genus and species parameters can be entered as a vector of strings to search for multiple entries.

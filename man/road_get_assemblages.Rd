@@ -54,6 +54,10 @@ botanical remains. An assemblage comes from a single geological layer or several
 the nature of the locality is geological, archaeological or paleontological. Each physical object
 contained in any assemblage can appear only once in this table.
 }
+\details{
+Use parameters to filter search results by location, type, culture, assemblage category, age or omit them to have a broader result set.
+All parameters are optional and should be omitted or set to NULL when not used.
+}
 \examples{
 road_get_assemblages(countries = c("Germany", "France"), age_min = 300000L, 
                      categories = c("miscellaneous finds"))

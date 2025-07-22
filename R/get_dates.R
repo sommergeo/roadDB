@@ -1,6 +1,6 @@
 #' Retrieve Dating Information for Assemblages, Geolayers, and Archlayers from the ROAD Database
 #'
-#' The \code{road_get_dates} function retrieves absolute dating records for 
+#' The  \strong{\code{road_get_dates}} function retrieves absolute dating records for 
 #' assemblages, geological layers, and archaeological layers from the ROAD database. 
 #' 
 #' @param continents specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. 

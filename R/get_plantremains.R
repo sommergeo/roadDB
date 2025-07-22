@@ -1,9 +1,11 @@
 #' Get paleobotany data from ROAD database
 #'
-#' The function \code{road_get_plantremains} fetches data of paleobotanical remains from the ROAD database.
-#'
+#' The function  \strong{\code{road_get_plantremains}} fetches data of paleobotanical remains from the ROAD database.
 #' Paleobotanical remains are plant remains found in archaeological contexts and are associated with
-#' assemblages. This function allows you to query paleobotanical data based on
+#' assemblages. 
+#' 
+#' @details
+#' This function allows you to query paleobotanical data based on
 #' various parameters such as geographical location, cultural periods, plant taxonomy,
 #' and assemblages. Use the parameters to filter the results or omit them to retrieve a broader dataset.
 #' Genus and species parameters can be entered as a vector of strings to search for multiple entries.
@@ -40,7 +42,7 @@
 #' "Setaria pumila (Poir.) Roem. & Schult.", "Typha angustifolia L." etc.
 #' The parameter species is a string (one item) or vector of strings (one or more items).
 #'
-#' @return Database search result as a list of assemblages with paleobotanical remains.
+#' @return Database search result as a list of assemblages with information about paleobotanical remains.
 #' @export
 #'
 #' @examples
