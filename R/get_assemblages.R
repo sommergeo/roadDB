@@ -44,6 +44,7 @@ road_get_assemblages <- function(
     countries = NULL,
     locality_types = NULL,
     cultural_periods = NULL,
+    technocomplexes = NULL, 
     categories = NULL,
     age_min = NULL,
     age_max = NULL
@@ -55,7 +56,8 @@ road_get_assemblages <- function(
   if (!is.null(age_min) && !is.null(age_max) && age_min > age_max)
     stop("Parameter 'min_age' can not be bigger than 'max_age'.")
 
-  localities <- road_get_localities(continents, subcontinents, countries, locality_types, cultural_periods)
+  localities <- road_get_localities(continents, subcontinents, countries, 
+                                    locality_types, cultural_periods)
 
   query_localities <- paste(
     sapply(localities[cm_locality_idlocality], function(x) paste0("'", x, "'")),
@@ -72,7 +74,8 @@ road_get_assemblages <- function(
     paste0("MAX(geological_stratigraphy.age_max) AS ", cm_geological_stratigraphy_age_max),
     paste0("STRING_AGG(DISTINCT assemblage_in_geolayer.geolayer_name, ', ') AS ", cm_assemblage_in_geolayer_geolayer_name),
     paste0("STRING_AGG(DISTINCT assemblage_in_archlayer.archlayer_name, ', ') AS ", cm_assemblage_in_archlayer_archlayer_name),
-    paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.cultural_period, ', ') AS ", cm_cultural_periods)
+    paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.cultural_period, ', ') AS ", cm_cultural_periods),
+    paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.technocomplex, ', ') AS ", cm_technocomplexes)
   )
 
   # combine query parts
@@ -132,9 +135,21 @@ road_get_assemblages <- function(
           archaeological_layer.archstratigraphy_idarchstrat = archaeological_stratigraphy.idarchstrat
         WHERE archaeological_stratigraphy.cultural_period IN (", cultural_periods, "))"
     ),
+    parameter_to_query(
+      "AND (assemblage.locality_idlocality, assemblage.idassemblage) IN (
+        SELECT DISTINCT assemblage_in_archlayer.assemblage_idlocality, assemblage_in_archlayer.assemblage_idassemblage
+        FROM archaeological_layer
+        LEFT JOIN assemblage_in_archlayer ON
+          assemblage_in_archlayer.archlayer_idlocality = archaeological_layer.locality_idlocality
+          AND archaeological_layer.name = assemblage_in_archlayer.archlayer_name
+        LEFT JOIN archaeological_stratigraphy ON
+          archaeological_layer.archstratigraphy_idarchstrat = archaeological_stratigraphy.idarchstrat
+        WHERE archaeological_stratigraphy.technocomplex IN (", technocomplexes, "))"
+    ),
     # GROUP and ORDER
     "GROUP BY assemblage.locality_idlocality, assemblage.idassemblage, assemblage.name, 
-              assemblage.category, geological_stratigraphy.age_min, geological_stratigraphy.age_max",
+              assemblage.category",
+    #geological_stratigraphy.age_min, geological_stratigraphy.age_max",
     "ORDER BY assemblage.locality_idlocality ASC, assemblage.idassemblage ASC"
   )
  
@@ -147,6 +162,7 @@ road_get_assemblages <- function(
                                 countries,
                                 locality_types,
                                 cultural_periods,
+                                technocomplexes,
                                 categories,
                                 age_min,
                                 age_max

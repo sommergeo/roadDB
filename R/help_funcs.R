@@ -1,4 +1,4 @@
-# source("./R/login.R")
+source("./R/login.R")
 
 # column names
 cm_locality_idlocality <- "locality_id"
@@ -9,6 +9,7 @@ cm_locality_country <- "country"
 cm_locality_x <- "coord_x"
 cm_locality_y <- "coord_y"
 cm_cultural_periods <- "cultural_periods"
+cm_technocomplexes <- "technocomplexes"
 cm_assemblages_locality_idlocality <- "locality_id"
 cm_assemblages_idassemblage <- "assemblage_id"
 cm_assemblages_name <- "assemblage_name"
@@ -67,11 +68,11 @@ road_run_query <- function(query)
     stop("Query can not be empty.")
   }
 
-  con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host="134.2.216.14", 
-                   port=5432, user=rstudioapi::askForPassword("Database username"), 
-                   password=rstudioapi::askForPassword("Database password"))
-  #con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host = "134.2.216.14", 
-  #port = 5432, user = user_name, password = user_password)
+  # con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host="134.2.216.14", 
+  #                  port=5432, user=rstudioapi::askForPassword("Database username"), 
+  #                  password=rstudioapi::askForPassword("Database password"))
+  con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host = "134.2.216.14", 
+  port = 5432, user = user_name, password = user_password)
 
   # run query
   result <- dbGetQuery(con, query)
@@ -232,10 +233,12 @@ add_locality_columns <- function(data, localities = NULL, assemblages = NULL)
       cm_assemblages_categories,
       cm_geological_stratigraphy_age_min,
       cm_geological_stratigraphy_age_max,
-      cm_cultural_periods
+      cm_cultural_periods,
+      cm_technocomplexes
     )
     assemblages <- assemblages[, column_selection]
-    data <- merge(x = assemblages, y = data, by = c(cm_locality_idlocality, cm_assemblages_idassemblage), all.y = TRUE)
+    data <- merge(x = assemblages, y = data, by = c(cm_locality_idlocality, 
+                                                    cm_assemblages_idassemblage), all.y = TRUE)
   }
 
   return(data)
@@ -285,6 +288,7 @@ print_null_result_message <- function(
     countries = NULL,
     locality_types = NULL,
     cultural_periods = NULL,
+    technocomplexes = NULL,
     categories = NULL,
     age_min = NULL,
     age_max = NULL,
@@ -311,6 +315,7 @@ print_null_result_message <- function(
   locality_types_str <- ifelse(is.null(locality_types), "", paste("locality_types = (", toString(locality_types), ")"))
   cultural_periods_str <- ifelse(is.null(cultural_periods), "", paste("cultural_periods = (", toString(cultural_periods), ")"))
   
+  technocomplexes_str <- ifelse(is.null(technocomplexes), "", paste("technocomplexes = (", toString(technocomplexes), ")"))
   categories_str <- ifelse(is.null(categories), "", paste("categories = (", toString(categories), ")"))
   age_min_str <- ifelse(is.null(age_min), "", paste("age_min = (", age_min, ")"))
   age_max_str <- ifelse(is.null(age_max), "", paste("age_max = (", age_max, ")"))
@@ -341,6 +346,7 @@ print_null_result_message <- function(
                 countries_str,
                 locality_types_str,
                 cultural_periods_str,
+                technocomplexes_str,
                 categories_str,
                 age_min_str,
                 age_max_str,

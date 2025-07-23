@@ -49,21 +49,20 @@ road_get_localities <- function(
     paste0("locality.x AS ", cm_locality_x),
     paste0("locality.y AS ", cm_locality_y),
     paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.cultural_period, ', ') AS ", cm_cultural_periods)
+    #paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.technocomplex, ', ') AS ", cm_technocomplexes)
   )
   
   # order by
   query_order_by <- ""
-  if (!is.null(countries))
-  {
+  #if (!is.null(countries))
+  #{
     query_order_by <- paste("ORDER BY", cm_locality_idlocality)
-  }
+  #}
   
   # combine query parts
   query <- paste(
-    # SELECT
     "SELECT DISTINCT",
     paste(select_fields, collapse = ", "),
-    # FROM
     "FROM locality",
     "INNER JOIN geopolitical_units ON
       locality.country = geopolitical_units.geopolitical_name",
@@ -71,18 +70,18 @@ road_get_localities <- function(
       locality.idlocality = archaeological_layer.locality_idlocality",
     "LEFT JOIN archaeological_stratigraphy ON
       archaeological_layer.archstratigraphy_idarchstrat = archaeological_stratigraphy.idarchstrat",
-    # WHERE
     "WHERE NOT locality.no_data_entry AND geopolitical_units.rank = 1",
     parameter_to_query("AND geopolitical_units.continent IN (", continents, ")"),
     parameter_to_query("AND geopolitical_units.continent_region IN (", subcontinents, ")"),
     parameter_to_query("AND locality.country IN (", countries, ")"),
     parameter_to_query("AND string_to_array(locality.type, ', ') && array[", locality_types, "]"),
-    parameter_to_query(
-      "AND locality.idlocality IN
-        (SELECT DISTINCT locality_idlocality FROM archaeological_layer 
-        LEFT JOIN archaeological_stratigraphy ON archaeological_layer.archstratigraphy_idarchstrat = archaeological_stratigraphy.idarchstrat 
-        WHERE archaeological_stratigraphy.cultural_period IN (", cultural_periods, "))"
-    ),
+    parameter_to_query("AND archaeological_stratigraphy.cultural_period IN (", cultural_periods, ")"),
+    # parameter_to_query(
+    #   "AND locality.idlocality IN
+    #     (SELECT DISTINCT locality_idlocality FROM archaeological_layer 
+    #     LEFT JOIN archaeological_stratigraphy ON archaeological_layer.archstratigraphy_idarchstrat = archaeological_stratigraphy.idarchstrat 
+    #     WHERE archaeological_stratigraphy.cultural_period IN (", cultural_periods, "))"
+    # ),
     "GROUP BY locality.idlocality, geopolitical_units.continent, geopolitical_units.continent_region, locality.country, locality.type, locality.x, locality.y",
     query_order_by
   )
@@ -94,8 +93,50 @@ road_get_localities <- function(
                                 subcontinents,
                                 countries,
                                 locality_types,
-                                cultural_periods
+                                cultural_periods,
+                                technocomplexes
     )
 
   return(data)
+}
+
+road_get_localities_ext <- function(
+    continents = NULL,
+    subcontinents = NULL,
+    countries = NULL,
+    locality_types = NULL,
+    cultural_periods = NULL,
+    technocomplexes = NULL,
+    categories = NULL,
+    age_min = NULL,
+    age_max = NULL
+)
+{
+  assemblages <- road_get_assemblages(continents, subcontinents, countries, 
+                                      locality_types, cultural_periods, technocomplexes, 
+                                      categories, age_min, age_max)
+  if (!is.null(assemblages) && nrow(assemblages) != 0)
+  {
+    assemblages_selected <- assemblages %>% select(c(cm_locality_idlocality,
+                                                   cm_geopolitical_units_continent, 
+                                                   cm_geopolitical_units_continent_region, cm_locality_country,
+                                                   cm_locality_types, cm_locality_x, 
+                                                   cm_locality_y, cm_cultural_periods,
+                                                   cm_technocomplexes, cm_assemblages_categories,
+                                                   cm_geological_stratigraphy_age_min, 
+                                                   cm_geological_stratigraphy_age_max))
+  
+    data <- assemblages_selected %>% group_by(locality_id, continent, subcontinent,
+                                            country, locality_types, coord_x, 
+                                            coord_y) %>% 
+                                            summarise(min_assemblage_age = min(age_min), 
+                                            max_assemblage_age = max(age_max),
+                                            categories = paste0(categories, collapse = ", "),
+                                            cultural_periods = paste0(cultural_periods, collapse = ", "),
+                                            technocomplexes = paste0(technocomplexes, collapse = ", "),
+                                            )
+    return(data)
+  }
+  else return(assemblages)
+  
 }
