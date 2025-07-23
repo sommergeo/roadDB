@@ -119,7 +119,8 @@ road_get_localities_ext <- function(
   {
     assemblages_selected <- assemblages %>% select(c(cm_locality_idlocality,
                                                    cm_geopolitical_units_continent, 
-                                                   cm_geopolitical_units_continent_region, cm_locality_country,
+                                                   cm_geopolitical_units_continent_region, 
+                                                   cm_locality_country,
                                                    cm_locality_types, cm_locality_x, 
                                                    cm_locality_y, cm_cultural_periods,
                                                    cm_technocomplexes, cm_assemblages_categories,
