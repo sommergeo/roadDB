@@ -10,6 +10,7 @@ road_get_assemblages(
   countries = NULL,
   locality_types = NULL,
   cultural_periods = NULL,
+  technocomplexes = NULL,
   categories = NULL,
   age_min = NULL,
   age_max = NULL
