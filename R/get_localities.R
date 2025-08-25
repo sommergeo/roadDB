@@ -171,20 +171,28 @@ road_get_localities_ext <- function(
                                                    cm_geological_stratigraphy_age_max))
   
     data_tmp <- assemblages_selected %>% group_by(locality_id, continent, subcontinent,
-                                            country, locality_types, coord_x, 
-                                            coord_y) %>% 
-                                            summarise(
-                                            categories = paste0(categories, collapse = ", "),
-                                            cultural_periods = paste0(cultural_periods, collapse = ", "),
-                                            technocomplexes = paste0(technocomplexes, collapse = ", "),
-                                            subset_min_age = min(age_min), 
-                                            subset_max_age = max(age_max)
-                                            )
-    data <- full_join(data_tmp, ages_min_max, by = c("locality_id"),
+                                                  country, locality_types, coord_x, coord_y
+                                                  ) %>% summarise(categories = well_formed_string_to_string_without_duplikates(paste0(categories, collapse = ", ")),
+                                                                                     cultural_periods = well_formed_string_to_string_without_duplikates(paste0(cultural_periods, collapse = ", ")),
+                                                                                     technocomplexes = well_formed_string_to_string_without_duplikates(paste0(technocomplexes, collapse = ", ")),
+                                                                                     subset_min_age = min(age_min), 
+                                                                                     subset_max_age = max(age_max)
+                                                                 )
+    categories <- subset(data_tmp, select = categories)
+    
+    data <- inner_join(data_tmp, ages_min_max, by = c("locality_id"),
                       copy = FALSE, na_matches = "na")
                            
     return(data)
   }
   else return(assemblages)
+}
+
+well_formed_string_to_string_without_duplikates <- function(str_with_duplikates = NULL, separator = ",[ ]*")
+{
+  l <- str_split(str_with_duplikates, separator)
+  v <- unique(l[[1]])
+
+  return(paste0(v, collapse = ", "))
   
 }
