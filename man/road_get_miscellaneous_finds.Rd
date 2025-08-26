@@ -18,39 +18,59 @@ road_get_miscellaneous_finds(
 )
 }
 \arguments{
-\item{continents}{specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. The parameter continents is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{continents}{specifies the continent(s) (e.g. Africa, Europe, Asia).
+Run \code{road_list_argument_values("continents")} to display possible values.
+The argument\code{continents} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 
-\item{subcontinents}{specifies the continental region(s) of the country , e.g. Southern Europe. The parameter subcontinents is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{subcontinents}{specifies the continental region(s) (e.g. Southern Europe). 
+Run \code{road_list_argument_values("subcontinents")} to display possible values.
+The argument \code{subcontinents} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 
-\item{countries}{specifies the name of the country where a locality is situated (e.g.
-Germany, Kenya, Saudi Arabia, China). The parameter countries is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{countries}{specifies the name of the country where a locality is situated 
+(e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("countries")} 
+to display possible values.
+The argument \code{countries} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 
-\item{locality_types}{specifies the type of locality (e.g. cave, rockshelter, open air, profile, outcrop,
-mine, quarry, boring). The parameter locality_types is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{locality_types}{specifies the type of locality (e.g. cave, rockshelter, open air).
+Run \code{road_list_argument_values("locality_types")} to display possible values.
+The argument \code{locality_types} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 
-\item{cultural_periods}{specifies the main cultural epoch(s) and includes the Eurasian
-Paleolithic (Lower, Middle, Upper, Epi) and the African Stone Age (Earlier, Middle, Later). The parameter cultural_periods is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{cultural_periods}{specifies the main cultural epoch(s) and includes the 
+Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age 
+(Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
+to display possible values. The argument \code{cultural_periods} is a string 
+(one item) or vector of strings (one or more items); defaults to NULL.}
 
-\item{categories}{specifies the assemblage category/categories. For an assemblage consisting of human remains category includes the entry “human
-remains”. In the case of archaeological assemblages, multiple categories are the norm and may
-include “raw material, typology, technology, function, organic tools, symbolic artifacts, feature,
-miscellaneous finds”. A faunal assemblage can also contain multiple entries including
-“paleofauna, animal remains”, while a botanical assemblage can only include the entry “plant
-remains”.The parameter categories is a string (one item) or vector of strings (one or more items).}
+\item{categories}{specifies the assemblage category/categories with the classes 
+human remains, raw material, typology, technology, function, organic tools, 
+symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains, 
+plant remains. The argument \code{categories} is a string (one item) or 
+vector of strings (one or more items); defaults to NULL.}
 
-\item{age_min}{specifies the minimum age of assemblage. The parameter age_min is an integer.}
+\item{age_min}{specifies the minimum age in years before present, using 1950 CE 
+as the baseline. The argument \code{age_min} is an integer; defaults to NULL.}
 
-\item{age_max}{specifies the maximum age of assemblage. The parameter age_max is an integer.}
+\item{age_max}{specifies the maximum age in years before present, using 1950 CE 
+as the baseline. The argument \code{age_max} is an integer; defaults to NULL.}
 
-\item{miscellaneous_finds_material}{specifies material of the miscellaneous find
-and may include: beeswax, bitumen, clay, flax fiber, fossil, mineral diverse
-(materials such as crystals), mineral pigment (colorants such as ochre, hematite,
-limonite, goethite, specularite, etc.) ostrich eggshell, shell,
-stone, etc.  The parameter miscellaneous_finds_material is
-a string (one item) or vector of strings}
+\item{miscellaneous_finds_material}{specifies material of the miscellaneous 
+finds (e.g. shell, ochre, ostrich eggshell).
+Run \code{road_list_argument_values("miscellaneous_finds_material")} to 
+display possible values. The argument \code{miscellaneous_finds_material} is 
+a string (one item) or vector of strings; defaults to NULL.}
 
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
 Can be used instead of the other locality and assemblage parameters to filter the results.}
+
+\item{technocomplex}{specifies an archaeological culture or named stone tool 
+industry (e.g. Oldowan, Acheulean, Mousterian).
+Run \code{road_list_argument_values("technocomplex")} to display possible values.
+The argument \code{technocomplex} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 }
 \value{
 Database search result as a data frame with the information about 

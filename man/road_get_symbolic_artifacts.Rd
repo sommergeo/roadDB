@@ -18,43 +18,66 @@ road_get_symbolic_artifacts(
 )
 }
 \arguments{
-\item{continents}{specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. The parameter continents is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{continents}{specifies the continent(s) (e.g. Africa, Europe, Asia).
+Run \code{road_list_argument_values("continents")} to display possible values.
+The argument\code{continents} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 
-\item{subcontinents}{specifies the continental region(s) of the country , e.g. Southern Europe. The parameter subcontinents is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{subcontinents}{specifies the continental region(s) (e.g. Southern Europe). 
+Run \code{road_list_argument_values("subcontinents")} to display possible values.
+The argument \code{subcontinents} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 
-\item{countries}{specifies the name of the country where a locality is situated (e.g.
-Germany, Kenya, Saudi Arabia, China). The parameter countries is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{countries}{specifies the name of the country where a locality is situated 
+(e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("countries")} 
+to display possible values.
+The argument \code{countries} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 
-\item{locality_types}{specifies the type of locality (e.g. cave, rockshelter, open air, profile, outcrop,
-mine, quarry, boring). The parameter locality_types is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{locality_types}{specifies the type of locality (e.g. cave, rockshelter, open air).
+Run \code{road_list_argument_values("locality_types")} to display possible values.
+The argument \code{locality_types} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 
-\item{cultural_periods}{specifies the main cultural epoch(s) and includes the Eurasian
-Paleolithic (Lower, Middle, Upper, Epi) and the African Stone Age (Earlier, Middle, Later). The parameter cultural_periods is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{cultural_periods}{specifies the main cultural epoch(s) and includes the 
+Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age 
+(Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
+to display possible values. The argument \code{cultural_periods} is a string 
+(one item) or vector of strings (one or more items); defaults to NULL.}
 
-\item{categories}{specifies the assemblage category/categories. For an assemblage consisting of human remains category includes the entry “human
-remains”. In the case of archaeological assemblages, multiple categories are the norm and may
-include “raw material, typology, technology, function, organic tools, symbolic artifacts, feature,
-miscellaneous finds”. A faunal assemblage can also contain multiple entries including
-“paleofauna, animal remains”, while a botanical assemblage can only include the entry “plant
-remains”.The parameter categories is a string (one item) or vector of strings (one or more items).}
+\item{categories}{specifies the assemblage category/categories with the classes 
+human remains, raw material, typology, technology, function, organic tools, 
+symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains, 
+plant remains. The argument \code{categories} is a string (one item) or 
+vector of strings (one or more items); defaults to NULL.}
 
-\item{age_min}{specifies the minimum age of assemblage. The parameter age_min is an integer.}
+\item{age_min}{specifies the minimum age in years before present, using 1950 CE 
+as the baseline. The argument \code{age_min} is an integer; defaults to NULL.}
 
-\item{age_max}{specifies the maximum age of assemblage. The parameter age_max is an integer.}
+\item{age_max}{specifies the maximum age in years before present, using 1950 CE 
+as the baseline. The argument \code{age_max} is an integer; defaults to NULL.}
 
-\item{symbolic_artifacts_interpretation}{specifies symbolic artifacts. Possible values for the
-interpretation can be abstract, anthropomorphic, instrument, ornament, therianthropic,
-zoomorphic, etc. The parameter symbolic_artifacts_interpretation is a string (one item)
-or vector of strings}
+\item{symbolic_artifacts_interpretation}{specifies the interpretation of 
+symbolic artifacts (e.g. abstract, anthropomorphic, zoomorphic, instrument, 
+ornament). Run \code{road_list_argument_values("symbolic_artifacts_interpretation")} 
+to display possible values. The argument \code{symbolic_artifacts_interpretation} 
+is a string (one item) or vector of strings; defaults to NULL.}
 
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
 Can be used instead of the other locality and assemblage parameters to filter the results.}
+
+\item{technocomplex}{specifies an archaeological culture or named stone tool 
+industry (e.g. Oldowan, Acheulean, Mousterian).
+Run \code{road_list_argument_values("technocomplex")} to display possible values.
+The argument \code{technocomplex} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 }
 \value{
-Database search result as a data frame with the information about symbolic artifacts 
-like their geographic information, cultural period, locality type, assemblage category, 
-dating and info about symbolic artifacts interpretation, symbolic artifacts 
-category, symbolic artifacts technology, symbolic artifacts material, symbolic artifacts raw material source.
+Database search result as a data frame with the information about 
+symbolic artifacts like their geographic information, cultural period, 
+locality type, assemblage category, dating and info about symbolic artifacts 
+interpretation, symbolic artifacts category, symbolic artifacts technology, 
+symbolic artifacts material, symbolic artifacts raw material source.
 }
 \description{
 The \strong{\code{road_get_symbolic_artifacts}} fetches data of symbolic artifacts from ROAD database.

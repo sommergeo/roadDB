@@ -2,64 +2,82 @@ General arguments
 
 #' @param continents specifies the continent(s) (e.g. Africa, Europe, Asia).
 #' Run \code{road_list_argument_values("continents")} to display possible values.
-#' The argument \code{continents} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' The argument\code{continents} is a string (one item) or vector of strings 
+#' (one or more items); defaults to NULL.
 
 #' @param subcontinents specifies the continental region(s) (e.g. Southern Europe). 
 #' Run \code{road_list_argument_values("subcontinents")} to display possible values.
-#' The argument \code{subcontinents} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' The argument \code{subcontinents} is a string (one item) or vector of strings 
+#' (one or more items); defaults to NULL.
 
-#' @param countries specifies the name of the country where a locality is situated (e.g. Germany, Kenya, Saudi Arabia).
-#' Run \code{road_list_argument_values("countries")} to display possible values.
-#' The argument \code{countries} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param countries specifies the name of the country where a locality is situated 
+#' (e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("countries")} 
+#' to display possible values.
+#' The argument \code{countries} is a string (one item) or vector of strings 
+#' (one or more items); defaults to NULL.
 
 #' @param locality_types specifies the type of locality (e.g. cave, rockshelter, open air).
 #' Run \code{road_list_argument_values("locality_types")} to display possible values.
-#' The argument \code{locality_types} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' The argument \code{locality_types} is a string (one item) or vector of strings 
+#' (one or more items); defaults to NULL.
 
-#' @param cultural_periods specifies the main cultural epoch(s) and includes the Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age (Earlier, Middle, Later).
-#' Run \code{road_list_argument_values("cultural_periods")} to display possible values.
-#' The argument \code{cultural_periods} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param cultural_periods specifies the main cultural epoch(s) and includes the 
+#' Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age 
+#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
+#' to display possible values. The argument \code{cultural_periods} is a string 
+#' (one item) or vector of strings (one or more items); defaults to NULL.
 
-#' @param technocomplex specifies an archaeological culture or named stone tool industry (e.g. Oldowan, Acheulean, Mousterian).
+#' @param technocomplex specifies an archaeological culture or named stone tool 
+#' industry (e.g. Oldowan, Acheulean, Mousterian).
 #' Run \code{road_list_argument_values("technocomplex")} to display possible values.
-#' The argument \code{technocomplex} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' The argument \code{technocomplex} is a string (one item) or vector of strings 
+#' (one or more items); defaults to NULL.
 
-#' @param categories specifies the assemblage category/categories with the classes human remains, raw material, typology, technology, function, organic tools, symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains, plant remains.
-#' The argument \code{categories} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param categories specifies the assemblage category/categories with the classes 
+#' human remains, raw material, typology, technology, function, organic tools, 
+#' symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains, 
+#' plant remains. The argument \code{categories} is a string (one item) or 
+#' vector of strings (one or more items); defaults to NULL.
 
-#' @param age_min specifies the minimum age in years before present, using 1950 CE as the baseline.
-#' The argument \code{age_min} is an integer; defaults to NULL.
+#' @param age_min specifies the minimum age in years before present, using 1950 CE 
+#' as the baseline. The argument \code{age_min} is an integer; defaults to NULL.
 
-#' @param age_max specifies the maximum age in years before present, using 1950 CE as the baseline.
-#' The argument \code{age_max} is an integer; defaults to NULL.
+#' @param age_max specifies the maximum age in years before present, using 1950 CE 
+#' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
 
 
 Specific arguments
 
 #' @param dating_methods specifies the method of temporal analysis (e.g. 14C, OSL, IRSL).
 #' Run \code{road_list_argument_values("dating_methods")} to display possible values.
-#' The argument \code{dating_methods} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' The argument \code{dating_methods} is a string (one item) or vector of strings 
+#' (one or more items); defaults to NULL.
 
-#' @param material_dated (string) specifies the material used for temporal analysis (e.g. bone, tooth, antler).
-#' Run \code{road_list_argument_values("material_dated")} to display possible values.
-#' The argument \code{datied_material} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param material_dated (string) specifies the material used for temporal analysis 
+#' (e.g. bone, tooth, antler). Run \code{road_list_argument_values("material_dated")} 
+#' to display possible values. The argument \code{datied_material} is a string 
+#' (one item) or vector of strings (one or more items); defaults to NULL.
 
-#' @param tool_list specifies values that can be entered for various tool types. Tool types
-#' can contain 1) chipped tool types like scraper end, scraper side, scraper carinated, burin, handaxe, chopper,
-#' cleaver, point, point unifacial, segment, unknown; 2) non-chipped tool types
-#' like grindstone upper, hammerstone, anvil, retoucher; 3) non-tools like core, debitage,
-#' flake, point; 4) unknown like cobble, block, manuport.
-#' Run \code{road_list_argument_values("tool_list")} to display possible values.
-#' The argument \code{tool_list} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param tool_list specifies values that can be entered for various tool types. 
+#' Tool types can contain 1) chipped tool types like scraper end, scraper side, 
+#' scraper, carinated, burin, handaxe, chopper, cleaver, point, point unifacial, 
+#' segment, unknown; 2) non-chipped tool types like grindstone upper, hammerstone, 
+#' anvil, retoucher; 3) non-tools like core, debitage, flake, point; 4) unknown 
+#' like cobble, block, manuport. Run \code{road_list_argument_values("tool_list")} 
+#' to display possible values. The argument \code{tool_list} is a string (one item) 
+#' or vector of strings (one or more items); defaults to NULL.
 
-#' @param raw_material_list specifies lithic raw materials (e.g. quartz, chert, flint). Consider the function \code{road_get_organic_tools()} for non-lithic raw materials.
+#' @param raw_material_list specifies lithic raw materials (e.g. quartz, chert, flint). 
+#' Consider the function \code{road_get_organic_tools()} for non-lithic raw materials.
 #' Run \code{road_list_argument_values("raw_material_list")} to display possible values.
-#' The argument \code{raw_material_list} is a string (one item) or vector of strings (one or more items); defaults to NULL.
+#' The argument \code{raw_material_list} is a string (one item) or vector of strings 
+#' (one or more items); defaults to NULL.
 
-#' @param transport_distance specifies one or more of the five categories, each distinguished by specific 
-#' intervals of transport for the raw materials present in an assemblage. When more 
-#' than one type of transport distance is present, then each of the transport distances 
-#' must be entered as a unique dataset. The five classes of transport distance are:
+#' @param transport_distance specifies one or more of the five categories, each 
+#' distinguished by specific intervals of transport for the raw materials present 
+#' in an assemblage. When more than one type of transport distance is present, 
+#' then each of the transport distances must be entered as a unique dataset. 
+#' The five classes of transport distance are:
 #' \itemize{
 #'   \item local (0-5 km) 
 #'   \item regional (6-20 km)
@@ -68,20 +86,73 @@ Specific arguments
 #'   \item unknown
 #' }
 #' Run \code{road_list_argument_values("transport_distance")} to display possible values.
-#' The argument \code{transport_distance} is a string (one item) or vector of strings; defaults to NULL.
+#' The argument \code{transport_distance} is a string (one item) or vector of strings; 
+#' defaults to NULL.
 
-#' @param organic_tools_interpretation specifies interpreted organic tool types (e.g. lance/spear, point, retoucher).
-#' Run \code{road_list_argument_values("organic_tools_interpretation")} to display possible values.
-#' The argument \code{organic_tools_interpretation} is a string (one item) or vector of strings; defaults to NULL.
+#' @param organic_tools_interpretation specifies interpreted organic tool types 
+#' (e.g. lance/spear, point, retoucher). 
+#' Run \code{road_list_argument_values("organic_tools_interpretation")} 
+#' to display possible values. The argument \code{organic_tools_interpretation} 
+#' is a string (one item) or vector of strings; defaults to NULL.
 
-#' @param symbolic_artifacts_interpretation specifies the interpretation of symbolic artifacts (e.g. abstract, anthropomorphic, zoomorphic, instrument, ornament).
-#' Run \code{road_list_argument_values("symbolic_artifacts_interpretation")} to display possible values.
-#' The argument \code{symbolic_artifacts_interpretation} is a string (one item) or vector of strings; defaults to NULL.
+#' @param symbolic_artifacts_interpretation specifies the interpretation of 
+#' symbolic artifacts (e.g. abstract, anthropomorphic, zoomorphic, instrument, 
+#' ornament). Run \code{road_list_argument_values("symbolic_artifacts_interpretation")} 
+#' to display possible values. The argument \code{symbolic_artifacts_interpretation} 
+#' is a string (one item) or vector of strings; defaults to NULL.
 
-#' @param feature_interpretation specifies archaeological features present in the archaeological assemblage (e.g. bedding, burial, butchering event).
-#' Run \code{road_list_argument_values("feature_interpretation")} to display possible values.
-#' The argument \code{feature_interpretation} is a string (one item) or vector of strings; defaults to NULL.
+#' @param feature_interpretation specifies archaeological features present in 
+#' the archaeological assemblage (e.g. bedding, burial, butchering event).
+#' Run \code{road_list_argument_values("feature_interpretation")} to display 
+#' possible values. The argument \code{feature_interpretation} is a string 
+#' (one item) or vector of strings; defaults to NULL.
 
-#' @param miscellaneous_finds_material specifies material of the miscellaneous finds (e.g. shell, ochre, ostrich eggshell).
-#' Run \code{road_list_argument_values("miscellaneous_finds_material")} to display possible values.
-#' The argument \code{miscellaneous_finds_material} is a string (one item) or vector of strings; defaults to NULL.
+#' @param miscellaneous_finds_material specifies material of the miscellaneous 
+#' finds (e.g. shell, ochre, ostrich eggshell).
+#' Run \code{road_list_argument_values("miscellaneous_finds_material")} to 
+#' display possible values. The argument \code{miscellaneous_finds_material} is 
+#' a string (one item) or vector of strings; defaults to NULL.
+
+#' @param human_genus specifies the genus to which the described fossil is attributed to.
+#' Possible entries include: "Australopithecus", "Homo", "indet", etc.
+#' Run \code{road_list_argument_values("human_genus")} to display 
+#' possible values.
+#' The argument \code{human_genus} is a string (one item) or vector of strings; defaults to NULL.
+
+#' @param human_species specifies the species to which the described fossil is attributed. 
+#' Possible entries include: "afarensis", "sapiens", "erectus" or "sp." 
+#' for unidentified species. 
+#' Run \code{road_list_argument_values("human_species")} to display 
+#' possible values.The parameter \code{human_species} is a string (one item) or 
+#' vector of strings; defaults to NULL.
+
+#' @param fauna_genus specifies the genus to which the described faunal remains 
+#' is attributed to. Possible entries include: "Mammuthus", "Vulpes" etc.
+#' Run \code{road_list_argument_values("fauna_genus")} to
+#' display possible values. The argument \code{fauna_genus} is a string 
+#' (one item) or vector of strings; defaults to NULL.
+
+#' @param fauna_species specifies the species to which the 
+#' described faunal remains is attributed. Possible entries include:
+#' "primigenius", "vulpes" or "sp." for unidentified species. Run 
+#' \code{road_list_argument_values("fauna_species")} to display possible values.
+#' The argument \code{fauna_species} is a string (one item) or vector of strings; 
+#' defaults to NULL.
+
+#' @param plant_remains specifies the type of plant remains. Possible entries 
+#' include: "pollen", "plant macroremains" etc. The parameter family is 
+#' a string (one item) or vector of strings; defaults to NULL.
+
+#' @param plant_family specifies the family to which the described plant remains 
+#' is attributed to. Possible entries include: "Poaceae", "Typhaceae" etc.
+#' The parameter family is a string (one item) or vector of strings; defaults to NULL.
+
+#' @param plant_genus specifies the genus name of the taxon. 
+#' The parameter genus is a string (one item) or vector of strings; 
+#' defaults to NULL.
+
+#' @param plant_species presents the full and valid species name including 
+#' author’s name (e.g. Quercus ilex L., Sciadopitys verticillata (Thunb.) 
+#' Siebold & Zucc). The parameter plant_species is a string (one item) or
+#' vector of strings; defaults to NULL.
+

@@ -46,10 +46,10 @@
 #                 "plant:species",
 #                 "fauna:genus",
 #                 "fauna:species")
-#' Get parameter value from ROAD Database
+#' Get argument value from ROAD Database
 #'
-#' The  \strong{\code{road_list_parameter_values}} function fetches values of a given parameter in the database or 
-#' read values from file
+#' The  \strong{\code{road_list_argument_values}} function fetches values of a 
+#' given parameter in the database or read values from file
 #'
 #' @param function_parameter name of a function parameter
 #' @param function_name name of a function
@@ -57,8 +57,8 @@
 #' @return List of attribute values.
 #' @export
 #'
-#' @examples road_list_parameter_values("locality_types")
-road_list_parameter_values <- function (function_parameter, function_name = NULL)
+#' @examples road_list_argument_values("locality_types")
+road_list_argument_values <- function (function_parameter, function_name = NULL)
 {
   if (is.null(function_parameter))
     stop("No parameter name is given.")
