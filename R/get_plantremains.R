@@ -50,18 +50,28 @@
 #' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
 #' @param assemblages list of assemblages; return value from function \code{road_get_assemblages}.
 #' Can be used instead of the other locality and assemblage parameters to filter the results.
-#' @param plant_remains specifies the type of plant remains. Possible entries include: "pollen", "plant macroremains" etc.
-#' The parameter family is a string (one item) or vector of strings (one or more items).
-#' @param plant_family specifies the family to which the described plant remains is attributed to.
-#' Possible entries include: "Poaceae", "Typhaceae" etc.
-#' The parameter family is a string (one item) or vector of strings; defaults to NULL.
-#' @param plant_genus specifies the genus name of the taxon. 
-#' The parameter genus is a string (one item) or vector of strings; defaults to NULL.
-#' @param plant_species presents the full and valid species name including author’s name (e.g.
-#' Quercus ilex L., Sciadopitys verticillata (Thunb.) Siebold & Zucc). 
-#' The parameter plant_species is a string (one item) or vector of strings; defaults to NULL.
+#' @param plant_remains specifies the type of plant remains. Possible entries 
+#' include: "pollen", "plant macroremains" etc. Run 
+#' \code{road_list_argument_values("plant_remains")} to display 
+#' possible values. The argument \code{plant_remains} is a string (one item) or vector of 
+#' strings; defaults to NULL.
+#' @param plant_family specifies the family to which the described plant remains 
+#' is attributed to. Possible entries include: "Poaceae", "Typhaceae" etc.
+#' Run \code{road_list_argument_values("plant_family")} to display 
+#' possible values. The argument \code{plant_family} is a string (one item) or 
+#' vector of strings; defaults to NULL.
+#' @param plant_genus specifies the genus name of the taxon.
+#' Run \code{road_list_argument_values("plant_genus")} to display 
+#' possible values. The argument \code{plant_genus} is a string (one item) or 
+#' vector of strings; defaults to NULL.
+#' @param plant_species specifies the full and valid species name including 
+#' author’s name (e.g. Quercus ilex L., Sciadopitys verticillata (Thunb.) 
+#' Siebold & Zucc). Run \code{road_list_argument_values("plant_species")} 
+#' to display possible values. The argument \code{plant_species} is a string 
+#' (one item) or vector of strings; defaults to NULL.
 #'
-#' @return Database search result as a list of assemblages with information about paleobotanical remains.
+#' @return Database search result as a list of assemblages with information about 
+#' paleobotanical remains.
 #' @export
 #'
 #' @examples

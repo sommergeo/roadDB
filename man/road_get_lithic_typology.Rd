@@ -13,8 +13,8 @@ road_get_lithic_typology(
   categories = NULL,
   age_min = NULL,
   age_max = NULL,
-  tool_list = NULL,
-  assemblages = NULL
+  assemblages = NULL,
+  tool_list = NULL
 )
 }
 \arguments{
@@ -57,6 +57,9 @@ as the baseline. The argument \code{age_min} is an integer; defaults to NULL.}
 \item{age_max}{specifies the maximum age in years before present, using 1950 CE 
 as the baseline. The argument \code{age_max} is an integer; defaults to NULL.}
 
+\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
+Can be used instead of the other locality and assemblage parameters to filter the results.}
+
 \item{tool_list}{specifies values that can be entered for various tool types. 
 Tool types can contain 1) chipped tool types like scraper end, scraper side, 
 scraper, carinated, burin, handaxe, chopper, cleaver, point, point unifacial, 
@@ -65,9 +68,6 @@ anvil, retoucher; 3) non-tools like core, debitage, flake, point; 4) unknown
 like cobble, block, manuport. Run \code{road_list_argument_values("tool_list")} 
 to display possible values. The argument \code{tool_list} is a string (one item) 
 or vector of strings (one or more items); defaults to NULL.}
-
-\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
-Can be used instead of the other locality and assemblage parameters to filter the results.}
 
 \item{technocomplex}{specifies an archaeological culture or named stone tool 
 industry (e.g. Oldowan, Acheulean, Mousterian).
@@ -91,5 +91,6 @@ to retrieve a broader dataset.
 }
 \examples{
 road_get_lithic_typology(continents = c("Asia"), tool_list = "adze")
-road_get_lithic_typology(subcontinents = "Eastern Europe", tool_list = c("bladelet burin spall"))
+road_get_lithic_typology(subcontinents = "Eastern Europe", 
+                         tool_list = c("bladelet burin spall"))
 }
