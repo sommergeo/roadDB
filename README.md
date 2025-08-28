@@ -44,6 +44,13 @@ The following arguments are optional and can be used with every `road_get_*` fun
 | `age_max`                           | numeric   | archaeological_stratigraphy / age_max                | 3000000                                       |
 | `technocomplexes`                   | character | archaeological_stratigraphy /technocomplex           | "ESA/ Early Acheulean"                         |
 | `cultural_periods`                  | character | archaeological_stratigraphy / cultural_period        | "Middle Stone Age"                            |
+
+
+The following arguments are optional and can be used with the corresponding `road_get_*` function to constrain queries.
+
+| Argument                            | Type      | ROAD table / attribute                               | Example                                       |
+| ----------------------------------- | --------- | ---------------------------------------------------- | --------------------------------------------- |
+
 | `tool_list`                         | character |                                                      |                                               |
 | `raw_material_list`                 | character |                                                     |                                               |
 | `transport_distance`                | character | transport_distance                                   |  "regional (6-20 km)"                         |
