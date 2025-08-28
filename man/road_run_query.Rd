@@ -2,7 +2,7 @@
 % Please edit documentation in R/help_funcs.R
 \name{road_run_query}
 \alias{road_run_query}
-\title{run query in ROAD db}
+\title{run query in ROAD database}
 \usage{
 road_run_query(query)
 }
@@ -13,7 +13,7 @@ road_run_query(query)
 Database search result as a data frame.
 }
 \description{
-run query in ROAD db
+run query in ROAD database
 }
 \keyword{'transport_distance',}
 \keyword{a}

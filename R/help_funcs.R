@@ -59,7 +59,7 @@ cm_feature_interpretation <- "feature_interpretation"
 cm_miscellaneous_finds_material <- "miscellaneous_finds_material"
 cm_miscellaneous_finds_raw_material_source <- "miscellaneous_finds_raw_material_source"
 
-#' run query in ROAD db
+#' run query in ROAD database
 #' 
 #' @param query specifies the SQl query.
 #'
@@ -372,7 +372,7 @@ print_null_result_message <- function(
                 fauna_genus_str,
                 fauna_species_str,
                 "
-      Please keep in mind, the data search needs for most parameters exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
+      Please keep in mind, the data search needs for most arguments exact argument value. To get exact value for a given argument 'p' you can use the function road_list_argument_values('p')."))
   
   if (is.vector(raw_material_list) && is.vector(transport_distance))
   {
