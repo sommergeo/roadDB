@@ -10,6 +10,7 @@ road_get_human_remains(
   countries = NULL,
   locality_types = NULL,
   cultural_periods = NULL,
+  technocomplexes = NULL,
   categories = NULL,
   age_min = NULL,
   age_max = NULL,
@@ -46,6 +47,12 @@ Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age
 to display possible values. The argument \code{cultural_periods} is a string 
 (one item) or vector of strings (one or more items); defaults to NULL.}
 
+\item{technocomplexes}{specifies an archaeological culture or named stone tool 
+industry (e.g. Oldowan, Acheulean, Mousterian).
+Run \code{road_list_argument_values("technocomplexes")} to display possible values.
+The argument \code{technocomplexes} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
+
 \item{categories}{specifies the assemblage category/categories with the classes 
 human remains, raw material, typology, technology, function, organic tools, 
 symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains, 
@@ -68,12 +75,6 @@ The parameter genus is a string (one item) or vector of strings (one or more ite
 \item{species}{specifies the species to which the described fossil is attributed. Possible entries include:
 "afarensis", "sapiens", "erectus" or "sp." for unidentified species.
 The parameter species is a string (one item) or vector of strings (one or more items).}
-
-\item{technocomplex}{specifies an archaeological culture or named stone tool 
-industry (e.g. Oldowan, Acheulean, Mousterian).
-Run \code{road_list_argument_values("technocomplex")} to display possible values.
-The argument \code{technocomplex} is a string (one item) or vector of strings 
-(one or more items); defaults to NULL.}
 }
 \value{
 Database search result as list of assemblages with human remains.

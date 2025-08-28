@@ -33,10 +33,10 @@
 #' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
 #' to display possible values. The argument \code{cultural_periods} is a string 
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplex specifies an archaeological culture or named stone tool 
+#' @param technocomplexes specifies an archaeological culture or named stone tool 
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
-#' Run \code{road_list_argument_values("technocomplex")} to display possible values.
-#' The argument \code{technocomplex} is a string (one item) or vector of strings 
+#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
+#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' 
 #' @return Database search result as a data frame with the information about localities 
@@ -108,13 +108,12 @@ road_get_localities <- function(
   data <- road_run_query(query)
 
   if (nrow(data) == 0) 
-    print_null_result_message(  continents,
-                                subcontinents,
-                                countries,
-                                locality_types,
-                                cultural_periods,
-                                technocomplexes
-    )
+    print_null_result_message(continents = continents,
+                              subcontinents = subcontinents,
+                              countries = countries,
+                              locality_types = locality_types,
+                              cultural_periods = cultural_periods,
+                              technocomplexes = technocomplexes)
 
   return(data)
 }
@@ -191,16 +190,26 @@ road_get_localities_ext <- function(
     age_max = NULL
 )
 {
-  assemblages_all_info <- road_get_assemblages(continents, subcontinents, countries, locality_types)
+  assemblages_all_info <- road_get_assemblages(continents = continents, 
+                                               subcontinents = subcontinents, 
+                                               countries = countries, 
+                                               locality_types = locality_types)
   assemblages_ages <- assemblages_all_info %>% select(c(cm_locality_idlocality,
                                                   cm_geological_stratigraphy_age_min,
                                                   cm_geological_stratigraphy_age_max))
   ages_min_max <- assemblages_ages %>% group_by(locality_id) %>% summarise(locality_min_age = min(age_min), 
                                                              locality_max_age = max(age_max))
   
-  assemblages <- road_get_assemblages(continents, subcontinents, countries, 
-                                      locality_types, cultural_periods, technocomplexes, 
-                                      categories, age_min, age_max)
+  assemblages <- road_get_assemblages(continents = continents,
+                                      subcontinents = subcontinents,
+                                      countries = countries,
+                                      locality_types = locality_types,
+                                      cultural_periods = cultural_periods,
+                                      technocomplexes = technocomplexes,
+                                      categories = categories,
+                                      age_min = age_min,
+                                      age_max = age_max)
+
   if (!is.null(assemblages) && nrow(assemblages) != 0)
   {
     assemblages_selected <- assemblages %>% select(c(cm_locality_idlocality,
@@ -225,6 +234,13 @@ road_get_localities_ext <- function(
     
     data <- inner_join(data_tmp, ages_min_max, by = c("locality_id"),
                       copy = FALSE, na_matches = "na")
+    if (nrow(data) == 0) 
+      print_null_result_message(continents = continents,
+                                subcontinents = subcontinents,
+                                countries = countries,
+                                locality_types = locality_types,
+                                cultural_periods = cultural_periods,
+                                technocomplexes = technocomplexes)
                            
     return(data)
   }

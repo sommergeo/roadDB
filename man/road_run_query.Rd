@@ -2,10 +2,29 @@
 % Please edit documentation in R/help_funcs.R
 \name{road_run_query}
 \alias{road_run_query}
-\title{unknown' is a correct value of 'transport_distance', we dont want replace it.}
+\title{run query in ROAD db}
 \usage{
 road_run_query(query)
 }
-\description{
-unknown' is a correct value of 'transport_distance', we dont want replace it.
+\arguments{
+\item{query}{specifies the SQl query.}
 }
+\value{
+Database search result as a data frame.
+}
+\description{
+run query in ROAD db
+}
+\keyword{'transport_distance',}
+\keyword{a}
+\keyword{correct}
+\keyword{dont}
+\keyword{internal}
+\keyword{is}
+\keyword{it.}
+\keyword{of}
+\keyword{replace}
+\keyword{unknown'}
+\keyword{value}
+\keyword{want}
+\keyword{we}

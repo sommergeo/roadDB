@@ -44,6 +44,12 @@ Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age
 to display possible values. The argument \code{cultural_periods} is a string 
 (one item) or vector of strings (one or more items); defaults to NULL.}
 
+\item{technocomplexes}{specifies an archaeological culture or named stone tool 
+industry (e.g. Oldowan, Acheulean, Mousterian).
+Run \code{road_list_argument_values("technocomplex")} to display possible values.
+The argument \code{technocomplex} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
+
 \item{categories}{specifies the assemblage category/categories with the classes 
 human remains, raw material, typology, technology, function, organic tools, 
 symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains, 
@@ -55,12 +61,6 @@ as the baseline. The argument \code{age_min} is an integer; defaults to NULL.}
 
 \item{age_max}{specifies the maximum age in years before present, using 1950 CE 
 as the baseline. The argument \code{age_max} is an integer; defaults to NULL.}
-
-\item{technocomplex}{specifies an archaeological culture or named stone tool 
-industry (e.g. Oldowan, Acheulean, Mousterian).
-Run \code{road_list_argument_values("technocomplex")} to display possible values.
-The argument \code{technocomplex} is a string (one item) or vector of strings 
-(one or more items); defaults to NULL.}
 }
 \value{
 Database search result as a data frame with the information about 

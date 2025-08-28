@@ -59,7 +59,13 @@ cm_feature_interpretation <- "feature_interpretation"
 cm_miscellaneous_finds_material <- "miscellaneous_finds_material"
 cm_miscellaneous_finds_raw_material_source <- "miscellaneous_finds_raw_material_source"
 
-# run query in ROAD db
+#' run query in ROAD db
+#' 
+#' @param query specifies the SQl query.
+#'
+#' @return Database search result as a data frame.
+#' @keywords internal
+
 road_run_query <- function(query)
 {
   query <- trimws(query)

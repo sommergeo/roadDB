@@ -41,10 +41,10 @@ Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age
 to display possible values. The argument \code{cultural_periods} is a string 
 (one item) or vector of strings (one or more items); defaults to NULL.}
 
-\item{technocomplex}{specifies an archaeological culture or named stone tool 
+\item{technocomplexes}{specifies an archaeological culture or named stone tool 
 industry (e.g. Oldowan, Acheulean, Mousterian).
-Run \code{road_list_argument_values("technocomplex")} to display possible values.
-The argument \code{technocomplex} is a string (one item) or vector of strings 
+Run \code{road_list_argument_values("technocomplexes")} to display possible values.
+The argument \code{technocomplexes} is a string (one item) or vector of strings 
 (one or more items); defaults to NULL.}
 }
 \value{

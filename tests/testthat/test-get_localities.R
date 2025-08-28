@@ -26,11 +26,11 @@ test_that("road_get_localities() returns the correct data types", {
 # Testing whether the information about the function is helpful
 help(road_get_localities)
 
-road_list_parameter_values("continents") # Works
-road_list_parameter_values("subcontinents") # when running this it returns nothing
-road_list_parameter_values("countries") # Works, but very last on list is "the"
-road_list_parameter_values("locality_types") # when running this it returns nothing
-road_list_parameter_values("cultural_periods") # the very first row here is "Age", also, there is no "Middle Paleolithic" as used in one of the examples?
+road_list_argument_values("continents") # Works
+road_list_argument_values("subcontinents") # when running this it returns nothing
+road_list_argument_values("countries") # Works, but very last on list is "the"
+road_list_argument_values("locality_types") # when running this it returns nothing
+road_list_argument_values("cultural_periods") # the very first row here is "Age", also, there is no "Middle Paleolithic" as used in one of the examples?
 
 
 # testing examples

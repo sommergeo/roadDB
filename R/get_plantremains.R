@@ -34,10 +34,10 @@
 #' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
 #' to display possible values. The argument \code{cultural_periods} is a string 
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplex specifies an archaeological culture or named stone tool 
+#' @param technocomplexes specifies an archaeological culture or named stone tool 
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
-#' Run \code{road_list_argument_values("technocomplex")} to display possible values.
-#' The argument \code{technocomplex} is a string (one item) or vector of strings 
+#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
+#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param categories specifies the assemblage category/categories with the classes 
 #' human remains, raw material, typology, technology, function, organic tools, 
@@ -83,6 +83,7 @@ road_get_plantremains <- function(
     countries = NULL,
     locality_types = NULL,
     cultural_periods = NULL,
+    technocomplexes = NULL,
     categories = NULL,
     age_min = NULL,
     age_max = NULL,
@@ -97,7 +98,15 @@ road_get_plantremains <- function(
   if ((!is.null(categories) || !is.null(age_min) || !is.null(age_max)) && !is.null(assemblages))
     warning("No assemblage search for categories or age_min/age_max is performed because a non-empty assemblage list was passed")
 
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents, 
+                                                                subcontinents = subcontinents, 
+                                                                countries = countries, 
+                                                                locality_types = locality_types, 
+                                                                cultural_periods = cultural_periods, 
+                                                                technocomplexes = technocomplexes, 
+                                                                categories = categories, 
+                                                                age_min = age_min, 
+                                                                age_max = age_max)
 
   assemblage_condition <- get_assemblage_condition(query_start = " AND ", assemblages = assemblages, 
                                                    locality_id_column_name = cm_locality_idlocality, assemblage_id_column_name = cm_assemblages_idassemblage)
@@ -252,19 +261,19 @@ road_get_plantremains <- function(
     #               ", "(", s, ")"))
     # }
     
-    print_null_result_message(  continents,
-                                subcontinents,
-                                countries,
-                                locality_types,
-                                cultural_periods,
-                                categories,
-                                age_min,
-                                age_max,
-                                plant_remains,
-                                plant_family,
-                                plant_genus,
-                                plant_species
-    )
+    print_null_result_message(continents = continents,
+                              subcontinents = subcontinents,
+                              countries = countries,
+                              locality_types = locality_types,
+                              cultural_periods = cultural_periods,
+                              technocomplexes = technocomplexes,
+                              categories = categories,
+                              age_min = age_min,
+                              age_max = age_max,
+                              plant_remains = plant_remains,
+                              plant_family = plant_family,
+                              plant_genus = plant_genus,
+                              plant_species = plant_species)
     
   }
 

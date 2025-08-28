@@ -10,6 +10,7 @@ road_get_paleofauna(
   countries = NULL,
   locality_types = NULL,
   cultural_periods = NULL,
+  technocomplexes = NULL,
   categories = NULL,
   age_min = NULL,
   age_max = NULL,
@@ -46,6 +47,12 @@ Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age
 to display possible values. The argument \code{cultural_periods} is a string 
 (one item) or vector of strings (one or more items); defaults to NULL.}
 
+\item{technocomplexes}{specifies an archaeological culture or named stone tool 
+industry (e.g. Oldowan, Acheulean, Mousterian).
+Run \code{road_list_argument_values("technocomplexes")} to display possible values.
+The argument \code{technocomplexes} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
+
 \item{categories}{specifies the assemblage category/categories with the classes 
 human remains, raw material, typology, technology, function, organic tools, 
 symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains, 
@@ -73,12 +80,6 @@ described faunal remains is attributed. Possible entries include:
 \code{road_list_argument_values("fauna_species")} to display possible values.
 The argument \code{fauna_species} is a string (one item) or vector of strings; 
 defaults to NULL.}
-
-\item{technocomplex}{specifies an archaeological culture or named stone tool 
-industry (e.g. Oldowan, Acheulean, Mousterian).
-Run \code{road_list_argument_values("technocomplex")} to display possible values.
-The argument \code{technocomplex} is a string (one item) or vector of strings 
-(one or more items); defaults to NULL.}
 }
 \value{
 Database search result as list of assemblages with paleofauna information.

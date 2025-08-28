@@ -30,10 +30,10 @@
 #' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
 #' to display possible values. The argument \code{cultural_periods} is a string 
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplex specifies an archaeological culture or named stone tool 
+#' @param technocomplexes specifies an archaeological culture or named stone tool 
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
-#' Run \code{road_list_argument_values("technocomplex")} to display possible values.
-#' The argument \code{technocomplex} is a string (one item) or vector of strings 
+#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
+#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param categories specifies the assemblage category/categories with the classes 
 #' human remains, raw material, typology, technology, function, organic tools, 
@@ -70,6 +70,7 @@ road_get_lithic_typology <- function(
     countries = NULL,
     locality_types = NULL,
     cultural_periods = NULL,
+    technocomplexes = NULL,
     categories = NULL,
     age_min = NULL,
     age_max = NULL,
@@ -79,7 +80,15 @@ road_get_lithic_typology <- function(
 {
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents, 
+                                                                subcontinents = subcontinents, 
+                                                                countries = countries, 
+                                                                locality_types = locality_types, 
+                                                                cultural_periods = cultural_periods, 
+                                                                technocomplexes = technocomplexes, 
+                                                                categories = categories, 
+                                                                age_min = age_min, 
+                                                                age_max = age_max)
   assemblage_condition <- get_assemblage_condition(assemblages = assemblages, locality_id_column_name = "typology.assemblage_idlocality", assemblage_id_column_name = "typology.assemblage_idassemblage")
 
   # select fields
@@ -106,16 +115,16 @@ road_get_lithic_typology <- function(
   if (nrow(data) == 0 && nrow(assemblages) > 0)
   {
     
-    print_null_result_message(  continents,
-                                subcontinents,
-                                countries,
-                                locality_types,
-                                cultural_periods,
-                                categories,
-                                age_min,
-                                age_max,
-                                tool_list
-    )
+    print_null_result_message(continents = continents,
+                              subcontinents = subcontinents,
+                              countries = countries,
+                              locality_types = locality_types,
+                              cultural_periods = cultural_periods,
+                              technocomplexes = technocomplexes,
+                              categories = categories,
+                              age_min = age_min,
+                              age_max = age_max,
+                              tool_list = tool_list)
   }
   
   data <- add_locality_columns(data, assemblages = assemblages)
@@ -156,10 +165,10 @@ road_get_lithic_typology <- function(
 #' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
 #' to display possible values. The argument \code{cultural_periods} is a string 
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplex specifies an archaeological culture or named stone tool 
+#' @param technocomplexes specifies an archaeological culture or named stone tool 
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
-#' Run \code{road_list_argument_values("technocomplex")} to display possible values.
-#' The argument \code{technocomplex} is a string (one item) or vector of strings 
+#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
+#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param categories specifies the assemblage category/categories with the classes 
 #' human remains, raw material, typology, technology, function, organic tools, 
@@ -210,6 +219,7 @@ road_get_lithic_raw_material <- function(
     countries = NULL,
     locality_types = NULL,
     cultural_periods = NULL,
+    technocomplexes = NULL,
     categories = NULL,
     age_min = NULL,
     age_max = NULL,
@@ -220,7 +230,15 @@ road_get_lithic_raw_material <- function(
 {
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents, 
+                                                                subcontinents = subcontinents, 
+                                                                countries = countries, 
+                                                                locality_types = locality_types, 
+                                                                cultural_periods = cultural_periods, 
+                                                                technocomplexes = technocomplexes, 
+                                                                categories = categories, 
+                                                                age_min = age_min, 
+                                                                age_max = age_max)
   assemblage_condition <- get_assemblage_condition(assemblages = assemblages, locality_id_column_name = "raw_material.assemblage_idlocality", assemblage_id_column_name = "raw_material.assemblage_idassemblage")
 
   # select fields
@@ -249,17 +267,17 @@ road_get_lithic_raw_material <- function(
   if (nrow(data) == 0 && nrow(assemblages) > 0)
   {
     
-    print_null_result_message(  continents,
-                                subcontinents,
-                                countries,
-                                locality_types,
-                                cultural_periods,
-                                categories,
-                                age_min,
-                                age_max,
-                                raw_material_list,
-                                transport_distance
-    )
+    print_null_result_message(continents = continents,
+                              subcontinents = subcontinents,
+                              countries = countries,
+                              locality_types = locality_types,
+                              cultural_periods = cultural_periods,
+                              technocomplexes = technocomplexes,
+                              categories = categories,
+                              age_min = age_min,
+                              age_max = age_max,
+                              raw_material_list = raw_material_list,
+                              transport_distance = transport_distance)
   }
   
   data <- add_locality_columns(data, assemblages = assemblages)
@@ -299,10 +317,10 @@ road_get_lithic_raw_material <- function(
 #' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
 #' to display possible values. The argument \code{cultural_periods} is a string 
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplex specifies an archaeological culture or named stone tool 
+#' @param technocomplexes specifies an archaeological culture or named stone tool 
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
-#' Run \code{road_list_argument_values("technocomplex")} to display possible values.
-#' The argument \code{technocomplex} is a string (one item) or vector of strings 
+#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
+#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param categories specifies the assemblage category/categories with the classes 
 #' human remains, raw material, typology, technology, function, organic tools, 
@@ -336,6 +354,7 @@ road_get_organic_tools <- function(
     countries = NULL,
     locality_types = NULL,
     cultural_periods = NULL,
+    technocomplexes = NULL,
     categories = NULL,
     age_min = NULL,
     age_max = NULL,
@@ -346,7 +365,15 @@ road_get_organic_tools <- function(
 
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents, 
+                                                                subcontinents = subcontinents, 
+                                                                countries = countries, 
+                                                                locality_types = locality_types, 
+                                                                cultural_periods = cultural_periods, 
+                                                                technocomplexes = technocomplexes, 
+                                                                categories = categories, 
+                                                                age_min = age_min, 
+                                                                age_max = age_max)
   assemblage_condition <- get_assemblage_condition(assemblages = assemblages, locality_id_column_name = "organic_tools.assemblage_idlocality", assemblage_id_column_name = "organic_tools.assemblage_idassemblage")
 
   # select fields
@@ -374,16 +401,16 @@ road_get_organic_tools <- function(
   if (nrow(data) == 0 && nrow(assemblages) > 0)
   {
     
-    print_null_result_message(  continents,
-                                subcontinents,
-                                countries,
-                                locality_types,
-                                cultural_periods,
-                                categories,
-                                age_min,
-                                age_max,
-                                organic_tools_interpretation
-    )
+    print_null_result_message(continents = continents,
+                              subcontinents = subcontinents,
+                              countries = countries,
+                              locality_types = locality_types,
+                              cultural_periods = cultural_periods,
+                              technocomplexes = technocomplexes,
+                              categories = categories,
+                              age_min = age_min,
+                              age_max = age_max,
+                              organic_tools_interpretation = organic_tools_interpretation)
   }
 
   data <- add_locality_columns(data, assemblages = assemblages)
@@ -423,10 +450,10 @@ road_get_organic_tools <- function(
 #' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
 #' to display possible values. The argument \code{cultural_periods} is a string 
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplex specifies an archaeological culture or named stone tool 
+#' @param technocomplexes specifies an archaeological culture or named stone tool 
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
-#' Run \code{road_list_argument_values("technocomplex")} to display possible values.
-#' The argument \code{technocomplex} is a string (one item) or vector of strings 
+#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
+#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param categories specifies the assemblage category/categories with the classes 
 #' human remains, raw material, typology, technology, function, organic tools, 
@@ -461,6 +488,7 @@ road_get_symbolic_artifacts <- function(
     countries = NULL,
     locality_types = NULL,
     cultural_periods = NULL,
+    technocomplexes = NULL,
     categories = NULL,
     age_min = NULL,
     age_max = NULL,
@@ -469,9 +497,15 @@ road_get_symbolic_artifacts <- function(
 ) {
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, 
-                                                                countries, locality_types, 
-                                                                cultural_periods, categories, age_min, age_max)
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents, 
+                                                                subcontinents = subcontinents, 
+                                                                countries = countries, 
+                                                                locality_types = locality_types, 
+                                                                cultural_periods = cultural_periods, 
+                                                                technocomplexes = technocomplexes, 
+                                                                categories = categories, 
+                                                                age_min = age_min, 
+                                                                age_max = age_max)
   assemblage_condition <- get_assemblage_condition(assemblages = assemblages, 
                                                    locality_id_column_name = "symbolic_artifacts.assemblage_idlocality", 
                                                    assemblage_id_column_name = "symbolic_artifacts.assemblage_idassemblage")
@@ -502,15 +536,16 @@ road_get_symbolic_artifacts <- function(
   if (nrow(data) == 0 && nrow(assemblages) > 0)
   {
     
-    print_null_result_message(  continents,
-                                subcontinents,
-                                countries,
-                                locality_types,
-                                cultural_periods,
-                                categories,
-                                age_min,
-                                age_max,
-                                symbolic_artifacts_interpretation
+    print_null_result_message(continents = continents,
+                              subcontinents = subcontinents,
+                              countries = countries,
+                              locality_types = locality_types,
+                              cultural_periods = cultural_periods,
+                              technocomplexes = technocomplexes,
+                              categories = categories,
+                              age_min = age_min,
+                              age_max = age_max,
+                              symbolic_artifacts_interpretation = symbolic_artifacts_interpretation
     )
   }
 
@@ -548,10 +583,10 @@ road_get_symbolic_artifacts <- function(
 #' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
 #' to display possible values. The argument \code{cultural_periods} is a string 
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplex specifies an archaeological culture or named stone tool 
+#' @param technocomplexes specifies an archaeological culture or named stone tool 
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
-#' Run \code{road_list_argument_values("technocomplex")} to display possible values.
-#' The argument \code{technocomplex} is a string (one item) or vector of strings 
+#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
+#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param categories specifies the assemblage category/categories with the classes 
 #' human remains, raw material, typology, technology, function, organic tools, 
@@ -585,6 +620,7 @@ road_get_feature <- function(
     countries = NULL,
     locality_types = NULL,
     cultural_periods = NULL,
+    technocomplexes = NULL,
     categories = NULL,
     age_min = NULL,
     age_max = NULL,
@@ -593,7 +629,15 @@ road_get_feature <- function(
 ) {
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents, 
+                                                                subcontinents = subcontinents, 
+                                                                countries = countries, 
+                                                                locality_types = locality_types, 
+                                                                cultural_periods = cultural_periods, 
+                                                                technocomplexes = technocomplexes, 
+                                                                categories = categories, 
+                                                                age_min = age_min, 
+                                                                age_max = age_max)
   assemblage_condition <- get_assemblage_condition(assemblages = assemblages, locality_id_column_name = "feature.assemblage_idlocality", assemblage_id_column_name = "feature.assemblage_idassemblage")
 
   # select fields
@@ -618,16 +662,16 @@ road_get_feature <- function(
   if (nrow(data) == 0 && nrow(assemblages) > 0)
   {
     
-    print_null_result_message(  continents,
-                                subcontinents,
-                                countries,
-                                locality_types,
-                                cultural_periods,
-                                categories,
-                                age_min,
-                                age_max,
-                                feature_interpretation
-    )
+    print_null_result_message(continents = continents,
+                              subcontinents = subcontinents,
+                              countries = countries,
+                              locality_types = locality_types,
+                              cultural_periods = cultural_periods,
+                              technocomplexes = technocomplexes,
+                              categories = categories,
+                              age_min = age_min,
+                              age_max = age_max,
+                              feature_interpretation = feature_interpretation)
   }
   
   data <- add_locality_columns(data, assemblages = assemblages)
@@ -667,10 +711,10 @@ road_get_feature <- function(
 #' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
 #' to display possible values. The argument \code{cultural_periods} is a string 
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplex specifies an archaeological culture or named stone tool 
+#' @param technocomplexes specifies an archaeological culture or named stone tool 
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
-#' Run \code{road_list_argument_values("technocomplex")} to display possible values.
-#' The argument \code{technocomplex} is a string (one item) or vector of strings 
+#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
+#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param categories specifies the assemblage category/categories with the classes 
 #' human remains, raw material, typology, technology, function, organic tools, 
@@ -705,6 +749,7 @@ road_get_miscellaneous_finds <- function(
     countries = NULL,
     locality_types = NULL,
     cultural_periods = NULL,
+    technocomplexes = NULL,
     categories = NULL,
     age_min = NULL,
     age_max = NULL,
@@ -713,7 +758,15 @@ road_get_miscellaneous_finds <- function(
 ) {
   # calculate assemblage_condition
   # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
+  if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents, 
+                                                                subcontinents = subcontinents, 
+                                                                countries = countries, 
+                                                                locality_types = locality_types, 
+                                                                cultural_periods = cultural_periods, 
+                                                                technocomplexes = technocomplexes, 
+                                                                categories = categories, 
+                                                                age_min = age_min, 
+                                                                age_max = age_max)
   assemblage_condition <- get_assemblage_condition(assemblages = assemblages, locality_id_column_name = "miscellaneous_finds.assemblage_idlocality", assemblage_id_column_name = "miscellaneous_finds.assemblage_idassemblage")
 
   # select fields
@@ -740,16 +793,16 @@ road_get_miscellaneous_finds <- function(
   if (nrow(data) == 0 && nrow(assemblages) > 0)
   {
     
-    print_null_result_message(  continents,
-                                subcontinents,
-                                countries,
-                                locality_types,
-                                cultural_periods,
-                                categories,
-                                age_min,
-                                age_max,
-                                miscellaneous_finds_material
-    )
+    print_null_result_message(continents = continents,
+                              subcontinents = subcontinents,
+                              countries = countries,
+                              locality_types = locality_types,
+                              cultural_periods = cultural_periods,
+                              technocomplexes = technocomplexes,
+                              categories = categories,
+                              age_min = age_min,
+                              age_max = age_max,
+                              miscellaneous_finds_material = miscellaneous_finds_material)
   }
   
   data <- add_locality_columns(data, assemblages = assemblages)

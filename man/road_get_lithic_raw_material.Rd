@@ -10,6 +10,7 @@ road_get_lithic_raw_material(
   countries = NULL,
   locality_types = NULL,
   cultural_periods = NULL,
+  technocomplexes = NULL,
   categories = NULL,
   age_min = NULL,
   age_max = NULL,
@@ -45,6 +46,12 @@ Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age
 (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
 to display possible values. The argument \code{cultural_periods} is a string 
 (one item) or vector of strings (one or more items); defaults to NULL.}
+
+\item{technocomplexes}{specifies an archaeological culture or named stone tool 
+industry (e.g. Oldowan, Acheulean, Mousterian).
+Run \code{road_list_argument_values("technocomplexes")} to display possible values.
+The argument \code{technocomplexes} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 
 \item{categories}{specifies the assemblage category/categories with the classes 
 human remains, raw material, typology, technology, function, organic tools, 
@@ -82,12 +89,6 @@ defaults to NULL.}
 
 \item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
 Can be used instead of the other locality and assemblage parameters to filter the results.}
-
-\item{technocomplex}{specifies an archaeological culture or named stone tool 
-industry (e.g. Oldowan, Acheulean, Mousterian).
-Run \code{road_list_argument_values("technocomplex")} to display possible values.
-The argument \code{technocomplex} is a string (one item) or vector of strings 
-(one or more items); defaults to NULL.}
 }
 \value{
 Database search result as a data frame with the information about 

@@ -36,7 +36,7 @@
 #' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
 #' to display possible values. The argument \code{cultural_periods} is a string 
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplex specifies an archaeological culture or named stone tool 
+#' @param technocomplexes specifies an archaeological culture or named stone tool 
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
 #' Run \code{road_list_argument_values("technocomplex")} to display possible values.
 #' The argument \code{technocomplex} is a string (one item) or vector of strings 
@@ -184,16 +184,15 @@ road_get_assemblages <- function(
   
   if (nrow(data) == 0 & nrow(localities) > 0)
   {
-    print_null_result_message(  continents,
-                                subcontinents,
-                                countries,
-                                locality_types,
-                                cultural_periods,
-                                technocomplexes,
-                                categories,
-                                age_min,
-                                age_max
-    )
+    print_null_result_message(continents = continents,
+                              subcontinents = subcontinents,
+                              countries = countries,
+                              locality_types = locality_types,
+                              cultural_periods = cultural_periods,
+                              technocomplexes = technocomplexes,
+                              categories = categories,
+                              age_min = age_min,
+                              age_max = age_max)
   }  
 
   data <- add_locality_columns(data, localities = localities)
