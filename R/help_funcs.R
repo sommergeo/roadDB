@@ -345,7 +345,7 @@ print_null_result_message <- function(
   fauna_genus_str <- ifelse(is.null(fauna_genus), "", paste("fauna_genus = (", toString(fauna_genus), ")"))
   fauna_species_str <- ifelse(is.null(fauna_species), "", paste("fauna_species = (", toString(fauna_species), ")"))
   
-  message(paste("One or more of the following parameters caused the empty result set:
+  message(paste("One or more of the following arguments caused the empty result set:
                   ",
                 continents_str,
                 subcontinents_str,
@@ -381,7 +381,7 @@ print_null_result_message <- function(
     cp <- cp %>% mutate(raw_material_list_transport_distance = paste(raw_material_list, transport_distance, sep = " "))
     s <- paste(cp$raw_material_list_transport_distance, collapse = "; ")
     message(paste("
-      Please keep in mind at least one of the the following combinations (fauna_genus fauna_species) have to be in the database:
+      Please keep in mind at least one of the the following combinations ( raw_material_list transport_distance) have to be in the database:
                   ", s))
   }
   
@@ -392,7 +392,7 @@ print_null_result_message <- function(
     cp <- cp %>% mutate(genus_species = paste(genus, species, sep = " "))
     s <- paste(cp$genus_species, collapse = "; ")
     message(paste("
-      Please keep in mind at least one of the the following combinations (fauna_genus fauna_species) have to be in the database:
+      Please keep in mind at least one of the the following combinations (human_genus human_species) have to be in the database:
                   ", s))
   }
 
