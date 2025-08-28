@@ -155,10 +155,10 @@ road_get_localities <- function(
 #' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
 #' to display possible values. The argument \code{cultural_periods} is a string 
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplex specifies an archaeological culture or named stone tool 
+#' @param technocomplexes specifies an archaeological culture or named stone tool 
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
-#' Run \code{road_list_argument_values("technocomplex")} to display possible values.
-#' The argument \code{technocomplex} is a string (one item) or vector of strings 
+#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
+#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param categories specifies the assemblage category/categories with the classes 
 #' human remains, raw material, typology, technology, function, organic tools, 
@@ -215,9 +215,9 @@ road_get_localities_ext <- function(
   
     data_tmp <- assemblages_selected %>% group_by(locality_id, continent, subcontinent,
                                                   country, locality_types, coord_x, coord_y
-                                                  ) %>% summarise(categories = well_formed_string_to_string_without_duplikates(paste0(categories, collapse = ", ")),
-                                                                                     cultural_periods = well_formed_string_to_string_without_duplikates(paste0(cultural_periods, collapse = ", ")),
-                                                                                     technocomplexes = well_formed_string_to_string_without_duplikates(paste0(technocomplexes, collapse = ", ")),
+                                                  ) %>% summarise(categories = well_formed_string_to_string_without_duplicates(paste0(categories, collapse = ", ")),
+                                                                                     cultural_periods = well_formed_string_to_string_without_duplicates(paste0(cultural_periods, collapse = ", ")),
+                                                                                     technocomplexes = well_formed_string_to_string_without_duplicates(paste0(technocomplexes, collapse = ", ")),
                                                                                      subset_min_age = min(age_min), 
                                                                                      subset_max_age = max(age_max)
                                                                  )
@@ -231,7 +231,7 @@ road_get_localities_ext <- function(
   else return(assemblages)
 }
 
-well_formed_string_to_string_without_duplikates <- function(str_with_duplikates = NULL, separator = ",[ ]*")
+well_formed_string_to_string_without_duplicates <- function(str_with_duplikates = NULL, separator = ",[ ]*")
 {
   l <- str_split(str_with_duplikates, separator)
   v <- unique(l[[1]])

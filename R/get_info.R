@@ -87,7 +87,7 @@ road_list_argument_values <- function (function_parameter, function_name = NULL)
       ~ "dating_method",
     function_parameter == "material_dated" 
       ~ "material_dated",
-    function_parameter == "technocomplex" 
+    function_parameter == "technocomplexes" 
       ~ "technocomplex",
     function_parameter == "tool_list" 
       ~ "tool_list",
