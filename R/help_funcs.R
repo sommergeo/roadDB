@@ -381,7 +381,7 @@ print_null_result_message <- function(
     cp <- cp %>% mutate(raw_material_list_transport_distance = paste(raw_material_list, transport_distance, sep = " "))
     s <- paste(cp$raw_material_list_transport_distance, collapse = "; ")
     message(paste("
-      Please keep in mind at least one of the the following combinations ( raw_material_list transport_distance) have to be in the database:
+      Please note at least one of the the following combinations ( raw_material_list transport_distance) have to be in the database:
                   ", s))
   }
   
@@ -392,7 +392,7 @@ print_null_result_message <- function(
     cp <- cp %>% mutate(genus_species = paste(genus, species, sep = " "))
     s <- paste(cp$genus_species, collapse = "; ")
     message(paste("
-      Please keep in mind at least one of the the following combinations (human_genus human_species) have to be in the database:
+      Please note at least one of the the following combinations (human_genus human_species) have to be in the database:
                   ", s))
   }
 
@@ -454,7 +454,7 @@ print_null_result_message <- function(
     cp <- cp %>% mutate(remains_family_genus_species = paste(remains, family, genus, species, sep = " "))
     s <- paste(cp$remains_family_genus_species, collapse = "); (")
     message(paste0("
-      Please keep in mind at least one of the the following combinations (", pr, pf, pg, ps, ")"," have to be in the database:
+      Please note at least one of the the following combinations (", pr, pf, pg, ps, ")"," have to be in the database:
                   ", "(", s, ")"))
   }
   
