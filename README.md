@@ -50,7 +50,6 @@ The following arguments are optional and can be used with the corresponding `roa
 
 | Argument                            | Type      | ROAD table / attribute                               | Example                                       |
 | ----------------------------------- | --------- | ---------------------------------------------------- | --------------------------------------------- |
-
 | `tool_list`                         | character |                                                      |                                               |
 | `raw_material_list`                 | character |                                                     |                                               |
 | `transport_distance`                | character | transport_distance                                   |  "regional (6-20 km)"                         |
