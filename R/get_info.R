@@ -49,80 +49,72 @@
 #' Get argument value from ROAD Database
 #'
 #' The  \strong{\code{road_list_argument_values}} function fetches values of a 
-#' given parameter in the database or read values from file
+#' given argument in the database or read values from file
 #'
-#' @param function_parameter name of a function parameter
-#' @param function_name name of a function
+#' @param function_argument name of a function argument
 #'
 #' @return List of attribute values.
 #' @export
 #'
 #' @examples road_list_argument_values("locality_types")
-road_list_argument_values <- function (function_parameter, function_name = NULL)
+road_list_argument_values <- function (function_argument)
 {
-  if (is.null(function_parameter))
-    stop("No parameter name is given.")
+  if (is.null(function_argument))
+    stop("No argument name is given.")
   
   attribute_name = case_when(
-    #(function_name == "road_get_localities" | 
-    #  function_name == "road_get_assemblages") & 
-    function_parameter == "continents"
+    function_argument == "continents"
       ~ "continent",
-    #function_name == "road_get_localities" & 
-    function_parameter == "subcontinents"
+    function_argument == "subcontinents"
       ~ "continent_region",
-    #function_name == "road_get_localities" & 
-    function_parameter == "countries"
+    function_argument == "countries"
       ~ "country",
-    #function_name == "road_get_localities" & 
-    function_parameter == "locality_types"
+    function_argument == "locality_types"
       ~ "type",
-    #function_name == "road_get_localities" & 
-    function_parameter == "cultural_periods"
+    function_argument == "cultural_periods"
       ~ "cultural_period",
-    #function_name == "road_get_assemblages" &
-    function_parameter == "categories" 
+    function_argument == "categories" 
       ~ "category",
-    function_parameter == "dating_methods" 
+    function_argument == "dating_methods" 
       ~ "dating_method",
-    function_parameter == "material_dated" 
+    function_argument == "material_dated" 
       ~ "material_dated",
-    function_parameter == "technocomplexes" 
+    function_argument == "technocomplexes" 
       ~ "technocomplex",
-    function_parameter == "tool_list" 
+    function_argument == "tool_list" 
       ~ "tool_list",
-    function_parameter == "raw_material_list" 
+    function_argument == "raw_material_list" 
       ~ "raw_material_list",
-    function_parameter == "transport_distance" 
+    function_argument == "transport_distance" 
       ~ "transport_distance",
-    function_parameter == "organic_tools_interpretation" 
+    function_argument == "organic_tools_interpretation" 
       ~ "organic_tools:interpretation",
-    function_parameter == "symbolic_artifacts_interpretation" 
+    function_argument == "symbolic_artifacts_interpretation" 
       ~ "symbolic_artifacts:interpretation",
-    function_parameter == "feature_interpretation" 
+    function_argument == "feature_interpretation" 
       ~ "feature:interpretation",
-    function_parameter == "miscellaneous_finds_material" 
+    function_argument == "miscellaneous_finds_material" 
       ~ "miscellaneous_finds:material",
-    function_parameter == "genus" 
+    function_argument == "human_genus" 
       ~ "humanremains:genus",
-    function_parameter == "species" 
+    function_argument == "human_species" 
       ~ "humanremains:species",
-    function_parameter == "fauna_genus" 
+    function_argument == "fauna_genus" 
       ~ "fauna:genus",
-    function_parameter == "fauna_species" 
+    function_argument == "fauna_species" 
       ~ "fauna:species",
-    function_parameter == "plant_remains" 
+    function_argument == "plant_remains" 
       ~ "plant_remains",
-    function_parameter == "plant_family" 
+    function_argument == "plant_family" 
       ~ "plant:family",
-    function_parameter == "plant_genus" 
+    function_argument == "plant_genus" 
       ~ "plant:genus",
-    function_parameter == "plant_species" 
+    function_argument == "plant_species" 
       ~ "plant:species",
     TRUE  ~ "NULL"
   )
   
-  if (attribute_name == "NULL") stop("No such function parameter.")
+  if (attribute_name == "NULL") stop("No such function argument.")
   
   data <- road_list_values(attribute_name)
   
@@ -213,7 +205,7 @@ road_list_values <- function (attribute_name)
   # table <- c("geological_layer_age", "archaeological_layer_age", "assemblage_age")
   if (is.null(table))
   {
-    warning(paste("No data source for parameter ", attribute_name, " was found."))
+    warning(paste("No data source for argument ", attribute_name, " was found."))
     return(table)
   }
   
@@ -241,7 +233,7 @@ road_list_values <- function (attribute_name)
     collapse = " UNION "
   )
   query <- paste0(q_extension, que, ") AS foo ORDER BY ", cm_attribute_name, "")
-
+message(query)
   data <- road_run_query(query)
   
   return(data)

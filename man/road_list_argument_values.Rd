@@ -4,19 +4,17 @@
 \alias{road_list_argument_values}
 \title{Get argument value from ROAD Database}
 \usage{
-road_list_argument_values(function_parameter, function_name = NULL)
+road_list_argument_values(function_argument)
 }
 \arguments{
-\item{function_parameter}{name of a function parameter}
-
-\item{function_name}{name of a function}
+\item{function_argument}{name of a function argument}
 }
 \value{
 List of attribute values.
 }
 \description{
 The  \strong{\code{road_list_argument_values}} function fetches values of a 
-given parameter in the database or read values from file
+given argument in the database or read values from file
 }
 \examples{
 road_list_argument_values("locality_types")

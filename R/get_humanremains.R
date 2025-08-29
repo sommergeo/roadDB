@@ -1,17 +1,20 @@
 #' Get human remains from ROAD database
 #'
-#' The \strong{\code{road_get_human_remains}} function fetches data of human remains from ROAD database.
-#' Human remains are human fossil finds and always associated with an assemblage. A human remain is
-#' a direct and substantial piece of evidence for the presence of fossil hominids at a particular locality.
-#' Next to the assemblage information the function returns genus, species, age and sex if available
-#' and further information regarding the remains.
-#' The dataset may also include indirect evidence such as fossil endocasts and footprints.
+#' The \strong{\code{road_get_human_remains}} function fetches data of human 
+#' remains from ROAD database. Human remains are human fossil finds and always 
+#' associated with an assemblage. A human remain is a direct and substantial 
+#' piece of evidence for the presence of fossil hominids at a particular locality.
+#' Next to the assemblage information the function returns genus, species, 
+#' age and sex if available and further information regarding the remains.
+#' The dataset may also include indirect evidence such as fossil endocasts and 
+#' footprints.
 #' 
 #' @details
-#' Use the parameters to filter the results or omit them to retrieve a broader dataset.
-#' Genus and species parameters can be entered as a vector of strings to search for multiple entries.
-#' If genus and species are both specified, most of the time it's more sensible to enter them as
-#' single strings and not as vectors with multiple search words to recieve useful results.
+#' Use the parameters to filter the results or omit them to retrieve a broader 
+#' dataset. Genus and species parameters can be entered as a vector of strings 
+#' to search for multiple entries. If genus and species are both specified, 
+#' most of the time it's more sensible to enter them as single strings and not 
+#' as vectors with multiple search words to recieve useful results.
 #' 
 #' @param continents specifies the continent(s) (e.g. Africa, Europe, Asia).
 #' Run \code{road_list_argument_values("continents")} to display possible values.
@@ -49,14 +52,20 @@
 #' as the baseline. The argument \code{age_min} is an integer; defaults to NULL.
 #' @param age_max specifies the maximum age in years before present, using 1950 CE 
 #' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
-#' @param assemblages list of assemblages; return value from function \code{road_get_assemblages}.
-#' Can be used instead of the other locality and assemblage parameters to filter the results.
-#' @param genus specifies the genus to which the described fossil is attributed to.
-#' Possible entries include: "Australopithecus", "Homo", "indet", etc.
-#' The parameter genus is a string (one item) or vector of strings (one or more items).
-#' @param species specifies the species to which the described fossil is attributed. Possible entries include:
-#' "afarensis", "sapiens", "erectus" or "sp." for unidentified species.
-#' The parameter species is a string (one item) or vector of strings (one or more items).
+#' @param assemblages list of assemblages; return value from function 
+#' \code{road_get_assemblages}. Can be used instead of the other locality and 
+#' assemblage parameters to filter the results.
+#' @param human_genus specifies the genus to which the described fossil is 
+#' attributed to. Possible entries include: "Australopithecus", "Homo", "indet", 
+#' etc. Run \code{road_list_argument_values("human_genus")} to display possible
+#' values. The argument \code{human_genus} is a string (one item) or vector of 
+#' strings; defaults to NULL.
+#' @param human_species specifies the species to which the described fossil is 
+#' attributed. Possible entries include: "afarensis", "sapiens", "erectus" or 
+#' "sp." for unidentified species. 
+#' Run \code{road_list_argument_values("human_species")} to display 
+#' possible values.The parameter \code{human_species} is a string (one item) or 
+#' vector of strings; defaults to NULL.
 #'
 #' @return Database search result as list of assemblages with human remains.
 #' @importFrom dplyr %>%
@@ -78,8 +87,8 @@ road_get_human_remains <- function(
     age_min = NULL,
     age_max = NULL,
     assemblages = NULL,
-    genus = NULL,
-    species = NULL
+    human_genus = NULL,
+    human_species = NULL
 )
 {
   # calculate assemblage_condition
@@ -102,13 +111,13 @@ road_get_human_remains <- function(
   genus_condition <- ""
   species_condition <- ""
 
-  if (!is.null(genus))
+  if (!is.null(human_genus))
   {
-    genus_condition <- parameter_to_query("AND genus IN (", genus, ")")
+    genus_condition <- parameter_to_query("AND genus IN (", human_genus, ")")
   }
-  if (!is.null(species))
+  if (!is.null(human_species))
   {
-    species_condition <- parameter_to_query("AND species IN (", species, ")")
+    species_condition <- parameter_to_query("AND species IN (", human_species, ")")
   }
 
   # select fields
@@ -147,8 +156,8 @@ road_get_human_remains <- function(
                               categories = categories,
                               age_min = age_min,
                               age_max = age_max,
-                              genus = genus,
-                              species = species
+                              genus = human_genus,
+                              species = human_species
     )
       
   }

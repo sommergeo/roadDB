@@ -113,15 +113,15 @@ Specific arguments
 #' display possible values. The argument \code{miscellaneous_finds_material} is 
 #' a string (one item) or vector of strings; defaults to NULL.
 
-#' @param human_genus specifies the genus to which the described fossil is attributed to.
-#' Possible entries include: "Australopithecus", "Homo", "indet", etc.
-#' Run \code{road_list_argument_values("human_genus")} to display 
-#' possible values.
-#' The argument \code{human_genus} is a string (one item) or vector of strings; defaults to NULL.
+#' @param human_genus specifies the genus to which the described fossil is 
+#' attributed to. Possible entries include: "Australopithecus", "Homo", "indet", 
+#' etc. Run \code{road_list_argument_values("human_genus")} to display possible
+#' values. The argument \code{human_genus} is a string (one item) or vector of 
+#' strings; defaults to NULL.
 
-#' @param human_species specifies the species to which the described fossil is attributed. 
-#' Possible entries include: "afarensis", "sapiens", "erectus" or "sp." 
-#' for unidentified species. 
+#' @param human_species specifies the species to which the described fossil is 
+#' attributed. Possible entries include: "afarensis", "sapiens", "erectus" or 
+#' "sp." for unidentified species. 
 #' Run \code{road_list_argument_values("human_species")} to display 
 #' possible values.The parameter \code{human_species} is a string (one item) or 
 #' vector of strings; defaults to NULL.
