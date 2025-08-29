@@ -1,51 +1,3 @@
-# tables <- list("geopolitical_units", 
-#                "geopolitical_units", 
-#                "locality", 
-#                "locality", 
-#                "archaeological_stratigraphy", 
-#                "assemblage", 
-#                "attr_values/ex.txt", 
-#                c("geological_layer_age", "archaeological_layer_age", "assemblage_age"), 
-#                c("geological_layer_age", "archaeological_layer_age", "assemblage_age"),
-#                "archaeological_stratigraphy", 
-#                "typology",
-#                "raw_material",
-#                "organic_tools",                     # rethink
-#                "feature",                           # rethink
-#                "miscellaneous_finds",               # rethink
-#                "symbolic_artifacts",                # rethink
-#                "publication_desc_humanremains", 
-#                "publication_desc_humanremains",
-#                "plantremains",
-#                "plant_taxonomy", 
-#                "plant_taxonomy",
-#                "plant_taxonomy", 
-#                "taxonomical_classification", 
-#                "paleofauna")
-# attributes <- c("continent", 
-#                 "continent_region", 
-#                 "country", 
-#                 "type", 
-#                 "cultural_period",
-#                 "category", 
-#                 "example", 
-#                 "dating_method", 
-#                 "material_dated", 
-#                 "technocomplex", 
-#                 "tool_list",
-#                 "raw_material_list",
-#                 "organic_tools:interpretation",       # rethink
-#                 "feature:interpretation",             # rethink
-#                 "miscellaneous_finds:material",       # rethink
-#                 "symbolic_artifacts:interpretation",  # rethink
-#                 "humanremains:genus", 
-#                 "humanremains:species", 
-#                 "plant_remains",
-#                 "plant:family",
-#                 "plant:genus", 
-#                 "plant:species",
-#                 "fauna:genus",
-#                 "fauna:species")
 #' Get argument value from ROAD Database
 #'
 #' The  \strong{\code{road_list_argument_values}} function fetches values of a 
@@ -61,6 +13,9 @@ road_list_argument_values <- function (function_argument)
 {
   if (is.null(function_argument))
     stop("No argument name is given.")
+  
+  attribute_name <- ""
+  table_names = NULL
   
   attribute_name = case_when(
     function_argument == "continents"
@@ -88,38 +43,90 @@ road_list_argument_values <- function (function_argument)
     function_argument == "transport_distance" 
       ~ "transport_distance",
     function_argument == "organic_tools_interpretation" 
-      ~ "organic_tools:interpretation",
+      ~ "interpretation",
     function_argument == "symbolic_artifacts_interpretation" 
-      ~ "symbolic_artifacts:interpretation",
+      ~ "interpretation",
     function_argument == "feature_interpretation" 
-      ~ "feature:interpretation",
+      ~ "interpretation",
     function_argument == "miscellaneous_finds_material" 
-      ~ "miscellaneous_finds:material",
+      ~ "material",
     function_argument == "human_genus" 
-      ~ "humanremains:genus",
+      ~ "genus",
     function_argument == "human_species" 
-      ~ "humanremains:species",
+      ~ "species",
     function_argument == "fauna_genus" 
-      ~ "fauna:genus",
+      ~ "genus",
     function_argument == "fauna_species" 
-      ~ "fauna:species",
+      ~ "species",
     function_argument == "plant_remains" 
       ~ "plant_remains",
     function_argument == "plant_family" 
-      ~ "plant:family",
+      ~ "family",
     function_argument == "plant_genus" 
-      ~ "plant:genus",
+      ~ "genus",
     function_argument == "plant_species" 
-      ~ "plant:species",
+      ~ "species",
     TRUE  ~ "NULL"
   )
+
+  table_names = case_when(
+    function_argument == "continents"
+      ~ "geopolitical_units",
+    function_argument == "subcontinents"
+      ~ "geopolitical_units",
+    function_argument == "countries"
+      ~ "locality",
+    function_argument == "locality_types"
+      ~ "locality",
+    function_argument == "cultural_periods"
+      ~ "archaeological_stratigraphy",
+    function_argument == "categories" 
+      ~ "assemblage",
+    function_argument == "technocomplexes" 
+      ~ "archaeological_stratigraphy",
+    function_argument == "tool_list" 
+      ~ "typology",
+    function_argument == "raw_material_list" 
+      ~ "raw_material",
+    function_argument == "transport_distance" 
+      ~ "raw_material",
+    function_argument == "organic_tools_interpretation" 
+      ~ "organic_tools",
+    function_argument == "symbolic_artifacts_interpretation" 
+      ~ "symbolic_artifacts",
+    function_argument == "feature_interpretation" 
+      ~ "feature",
+    function_argument == "miscellaneous_finds_material" 
+      ~ "miscellaneous_finds",
+    function_argument == "human_genus" 
+      ~ "publication_desc_humanremains",
+    function_argument == "human_species" 
+      ~ "publication_desc_humanremains",
+    function_argument == "fauna_genus" 
+      ~ "taxonomical_classification",
+    function_argument == "fauna_species" 
+      ~ "paleofauna",
+    function_argument == "plant_remains" 
+      ~ "plantremains",
+    function_argument == "plant_family" 
+      ~ "plant_taxonomy",
+    function_argument == "plant_genus" 
+      ~ "plant_taxonomy",
+    function_argument == "plant_species" 
+      ~ "plant_taxonomy",
+    #TRUE  = NULL
+  )
   
-  if (attribute_name == "NULL") stop("No such function argument.")
+  if (function_argument == "dating_methods" || function_argument == "material_dated")
+   table_names <- c("geological_layer_age", "archaeological_layer_age", "assemblage_age")
   
-  data <- road_list_values(attribute_name)
+  if (is.null(table_names)) stop("No table name found.")
+  #if (length(table_names) < 1) stop("No table name found.") 
+  if (attribute_name == "NULL") stop("No attribute name found.")
+  
+  data <- road_list_values(table_names = table_names, attribute_name = attribute_name)
   
   return(data)
-  
 }
 
 #' Retrieve Attribute Values from the ROAD Database
@@ -134,109 +141,55 @@ road_list_argument_values <- function (function_argument)
 #' @export
 #'
 #' @examples
-#' road_list_values("category")
-#' road_list_values("cultural_period")
-road_list_values <- function (attribute_name)
+#' road_list_values(table_names = "assemblage", attribute_name = "category")
+#' road_list_values(table_names = c("geological_layer_age", "archaeological_layer_age", "assemblage_age"),
+#'                 attribute_name = "dating_method")
+road_list_values <- function (table_names, attribute_name)
 { 
-  tables <- list("geopolitical_units", 
-                 "geopolitical_units", 
-                 "locality", 
-                 "locality", 
-                 "archaeological_stratigraphy", 
-                 "assemblage", 
-                 "attr_values/ex.txt", 
-                 c("geological_layer_age", "archaeological_layer_age", "assemblage_age"), 
-                 c("geological_layer_age", "archaeological_layer_age", "assemblage_age"),
-                 "archaeological_stratigraphy", 
-                 "typology",
-                 "raw_material",
-                 "raw_material",
-                 "organic_tools",
-                 "feature", 
-                 "miscellaneous_finds",
-                 "symbolic_artifacts",
-                 "publication_desc_humanremains", 
-                 "publication_desc_humanremains",
-                 "plantremains",
-                 "plant_taxonomy", 
-                 "plant_taxonomy",
-                 "plant_taxonomy", 
-                 "taxonomical_classification", 
-                 "paleofauna")
-  attributes <- c("continent", 
-                  "continent_region", 
-                  "country", 
-                  "type", 
-                  "cultural_period",
-                  "category", 
-                  "example", 
-                  "dating_method", 
-                  "material_dated", 
-                  "technocomplex", 
-                  "tool_list",
-                  "raw_material_list",
-                  "transport_distance",
-                  "organic_tools:interpretation",
-                  "feature:interpretation", 
-                  "miscellaneous_finds:material", 
-                  "symbolic_artifacts:interpretation",
-                  "humanremains:genus", 
-                  "humanremains:species", 
-                  "plant_remains",
-                  "plant:family",
-                  "plant:genus", 
-                  "plant:species",
-                  "fauna:genus",
-                  "fauna:species")
-  
-  if (is.null(attribute_name))
+   if (is.null(attribute_name))
     stop("No attribute name is given.")
   
-  table <- NULL
-
-  # computing length of attributes array
-  size = length(attributes)
-  # iterating over elements of attributes to get table list
-  for (i in 1:size){
-    if(attribute_name == attributes[i]) {
-      table = tables[i]
-    }
-  }  
-  # table <- c("geological_layer_age", "archaeological_layer_age", "assemblage_age")
-  if (is.null(table))
-  {
-    warning(paste("No data source for argument ", attribute_name, " was found."))
-    return(table)
-  }
+   if (is.null(table_names))
+    stop(paste("No data source for argument ", attribute_name, " was found."))
   
-  if (grepl(".txt", table, fixed = TRUE) && grepl("/", table, fixed = TRUE)) {
-    data <- read.csv(toString(table))
-    return(data)
-  }
+   # table_names is a file name
+   #if (grepl(".txt", table_names, fixed = TRUE) && grepl("/", table_names, fixed = TRUE)) {
+   # data <- read.csv(toString(table_names))
+   # return(data)
+   #}
   
-  x <- strsplit(attribute_name, ":")
+   cm_attribute_name <- attribute_name
   
-  if (length(x[[1]]) > 1) cm_attribute_name <- x[[1]][2]
-  else cm_attribute_name <- attribute_name
+   q_extension <- ""
+   q <- ""
   
-  # if we use tables <- list(...), all elements of the list are vectors
-  q_extension <- paste( "SELECT DISTINCT regexp_replace(", cm_attribute_name,", '.+[1234567890]+', '') AS ",
+   # if we use tables <- list(...), all elements of the list are vectors
+   q_extension <- paste( "SELECT DISTINCT regexp_replace(", cm_attribute_name,", '.+[1234567890]+', '') AS ",
                         cm_attribute_name,
                         " FROM ( ")
   
-  q <- paste( "SELECT 
+   q <- paste( "SELECT 
               DISTINCT(unnest(regexp_split_to_array(", cm_attribute_name, ",',[ ]*'))) AS ",
               cm_attribute_name,
               " from ")
-  que <- paste(
-    sapply(table, function(x) paste0(q, x)), 
+   if (cm_attribute_name == "transport_distance") q <- paste( "SELECT DISTINCT ", cm_attribute_name,
+                                                              " AS ", cm_attribute_name,
+                                                              " from ")
+   
+   que <- paste(
+    sapply(table_names, function(x) paste0(q, x)), 
     collapse = " UNION "
-  )
-  query <- paste0(q_extension, que, ") AS foo ORDER BY ", cm_attribute_name, "")
-message(query)
-  data <- road_run_query(query)
+   )
+   query <- paste0(q_extension, que, ") AS foo ORDER BY ", cm_attribute_name, "")
+   
+   # First exception
+   if (cm_attribute_name == "transport_distance") query <- paste( "SELECT DISTINCT ", cm_attribute_name,
+                                                              " AS ", cm_attribute_name,
+                                                              " FROM ", table_names)
+   
+   data <- road_run_query(query)
   
-  return(data)
+   return(data)
 }
 
 #' Get an Overview of the ROAD Archaeology Database
