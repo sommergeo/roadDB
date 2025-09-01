@@ -48,20 +48,23 @@ The following arguments are optional and can be used with every `road_get_*` fun
 
 The following arguments are optional and can be used with the corresponding `road_get_*` function to constrain queries.
 
-| Argument                            | Type      | ROAD table / attribute                               | Example                                       |
+| Argument                            | Type      | ROAD table / attribute                               | Example(s)                                    |
 | ----------------------------------- | --------- | ---------------------------------------------------- | --------------------------------------------- |
-| `tool_list`                         | character |                                                      |                                               |
-| `raw_material_list`                 | character |                                                      |                                               |
+| `dating_methods`                    | character |                                                      |  "C (radiocarbon) dating"                     |
+| `material_dated`                    | character |                                                      |  "flint", "limestone", "tephra"               |       
+| `tool_list`                         | character |                                                      |  "blade aurignacian"                          |  
+| `raw_material_list`                 | character |                                                      |  "ironstone banded"                           |
 | `transport_distance`                | character | transport_distance                                   |  "regional (6-20 km)"                         |
-| `organic_tools_interpretation`      | character |                                                      |                                               |
-| `symbolic_artifacts_interpretation` | character |                                                      |                                               |
-| `feature_interpretation`            | character |                                                      |                                               |
-| `human_genus`                       | character |                                                      |                                               |
-| `human_species`                     | character |                                                      |                                               |
-| `plant_remains`                     | character |                                                      |                                               |
-| `plant_family`                      | character |                                                      |                                               |
-| `plant_genus`                       | character |                                                      |                                               |
-| `plant_species`                     | character |                                                      |                                               |
-| `fauna_genus`                       | character |                                                      |                                               |
-| `fauna_species`                     | character |                                                      |                                               |
+| `organic_tools_interpretation`      | character |                                                      |  "harpoon"                                    |
+| `symbolic_artifacts_interpretation` | character |                                                      |  "anthropomorphic"                            |
+| `feature_interpretation`            | character |                                                      |  "stone construction"                         |
+| `miscellaneous_finds_material`      | character |                                                      |  "ostrich egg shell"                          |
+| `human_genus`                       | character |                                                      |  "Homo", "Paranthropus"                       |
+| `human_species`                     | character |                                                      |  "sapiens rhodesiensis"                       |
+| `plant_remains`                     | character |                                                      |  "phytoliths", "plant macroremains"           |
+| `plant_family`                      | character |                                                      |  "Anarcadiaceae",    "Phyllanthaceae"         |
+| `plant_genus`                       | character |                                                      |  "Jasione", "Larix/Picea"                     |
+| `plant_species`                     | character |                                                      |  "Potamogeton gramineus L."                   |
+| `fauna_genus`                       | character |                                                      |  "Lemniscomys", "Hipposideros"                |
+| `fauna_species`                     | character |                                                      |  "cf. germanicus", "atapuerquensis"           |
 | xxxxxxxxxxxxxxx                     |           |                                                      |                                               |
