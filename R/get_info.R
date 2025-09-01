@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # tables <- list("geopolitical_units",
 #                "geopolitical_units",
 #                "locality",
@@ -50,13 +51,19 @@
 #'
 #' `road_list_parameter_values` fetches values of a given parameter in the database or
 #' read values from file
+=======
+#' Get argument value from ROAD Database
 #'
-#' @param function_parameter name of a function parameter
-#' @param function_name name of a function
+#' The  \strong{\code{road_list_argument_values}} function fetches values of a 
+#' given argument in the database or read values from file
+>>>>>>> 0e608962e8cbe702dafa93fc6d284d9ee10f3991
+#'
+#' @param function_argument name of a function argument
 #'
 #' @return List of attribute values.
 #' @export
 #'
+<<<<<<< HEAD
 #' @examples road_list_parameter_values("locality_types")
 road_list_parameter_values <- function(function_parameter, function_name = NULL)
 {
@@ -128,20 +135,146 @@ road_list_parameter_values <- function(function_parameter, function_name = NULL)
 
   return(data)
 
+=======
+#' @examples road_list_argument_values("locality_types")
+road_list_argument_values <- function (function_argument)
+{
+  if (is.null(function_argument))
+    stop("No argument name is given.")
+  
+  attribute_name <- ""
+  table_names = NULL
+  
+  attribute_name = case_when(
+    function_argument == "continents"
+      ~ "continent",
+    function_argument == "subcontinents"
+      ~ "continent_region",
+    function_argument == "countries"
+      ~ "country",
+    function_argument == "locality_types"
+      ~ "type",
+    function_argument == "cultural_periods"
+      ~ "cultural_period",
+    function_argument == "categories" 
+      ~ "category",
+    function_argument == "dating_methods" 
+      ~ "dating_method",
+    function_argument == "material_dated" 
+      ~ "material_dated",
+    function_argument == "technocomplexes" 
+      ~ "technocomplex",
+    function_argument == "tool_list" 
+      ~ "tool_list",
+    function_argument == "raw_material_list" 
+      ~ "raw_material_list",
+    function_argument == "transport_distance" 
+      ~ "transport_distance",
+    function_argument == "organic_tools_interpretation" 
+      ~ "interpretation",
+    function_argument == "symbolic_artifacts_interpretation" 
+      ~ "interpretation",
+    function_argument == "feature_interpretation" 
+      ~ "interpretation",
+    function_argument == "miscellaneous_finds_material" 
+      ~ "material",
+    function_argument == "human_genus" 
+      ~ "genus",
+    function_argument == "human_species" 
+      ~ "species",
+    function_argument == "fauna_genus" 
+      ~ "genus",
+    function_argument == "fauna_species" 
+      ~ "species",
+    function_argument == "plant_remains" 
+      ~ "plant_remains",
+    function_argument == "plant_family" 
+      ~ "family",
+    function_argument == "plant_genus" 
+      ~ "genus",
+    function_argument == "plant_species" 
+      ~ "species",
+    TRUE  ~ "NULL"
+  )
+
+  table_names = case_when(
+    function_argument == "continents"
+      ~ "geopolitical_units",
+    function_argument == "subcontinents"
+      ~ "geopolitical_units",
+    function_argument == "countries"
+      ~ "locality",
+    function_argument == "locality_types"
+      ~ "locality",
+    function_argument == "cultural_periods"
+      ~ "archaeological_stratigraphy",
+    function_argument == "categories" 
+      ~ "assemblage",
+    function_argument == "technocomplexes" 
+      ~ "archaeological_stratigraphy",
+    function_argument == "tool_list" 
+      ~ "typology",
+    function_argument == "raw_material_list" 
+      ~ "raw_material",
+    function_argument == "transport_distance" 
+      ~ "raw_material",
+    function_argument == "organic_tools_interpretation" 
+      ~ "organic_tools",
+    function_argument == "symbolic_artifacts_interpretation" 
+      ~ "symbolic_artifacts",
+    function_argument == "feature_interpretation" 
+      ~ "feature",
+    function_argument == "miscellaneous_finds_material" 
+      ~ "miscellaneous_finds",
+    function_argument == "human_genus" 
+      ~ "publication_desc_humanremains",
+    function_argument == "human_species" 
+      ~ "publication_desc_humanremains",
+    function_argument == "fauna_genus" 
+      ~ "taxonomical_classification",
+    function_argument == "fauna_species" 
+      ~ "paleofauna",
+    function_argument == "plant_remains" 
+      ~ "plantremains",
+    function_argument == "plant_family" 
+      ~ "plant_taxonomy",
+    function_argument == "plant_genus" 
+      ~ "plant_taxonomy",
+    function_argument == "plant_species" 
+      ~ "plant_taxonomy",
+    #TRUE  = NULL
+  )
+  
+  if (function_argument == "dating_methods" || function_argument == "material_dated")
+   table_names <- c("geological_layer_age", "archaeological_layer_age", "assemblage_age")
+  
+  if (is.null(table_names)) stop("No table name found.")
+  #if (length(table_names) < 1) stop("No table name found.") 
+  if (attribute_name == "NULL") stop("No attribute name found.")
+  
+  data <- road_list_values(table_names = table_names, attribute_name = attribute_name)
+  
+  return(data)
+>>>>>>> 0e608962e8cbe702dafa93fc6d284d9ee10f3991
 }
 
 #' Retrieve Attribute Values from the ROAD Database
 #'
-#' The `road_list_values` function allows you to find valid attribute values for a given attribute name. 
-#' You can search for attribute names from any `road_get_*` function, and the function will return a list of all possible attribute values used in the associated tables.
-#' This is particularly useful when you need to specify an attribute but are unsure of its exact spelling or available values.
+#' The  \strong{\code{road_list_values}} function allows you to find valid 
+#' attribute values for a given attribute name. You can search for attribute 
+#' names from any `road_get_*` function, and the function will return a list of 
+#' all possible attribute values used in the associated tables. This is 
+#' particularly useful when you need to specify an attribute but are unsure of 
+#' its exact spelling or available values.
 #'
-#' @param attribute_name name of an attribute.
+#' @param attribute_name is a name of an attribute.
+#' @param table_names is a table name or table names to which the attribute belongs.
 #'
 #' @return List of attribute values.
 #' @export
 #'
 #' @examples
+<<<<<<< HEAD
 #' road_list_values("category")
 #' road_list_values("cultural_period")
 road_list_values <- function(attribute_name)
@@ -246,6 +379,56 @@ road_list_values <- function(attribute_name)
   data <- road_run_query(query)
 
   return(data)
+=======
+#' road_list_values(table_names = "assemblage", attribute_name = "category")
+#' road_list_values(table_names = c("geological_layer_age", 
+#' "archaeological_layer_age", "assemblage_age"), attribute_name = "dating_method")
+road_list_values <- function (table_names, attribute_name)
+{ 
+   if (is.null(attribute_name))
+    stop("No attribute name is given.")
+  
+   if (is.null(table_names))
+    stop(paste("No data source for argument ", attribute_name, " was found."))
+  
+   # table_names is a file name
+   #if (grepl(".txt", table_names, fixed = TRUE) && grepl("/", table_names, fixed = TRUE)) {
+   # data <- read.csv(toString(table_names))
+   # return(data)
+   #}
+  
+   cm_attribute_name <- attribute_name
+  
+   q_extension <- ""
+   q <- ""
+  
+   q_extension <- paste( "SELECT DISTINCT regexp_replace(", cm_attribute_name,", '.+[1234567890]+', '') AS ",
+                        cm_attribute_name,
+                        " FROM ( ")
+  
+   q <- paste( "SELECT 
+              DISTINCT(unnest(regexp_split_to_array(", cm_attribute_name, ",',[ ]*'))) AS ",
+              cm_attribute_name,
+              " from ")
+   if (cm_attribute_name == "transport_distance") q <- paste( "SELECT DISTINCT ", cm_attribute_name,
+                                                              " AS ", cm_attribute_name,
+                                                              " from ")
+   
+   que <- paste(
+    sapply(table_names, function(x) paste0(q, x)), 
+    collapse = " UNION "
+   )
+   query <- paste0(q_extension, que, ") AS foo ORDER BY ", cm_attribute_name, "")
+   
+   # First exception
+   if (cm_attribute_name == "transport_distance") query <- paste( "SELECT DISTINCT ", cm_attribute_name,
+                                                              " AS ", cm_attribute_name,
+                                                              " FROM ", table_names)
+   
+   data <- road_run_query(query)
+  
+   return(data)
+>>>>>>> 0e608962e8cbe702dafa93fc6d284d9ee10f3991
 }
 
 #' Get an Overview of the ROAD Archaeology Database

@@ -1,4 +1,4 @@
-# source("./R/login.R")
+source("./R/login.R")
 
 # column names
 cm_locality_idlocality <- "locality_id"
@@ -9,6 +9,7 @@ cm_locality_country <- "country"
 cm_locality_x <- "coord_x"
 cm_locality_y <- "coord_y"
 cm_cultural_periods <- "cultural_periods"
+cm_technocomplexes <- "technocomplexes"
 cm_assemblages_locality_idlocality <- "locality_id"
 cm_assemblages_idassemblage <- "assemblage_id"
 cm_assemblages_name <- "assemblage_name"
@@ -58,7 +59,13 @@ cm_feature_interpretation <- "feature_interpretation"
 cm_miscellaneous_finds_material <- "miscellaneous_finds_material"
 cm_miscellaneous_finds_raw_material_source <- "miscellaneous_finds_raw_material_source"
 
-# run query in ROAD db
+#' run query in ROAD database
+#' 
+#' @param query specifies the SQl query.
+#'
+#' @return Database search result as a data frame.
+#' @keywords internal
+
 road_run_query <- function(query)
 {
   query <- trimws(query)
@@ -67,14 +74,11 @@ road_run_query <- function(query)
     stop("Query can not be empty.")
   }
 
-  # con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host="134.2.216.14",
-  #                  port=5432, user=rstudioapi::askForPassword("Database username"),
+  # con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host="134.2.216.14", 
+  #                  port=5432, user=rstudioapi::askForPassword("Database username"), 
   #                  password=rstudioapi::askForPassword("Database password"))
-  con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host="134.2.216.14",
-                   port=5432, user="roadgis",
-                   password="athene2020")
-  #con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host = "134.2.216.14",
-  #port = 5432, user = user_name, password = user_password)
+  con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host = "134.2.216.14", 
+  port = 5432, user = user_name, password = user_password)
 
   # run query
   result <- dbGetQuery(con, query)
@@ -235,10 +239,12 @@ add_locality_columns <- function(data, localities = NULL, assemblages = NULL)
       cm_assemblages_categories,
       cm_geological_stratigraphy_age_min,
       cm_geological_stratigraphy_age_max,
-      cm_cultural_periods
+      cm_cultural_periods,
+      cm_technocomplexes
     )
     assemblages <- assemblages[, column_selection]
-    data <- merge(x = assemblages, y = data, by = c(cm_locality_idlocality, cm_assemblages_idassemblage), all.y = TRUE)
+    data <- merge(x = assemblages, y = data, by = c(cm_locality_idlocality, 
+                                                    cm_assemblages_idassemblage), all.y = TRUE)
   }
 
   return(data)
@@ -288,6 +294,7 @@ print_null_result_message <- function(
     countries = NULL,
     locality_types = NULL,
     cultural_periods = NULL,
+    technocomplexes = NULL,
     categories = NULL,
     age_min = NULL,
     age_max = NULL,
@@ -314,6 +321,7 @@ print_null_result_message <- function(
   locality_types_str <- ifelse(is.null(locality_types), "", paste("locality_types = (", toString(locality_types), ")"))
   cultural_periods_str <- ifelse(is.null(cultural_periods), "", paste("cultural_periods = (", toString(cultural_periods), ")"))
   
+  technocomplexes_str <- ifelse(is.null(technocomplexes), "", paste("technocomplexes = (", toString(technocomplexes), ")"))
   categories_str <- ifelse(is.null(categories), "", paste("categories = (", toString(categories), ")"))
   age_min_str <- ifelse(is.null(age_min), "", paste("age_min = (", age_min, ")"))
   age_max_str <- ifelse(is.null(age_max), "", paste("age_max = (", age_max, ")"))
@@ -337,13 +345,14 @@ print_null_result_message <- function(
   fauna_genus_str <- ifelse(is.null(fauna_genus), "", paste("fauna_genus = (", toString(fauna_genus), ")"))
   fauna_species_str <- ifelse(is.null(fauna_species), "", paste("fauna_species = (", toString(fauna_species), ")"))
   
-  message(paste("One or more of the following parameters caused the empty result set:
+  message(paste("One or more of the following arguments caused the empty result set:
                   ",
                 continents_str,
                 subcontinents_str,
                 countries_str,
                 locality_types_str,
                 cultural_periods_str,
+                technocomplexes_str,
                 categories_str,
                 age_min_str,
                 age_max_str,
@@ -363,7 +372,7 @@ print_null_result_message <- function(
                 fauna_genus_str,
                 fauna_species_str,
                 "
-      Please keep in mind, the data search needs for most parameters exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
+      Please keep in mind, the data search needs for most arguments exact argument value. To get exact value for a given argument 'p' you can use the function road_list_argument_values('p')."))
   
   if (is.vector(raw_material_list) && is.vector(transport_distance))
   {
@@ -372,7 +381,7 @@ print_null_result_message <- function(
     cp <- cp %>% mutate(raw_material_list_transport_distance = paste(raw_material_list, transport_distance, sep = " "))
     s <- paste(cp$raw_material_list_transport_distance, collapse = "; ")
     message(paste("
-      Please keep in mind at least one of the the following combinations (fauna_genus fauna_species) have to be in the database:
+      Please note at least one of the the following combinations ( raw_material_list transport_distance) have to be in the database:
                   ", s))
   }
   
@@ -383,7 +392,7 @@ print_null_result_message <- function(
     cp <- cp %>% mutate(genus_species = paste(genus, species, sep = " "))
     s <- paste(cp$genus_species, collapse = "; ")
     message(paste("
-      Please keep in mind at least one of the the following combinations (fauna_genus fauna_species) have to be in the database:
+      Please note at least one of the the following combinations (human_genus human_species) have to be in the database:
                   ", s))
   }
 
@@ -445,7 +454,7 @@ print_null_result_message <- function(
     cp <- cp %>% mutate(remains_family_genus_species = paste(remains, family, genus, species, sep = " "))
     s <- paste(cp$remains_family_genus_species, collapse = "); (")
     message(paste0("
-      Please keep in mind at least one of the the following combinations (", pr, pf, pg, ps, ")"," have to be in the database:
+      Please note at least one of the the following combinations (", pr, pf, pg, ps, ")"," have to be in the database:
                   ", "(", s, ")"))
   }
   

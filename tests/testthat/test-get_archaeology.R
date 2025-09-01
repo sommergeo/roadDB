@@ -16,6 +16,7 @@ test_that("road_get_lithic_typology()", {
   expect_equal(class(result_all_columns$age_min), "integer")
   expect_equal(class(result_all_columns$age_max), "integer")
   expect_equal(class(result_all_columns$cultural_periods), "character")
+  expect_equal(class(result_all_columns$technocomplexes), "character")
   expect_equal(class(result_all_columns$tool_list), "character")
   expect_equal(class(result_all_columns$typology), "character")
   expect_equal(class(result_all_columns$percentage), "integer")
@@ -23,7 +24,7 @@ test_that("road_get_lithic_typology()", {
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
-  expect_equal(ncol(result_all_columns), 17)
+  expect_equal(ncol(result_all_columns), 18)
 
   # Check that the percentage column is within the expected range (0 to 100), or NA is allowed
   expect_true(
@@ -63,6 +64,7 @@ test_that("road_get_lithic_raw_material()", {
   expect_equal(class(result_all_columns$age_min), "integer")
   expect_equal(class(result_all_columns$age_max), "integer")
   expect_equal(class(result_all_columns$cultural_periods), "character")
+  expect_equal(class(result_all_columns$technocomplexes), "character")
   expect_equal(class(result_all_columns$raw_material_list), "character")
   expect_equal(class(result_all_columns$transport_distance), "character")
   expect_equal(class(result_all_columns$percentage), "integer")
@@ -70,7 +72,7 @@ test_that("road_get_lithic_raw_material()", {
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
-  expect_equal(ncol(result_all_columns), 17)
+  expect_equal(ncol(result_all_columns), 18)
 
   # Check that the percentage column is within the expected range (0 to 100), or NA is allowed
   expect_true(
@@ -110,6 +112,7 @@ test_that("road_get_organic_tools()", {
   expect_equal(class(result_all_columns$age_min), "integer")
   expect_equal(class(result_all_columns$age_max), "integer")
   expect_equal(class(result_all_columns$cultural_periods), "character")
+  expect_equal(class(result_all_columns$technocomplexes), "character")
   expect_equal(class(result_all_columns$organic_tools_interpretation), "character")
   expect_equal(class(result_all_columns$organic_raw_material), "character")
   expect_equal(class(result_all_columns$number), "integer")
@@ -117,7 +120,7 @@ test_that("road_get_organic_tools()", {
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
-  expect_equal(ncol(result_all_columns), 18)
+  expect_equal(ncol(result_all_columns), 19)
 
   result_filter1 <- road_get_organic_tools(organic_tools_interpretation = "abrader/polisher")
   expect_true(
@@ -150,6 +153,7 @@ test_that("road_get_symbolic_artifacts()", {
   expect_equal(class(result_all_columns$age_min), "integer")
   expect_equal(class(result_all_columns$age_max), "integer")
   expect_equal(class(result_all_columns$cultural_periods), "character")
+  expect_equal(class(result_all_columns$technocomplexes), "character")
   expect_equal(class(result_all_columns$symbolic_artifacts_interpretation), "character")
   expect_equal(class(result_all_columns$symbolic_artifacts_category), "character")
   expect_equal(class(result_all_columns$symbolic_artifacts_material), "character")
@@ -158,7 +162,7 @@ test_that("road_get_symbolic_artifacts()", {
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
-  expect_equal(ncol(result_all_columns), 19)
+  expect_equal(ncol(result_all_columns), 20)
 
   result_filter1 <- road_get_symbolic_artifacts(symbolic_artifacts_interpretation = "abstract")
   expect_true(
@@ -191,12 +195,13 @@ test_that("road_get_feature()", {
   expect_equal(class(result_all_columns$age_min), "integer")
   expect_equal(class(result_all_columns$age_max), "integer")
   expect_equal(class(result_all_columns$cultural_periods), "character")
+  expect_equal(class(result_all_columns$technocomplexes), "character")
   expect_equal(class(result_all_columns$feature_interpretation), "character")
   expect_equal(class(result_all_columns$comments), "character")
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
-  expect_equal(ncol(result_all_columns), 15)
+  expect_equal(ncol(result_all_columns), 16)
 
   result_filter1 <- road_get_feature(feature_interpretation = "bedding")
   expect_true(
@@ -229,6 +234,7 @@ test_that("road_get_miscellaneous_finds()", {
   expect_equal(class(result_all_columns$age_min), "integer")
   expect_equal(class(result_all_columns$age_max), "integer")
   expect_equal(class(result_all_columns$cultural_periods), "character")
+  expect_equal(class(result_all_columns$technocomplexes), "character")
   expect_equal(class(result_all_columns$miscellaneous_finds_material), "character")
   expect_equal(class(result_all_columns$miscellaneous_finds_raw_material_source), "character")
   expect_equal(class(result_all_columns$number), "integer")
@@ -236,7 +242,7 @@ test_that("road_get_miscellaneous_finds()", {
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
-  expect_equal(ncol(result_all_columns), 17)
+  expect_equal(ncol(result_all_columns), 18)
 
   result_filter1 <- road_get_miscellaneous_finds(miscellaneous_finds_material = "wood fossil")
   expect_true(

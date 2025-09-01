@@ -1,21 +1,22 @@
 test_that("road_get_localities() returns the correct data types", {
   # Call the function
-  result <- road_get_localities()
+  result_all_columns <- road_get_localities()
   
   # Check if the column types match the expected types
-  expect_equal(class(result$locality_id), "character")
-  expect_equal(class(result$continent), "character")
-  expect_equal(class(result$subcontinent), "character")
-  expect_equal(class(result$country), "character")
-  expect_equal(class(result$locality_types), "character")
-  expect_equal(class(result$coord_x), "numeric")
-  expect_equal(class(result$coord_y), "numeric")
-  expect_equal(class(result$cultural_periods), "character")
+  expect_equal(class(result_all_columns$locality_id), "character")
+  expect_equal(class(result_all_columns$continent), "character")
+  expect_equal(class(result_all_columns$subcontinent), "character")
+  expect_equal(class(result_all_columns$country), "character")
+  expect_equal(class(result_all_columns$locality_types), "character")
+  expect_equal(class(result_all_columns$coord_x), "numeric")
+  expect_equal(class(result_all_columns$coord_y), "numeric")
+  expect_equal(class(result_all_columns$cultural_periods), "character")
+  expect_equal(class(result_all_columns$technocomplexes), "character")
   
   # Check if the result is a data frame and has the expected number of rows 
   # and columns
-  expect_s3_class(result, "data.frame")
-  expect_equal(ncol(result), 8)
+  expect_s3_class(result_all_columns, "data.frame")
+  expect_equal(ncol(result_all_columns), 9)
   expect_true(nrow(road_get_localities()) > 0)
   
   #expect_message()
@@ -26,11 +27,11 @@ test_that("road_get_localities() returns the correct data types", {
 # Testing whether the information about the function is helpful
 help(road_get_localities)
 
-road_list_parameter_values("continents") # Works
-road_list_parameter_values("subcontinents") # when running this it returns nothing
-road_list_parameter_values("countries") # Works, but very last on list is "the"
-road_list_parameter_values("locality_types") # when running this it returns nothing
-road_list_parameter_values("cultural_periods") # the very first row here is "Age", also, there is no "Middle Paleolithic" as used in one of the examples?
+road_list_argument_values("continents") # Works
+road_list_argument_values("subcontinents") # when running this it returns nothing
+road_list_argument_values("countries") # Works, but very last on list is "the"
+road_list_argument_values("locality_types") # when running this it returns nothing
+road_list_argument_values("cultural_periods") # the very first row here is "Age", also, there is no "Middle Paleolithic" as used in one of the examples?
 
 
 # testing examples

@@ -33,38 +33,38 @@ As the ROAD database is exceptionally rich in information at the assemblage leve
 ### Arguments
 The following arguments are optional and can be used with every `road_get_*` function to constrain queries.
 
-| Argument                  | Type      | ROAD table / attribute                               | Example                                       |
-| ------------------------- | --------- | ---------------------------------------------------- | --------------------------------------------- |
-| `locality`                  | character | locality / idlocality                                | "Sibhudu Cave"                                |
-| `continent`                 | character | country_continent / continent                        | "Africa"                                      |
-| `subcontinent`              | character | country_continent / region                           | "Southern Africa"                             |
-| `country`                   | character | locality / country                                   | "South Africa"                                |
-| `region`                    | character | locality / region                                    | "KwaZulu-Natal"                               |
-| `locality_type`             | character | locality / type                                      | "rock shelter"                                |
-| `assemblage_name`           | character | assemblage / name                                    | "Sibhudu Cave DMou Archaeological Assemblage" |
-| `assemblage_id`             | character | assemblage / idassemblage                            | "154"                                         |
-| `geolayer`                  | character | geostrat_describes_geolayer / geolayer_name          | "OMOD"                                        |
-| `archaeological_layer`      | character | archaeological_stratigraphy / name                   | "LBG"                                         |
-| `age_min`                   | numeric   | assemblage_age / age and negative_standard_deviation | 20000                                         |
-| `age_max`                   | numeric   | assemblage_age / age and positive_standard_deviation | 3000000                                       |
-| `culture`                   | character | archaeological_layer / archstratigraphy_idarchstrat  | "Post-Howiesonspoort"                         |
-| `cultural_period`           | character |  archaeological_stratigraphy / cultural_period       | "Middle Stone Age"                            |
-| `archaeological_technology` | character |                                                      |                                               |
-| `archaeological_typology`   | character |                                                      |                                               |
-| `raw_materials`             | character |                                                      |                                               |
-| `archaeological_function`   | character |                                                      |                                               |
-| `miscalaneous_finds`        | character |                                                      |                                               |
-| `organic_tools`             | character |                                                      |                                               |
-| `symbolic_artifacts`        | character |                                                      |                                               |
-| `archaeological_feature`    | character |                                                      |                                               |
-| `plant_remains`             | boolean   |                                                      |                                               |
-| `human_remains`             | boolean   |                                                      |                                               |
-| human_genus?              | character |                                                      |                                               |
-| human species?            | character |                                                      |                                               |
-| `plant_remains`             | boolean   |                                                      |                                               |
-| plant_species?            | character |                                                      |                                               |
-| `paleofauna`                | boolean   |                                                      |                                               |
-| faunal_genus?             | character |                                                      |                                               |
-| faunal_species?           | character |                                                      |                                               |
-| `animal_remains`            | boolean   |                                                      |                                               |
-| further arguments?        |           |                                                      |                                               |
+| Argument                            | Type      | ROAD table / attribute                               | Example                                       |
+| ----------------------------------- | --------- | ---------------------------------------------------- | --------------------------------------------- |
+| `continents`                        | character | country_continent / continent                        | "Africa"                                      |
+| `subcontinents`                     | character | country_continent / region                           | "Southern Africa"                             |
+| `countries`                         | character | locality / country                                   | "South Africa"                                |
+| `locality_types`                    | character | locality / type                                      | "rock shelter"                                |
+| `categories`                        | character | assemblage / category                                | "Sibhudu Cave DMou Archaeological Assemblage" |
+| `age_min`                           | numeric   | archaeological_stratigraphy / age_min                | 20000                                         |
+| `age_max`                           | numeric   | archaeological_stratigraphy / age_max                | 3000000                                       |
+| `technocomplexes`                   | character | archaeological_stratigraphy /technocomplex           | "ESA/ Early Acheulean"                         |
+| `cultural_periods`                  | character | archaeological_stratigraphy / cultural_period        | "Middle Stone Age"                            |
+
+
+The following arguments are optional and can be used with the corresponding `road_get_*` function to constrain queries.
+
+| Argument                            | Type      | ROAD table / attribute                               | Example(s)                                    |
+| ----------------------------------- | --------- | ---------------------------------------------------- | --------------------------------------------- |
+| `dating_methods`                    | character |                                                      |  "C (radiocarbon) dating"                     |
+| `material_dated`                    | character |                                                      |  "flint", "limestone", "tephra"               |       
+| `tool_list`                         | character |                                                      |  "blade aurignacian"                          |  
+| `raw_material_list`                 | character |                                                      |  "ironstone banded"                           |
+| `transport_distance`                | character | transport_distance                                   |  "regional (6-20 km)"                         |
+| `organic_tools_interpretation`      | character |                                                      |  "harpoon"                                    |
+| `symbolic_artifacts_interpretation` | character |                                                      |  "anthropomorphic"                            |
+| `feature_interpretation`            | character |                                                      |  "stone construction"                         |
+| `miscellaneous_finds_material`      | character |                                                      |  "ostrich egg shell"                          |
+| `human_genus`                       | character |                                                      |  "Homo", "Paranthropus"                       |
+| `human_species`                     | character |                                                      |  "sapiens rhodesiensis"                       |
+| `plant_remains`                     | character |                                                      |  "phytoliths", "plant macroremains"           |
+| `plant_family`                      | character |                                                      |  "Anarcadiaceae",    "Phyllanthaceae"         |
+| `plant_genus`                       | character |                                                      |  "Jasione", "Larix/Picea"                     |
+| `plant_species`                     | character |                                                      |  "Potamogeton gramineus L."                   |
+| `fauna_genus`                       | character |                                                      |  "Lemniscomys", "Hipposideros"                |
+| `fauna_species`                     | character |                                                      |  "cf. germanicus", "atapuerquensis"           |
+| xxxxxxxxxxxxxxx                     |           |                                                      |                                               |

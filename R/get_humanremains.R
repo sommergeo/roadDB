@@ -1,41 +1,71 @@
 #' Get human remains from ROAD database
 #'
-#' The function \code{road_get_human_remains} fetches data of human remains from ROAD database.
-#'
-#' Human remains are human fossil finds and always associated with an assemblage. A human remain is
-#' a direct and substantial piece of evidence for the presence of fossil hominids at a particular locality.
-#' Next to the assemblage information the function returns genus, species, age and sex if available
-#' and further information regarding the remains.
-#' The dataset may also include indirect evidence such as fossil endocasts and footprints.
-#' Use the parameters to filter the results or omit them to retrieve a broader dataset.
-#' Genus and species parameters can be entered as a vector of strings to search for multiple entries.
-#' If genus and species are both specified, most of the time it's more sensible to enter them as
-#' single strings and not as vectors with multiple search words to recieve useful results.
-#'
-#' @param continents specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. The parameter continents is a string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param subcontinents specifies the continental region(s) of the country , e.g. Southern Europe. The parameter subcontinents is a string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param countries specifies the name of the country where a locality is situated (e.g.
-#' Germany, Kenya, Saudi Arabia, China). The parameter countries is a string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param locality_types specifies the type of locality (e.g. cave, rockshelter, open air, profile, outcrop,
-#' mine, quarry, boring). The parameter locality_types is a string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param cultural_periods specifies the main cultural epoch(s) and includes the Eurasian
-#' Paleolithic (Lower, Middle, Upper, Epi) and the African Stone Age (Earlier, Middle, Later). The parameter cultural_periods is a string (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param categories specifies the assemblage category/categories. For an assemblage consisting of human remains category includes the entry “human
-#' remains”. In the case of archaeological assemblages, multiple categories are the norm and may
-#' include “raw material, typology, technology, function, organic tools, symbolic artifacts, feature,
-#' miscellaneous finds”. A faunal assemblage can also contain multiple entries including
-#' “paleofauna, animal remains”, while a botanical assemblage can only include the entry “plant
-#' remains”.The parameter categories is a string (one item) or vector of strings (one or more items).
-#' @param age_min specifies the minimum age of assemblage. The parameter \code{age_min} is an integer.
-#' @param age_max specifies the maximum age of assemblage. The parameter \code{age_max} is an integer.
-#' @param assemblages list of assemblages; return value from function \code{road_get_assemblages}.
-#' Can be used instead of the other locality and assemblage parameters to filter the results.
-#' @param genus specifies the genus to which the described fossil is attributed to.
-#' Possible entries include: "Australopithecus", "Homo", "indet", etc.
-#' The parameter genus is a string (one item) or vector of strings (one or more items).
-#' @param species specifies the species to which the described fossil is attributed. Possible entries include:
-#' "afarensis", "sapiens", "erectus" or "sp." for unidentified species.
-#' The parameter species is a string (one item) or vector of strings (one or more items).
+#' The \strong{\code{road_get_human_remains}} function fetches data of human 
+#' remains from ROAD database. Human remains are human fossil finds and always 
+#' associated with an assemblage. A human remain is a direct and substantial 
+#' piece of evidence for the presence of fossil hominids at a particular locality.
+#' Next to the assemblage information the function returns genus, species, 
+#' age and sex if available and further information regarding the remains.
+#' The dataset may also include indirect evidence such as fossil endocasts and 
+#' footprints.
+#' 
+#' @details
+#' Use the parameters to filter the results or omit them to retrieve a broader 
+#' dataset. Genus and species parameters can be entered as a vector of strings 
+#' to search for multiple entries. If genus and species are both specified, 
+#' most of the time it's more sensible to enter them as single strings and not 
+#' as vectors with multiple search words to recieve useful results.
+#' 
+#' @param continents specifies the continent(s) (e.g. Africa, Europe, Asia).
+#' Run \code{road_list_argument_values("continents")} to display possible values.
+#' The argument\code{continents} is a string (one item) or vector of strings 
+#' (one or more items); defaults to NULL.
+#' @param subcontinents specifies the continental region(s) (e.g. Southern Europe). 
+#' Run \code{road_list_argument_values("subcontinents")} to display possible values.
+#' The argument \code{subcontinents} is a string (one item) or vector of strings 
+#' (one or more items); defaults to NULL.
+#' @param countries specifies the name of the country where a locality is situated 
+#' (e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("countries")} 
+#' to display possible values.
+#' The argument \code{countries} is a string (one item) or vector of strings 
+#' (one or more items); defaults to NULL.
+#' @param locality_types specifies the type of locality (e.g. cave, rockshelter, open air).
+#' Run \code{road_list_argument_values("locality_types")} to display possible values.
+#' The argument \code{locality_types} is a string (one item) or vector of strings 
+#' (one or more items); defaults to NULL.
+#' @param cultural_periods specifies the main cultural epoch(s) and includes the 
+#' Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age 
+#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
+#' to display possible values. The argument \code{cultural_periods} is a string 
+#' (one item) or vector of strings (one or more items); defaults to NULL.
+#' @param technocomplexes specifies an archaeological culture or named stone tool 
+#' industry (e.g. Oldowan, Acheulean, Mousterian).
+#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
+#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
+#' (one or more items); defaults to NULL.
+#' @param categories specifies the assemblage category/categories with the classes 
+#' human remains, raw material, typology, technology, function, organic tools, 
+#' symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains, 
+#' plant remains. The argument \code{categories} is a string (one item) or 
+#' vector of strings (one or more items); defaults to NULL.
+#' @param age_min specifies the minimum age in years before present, using 1950 CE 
+#' as the baseline. The argument \code{age_min} is an integer; defaults to NULL.
+#' @param age_max specifies the maximum age in years before present, using 1950 CE 
+#' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
+#' @param assemblages list of assemblages; return value from function 
+#' \code{road_get_assemblages}. Can be used instead of the other locality and 
+#' assemblage parameters to filter the results.
+#' @param human_genus specifies the genus to which the described fossil is 
+#' attributed to. Possible entries include: "Australopithecus", "Homo", "indet", 
+#' etc. Run \code{road_list_argument_values("human_genus")} to display possible
+#' values. The argument \code{human_genus} is a string (one item) or vector of 
+#' strings; defaults to NULL.
+#' @param human_species specifies the species to which the described fossil is 
+#' attributed. Possible entries include: "afarensis", "sapiens", "erectus" or 
+#' "sp." for unidentified species. 
+#' Run \code{road_list_argument_values("human_species")} to display 
+#' possible values.The parameter \code{human_species} is a string (one item) or 
+#' vector of strings; defaults to NULL.
 #'
 #' @return Database search result as list of assemblages with human remains.
 #' @importFrom dplyr %>%
@@ -44,27 +74,37 @@
 #' @export
 #'
 #' @examples
-#' road_get_human_remains(genus = c('Homo', 'Paranthropus'))
-#' road_get_human_remains(continents = 'Europe', genus = 'Homo', species = 'neanderthalensis')
+#' road_get_human_remains(human_genus = c('Homo', 'Paranthropus'))
+#' road_get_human_remains(continents = 'Europe', human_genus = 'Homo', 
+#'                        human_species = 'neanderthalensis')
 road_get_human_remains <- function(
     continents = NULL,
     subcontinents = NULL,
     countries = NULL,
     locality_types = NULL,
     cultural_periods = NULL,
+    technocomplexes = NULL,
     categories = NULL,
     age_min = NULL,
     age_max = NULL,
     assemblages = NULL,
-    genus = NULL,
-    species = NULL
+    human_genus = NULL,
+    human_species = NULL
 )
 {
   # calculate assemblage_condition
   if ((!is.null(categories) || !is.null(age_min) || !is.null(age_max)) && !is.null(assemblages))
     warning("No assemblage search for categories or age_min/age_max is performed because a non-empty assemblage list was passed")
 
-  if (is.null(assemblages))  assemblages <- road_get_assemblages(continents, subcontinents, countries, locality_types, cultural_periods, categories, age_min, age_max)
+  if (is.null(assemblages))  assemblages <- road_get_assemblages(continents = continents, 
+                                                                 subcontinents = subcontinents, 
+                                                                 countries = countries, 
+                                                                 locality_types = locality_types, 
+                                                                 cultural_periods = cultural_periods, 
+                                                                 technocomplexes = technocomplexes, 
+                                                                 categories = categories, 
+                                                                 age_min = age_min, 
+                                                                 age_max = age_max)
 
   assemblage_condition <- get_assemblage_condition(query_start = " AND ", assemblages = assemblages)
 
@@ -72,13 +112,13 @@ road_get_human_remains <- function(
   genus_condition <- ""
   species_condition <- ""
 
-  if (!is.null(genus))
+  if (!is.null(human_genus))
   {
-    genus_condition <- parameter_to_query("AND genus IN (", genus, ")")
+    genus_condition <- parameter_to_query("AND genus IN (", human_genus, ")")
   }
-  if (!is.null(species))
+  if (!is.null(human_species))
   {
-    species_condition <- parameter_to_query("AND species IN (", species, ")")
+    species_condition <- parameter_to_query("AND species IN (", human_species, ")")
   }
 
   # select fields
@@ -108,16 +148,17 @@ road_get_human_remains <- function(
 
   if (nrow(data) == 0 && nrow(assemblages) > 0)
   {
-    print_null_result_message(  continents,
-                                subcontinents,
-                                countries,
-                                locality_types,
-                                cultural_periods,
-                                categories,
-                                age_min,
-                                age_max,
-                                genus,
-                                species
+    print_null_result_message(continents = continents,
+                              subcontinents = subcontinents,
+                              countries = countries,
+                              locality_types = locality_types,
+                              cultural_periods = cultural_periods,
+                              technocomplexes = technocomplexes,
+                              categories = categories,
+                              age_min = age_min,
+                              age_max = age_max,
+                              genus = human_genus,
+                              species = human_species
     )
       
   }

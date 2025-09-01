@@ -82,7 +82,7 @@ A data frame with absolute dating information. Rows represent individual dates, 
 \code{laboratory_idlaboratory}: The attribute is the official abbreviation for the designated analytical laboratory.
 }
 \description{
-The \code{road_get_dates} function retrieves absolute dating records for 
+The  \strong{\code{road_get_dates}} function retrieves absolute dating records for 
 assemblages, geological layers, and archaeological layers from the ROAD database.
 }
 \details{
