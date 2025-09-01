@@ -51,17 +51,17 @@ The following arguments are optional and can be used with the corresponding `roa
 | Argument                            | Type      | ROAD table / attribute                               | Example                                       |
 | ----------------------------------- | --------- | ---------------------------------------------------- | --------------------------------------------- |
 | `tool_list`                         | character |                                                      |                                               |
-| `raw_material_list`                 | character |                                                     |                                               |
+| `raw_material_list`                 | character |                                                      |                                               |
 | `transport_distance`                | character | transport_distance                                   |  "regional (6-20 km)"                         |
 | `organic_tools_interpretation`      | character |                                                      |                                               |
 | `symbolic_artifacts_interpretation` | character |                                                      |                                               |
 | `feature_interpretation`            | character |                                                      |                                               |
-| 'human_genus'                       | character |                                                      |                                               |
-| 'human_species'                     | character |                                                      |                                               |
-| 'plant_remains'                     | character |                                                      |                                               |
-| 'plant_family'                      | character |                                                      |                                               |
-| 'plant_genus'                       | character |                                                      |                                               |
-| 'plant_species'                     | character |                                                      |                                               |
-| 'fauna_genus'                       | character |                                                      |                                               |
-| 'fauna_species'                     | character |                                                      |                                               |
+| `human_genus`                       | character |                                                      |                                               |
+| `human_species`                     | character |                                                      |                                               |
+| `plant_remains`                     | character |                                                      |                                               |
+| `plant_family`                      | character |                                                      |                                               |
+| `plant_genus`                       | character |                                                      |                                               |
+| `plant_species`                     | character |                                                      |                                               |
+| `fauna_genus`                       | character |                                                      |                                               |
+| `fauna_species`                     | character |                                                      |                                               |
 | xxxxxxxxxxxxxxx                     |           |                                                      |                                               |
