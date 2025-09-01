@@ -1,28 +1,29 @@
 test_that("road_get_paleofauna() returns the correct data types", {
   # Call the function
-  result <- road_get_paleofauna()
+  result_all_columns <- road_get_paleofauna()
   
   # Check if the column types match the expected types
-  expect_equal(class(result$locality_id), "character")
-  expect_equal(class(result$assemblage_id), "integer")
-  expect_equal(class(result$continent), "character")
-  expect_equal(class(result$subcontinent), "character")
-  expect_equal(class(result$country), "character")
-  expect_equal(class(result$locality_types), "character")
-  expect_equal(class(result$coord_x), "numeric")
-  expect_equal(class(result$coord_y), "numeric")
-  expect_equal(class(result$cultural_periods), "character")
-  expect_equal(class(result$assemblage_name), "character")
-  expect_equal(class(result$categories), "character")
-  expect_equal(class(result$age_min), "integer")
-  expect_equal(class(result$age_max), "integer")
-  expect_equal(class(result$fauna_genus), "character")
-  expect_equal(class(result$fauna_species), "character")
+  expect_equal(class(result_all_columns$locality_id), "character")
+  expect_equal(class(result_all_columns$assemblage_id), "integer")
+  expect_equal(class(result_all_columns$continent), "character")
+  expect_equal(class(result_all_columns$subcontinent), "character")
+  expect_equal(class(result_all_columns$country), "character")
+  expect_equal(class(result_all_columns$locality_types), "character")
+  expect_equal(class(result_all_columns$coord_x), "numeric")
+  expect_equal(class(result_all_columns$coord_y), "numeric")
+  expect_equal(class(result_all_columns$cultural_periods), "character")
+  expect_equal(class(result_all_columns$technocomplexes), "character")
+  expect_equal(class(result_all_columns$assemblage_name), "character")
+  expect_equal(class(result_all_columns$categories), "character")
+  expect_equal(class(result_all_columns$age_min), "integer")
+  expect_equal(class(result_all_columns$age_max), "integer")
+  expect_equal(class(result_all_columns$fauna_genus), "character")
+  expect_equal(class(result_all_columns$fauna_species), "character")
   
   # Check if the result is a data frame and has the expected number of rows 
   # and columns
-  expect_s3_class(result, "data.frame")
-  expect_equal(ncol(result), 15)
+  expect_s3_class(result_all_columns, "data.frame")
+  expect_equal(ncol(result_all_columns), 16)
   expect_true(nrow(road_get_paleofauna()) > 0)
 })
 

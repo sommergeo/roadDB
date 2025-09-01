@@ -4,20 +4,26 @@
 \alias{road_list_values}
 \title{Retrieve Attribute Values from the ROAD Database}
 \usage{
-road_list_values(attribute_name)
+road_list_values(table_names, attribute_name)
 }
 \arguments{
-\item{attribute_name}{name of an attribute.}
+\item{table_names}{is a table name or table names to which the attribute belongs.}
+
+\item{attribute_name}{is a name of an attribute.}
 }
 \value{
 List of attribute values.
 }
 \description{
-The  \strong{\code{road_list_values}} function allows you to find valid attribute values for a given attribute name. 
-You can search for attribute names from any `road_get_*` function, and the function will return a list of all possible attribute values used in the associated tables.
-This is particularly useful when you need to specify an attribute but are unsure of its exact spelling or available values.
+The  \strong{\code{road_list_values}} function allows you to find valid 
+attribute values for a given attribute name. You can search for attribute 
+names from any `road_get_*` function, and the function will return a list of 
+all possible attribute values used in the associated tables. This is 
+particularly useful when you need to specify an attribute but are unsure of 
+its exact spelling or available values.
 }
 \examples{
-road_list_values("category")
-road_list_values("cultural_period")
+road_list_values(table_names = "assemblage", attribute_name = "category")
+road_list_values(table_names = c("geological_layer_age", 
+"archaeological_layer_age", "assemblage_age"), attribute_name = "dating_method")
 }

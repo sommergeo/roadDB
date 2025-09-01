@@ -8,7 +8,7 @@
 # 
 # humanremains0 <- road_get_human_remains(countries = "Ukraine")
 # humanremains1 <- road_get_human_remains(age_min = 80000L, age_max = 120000L)
-# humanremains2 <- road_get_human_remains(continents = "Africa", genus = "Homo", species = "rudolfensis")
+# humanremains2 <- road_get_human_remains(continents = "Africa", human_genus = "Homo", human_species = "rudolfensis")
 # 
 # values0 <- road_list_values()
 # values1 <- road_list_values("type")
