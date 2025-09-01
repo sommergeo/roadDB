@@ -67,10 +67,13 @@ road_run_query <- function(query)
     stop("Query can not be empty.")
   }
 
-  con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host="134.2.216.14", 
-                   port=5432, user=rstudioapi::askForPassword("Database username"), 
-                   password=rstudioapi::askForPassword("Database password"))
-  #con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host = "134.2.216.14", 
+  # con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host="134.2.216.14",
+  #                  port=5432, user=rstudioapi::askForPassword("Database username"),
+  #                  password=rstudioapi::askForPassword("Database password"))
+  con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host="134.2.216.14",
+                   port=5432, user="roadgis",
+                   password="athene2020")
+  #con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host = "134.2.216.14",
   #port = 5432, user = user_name, password = user_password)
 
   # run query
@@ -78,18 +81,18 @@ road_run_query <- function(query)
 
   #message(str(result$transport_distance))
   #message(str(result))
-  
+
   # replace all possible "NULL" values with NA
-  result[result == ""] <- NA
-  result[result == -1] <- NA
-  
+  #result[result == ""] <- NA
+  #result[result == -1] <- NA
+
   #'unknown' is a correct value of 'transport_distance', we dont want replace it.
   if ("transport_distance" %in% colnames(result))
     result['transport_distance'][result['transport_distance'] == 'unknown'] <- 'unknownunknown'
-  
-  result[result == "undefined"] <- NA
-  result[result == "unknown"] <- NA
-  
+
+ # result[result == "undefined"] <- NA
+ # result[result == "unknown"] <- NA
+
   if ("transport_distance" %in% colnames(result))
     result['transport_distance'][result['transport_distance'] == 'unknownunknown'] <- 'unknown'
 

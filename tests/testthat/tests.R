@@ -68,9 +68,9 @@
 # dates12 <- road_get_dates(assemblages=assemblages2, technocomplex = "UP/ Upper Paleolithic - Eurasia")
 # 
 # 
-# #road_summerize_archaeology
-# summary1 <- road_summerize_archaeology(term = "Cores")
-# summary2 <- road_summerize_archaeology(term = "ochre")
+# #road_summarize_archaeology
+# summary1 <- road_summarize_archaeology(term = "Cores")
+# summary2 <- road_summarize_archaeology(term = "ochre")
 # 
 # #
 # paleofauna0 <- road_get_paleofauna()
