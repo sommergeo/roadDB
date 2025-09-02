@@ -234,7 +234,7 @@ road_get_localities_ext <- function(
     
     data <- inner_join(data_tmp, ages_min_max, by = c("locality_id"),
                       copy = FALSE, na_matches = "na")
-    if (nrow(data) == 0) 
+    if (nrow(data) == 0)
       print_null_result_message(continents = continents,
                                 subcontinents = subcontinents,
                                 countries = countries,
