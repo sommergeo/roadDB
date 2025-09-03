@@ -125,19 +125,25 @@ road_get_human_remains <- function(
   select_fields <- c(
     paste0("humanremains_idlocality AS ", cm_locality_idlocality),
     paste0("humanremains_idassemblage AS ", cm_assemblages_idassemblage),
+    paste0("humanremains_idhumanremains AS ", cm_humanremains_idhumanremains),
     paste0("genus AS ", cm_humanremains_genus),
     paste0("species AS ", cm_humanremains_species),
     paste0("age AS ", cm_humanremains_age),
     paste0("sex AS ", cm_humanremains_sex),
-    paste0("humanremains_idhumanremains AS ", cm_humanremains_idhumanremains)
-  )
+    paste0("skeletal_element AS ", cm_humanremains_skeletal_element),
+    paste0("category AS ", cm_humanremains_category))
 
   # combine query parts
   query <- paste(
     "SELECT DISTINCT * FROM ( SELECT ",
     paste(select_fields, collapse = ", "),
-    " FROM publication_desc_humanremains) as foo  
-    WHERE TRUE ",
+    " FROM humanremains ",
+    "LEFT JOIN publication_desc_humanremains ON 
+      humanremains.assemblage_idlocality = publication_desc_humanremains.humanremains_idlocality AND 
+      humanremains.assemblage_idassemblage = publication_desc_humanremains.humanremains_idassemblage AND 
+      humanremains.idhumanremains = publication_desc_humanremains.humanremains_idhumanremains ",
+    ") as foo ",
+    " WHERE TRUE ",
     assemblage_condition,
     genus_condition,
     species_condition,
