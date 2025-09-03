@@ -89,15 +89,15 @@ road_run_query <- function(query)
   #message(str(result))
 
   # replace all possible "NULL" values with NA
-  #result[result == ""] <- NA
-  #result[result == -1] <- NA
+  result[result == ""] <- NA
+  result[result == -1] <- NA
+  result[result == "undefined"] <- NA
 
   #'unknown' is a correct value of 'transport_distance', we dont want replace it.
   if ("transport_distance" %in% colnames(result))
     result['transport_distance'][result['transport_distance'] == 'unknown'] <- 'unknownunknown'
-
- # result[result == "undefined"] <- NA
- # result[result == "unknown"] <- NA
+  
+  result[result == "unknown"] <- NA
 
   if ("transport_distance" %in% colnames(result))
     result['transport_distance'][result['transport_distance'] == 'unknownunknown'] <- 'unknown'
@@ -336,8 +336,8 @@ print_null_result_message <- function(
   feature_interpretation_str <- ifelse(is.null(feature_interpretation), "", paste("feature_interpretation = (", toString(feature_interpretation), ")"))
   miscellaneous_finds_material_str <- ifelse(is.null(miscellaneous_finds_material), "", paste("miscellaneous_finds_material = (", toString(miscellaneous_finds_material), ")"))
   
-  genus_str <- ifelse(is.null(genus), "", paste("genus = (", toString(genus), ")"))
-  species_str <- ifelse(is.null(species), "", paste("species = (", toString(species), ")"))
+  human_genus_str <- ifelse(is.null(genus), "", paste("human_genus = (", toString(genus), ")"))
+  human_species_str <- ifelse(is.null(species), "", paste("human_species = (", toString(species), ")"))
 
   plant_remains_str <- ifelse(is.null(plant_remains), "", paste("plant_remains = (", toString(plant_remains), ")"))
   plant_family_str <- ifelse(is.null(plant_family), "", paste("plant_family = (", toString(plant_family), ")"))
@@ -365,8 +365,8 @@ print_null_result_message <- function(
                 symbolic_artifacts_interpretation_str,
                 feature_interpretation_str,
                 miscellaneous_finds_material_str,
-                genus_str,
-                species_str,
+                human_genus_str,
+                human_species_str,
                 plant_remains_str,
                 plant_family_str,
                 plant_genus_str,
@@ -453,9 +453,10 @@ print_null_result_message <- function(
       plant_species_out <- plant_species
       ps <- "plant_species"
     }
-    remains <- ''
-    family <- ''
-    cp <- expand.grid(remains = plant_remains_out, family = plant_family_out, genus = plant_genus_out, species = plant_species_out)
+  
+    #cp <- expand.grid(remains = plant_remains_out, family = plant_family_out, genus = plant_genus_out, species = plant_species_out)
+    cp <- expand.grid(plant_remains_out, plant_family_out, plant_genus_out, plant_species_out)
+    names(cp) <- c('remains', 'family', 'genus', 'species')
     
     cp <- cp %>% mutate(remains_family_genus_species = paste(remains, family, genus, species, sep = " "))
     s <- paste(cp$remains_family_genus_species, collapse = "); (")
@@ -466,8 +467,9 @@ print_null_result_message <- function(
   
   if (is.vector(fauna_genus) && is.vector(fauna_species))
   {
-    genus <- ""
-    cp <- expand.grid(genus = fauna_genus, species = fauna_species)
+    #cp <- expand.grid(genus = fauna_genus, species = fauna_species)
+    cp <- expand.grid(fauna_genus, fauna_species)
+    names(cp) <- c('genus', 'species')
     
     cp <- cp %>% mutate(genus_species = paste(genus, species, sep = " "))
     s <- paste(cp$genus_species, collapse = "; ")
