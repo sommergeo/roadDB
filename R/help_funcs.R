@@ -458,7 +458,8 @@ print_null_result_message <- function(
     cp <- expand.grid(plant_remains_out, plant_family_out, plant_genus_out, plant_species_out)
     names(cp) <- c('remains', 'family', 'genus', 'species')
     
-    cp <- cp %>% mutate(remains_family_genus_species = paste(remains, family, genus, species, sep = " "))
+    # cp <- cp %>% mutate(remains_family_genus_species = paste(remains, family, genus, species, sep = " "))
+    cp$remains_family_genus_species <- paste(cp$remains, cp$family, cp$genus, cp$species, sep = " ")
     s <- paste(cp$remains_family_genus_species, collapse = "); (")
     message(paste0("
       Please note at least one of the following combinations (", pr, pf, pg, ps, ")"," have to be in the database:

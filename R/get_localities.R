@@ -1,6 +1,6 @@
 #' Get localities from ROAD Database
 #'
-#' The \strong{\code{road_get_localities}} fetches data of archaeological sites 
+#' The \strong{\code{road_get_localities_internal}} fetches data of archaeological sites 
 #' (localities) from ROAD database. The ROAD table locality provides basic 
 #' information about each place where an assemblage of archaeological, 
 #' paleoanthropological, paleontological, paleobotanical or other relevant materials
@@ -44,11 +44,11 @@
 #' @export
 #'
 #' @examples
-#' df <- road_get_localities(continents = "Europe", countries = c("Germany"), 
+#' df <- road_get_localities_internal(continents = "Europe", countries = c("Germany"), 
 #'                     locality_type = c("basin", "quarry"))
-#' df <- road_get_localities(countries = c("Germany", "France"), cultural_periods = "Epipaleolithic")
-# road_get_locality_info
-road_get_localities <- function(
+#' df <- road_get_localities_internal(countries = 
+#'                 c("Germany", "France"), cultural_periods = "Epipaleolithic")
+road_get_localities_internal <- function(
     continents = NULL,
     subcontinents = NULL,
     countries = NULL,
@@ -120,7 +120,7 @@ road_get_localities <- function(
 
 #' Get localities from ROAD Database
 #'
-#' The \strong{\code{road_get_localities_ext}} fetches data of archaeological 
+#' The \strong{\code{road_get_localities}} fetches data of archaeological 
 #' sites (localities) from ROAD database. The ROAD table locality provides basic 
 #' information about each place where an assemblage of archaeological, 
 #' paleoanthropological, paleontological, paleobotanical or other relevant materials
@@ -174,11 +174,11 @@ road_get_localities <- function(
 #' @export
 #'
 #' @examples
-#' df <- road_get_localities_ext(continents = "Europe", countries = c("Germany"), 
+#' df <- road_get_localities(continents = "Europe", countries = c("Germany"), 
 #'                     locality_type = c("basin", "quarry"))
-#' df <- road_get_localities_ext(countries = c("Germany", "France"), 
+#' df <- road_get_localities(countries = c("Germany", "France"), 
 #'                     cultural_periods = "Epipaleolithic")
-road_get_localities_ext <- function(
+road_get_localities <- function(
     continents = NULL,
     subcontinents = NULL,
     countries = NULL,
@@ -221,6 +221,7 @@ road_get_localities_ext <- function(
                                                    cm_technocomplexes, cm_assemblages_categories,
                                                    cm_geological_stratigraphy_age_min, 
                                                    cm_geological_stratigraphy_age_max))
+    
   
     data_tmp <- assemblages_selected %>% group_by(locality_id, continent, subcontinent,
                                                   country, locality_types, coord_x, coord_y

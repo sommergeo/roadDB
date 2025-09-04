@@ -10,7 +10,10 @@ road_get_localities(
   countries = NULL,
   locality_types = NULL,
   cultural_periods = NULL,
-  technocomplexes = NULL
+  technocomplexes = NULL,
+  categories = NULL,
+  age_min = NULL,
+  age_max = NULL
 )
 }
 \arguments{
@@ -46,26 +49,40 @@ industry (e.g. Oldowan, Acheulean, Mousterian).
 Run \code{road_list_argument_values("technocomplexes")} to display possible values.
 The argument \code{technocomplexes} is a string (one item) or vector of strings 
 (one or more items); defaults to NULL.}
+
+\item{categories}{specifies the assemblage category/categories with the classes 
+human remains, raw material, typology, technology, function, organic tools, 
+symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains, 
+plant remains. The argument \code{categories} is a string (one item) or 
+vector of strings (one or more items); defaults to NULL.}
+
+\item{age_min}{specifies the minimum age in years before present, using 1950 CE 
+as the baseline. The argument \code{age_min} is an integer; defaults to NULL.}
+
+\item{age_max}{specifies the maximum age in years before present, using 1950 CE 
+as the baseline. The argument \code{age_max} is an integer; defaults to NULL.}
 }
 \value{
 Database search result as a data frame with the information about localities 
 like their geographic information, cultural period and type.
 }
 \description{
-The \strong{\code{road_get_localities}} fetches data of archaeological sites 
-(localities) from ROAD database. The ROAD table locality provides basic 
+The \strong{\code{road_get_localities}} fetches data of archaeological 
+sites (localities) from ROAD database. The ROAD table locality provides basic 
 information about each place where an assemblage of archaeological, 
 paleoanthropological, paleontological, paleobotanical or other relevant materials
-was described, recorded, sampled or collected. Every locality (site) is situated in a specific
-country within a given geographic region. The name of every locality is unique.
+was described, recorded, sampled or collected. Every locality (site) is 
+situated in a specific country within a given geographic region. The name of every 
+locality is unique.
 }
 \details{
-Use arguments to filter search results by location, type, or culture or omit 
-them to have a broader result set. All arguments are optional and should be 
+Use parameters to filter search results by location, type, or culture or omit 
+them to have a broader result set. All parameters are optional and should be 
 omitted or set to NULL when not used.
 }
 \examples{
 df <- road_get_localities(continents = "Europe", countries = c("Germany"), 
                     locality_type = c("basin", "quarry"))
-df <- road_get_localities(countries = c("Germany", "France"), cultural_periods = "Epipaleolithic")
+df <- road_get_localities(countries = c("Germany", "France"), 
+                    cultural_periods = "Epipaleolithic")
 }

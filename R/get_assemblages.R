@@ -79,7 +79,7 @@ road_get_assemblages <- function(
   if (!is.null(age_min) && !is.null(age_max) && age_min > age_max)
     stop("Parameter 'min_age' can not be bigger than 'max_age'.")
 
-  localities <- road_get_localities(continents = continents, 
+  localities <- road_get_localities_internal(continents = continents, 
                                     subcontinents = subcontinents, 
                                     countries = countries, 
                                     locality_types = locality_types, 

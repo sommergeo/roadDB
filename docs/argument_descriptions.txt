@@ -162,3 +162,5 @@ Specific arguments
 #' to display possible values. The argument \code{plant_species} is a string 
 #' (one item) or vector of strings; defaults to NULL.
 
+Result values
+
