@@ -378,7 +378,9 @@ print_null_result_message <- function(
   
   if (is.vector(raw_material_list) && is.vector(transport_distance))
   {
-    cp <- expand.grid(raw_material_list = raw_material_list, transport_distance = transport_distance)
+    # cp <- expand.grid(raw_material_list = raw_material_list, transport_distance = transport_distance)
+    cp <- expand.grid(raw_material_list, transport_distance)
+    names(cp) <- c('raw_material_list', 'transport_distance')
     
     cp <- cp %>% mutate(raw_material_list_transport_distance = paste(raw_material_list, transport_distance, sep = " "))
     s <- paste(cp$raw_material_list_transport_distance, collapse = "; ")
@@ -478,6 +480,16 @@ print_null_result_message <- function(
       Please keep in mind at least one of the following combinations (fauna_genus fauna_species) have to be in the database:
                   ", s))
   }
+  
+}
+
+# eliminate duplicates from a list as string
+well_formed_string_to_string_without_duplicates <- function(str_with_duplikates = NULL, separator = ",[ ]*")
+{
+  l <- str_split(str_with_duplikates, separator)
+  v <- unique(l[[1]])
+  
+  return(paste0(v, collapse = ", "))
   
 }
   

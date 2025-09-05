@@ -190,69 +190,90 @@ road_get_localities <- function(
     age_max = NULL
 )
 {
-  assemblages_all_info <- road_get_assemblages(continents = continents, 
-                                               subcontinents = subcontinents, 
-                                               countries = countries, 
-                                               locality_types = locality_types)
-  assemblages_ages <- assemblages_all_info %>% select(c(cm_locality_idlocality,
-                                                  cm_geological_stratigraphy_age_min,
-                                                  cm_geological_stratigraphy_age_max))
-  ages_min_max <- assemblages_ages %>% group_by(locality_id) %>% summarise(locality_min_age = min(age_min), 
-                                                             locality_max_age = max(age_max))
-  
   assemblages <- road_get_assemblages(continents = continents,
-                                      subcontinents = subcontinents,
-                                      countries = countries,
-                                      locality_types = locality_types,
-                                      cultural_periods = cultural_periods,
-                                      technocomplexes = technocomplexes,
-                                      categories = categories,
-                                      age_min = age_min,
-                                      age_max = age_max)
-
+                                          subcontinents = subcontinents,
+                                          countries = countries,
+                                          locality_types = locality_types,
+                                          cultural_periods = cultural_periods,
+                                          technocomplexes = technocomplexes,
+                                          categories = categories,
+                                          age_min = age_min,
+                                          age_max = age_max)
+  
+  assemblages_selected <- select(assemblages, c(cm_locality_idlocality,
+                                                cm_geopolitical_units_continent, 
+                                                cm_geopolitical_units_continent_region, 
+                                                cm_locality_country,
+                                                cm_locality_types, cm_locality_x, 
+                                                cm_locality_y, cm_cultural_periods,
+                                                cm_technocomplexes, cm_assemblages_categories,
+                                                cm_geological_stratigraphy_age_min, 
+                                                cm_geological_stratigraphy_age_max))
+  
+  
   if (!is.null(assemblages) && nrow(assemblages) != 0)
   {
-    assemblages_selected <- assemblages %>% select(c(cm_locality_idlocality,
-                                                   cm_geopolitical_units_continent, 
-                                                   cm_geopolitical_units_continent_region, 
-                                                   cm_locality_country,
-                                                   cm_locality_types, cm_locality_x, 
-                                                   cm_locality_y, cm_cultural_periods,
-                                                   cm_technocomplexes, cm_assemblages_categories,
-                                                   cm_geological_stratigraphy_age_min, 
-                                                   cm_geological_stratigraphy_age_max))
+    
+    assemblages_all_info <- road_get_assemblages(continents = continents, 
+                                                 subcontinents = subcontinents, 
+                                                 countries = countries, 
+                                                 locality_types = locality_types)
+    assemblages_ages <- assemblages_all_info %>% select(c(cm_locality_idlocality,
+                                                          cm_geological_stratigraphy_age_min,
+                                                          cm_geological_stratigraphy_age_max))
+    
+    #assemblages_ages <- select(assemblages_all_info, c(cm_locality_idlocality,
+    #                                                      cm_geological_stratigraphy_age_min,
+    #                                                      cm_geological_stratigraphy_age_max))
+    
+    #ages_min_max <- assemblages_ages %>% group_by(locality_id) %>% summarise(locality_min_age = min(age_min), 
+    #                                                           locality_max_age = max(age_max))
+    
+    ages_min_max <- summarise(group_by(assemblages_ages, locality_id), locality_min_age = min(age_min), 
+                              locality_max_age = max(age_max))
+    
+    
+    assemblages_selected <- select(assemblages, c(cm_locality_idlocality,
+                                                  cm_geopolitical_units_continent, 
+                                                  cm_geopolitical_units_continent_region, 
+                                                  cm_locality_country,
+                                                  cm_locality_types, cm_locality_x, 
+                                                  cm_locality_y, cm_cultural_periods,
+                                                  cm_technocomplexes, cm_assemblages_categories,
+                                                  cm_geological_stratigraphy_age_min, 
+                                                  cm_geological_stratigraphy_age_max))
     
   
     data_tmp <- assemblages_selected %>% group_by(locality_id, continent, subcontinent,
                                                   country, locality_types, coord_x, coord_y
                                                   ) %>% summarise(categories = well_formed_string_to_string_without_duplicates(paste0(categories, collapse = ", ")),
-                                                                                     cultural_periods = well_formed_string_to_string_without_duplicates(paste0(cultural_periods, collapse = ", ")),
-                                                                                     technocomplexes = well_formed_string_to_string_without_duplicates(paste0(technocomplexes, collapse = ", ")),
-                                                                                     subset_min_age = min(age_min), 
-                                                                                     subset_max_age = max(age_max)
-                                                                 )
-    categories <- subset(data_tmp, select = categories)
+                                                                  cultural_periods = well_formed_string_to_string_without_duplicates(paste0(cultural_periods, collapse = ", ")),
+                                                                  technocomplexes = well_formed_string_to_string_without_duplicates(paste0(technocomplexes, collapse = ", ")),
+                                                                  subset_min_age = min(age_min),
+                                                                  subset_max_age = max(age_max))
+    
+    # data_tmp <- summarise(group_by(assemblages_selected, locality_id, continent, 
+    #                                subcontinent,
+    #                                country, locality_types, coord_x, coord_y
+    #                                 ), categories = well_formed_string_to_string_without_duplicates(paste0(categories, collapse = ", ")),
+    #                                    cultural_periods = well_formed_string_to_string_without_duplicates(paste0(cultural_periods, collapse = ", ")),
+    #                                    technocomplexes = well_formed_string_to_string_without_duplicates(paste0(technocomplexes, collapse = ", ")),
+    #                                    subset_min_age = min(age_min),
+    #                                    subset_max_age = max(age_max))
+    # 
+    # categories <- subset(data_tmp, select = categories)
     
     data <- inner_join(data_tmp, ages_min_max, by = c("locality_id"),
                       copy = FALSE, na_matches = "na")
-    if (nrow(data) == 0)
-      print_null_result_message(continents = continents,
-                                subcontinents = subcontinents,
-                                countries = countries,
-                                locality_types = locality_types,
-                                cultural_periods = cultural_periods,
-                                technocomplexes = technocomplexes)
-                           
+
     return(data)
   }
-  else return(assemblages)
-}
-
-well_formed_string_to_string_without_duplicates <- function(str_with_duplikates = NULL, separator = ",[ ]*")
-{
-  l <- str_split(str_with_duplikates, separator)
-  v <- unique(l[[1]])
-
-  return(paste0(v, collapse = ", "))
-  
+  else return(select(assemblages, c(cm_locality_idlocality,
+                                    cm_geopolitical_units_continent, 
+                                    cm_geopolitical_units_continent_region, 
+                                    cm_locality_country,
+                                    cm_locality_types, cm_locality_x, 
+                                    cm_locality_y, cm_cultural_periods,
+                                    cm_technocomplexes, cm_assemblages_categories
+                                    )))
 }
