@@ -1,52 +1,59 @@
 #' Get localities from ROAD Database
 #'
-#' The \strong{\code{road_get_localities_internal}} fetches data of archaeological sites 
-#' (localities) from ROAD database. The ROAD table locality provides basic 
-#' information about each place where an assemblage of archaeological, 
+#' The \strong{\code{road_get_localities_internal}} fetches data of archaeological sites
+#' (localities) from ROAD database. The ROAD table locality provides basic
+#' information about each place where an assemblage of archaeological,
 #' paleoanthropological, paleontological, paleobotanical or other relevant materials
 #' was described, recorded, sampled or collected. Every locality (site) is situated in a specific
 #' country within a given geographic region. The name of every locality is unique.
 #'
-#' Use arguments to filter search results by location, type, or culture or omit 
-#' them to have a broader result set. All arguments are optional and should be 
+#' Use arguments to filter search results by location, type, or culture or omit
+#' them to have a broader result set. All arguments are optional and should be
 #' omitted or set to NULL when not used.
 #'
 #' @param continents specifies the continent(s) (e.g. Africa, Europe, Asia).
 #' Run \code{road_list_argument_values("continents")} to display possible values.
-#' The argument\code{continents} is a string (one item) or vector of strings 
+#' The argument\code{continents} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param subcontinents specifies the continental region(s) (e.g. Southern Europe). 
+#' @param subcontinents specifies the continental region(s) (e.g. Southern Europe).
 #' Run \code{road_list_argument_values("subcontinents")} to display possible values.
-#' The argument \code{subcontinents} is a string (one item) or vector of strings 
+#' The argument \code{subcontinents} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param countries specifies the name of the country where a locality is situated 
-#' (e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("countries")} 
+#' @param countries specifies the name of the country where a locality is situated
+#' (e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("countries")}
 #' to display possible values.
-#' The argument \code{countries} is a string (one item) or vector of strings 
+#' The argument \code{countries} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
 #' @param locality_types specifies the type of locality (e.g. cave, rockshelter, open air).
 #' Run \code{road_list_argument_values("locality_types")} to display possible values.
-#' The argument \code{locality_types} is a string (one item) or vector of strings 
+#' The argument \code{locality_types} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param cultural_periods specifies the main cultural epoch(s) and includes the 
-#' Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age 
-#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
-#' to display possible values. The argument \code{cultural_periods} is a string 
+#' @param cultural_periods specifies the main cultural epoch(s) and includes the
+#' Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age
+#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")}
+#' to display possible values. The argument \code{cultural_periods} is a string
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplexes specifies an archaeological culture or named stone tool 
+#' @param technocomplexes specifies an archaeological culture or named stone tool
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
 #' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
-#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
+#' The argument \code{technocomplexes} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' 
-#' @return Database search result as a data frame with the information about localities 
-#' like their geographic information, cultural period and type.
-#' @export
+#'
+#' @details
+#' This function in comparison to \code{road_get_localities} does not include assemblage
+#' data for each location.
+#'
+#' @return A data frame with location information. Rows represent individual locations, columns contain location-related details on:
+#' @return \code{continent}, \code{subcontinent}, \code{country}: The attributes specify the geopolitical information of the locality.
+#' @return \code{locality_type}: The attribute specifies the type of locality (e.g. cave, rockshelter, open air).
+#' @return \code{coord_x}, \code{coord_y}: The attributes specify the geographic coordinates (longitude and latitude) of the locality.
+#' @return \code{cultural_periods}: The attribute specifies the cultural epoch(s) associated with the locality. If there are multiple, they are returned in a comma separated list.
+#' @return \code{technocomplexes}: The attribute specifies the archaeological culture or named stone tool industry associated with the locality. If there are multiple, they are returned in a comma separated list.
 #'
 #' @examples
-#' df <- road_get_localities_internal(continents = "Europe", countries = c("Germany"), 
+#' df <- road_get_localities_internal(continents = "Europe", countries = c("Germany"),
 #'                     locality_type = c("basin", "quarry"))
-#' df <- road_get_localities_internal(countries = 
+#' df <- road_get_localities_internal(countries =
 #'                 c("Germany", "France"), cultural_periods = "Epipaleolithic")
 road_get_localities_internal <- function(
     continents = NULL,
@@ -120,63 +127,64 @@ road_get_localities_internal <- function(
 
 #' Get localities from ROAD Database
 #'
-#' The \strong{\code{road_get_localities}} fetches data of archaeological 
-#' sites (localities) from ROAD database. The ROAD table locality provides basic 
-#' information about each place where an assemblage of archaeological, 
+#' The \strong{\code{road_get_localities}} fetches data of archaeological
+#' sites (localities) from ROAD database. The ROAD table locality provides basic
+#' information about each place where an assemblage of archaeological,
 #' paleoanthropological, paleontological, paleobotanical or other relevant materials
-#' was described, recorded, sampled or collected. Every locality (site) is 
-#' situated in a specific country within a given geographic region. The name of every 
+#' was described, recorded, sampled or collected. Every locality (site) is
+#' situated in a specific country within a given geographic region. The name of every
 #' locality is unique.
 #'
-#' Use parameters to filter search results by location, type, or culture or omit 
-#' them to have a broader result set. All parameters are optional and should be 
+#' Use parameters to filter search results by location, type, or culture or omit
+#' them to have a broader result set. All parameters are optional and should be
 #' omitted or set to NULL when not used.
 #'
 #' @param continents specifies the continent(s) (e.g. Africa, Europe, Asia).
 #' Run \code{road_list_argument_values("continents")} to display possible values.
-#' The argument\code{continents} is a string (one item) or vector of strings 
+#' The argument\code{continents} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param subcontinents specifies the continental region(s) (e.g. Southern Europe). 
+#' @param subcontinents specifies the continental region(s) (e.g. Southern Europe).
 #' Run \code{road_list_argument_values("subcontinents")} to display possible values.
-#' The argument \code{subcontinents} is a string (one item) or vector of strings 
+#' The argument \code{subcontinents} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param countries specifies the name of the country where a locality is situated 
-#' (e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("countries")} 
+#' @param countries specifies the name of the country where a locality is situated
+#' (e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("countries")}
 #' to display possible values.
-#' The argument \code{countries} is a string (one item) or vector of strings 
+#' The argument \code{countries} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
 #' @param locality_types specifies the type of locality (e.g. cave, rockshelter, open air).
 #' Run \code{road_list_argument_values("locality_types")} to display possible values.
-#' The argument \code{locality_types} is a string (one item) or vector of strings 
+#' The argument \code{locality_types} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param cultural_periods specifies the main cultural epoch(s) and includes the 
-#' Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age 
-#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
-#' to display possible values. The argument \code{cultural_periods} is a string 
+#' @param cultural_periods specifies the main cultural epoch(s) and includes the
+#' Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age
+#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")}
+#' to display possible values. The argument \code{cultural_periods} is a string
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplexes specifies an archaeological culture or named stone tool 
+#' @param technocomplexes specifies an archaeological culture or named stone tool
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
 #' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
-#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
+#' The argument \code{technocomplexes} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param categories specifies the assemblage category/categories with the classes 
-#' human remains, raw material, typology, technology, function, organic tools, 
-#' symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains, 
-#' plant remains. The argument \code{categories} is a string (one item) or 
+#' @param categories specifies the assemblage category/categories with the classes
+#' human remains, raw material, typology, technology, function, organic tools,
+#' symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains,
+#' plant remains. The argument \code{categories} is a string (one item) or
 #' vector of strings (one or more items); defaults to NULL.
-#' @param age_min specifies the minimum age in years before present, using 1950 CE 
+#' @param age_min specifies the minimum age in years before present, using 1950 CE
 #' as the baseline. The argument \code{age_min} is an integer; defaults to NULL.
-#' @param age_max specifies the maximum age in years before present, using 1950 CE 
+#' @param age_max specifies the maximum age in years before present, using 1950 CE
 #' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
 #'
-#' @return Database search result as a data frame with the information about localities 
+#' @return Database search result as a data frame with the information about localities
 #' like their geographic information, cultural period and type.
+#'
 #' @export
 #'
 #' @examples
-#' df <- road_get_localities(continents = "Europe", countries = c("Germany"), 
+#' df <- road_get_localities(continents = "Europe", countries = c("Germany"),
 #'                     locality_type = c("basin", "quarry"))
-#' df <- road_get_localities(countries = c("Germany", "France"), 
+#' df <- road_get_localities(countries = c("Germany", "France"),
 #'                     cultural_periods = "Epipaleolithic")
 road_get_localities <- function(
     continents = NULL,
