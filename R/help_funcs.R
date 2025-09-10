@@ -1,4 +1,4 @@
-source("./R/login.R")
+#source("./R/login.R")
 
 # column names
 cm_locality_idlocality <- "locality_id"
@@ -79,8 +79,8 @@ road_run_query <- function(query)
   # con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host="134.2.216.14", 
   #                  port=5432, user=rstudioapi::askForPassword("Database username"), 
   #                  password=rstudioapi::askForPassword("Database password"))
-  con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host = "134.2.216.14", 
-  port = 5432, user = user_name, password = user_password)
+  con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
+  port = 5432, user = "road_user", password = "road")
 
   # run query
   result <- dbGetQuery(con, query)
