@@ -10,7 +10,7 @@
 #'
 #' @param continents specifies the continent(s) (e.g. Africa, Europe, Asia).
 #' Run \code{road_list_argument_values("continents")} to display possible values.
-#' The argument\code{continents} is a string (one item) or vector of strings 
+#' The argument \code{continents} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param subcontinents specifies the continental region(s) (e.g. Southern Europe). 
 #' Run \code{road_list_argument_values("subcontinents")} to display possible values.
@@ -145,7 +145,7 @@ road_get_lithic_typology <- function(
 #' 
 #' @param continents specifies the continent(s) (e.g. Africa, Europe, Asia).
 #' Run \code{road_list_argument_values("continents")} to display possible values.
-#' The argument\code{continents} is a string (one item) or vector of strings 
+#' The argument \code{continents} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param subcontinents specifies the continental region(s) (e.g. Southern Europe). 
 #' Run \code{road_list_argument_values("subcontinents")} to display possible values.
@@ -297,7 +297,7 @@ road_get_lithic_raw_material <- function(
 #'
 #' @param continents specifies the continent(s) (e.g. Africa, Europe, Asia).
 #' Run \code{road_list_argument_values("continents")} to display possible values.
-#' The argument\code{continents} is a string (one item) or vector of strings 
+#' The argument \code{continents} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param subcontinents specifies the continental region(s) (e.g. Southern Europe). 
 #' Run \code{road_list_argument_values("subcontinents")} to display possible values.
@@ -430,7 +430,7 @@ road_get_organic_tools <- function(
 #'
 #' @param continents specifies the continent(s) (e.g. Africa, Europe, Asia).
 #' Run \code{road_list_argument_values("continents")} to display possible values.
-#' The argument\code{continents} is a string (one item) or vector of strings 
+#' The argument \code{continents} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param subcontinents specifies the continental region(s) (e.g. Southern Europe). 
 #' Run \code{road_list_argument_values("subcontinents")} to display possible values.
@@ -563,7 +563,7 @@ road_get_symbolic_artifacts <- function(
 #'
 #' @param continents specifies the continent(s) (e.g. Africa, Europe, Asia).
 #' Run \code{road_list_argument_values("continents")} to display possible values.
-#' The argument\code{continents} is a string (one item) or vector of strings 
+#' The argument \code{continents} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param subcontinents specifies the continental region(s) (e.g. Southern Europe). 
 #' Run \code{road_list_argument_values("subcontinents")} to display possible values.
@@ -691,7 +691,7 @@ road_get_feature <- function(
 #'
 #' @param continents specifies the continent(s) (e.g. Africa, Europe, Asia).
 #' Run \code{road_list_argument_values("continents")} to display possible values.
-#' The argument\code{continents} is a string (one item) or vector of strings 
+#' The argument \code{continents} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param subcontinents specifies the continental region(s) (e.g. Southern Europe). 
 #' Run \code{road_list_argument_values("subcontinents")} to display possible values.

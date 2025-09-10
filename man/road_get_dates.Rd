@@ -10,63 +10,70 @@ road_get_dates(
   countries = NULL,
   locality_types = NULL,
   cultural_periods = NULL,
+  technocomplexes = NULL,
   dating_methods = NULL,
   material_dated = NULL,
   age_min = NULL,
   age_max = NULL,
-  technocomplex = NULL,
   categories = NULL,
   assemblages = NULL
 )
 }
 \arguments{
-\item{continents}{specifies the continent(s) of the country/countries, e.g. Africa, Europe, Asia. 
-Run \code{road_list_values("continent")} to display possible values.
-The parameter \code{continents} is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{continents}{specifies the continent(s) (e.g. Africa, Europe, Asia).
+Run \code{road_list_argument_values("continents")} to display possible values.
+The argument \code{continents} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 
-\item{subcontinents}{specifies the continental region(s) of the country , e.g. Southern Europe. 
-Run \code{road_list_values("subcontinents")} to display possible values.
-The parameter \code{subcontinents} is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{subcontinents}{specifies the continental region(s) (e.g. Southern Europe). 
+Run \code{road_list_argument_values("subcontinents")} to display possible values.
+The argument \code{subcontinents} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 
-\item{countries}{specifies the name of the country where a locality is situated (e.g. Germany, Kenya, Saudi Arabia, China).
-Run \code{road_list_values("countries")} to display possible values.
-The parameter \code{countries} is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{countries}{specifies the name of the country where a locality is situated 
+(e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("countries")} 
+to display possible values.
+The argument \code{countries} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 
-\item{locality_types}{specifies the type of locality (e.g. cave, rockshelter, open air, profile, outcrop, mine, quarry, boring).
-Run \code{road_list_values("locality_types")} to display possible values.
-The parameter locality_types is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{locality_types}{specifies the type of locality (e.g. cave, rockshelter, open air).
+Run \code{road_list_argument_values("locality_types")} to display possible values.
+The argument \code{locality_types} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 
-\item{cultural_periods}{specifies the main cultural epoch(s) and includes the Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age (Earlier, Middle, Later).
-#' Run \code{road_list_values("cultural_periods")} to display possible values.
-The parameter cultural_periods is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{cultural_periods}{specifies the main cultural epoch(s) and includes the 
+Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age 
+(Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
+to display possible values. The argument \code{cultural_periods} is a string 
+(one item) or vector of strings (one or more items); defaults to NULL.}
 
-\item{dating_methods}{specifies the method of temporal analysis (e.g. 14C, OSL, IRSL, etc.).
-Run \code{road_list_values("dating_methods")} to display possible values.
-The parameter \code{dating_methods} is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{technocomplexes}{specifies an archaeological culture or named stone tool 
+industry (e.g. Oldowan, Acheulean, Mousterian).
+Run \code{road_list_argument_values("technocomplexes")} to display possible values.
+The argument \code{technocomplexes} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 
-\item{material_dated}{(string) specifies the material used for temporal analysis (e.g. bone, tooth, antler etc.).
-Run \code{road_list_values("material_dated")} to display possible values.
-The parameter \code{datied_material} is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{dating_methods}{specifies the method of temporal analysis (e.g. 14C, OSL, IRSL).
+Run \code{road_list_argument_values("dating_methods")} to display possible values.
+The argument \code{dating_methods} is a string (one item) or vector of strings 
+(one or more items); defaults to NULL.}
 
-\item{age_min}{(integer) specifies the minimum age of assemblage.
-The parameter \code{age_min} is an integer; defaults to NULL.}
+\item{material_dated}{(string) specifies the material used for temporal analysis 
+(e.g. bone, tooth, antler). Run \code{road_list_argument_values("material_dated")} 
+to display possible values. The argument \code{datied_material} is a string 
+(one item) or vector of strings (one or more items); defaults to NULL.}
 
-\item{age_max}{(integer) specifies the maximum age of assemblage.
-The parameter \code{age_max} is an integer; defaults to NULL.}
+\item{age_min}{specifies the minimum age in years before present, using 1950 CE 
+as the baseline. The argument \code{age_min} is an integer; defaults to NULL.}
 
-\item{technocomplex}{specifies an archaeological culture or stone tool industry. Grouping is based on published interpretation and inferred from technological traits, production methods, tool types, etc.
-Run \code{road_list_values("technocomplex")} to display possible values.
-The parameter \code{technocomplex} is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{age_max}{specifies the maximum age in years before present, using 1950 CE 
+as the baseline. The argument \code{age_max} is an integer; defaults to NULL.}
 
-\item{categories}{specifies the assemblage category/categories. For an assemblage consisting of human remains category includes the entry “human
-remains”. In the case of archaeological assemblages, multiple categories are the norm and may
-include “raw material, typology, technology, function, organic tools, symbolic artifacts, feature,
-miscellaneous finds”. A faunal assemblage can also contain multiple entries including
-“paleofauna, animal remains”, while a botanical assemblage can only include the entry “plant
-remains”.The parameter \code{categories} is a string (one item) or vector of strings (one or more items).}
-
-\item{assemblages}{list of assemblage names.
-The parameter \code{assemblage} is a string (one item) or vector of strings (one or more items); defaults to NULL.}
+\item{categories}{specifies the assemblage category/categories with the classes 
+human remains, raw material, typology, technology, function, organic tools, 
+symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains, 
+plant remains. The argument \code{categories} is a string (one item) or 
+vector of strings (one or more items); defaults to NULL.}
 }
 \value{
 A data frame with absolute dating information. Rows represent individual dates, columns contain standard outputs and dating-related details on:
