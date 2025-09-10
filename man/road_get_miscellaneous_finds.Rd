@@ -21,7 +21,7 @@ road_get_miscellaneous_finds(
 \arguments{
 \item{continents}{specifies the continent(s) (e.g. Africa, Europe, Asia).
 Run \code{road_list_argument_values("continents")} to display possible values.
-The argument\code{continents} is a string (one item) or vector of strings 
+The argument \code{continents} is a string (one item) or vector of strings 
 (one or more items); defaults to NULL.}
 
 \item{subcontinents}{specifies the continental region(s) (e.g. Southern Europe). 
@@ -70,8 +70,9 @@ Run \code{road_list_argument_values("miscellaneous_finds_material")} to
 display possible values. The argument \code{miscellaneous_finds_material} is 
 a string (one item) or vector of strings; defaults to NULL.}
 
-\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
-Can be used instead of the other locality and assemblage parameters to filter the results.}
+\item{assemblages}{list of assemblages; return value from function 
+\code{road_get_assemblages}. Can be used instead of the other locality and 
+assemblage parameters to filter the results.}
 }
 \value{
 Database search result as a data frame with the information about 

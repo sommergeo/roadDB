@@ -45,6 +45,9 @@ General arguments
 #' @param age_max specifies the maximum age in years before present, using 1950 CE 
 #' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
 
+#' @param assemblages list of assemblages; return value from function 
+#' \code{road_get_assemblages}. Can be used instead of the other locality and 
+#' assemblage parameters to filter the results.
 
 Specific arguments
 

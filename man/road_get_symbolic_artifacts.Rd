@@ -21,7 +21,7 @@ road_get_symbolic_artifacts(
 \arguments{
 \item{continents}{specifies the continent(s) (e.g. Africa, Europe, Asia).
 Run \code{road_list_argument_values("continents")} to display possible values.
-The argument\code{continents} is a string (one item) or vector of strings 
+The argument \code{continents} is a string (one item) or vector of strings 
 (one or more items); defaults to NULL.}
 
 \item{subcontinents}{specifies the continental region(s) (e.g. Southern Europe). 
@@ -70,8 +70,9 @@ ornament). Run \code{road_list_argument_values("symbolic_artifacts_interpretatio
 to display possible values. The argument \code{symbolic_artifacts_interpretation} 
 is a string (one item) or vector of strings; defaults to NULL.}
 
-\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
-Can be used instead of the other locality and assemblage parameters to filter the results.}
+\item{assemblages}{list of assemblages; return value from function 
+\code{road_get_assemblages}. Can be used instead of the other locality and 
+assemblage parameters to filter the results.}
 }
 \value{
 Database search result as a data frame with the information about 

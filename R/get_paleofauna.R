@@ -47,8 +47,9 @@
 #' as the baseline. The argument \code{age_min} is an integer; defaults to NULL.
 #' @param age_max specifies the maximum age in years before present, using 1950 CE 
 #' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
-#' @param assemblages list of assemblages; return value from function \code{road_get_assemblages}.
-#' Can be used instead of the other locality and assemblage parameters to filter the results.
+#' @param assemblages list of assemblages; return value from function 
+#' \code{road_get_assemblages}. Can be used instead of the other locality and 
+#' assemblage parameters to filter the results.
 #' @param fauna_genus specifies the genus to which the described faunal remains 
 #' is attributed to. Possible entries include: "Mammuthus", "Vulpes" etc.
 #' Run \code{road_list_argument_values("fauna_genus")} to

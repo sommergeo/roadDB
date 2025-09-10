@@ -74,6 +74,10 @@ human remains, raw material, typology, technology, function, organic tools,
 symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains, 
 plant remains. The argument \code{categories} is a string (one item) or 
 vector of strings (one or more items); defaults to NULL.}
+
+\item{assemblages}{list of assemblages; return value from function 
+\code{road_get_assemblages}. Can be used instead of the other locality and 
+assemblage parameters to filter the results.}
 }
 \value{
 A data frame with absolute dating information. Rows represent individual dates, columns contain standard outputs and dating-related details on:

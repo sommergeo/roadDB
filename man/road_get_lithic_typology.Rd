@@ -21,7 +21,7 @@ road_get_lithic_typology(
 \arguments{
 \item{continents}{specifies the continent(s) (e.g. Africa, Europe, Asia).
 Run \code{road_list_argument_values("continents")} to display possible values.
-The argument\code{continents} is a string (one item) or vector of strings 
+The argument \code{continents} is a string (one item) or vector of strings 
 (one or more items); defaults to NULL.}
 
 \item{subcontinents}{specifies the continental region(s) (e.g. Southern Europe). 
@@ -64,8 +64,9 @@ as the baseline. The argument \code{age_min} is an integer; defaults to NULL.}
 \item{age_max}{specifies the maximum age in years before present, using 1950 CE 
 as the baseline. The argument \code{age_max} is an integer; defaults to NULL.}
 
-\item{assemblages}{list of assemblages; return value from function `road_get_assemblages`.
-Can be used instead of the other locality and assemblage parameters to filter the results.}
+\item{assemblages}{list of assemblages; return value from function 
+\code{road_get_assemblages}. Can be used instead of the other locality and 
+assemblage parameters to filter the results.}
 
 \item{tool_list}{specifies values that can be entered for various tool types. 
 Tool types can contain 1) chipped tool types like scraper end, scraper side, 
