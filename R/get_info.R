@@ -171,7 +171,7 @@ road_list_values <- function (table_names, attribute_name)
    q_extension <- ""
    q <- ""
 
-   q_extension <- paste( "SELECT DISTINCT regexp_replace(", cm_attribute_name,", '.+[1234567890]+', '') AS ",
+   q_extension <- paste( "SELECT DISTINCT regexp_replace(", cm_attribute_name,", ' +[1234567890]+', '') AS ",
                         cm_attribute_name,
                         " FROM ( ")
 
@@ -194,6 +194,7 @@ road_list_values <- function (table_names, attribute_name)
                                                               " AS ", cm_attribute_name,
                                                               " FROM ", table_names)
 
+   message(query)
    data <- road_run_query(query)
 
    return(data)
