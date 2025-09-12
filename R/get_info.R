@@ -193,8 +193,6 @@ road_list_values <- function (table_names, attribute_name)
    if (cm_attribute_name == "transport_distance") query <- paste( "SELECT DISTINCT ", cm_attribute_name,
                                                               " AS ", cm_attribute_name,
                                                               " FROM ", table_names)
-
-   message(query)
    data <- road_run_query(query)
 
    return(data)

@@ -42,7 +42,7 @@ The following arguments are optional and can be used with every `road_get_*` fun
 | `categories`                        | character | assemblage / category                                | "Sibhudu Cave DMou Archaeological Assemblage" |
 | `age_min`                           | numeric   | archaeological_stratigraphy / age_min                | 20000                                         |
 | `age_max`                           | numeric   | archaeological_stratigraphy / age_max                | 3000000                                       |
-| `technocomplexes`                   | character | archaeological_stratigraphy /technocomplex           | "ESA/ Early Acheulean"                         |
+| `technocomplexes`                   | character | archaeological_stratigraphy /technocomplex           | "ESA/ Early Acheulean"                        |
 | `cultural_periods`                  | character | archaeological_stratigraphy / cultural_period        | "Middle Stone Age"                            |
 
 
@@ -50,21 +50,25 @@ The following arguments are optional and can be used with the corresponding `roa
 
 | Argument                            | Type      | ROAD table / attribute                               | Example(s)                                    |
 | ----------------------------------- | --------- | ---------------------------------------------------- | --------------------------------------------- |
-| `dating_methods`                    | character |                                                      |  "C (radiocarbon) dating"                     |
-| `material_dated`                    | character |                                                      |  "flint", "limestone", "tephra"               |       
-| `tool_list`                         | character |                                                      |  "blade aurignacian"                          |  
-| `raw_material_list`                 | character |                                                      |  "ironstone banded"                           |
-| `transport_distance`                | character | transport_distance                                   |  "regional (6-20 km)"                         |
-| `organic_tools_interpretation`      | character |                                                      |  "harpoon"                                    |
-| `symbolic_artifacts_interpretation` | character |                                                      |  "anthropomorphic"                            |
-| `feature_interpretation`            | character |                                                      |  "stone construction"                         |
-| `miscellaneous_finds_material`      | character |                                                      |  "ostrich egg shell"                          |
-| `human_genus`                       | character |                                                      |  "Homo", "Paranthropus"                       |
-| `human_species`                     | character |                                                      |  "sapiens rhodesiensis"                       |
-| `plant_remains`                     | character |                                                      |  "phytoliths", "plant macroremains"           |
-| `plant_family`                      | character |                                                      |  "Anarcadiaceae",    "Phyllanthaceae"         |
-| `plant_genus`                       | character |                                                      |  "Jasione", "Larix/Picea"                     |
-| `plant_species`                     | character |                                                      |  "Potamogeton gramineus L."                   |
-| `fauna_genus`                       | character |                                                      |  "Lemniscomys", "Hipposideros"                |
-| `fauna_species`                     | character |                                                      |  "cf. germanicus", "atapuerquensis"           |
-| xxxxxxxxxxxxxxx                     |           |                                                      |                                               |
+| `dating_methods`                    | character | assemblage_age / dating_method,                      |  "U series (uranium-thorium) dating",         |
+|                                     |           | archaeological_layer_age / dating_method,            |  "ESR (electron spin resonance) dating",      |
+|                                     |           | geological_layer_age / dating_method                 |  "14C (radiocarbon) dating"                   |
+| `material_dated`                    | character | assemblage_age / material_dated,                     |  "flint", "limestone", "tephra"               |       
+|                                     |           | archaeological_layer_age / material_dated,           |  "lithic burnt",                              |
+|                                     |           | geological_layer_age / material_dated                |  "bone"                                       |
+| `tool_list`                         | character | typology / tool_list                                 |  "core 29, bladelet 136, blade 1090"          |  
+| `raw_material_list`                 | character | raw_material / raw_material_list                     |  "ironstone banded"                           |
+| `transport_distance`                | character | raw_material / transport_distance                    |  "regional (6-20 km)"                         |
+| `organic_tools_interpretation`      | character | organic_tools / interpretation                       |  "harpoon", "worked", "retoucher"             |
+| `symbolic_artifacts_interpretation` | character | symbolic_artifacts / interpretation                  |  "anthropomorphic"                            |
+| `feature_interpretation`            | character | feature / interpretation                             |  "stone construction"                         |
+| `miscellaneous_finds_material`      | character | miscellaneous_finds / material                       |  "ostrich egg shell", "metal"                 |
+| `human_genus`                       | character | publication_desc_humanremains / genus                |  "Homo", "Paranthropus"                       |
+| `human_species`                     | character | publication_desc_humanremains / species              |  "sapiens rhodesiensis", "cf. sapiens"        |
+| `plant_remains`                     | character | plantremains / plant_remains                         |  "phytoliths", "plant macroremains"           |
+| `plant_family`                      | character | plant_taxonomy / family                              |  "Anarcadiaceae",    "Phyllanthaceae"         |
+| `plant_genus`                       | character | plant_taxonomy / genus                               |  "Jasione", "Larix/Picea"                     |
+| `plant_species`                     | character | plant_taxonomy / species                             |  "Potamogeton gramineus L."                   |
+| `fauna_genus`                       | character | taxonomical_classification / genus                   |  "Lemniscomys", "Hipposideros"                |
+| `fauna_species`                     | character | paleofauna / species                                 |  "cf. germanicus", "atapuerquensis"           |
+
