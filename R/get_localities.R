@@ -53,8 +53,8 @@
 # @examples
 # df <- road_get_localities_internal(continents = "Europe", countries = c("Germany"),
 #                     locality_type = c("basin", "quarry"))
-#' df <- road_get_localities_internal(countries =
-#'                 c("Germany", "France"), cultural_periods = "Epipaleolithic")
+# df <- road_get_localities_internal(countries =
+#                 c("Germany", "France"), cultural_periods = "Epipaleolithic")
 road_get_localities_internal <- function(
     continents = NULL,
     subcontinents = NULL,

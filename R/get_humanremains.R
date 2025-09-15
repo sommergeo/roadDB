@@ -74,8 +74,8 @@
 #' @export
 #'
 #' @examples
-#' road_get_human_remains(human_genus = c('Homo', 'Paranthropus'))
-#' road_get_human_remains(continents = 'Europe', human_genus = 'Homo', 
+#' road_get_human_remains(subcontinents = "East Africa", human_genus = c('Paranthropus'))
+#' road_get_human_remains(subcontinents = 'Caucasus', human_genus = 'Homo', 
 #'                        human_species = 'neanderthalensis')
 road_get_human_remains <- function(
     continents = NULL,

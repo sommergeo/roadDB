@@ -103,7 +103,7 @@ most of the time it's more sensible to enter them as single strings and not
 as vectors with multiple search words to recieve useful results.
 }
 \examples{
-road_get_human_remains(human_genus = c('Homo', 'Paranthropus'))
-road_get_human_remains(continents = 'Europe', human_genus = 'Homo', 
+road_get_human_remains(subcontinents = "East Africa", human_genus = c('Paranthropus'))
+road_get_human_remains(subcontinents = 'Caucasus', human_genus = 'Homo', 
                        human_species = 'neanderthalensis')
 }

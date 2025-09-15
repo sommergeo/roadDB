@@ -127,7 +127,7 @@ road_list_argument_values <- function(function_argument)
   if (attribute_name == "NULL") stop("No attribute name found.")
 
   data <- road_list_values(table_names = table_names, attribute_name = attribute_name)
-
+  
   return(data)
 }
 
