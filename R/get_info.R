@@ -67,7 +67,7 @@ road_list_argument_values <- function(function_argument)
     function_argument == "plant_species"
       ~ "species",
     function_argument == "assemblages"
-    ~ "assemblages",
+      ~ "assemblages",
     TRUE  ~ "NULL"
   )
 
@@ -155,7 +155,7 @@ road_list_values <- function (table_names, attribute_name)
    if (is.null(attribute_name))
     stop("No attribute name is given.")
 
-   if (attribute_name == 'assemblages') return("List of assemblages; return value from function 'road_get_assemblages'. Can be used instead of the other locality and assemblage parameters to filter the results.")
+   if (attribute_name == 'assemblages') return(paste0("The argument 'assemblages' is a data frame necessarily containing columns ", cm_assemblages_locality_idlocality, ", ", cm_assemblages_idassemblage, ". It can be  generated as return value of the function 'road_get_assemblages'. It can be used instead of the other locality and assemblage search parameters to filter the results."))
   
    if (is.null(table_names))
     stop(paste("No data source for argument ", attribute_name, " was found."))

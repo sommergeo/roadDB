@@ -63,8 +63,23 @@ as the baseline. The argument \code{age_min} is an integer; defaults to NULL.}
 as the baseline. The argument \code{age_max} is an integer; defaults to NULL.}
 }
 \value{
-Database search result as a data frame with the information about localities
-like their geographic information, cultural period and type.
+A data frame with location information. Rows represent individual locations, columns contain location-related details on:
+
+\code{continent}, \code{subcontinent}, \code{country}: The attributes specify the geopolitical information of the locality.
+
+\code{locality_type}: The attribute specifies the type of locality (e.g. cave, rockshelter, open air).
+
+\code{coord_x}, \code{coord_y}: The attributes specify the geographic coordinates (longitude and latitude) of the locality.
+
+\code{categories}: Specifies the categories of the findings associated with the locality. If there are multiple, they are returned in a comma separated list.
+
+\code{cultural_periods}: Specifies the cultural epoch(s) associated with the locality. If there are multiple, they are returned in a comma separated list.
+
+\code{technocomplexes}: Specifies the archaeological culture or named stone tool industry associated with the locality. If there are multiple, they are returned in a comma separated list.
+
+\code{subset_min_age}, \code{subset_max_age}: The attributes specify the minimum and maximum age of all assemblages associated with the locality that match the search criteria.
+
+\code{locality_min_age}, \code{locality_max_age}: The attributes specify the overall minimum and maximum age of all assemblages associated with this locality.
 }
 \description{
 The \strong{\code{road_get_localities}} fetches data of archaeological

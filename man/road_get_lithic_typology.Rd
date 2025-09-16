@@ -79,8 +79,18 @@ or vector of strings (one or more items); defaults to NULL.}
 }
 \value{
 Database search result as a data frame with the information about 
-lithic finds like their geographic information, cultural period, locality type, 
-assemblage category, dating, typology, percentage, tool list.
+lithic finds. Rows represent lithic finds and contain standard information 
+like locality name, geographic information, cultural period, locality type, 
+assemblage category, dating and lithic typology-related details:
+
+\code{typology}: Description of the group of tool type present in the 
+given lithic record. Following four values are possible: chipped tool, non-chipped 
+tool, non-tool and unknown.
+
+\code{percentage}: Percentage of the typology type of the given record
+in the corresponding assemblage.
+
+\code{tool list}: List of tool types in the given lithic record.
 }
 \description{
 The \strong{\code{road_get_lithic_typology}} fetches data of lithic finds 

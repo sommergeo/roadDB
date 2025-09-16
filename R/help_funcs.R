@@ -94,13 +94,13 @@ road_run_query <- function(query)
   result[result == "undefined"] <- NA
 
   #'unknown' is a correct value of 'transport_distance', we dont want replace it.
-  if ("transport_distance" %in% colnames(result))
-    result['transport_distance'][result['transport_distance'] == 'unknown'] <- 'unknownunknown'
+  # if ("transport_distance" %in% colnames(result))
+  #  result['transport_distance'][result['transport_distance'] == 'unknown'] <- 'unknownunknown'
   
-  result[result == "unknown"] <- NA
+  # result[result == "unknown"] <- NA
 
-  if ("transport_distance" %in% colnames(result))
-    result['transport_distance'][result['transport_distance'] == 'unknownunknown'] <- 'unknown'
+  # if ("transport_distance" %in% colnames(result))
+  #  result['transport_distance'][result['transport_distance'] == 'unknownunknown'] <- 'unknown'
 
   return(result)
 }

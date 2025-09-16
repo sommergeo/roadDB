@@ -76,9 +76,29 @@ assemblage parameters to filter the results.}
 }
 \value{
 Database search result as a data frame with the information about 
-miscellaneous finds like their geographic information,
-cultural period, locality type, category, dating, miscellaneous finds material,
-miscellaneous finds material source (local, regional, supra-regional, unknown) and number.
+miscellaneous finds. Rows represent miscellaneous finds and contain 
+standard information like locality name, geographic information, cultural 
+period, locality type, assemblage category, dating and miscellaneous 
+finds-related details
+
+\code{miscellaneous finds material}: Material of the miscellaneous 
+find. Some examples: beeswax, bitumen, clay, flax fiber, fossil, mineral 
+diverse (materials such as crystals), mineral pigment (colorants such as 
+ochre, hematite, limonite, goethite, specularite, etc.) ostrich eggshell
+
+\code{miscellaneous finds material source}: List with specific 
+intervals of transport for the raw material used to manufacture the 
+miscellaneous finds. Five fixed types of material source are possible:
+\itemize{
+  \item local (0-5 km) 
+  \item regional (6-20 km)
+  \item supra-regional (21-100 km)
+  \item distant (>100 km)
+  \item unknown
+}
+
+\code{number}: Number of individual pieces of a given material present
+ in an assemblage with miscellaneous finds.
 }
 \description{
 The \strong{\code{road_get_miscellaneous_finds}} fetches data of feature finds from ROAD database.

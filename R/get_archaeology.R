@@ -57,8 +57,15 @@
 #' or vector of strings (one or more items); defaults to NULL.
 #'
 #' @return Database search result as a data frame with the information about 
-#' lithic finds like their geographic information, cultural period, locality type, 
-#' assemblage category, dating, typology, percentage, tool list.
+#' lithic finds. Rows represent lithic finds and contain standard information 
+#' like locality name, geographic information, cultural period, locality type, 
+#' assemblage category, dating and lithic typology-related details:
+#' @return \code{typology}: Description of the group of tool type present in the 
+#' given lithic record. Following four values are possible: chipped tool, non-chipped 
+#' tool, non-tool and unknown.
+#' @return \code{percentage}: Percentage of the typology type of the given record
+#' in the corresponding assemblage. 
+#' @return \code{tool list}: List of tool types in the given lithic record.
 #' @export
 #'
 #' @examples
@@ -188,10 +195,9 @@ road_get_lithic_typology <- function(
 #' Run \code{road_list_argument_values("raw_material_list")} to display possible values.
 #' The argument \code{raw_material_list} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
-#' @param transport_distance specifies one or more of the five categories, each 
+#' @param transport_distance specifies one of the five categories, each 
 #' distinguished by specific intervals of transport for the raw materials present 
-#' in an assemblage. When more than one type of transport distance is present, 
-#' then each of the transport distances must be entered as a unique dataset. 
+#' in the assemblage.
 #' The five classes of transport distance are:
 #' \itemize{
 #'   \item local (0-5 km) 
@@ -205,13 +211,18 @@ road_get_lithic_typology <- function(
 #' defaults to NULL.
 #'
 #' @return Database search result as a data frame with the information about 
-#' lithic finds like their geographic information,
-#' cultural period, locality type, assemblage category, dating and info about raw material like
-#' transport distance, percentage, raw material list.
+#' lithic finds. Rows represent lithic finds and contain standard information 
+#' like locality name, geographic information, cultural period, locality type, 
+#' assemblage category, dating and raw material-related details:
+#' @return \code{transport distance}: Specific interval of transport for the 
+#' raw materials in the given record.
+#' @return \code{percentage}: Percentage of the raw materials of the given record
+#' in the corresponding assemblage.
+#' @return \code{raw material list}: List of raw materials of the given record. 
+#' 
 #' @export
 #'
 #' @examples
-#'
 #' road_get_lithic_raw_material(subcontinents = "South Asia", raw_material_list = c("limestone"))
 #' road_get_lithic_raw_material(subcontinents = c("Caucasus"), locality_types = "cave",
 #'                              raw_material_list = c("chalcedony", "limestone"))
@@ -343,9 +354,16 @@ road_get_lithic_raw_material <- function(
 #' is a string (one item) or vector of strings; defaults to NULL.
 #'
 #' @return Database search result as a data frame with the information about 
-#' organic tools like their geographic information,
-#' cultural period, locality type, category, dating, information about
-#' organic tools interpretation, organic raw material, organic tools technology and number.
+#' organic tool finds. Rows represent organic tool finds and contain standard 
+#' information like locality name, geographic information, cultural period, 
+#' locality type, assemblage category, dating and organic tools-related details:
+#' @return \code{organic tools interpretation}: List of organic tool types of 
+#' the given record.
+#' @return \code{organic raw material}: Material from which an organic tool is made.
+#' @return \code{organic tools technology}: List of actions used to manufacture 
+#' organic tools of the given record.
+#' @return \code{number}: Number of individual pieces for the organic raw 
+#' material in the assemblage.
 #' @export
 #'
 #' @examples
@@ -477,10 +495,26 @@ road_get_organic_tools <- function(
 #' is a string (one item) or vector of strings; defaults to NULL.
 #'
 #' @return Database search result as a data frame with the information about 
-#' symbolic artifacts like their geographic information, cultural period, 
-#' locality type, assemblage category, dating and info about symbolic artifacts 
-#' interpretation, symbolic artifacts category, symbolic artifacts technology, 
-#' symbolic artifacts material, symbolic artifacts raw material source.
+#' symbolic artifact finds. Rows represent symbolic artifact finds and contain standard 
+#' information like locality name, geographic information, cultural period, 
+#' locality type, assemblage category, dating and symbolic artifacts-related details:
+#' interpretation
+#' @return \code{symbolic artifacts category}: List of symbolic categories 
+#' (art, music, ornament).  
+#' @return \code{symbolic artifacts technology}: List of technologies such as: 
+#' painting, engraving, carving, molding, polishing, imprinting, etc.
+#' @return \code{symbolic artifacts material}: Material of the symbolic artifact, 
+#' for example: antler, bone, cave wall, clay, ivory, ochre, ostrich eggshell.
+#' @return \code{symbolic artifacts raw material source}: List with specific 
+#' intervals of transport for the raw material used to manufacture the symbolic 
+#' artifact. Five fixed types of raw material source are possible:
+#' \itemize{
+#'   \item local (0-5 km) 
+#'   \item regional (6-20 km)
+#'   \item supra-regional (21-100 km)
+#'   \item distant (>100 km)
+#'   \item unknown
+#' }
 #' @export
 #'
 #' @examples
@@ -610,9 +644,13 @@ road_get_symbolic_artifacts <- function(
 #' possible values. The argument \code{feature_interpretation} is a string 
 #' (one item) or vector of strings; defaults to NULL.
 #'
-#' @return Database search result as a data frame with the information about feature finds 
-#' like their geographic information, cultural period, locality type, assemblage category, 
-#' dating and interpretations.
+#' @return Database search result as a data frame with the information about 
+#' archaeological finds. Rows represent archaeological finds and contain standard 
+#' information like locality name, geographic information, cultural period, 
+#' locality type, assemblage category, dating and feature-related details:
+#' @return \code{interpretations}: Interpretation of the feature present in the 
+#' archaeological assemblage. Interpretations can be bedding, burial, butchering 
+#' event, combustion feature, cupule, dumping area.
 #' @export
 #'
 #' @examples
@@ -740,9 +778,26 @@ road_get_feature <- function(
 #' a string (one item) or vector of strings; defaults to NULL.
 #'
 #' @return Database search result as a data frame with the information about 
-#' miscellaneous finds like their geographic information,
-#' cultural period, locality type, category, dating, miscellaneous finds material,
-#' miscellaneous finds material source (local, regional, supra-regional, unknown) and number.
+#' miscellaneous finds. Rows represent miscellaneous finds and contain 
+#' standard information like locality name, geographic information, cultural 
+#' period, locality type, assemblage category, dating and miscellaneous 
+#' finds-related details
+#' @return \code{miscellaneous finds material}: Material of the miscellaneous 
+#' find. Some examples: beeswax, bitumen, clay, flax fiber, fossil, mineral 
+#' diverse (materials such as crystals), mineral pigment (colorants such as 
+#' ochre, hematite, limonite, goethite, specularite, etc.) ostrich eggshell
+#' @return \code{miscellaneous finds material source}: List with specific 
+#' intervals of transport for the raw material used to manufacture the 
+#' miscellaneous finds. Five fixed types of material source are possible:
+#' \itemize{
+#'   \item local (0-5 km) 
+#'   \item regional (6-20 km)
+#'   \item supra-regional (21-100 km)
+#'   \item distant (>100 km)
+#'   \item unknown
+#' }
+#' @return \code{number}: Number of individual pieces of a given material present
+#'  in an assemblage with miscellaneous finds.
 #' @export
 #'
 #' @examples

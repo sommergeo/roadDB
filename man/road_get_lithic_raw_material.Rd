@@ -71,10 +71,9 @@ Run \code{road_list_argument_values("raw_material_list")} to display possible va
 The argument \code{raw_material_list} is a string (one item) or vector of strings 
 (one or more items); defaults to NULL.}
 
-\item{transport_distance}{specifies one or more of the five categories, each 
+\item{transport_distance}{specifies one of the five categories, each 
 distinguished by specific intervals of transport for the raw materials present 
-in an assemblage. When more than one type of transport distance is present, 
-then each of the transport distances must be entered as a unique dataset. 
+in the assemblage.
 The five classes of transport distance are:
 \itemize{
   \item local (0-5 km) 
@@ -93,9 +92,17 @@ assemblage parameters to filter the results.}
 }
 \value{
 Database search result as a data frame with the information about 
-lithic finds like their geographic information,
-cultural period, locality type, assemblage category, dating and info about raw material like
-transport distance, percentage, raw material list.
+lithic finds. Rows represent lithic finds and contain standard information 
+like locality name, geographic information, cultural period, locality type, 
+assemblage category, dating and raw material-related details:
+
+\code{transport distance}: Specific interval of transport for the 
+raw materials in the given record.
+
+\code{percentage}: Percentage of the raw materials of the given record
+in the corresponding assemblage.
+
+\code{raw material list}: List of raw materials of the given record.
 }
 \description{
 The \strong{\code{road_get_lithic_raw_material}} fetches data of lithic finds 
@@ -107,7 +114,6 @@ Use the parameters to filter the results or omit them to retrieve a broader
 dataset.
 }
 \examples{
-
 road_get_lithic_raw_material(subcontinents = "South Asia", raw_material_list = c("limestone"))
 road_get_lithic_raw_material(subcontinents = c("Caucasus"), locality_types = "cave",
                              raw_material_list = c("chalcedony", "limestone"))

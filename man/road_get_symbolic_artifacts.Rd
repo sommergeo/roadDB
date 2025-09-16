@@ -76,10 +76,30 @@ assemblage parameters to filter the results.}
 }
 \value{
 Database search result as a data frame with the information about 
-symbolic artifacts like their geographic information, cultural period, 
-locality type, assemblage category, dating and info about symbolic artifacts 
-interpretation, symbolic artifacts category, symbolic artifacts technology, 
-symbolic artifacts material, symbolic artifacts raw material source.
+symbolic artifact finds. Rows represent symbolic artifact finds and contain standard 
+information like locality name, geographic information, cultural period, 
+locality type, assemblage category, dating and symbolic artifacts-related details:
+interpretation
+
+\code{symbolic artifacts category}: List of symbolic categories 
+(art, music, ornament).
+
+\code{symbolic artifacts technology}: List of technologies such as: 
+painting, engraving, carving, molding, polishing, imprinting, etc.
+
+\code{symbolic artifacts material}: Material of the symbolic artifact, 
+for example: antler, bone, cave wall, clay, ivory, ochre, ostrich eggshell.
+
+\code{symbolic artifacts raw material source}: List with specific 
+intervals of transport for the raw material used to manufacture the symbolic 
+artifact. Five fixed types of raw material source are possible:
+\itemize{
+  \item local (0-5 km) 
+  \item regional (6-20 km)
+  \item supra-regional (21-100 km)
+  \item distant (>100 km)
+  \item unknown
+}
 }
 \description{
 The \strong{\code{road_get_symbolic_artifacts}} fetches data of symbolic artifacts from ROAD database.

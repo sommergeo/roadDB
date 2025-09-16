@@ -75,9 +75,14 @@ possible values. The argument \code{feature_interpretation} is a string
 assemblage parameters to filter the results.}
 }
 \value{
-Database search result as a data frame with the information about feature finds 
-like their geographic information, cultural period, locality type, assemblage category, 
-dating and interpretations.
+Database search result as a data frame with the information about 
+archaeological finds. Rows represent archaeological finds and contain standard 
+information like locality name, geographic information, cultural period, 
+locality type, assemblage category, dating and feature-related details:
+
+\code{interpretations}: Interpretation of the feature present in the 
+archaeological assemblage. Interpretations can be bedding, burial, butchering 
+event, combustion feature, cupule, dumping area.
 }
 \description{
 The \strong{\code{road_get_feature}} fetches data of feature finds from ROAD database. Feature assemblages refer to archaeological features such as hearths, pits, or structures found at a site.
