@@ -215,7 +215,7 @@ road_get_localities <- function(
                                           age_min = age_min,
                                           age_max = age_max)
   
-  assemblages_selected <- select(assemblages, c(cm_locality_idlocality,
+  assemblages_selected <- select(assemblages, all_of(c(cm_locality_idlocality,
                                                 cm_geopolitical_units_continent, 
                                                 cm_geopolitical_units_continent_region, 
                                                 cm_locality_country,
@@ -223,7 +223,7 @@ road_get_localities <- function(
                                                 cm_locality_y, cm_cultural_periods,
                                                 cm_technocomplexes, cm_assemblages_categories,
                                                 cm_geological_stratigraphy_age_min, 
-                                                cm_geological_stratigraphy_age_max))
+                                                cm_geological_stratigraphy_age_max)))
   
   
   if (!is.null(assemblages) && nrow(assemblages) != 0)
@@ -233,9 +233,9 @@ road_get_localities <- function(
                                                  subcontinents = subcontinents, 
                                                  countries = countries, 
                                                  locality_types = locality_types)
-    assemblages_ages <- assemblages_all_info %>% select(c(cm_locality_idlocality,
+    assemblages_ages <- assemblages_all_info %>% select(all_of(c(cm_locality_idlocality,
                                                           cm_geological_stratigraphy_age_min,
-                                                          cm_geological_stratigraphy_age_max))
+                                                          cm_geological_stratigraphy_age_max)))
     
     #assemblages_ages <- select(assemblages_all_info, c(cm_locality_idlocality,
     #                                                      cm_geological_stratigraphy_age_min,
@@ -248,7 +248,7 @@ road_get_localities <- function(
                               locality_max_age = max(age_max))
     
     
-    assemblages_selected <- select(assemblages, c(cm_locality_idlocality,
+    assemblages_selected <- select(assemblages, all_of(c(cm_locality_idlocality,
                                                   cm_geopolitical_units_continent, 
                                                   cm_geopolitical_units_continent_region, 
                                                   cm_locality_country,
@@ -256,7 +256,7 @@ road_get_localities <- function(
                                                   cm_locality_y, cm_cultural_periods,
                                                   cm_technocomplexes, cm_assemblages_categories,
                                                   cm_geological_stratigraphy_age_min, 
-                                                  cm_geological_stratigraphy_age_max))
+                                                  cm_geological_stratigraphy_age_max)))
     
   
     data_tmp <- assemblages_selected %>% group_by(locality_id, continent, subcontinent,
@@ -283,12 +283,12 @@ road_get_localities <- function(
 
     return(data)
   }
-  else return(select(assemblages, c(cm_locality_idlocality,
+  else return(select(assemblages, all_of(c(cm_locality_idlocality,
                                     cm_geopolitical_units_continent, 
                                     cm_geopolitical_units_continent_region, 
                                     cm_locality_country,
                                     cm_locality_types, cm_locality_x, 
                                     cm_locality_y, cm_cultural_periods,
                                     cm_technocomplexes, cm_assemblages_categories
-                                    )))
+                                    ))))
 }
