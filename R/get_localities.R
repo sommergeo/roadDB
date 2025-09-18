@@ -188,6 +188,9 @@ road_get_localities_internal <- function(
 #'
 #' @export
 #'
+#' @importFrom dplyr select
+#' @importFrom dplyr all_of
+#'
 #' @examples
 #' df <- road_get_localities(continents = "Europe", countries = c("Germany"),
 #'                     locality_type = c("basin", "quarry"))
@@ -259,7 +262,7 @@ road_get_localities <- function(
                                                   cm_geological_stratigraphy_age_max)))
     
   
-    data_tmp <- assemblages_selected %>% group_by(locality_id, continent, subcontinent,
+    data_tmp <- assemblages_selected %>% group_by(.data$locality_idlocality, .data$continent, .data$subcontinent,
                                                   country, locality_types, coord_x, coord_y
                                                   ) %>% summarise(categories = well_formed_string_to_string_without_duplicates(paste0(categories, collapse = ", ")),
                                                                   cultural_periods = well_formed_string_to_string_without_duplicates(paste0(cultural_periods, collapse = ", ")),
