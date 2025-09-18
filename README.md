@@ -39,7 +39,7 @@ The following arguments are optional and can be used with every `road_get_*` fun
 | `subcontinents`                     | character | country_continent / region                           | "Southern Africa"                             |
 | `countries`                         | character | locality / country                                   | "South Africa"                                |
 | `locality_types`                    | character | locality / type                                      | "rock shelter"                                |
-| `categories`                        | character | assemblage / category                                | "Sibhudu Cave DMou Archaeological Assemblage" |
+| `categories`                        | character | assemblage / category                                | "symbolic artifacts, typology"                |
 | `age_min`                           | numeric   | archaeological_stratigraphy / age_min                | 20000                                         |
 | `age_max`                           | numeric   | archaeological_stratigraphy / age_max                | 3000000                                       |
 | `technocomplexes`                   | character | archaeological_stratigraphy /technocomplex           | "ESA/ Early Acheulean"                        |
