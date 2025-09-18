@@ -9,12 +9,14 @@
 #' @export
 #'
 #' @examples road_list_argument_values("locality_types")
+#' @examples road_list_argument_values("subcontinents")
+#' @examples road_list_argument_values("dating_methods")
 road_list_argument_values <- function(function_argument)
 {
   if (is.null(function_argument))
     stop("No argument name is given.")
 
-  attribute_name <- ""
+  attribute_name <- NULL
   table_names <- NULL
 
   attribute_name <- case_when(
@@ -67,8 +69,8 @@ road_list_argument_values <- function(function_argument)
     function_argument == "plant_species"
       ~ "species",
     function_argument == "assemblages"
-      ~ "assemblages",
-    TRUE  ~ "NULL"
+      ~ "assemblages"
+    #TRUE  ~ "NULL"
   )
 
   table_names <- case_when(
@@ -115,17 +117,21 @@ road_list_argument_values <- function(function_argument)
     function_argument == "plant_genus"
       ~ "plant_taxonomy",
     function_argument == "plant_species"
-      ~ "plant_taxonomy",
-    #TRUE  = NULL
+      ~ "plant_taxonomy"
+    # TRUE  ~ NULL
   )
 
+  if (function_argument == "assemblages") return(paste0("The argument 'assemblages' is a data frame necessarily containing columns ", cm_assemblages_locality_idlocality, ", ", cm_assemblages_idassemblage, ". It can be  generated as return value of the function 'road_get_assemblages'. It can be used instead of the other locality and assemblage search parameters to filter the results."))
   if (function_argument == "dating_methods" || function_argument == "material_dated")
-   table_names <- c("geological_layer_age", "archaeological_layer_age", "assemblage_age")
+    table_names <- c("geological_layer_age", "archaeological_layer_age", "assemblage_age")
 
-  if (is.null(table_names)) stop("No table name found.")
-  #if (length(table_names) < 1) stop("No table name found.") 
-  if (attribute_name == "NULL") stop("No attribute name found.")
+  if (is.null(attribute_name) || is.na(attribute_name)) stop(paste0("In roadDB there is no function with the argument '", function_argument, "'."))
 
+  if (is.null(table_names))
+  {
+    stop(paste("No data source for argument ", attribute_name, " was found."))
+  } 
+  
   data <- road_list_values(table_names = table_names, attribute_name = attribute_name)
   
   return(data)
@@ -154,11 +160,9 @@ road_list_values <- function (table_names, attribute_name)
 { 
    if (is.null(attribute_name))
     stop("No attribute name is given.")
-
-   if (attribute_name == 'assemblages') return(paste0("The argument 'assemblages' is a data frame necessarily containing columns ", cm_assemblages_locality_idlocality, ", ", cm_assemblages_idassemblage, ". It can be  generated as return value of the function 'road_get_assemblages'. It can be used instead of the other locality and assemblage search parameters to filter the results."))
   
    if (is.null(table_names))
-    stop(paste("No data source for argument ", attribute_name, " was found."))
+    stop(paste("No table name is given."))
 
    # table_names is a file name
    #if (grepl(".txt", table_names, fixed = TRUE) && grepl("/", table_names, fixed = TRUE)) {
