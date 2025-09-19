@@ -1,12 +1,15 @@
 
   ---
-title: "roadDB-vignette"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{roadDB-vignette}
+  title: "Introduction to roadDB package"
+  author: "ROCEEH"
+  date:  "`r Sys.Date()`"
+  ---
+  output: rmarkdown::html_vignette
+  vignette: >
+  %\VignetteIndexEntry{Introduction to roadDB package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
----
+
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -14,7 +17,20 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+# Introduction to roadDB
+Welcome to `roadDB`! This vignette will guide you through the core functionalities of the package, demonstrating how to use its key functions for data querying.
 
-```{r setup}
+`roaDB` is designed to make possible easy querying of ROAD data, providing intuitive functions for both beginners and experienced R users.
+
+## Installation
+You can install `roadDB` directly from GitHub using `devtools`:
+
+```r
+install.packages("devtools")
+devtools::install_github("sommergeo/roadDB")
+```
+
+Before you can use any of the functions, youll need to load the package into your R session:
+```r
 library(roadDB)
 ```
