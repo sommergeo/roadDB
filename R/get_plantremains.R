@@ -48,9 +48,10 @@
 #' as the baseline. The argument \code{age_min} is an integer; defaults to NULL.
 #' @param age_max specifies the maximum age in years before present, using 1950 CE
 #' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
-#' @param assemblages list of assemblages; return value from function
-#' \code{road_get_assemblages}. Can be used instead of the other locality and
-#' assemblage parameters to filter the results.
+#' @param assemblages specifies a data frame necessarily containing columns 
+#' locality_id, assemblage_id. It can be  generated as return value of the 
+#' function 'road_get_assemblages'. It can be used instead of the locality 
+#' and assemblage search parameters to filter the results.
 #' @param plant_remains specifies the type of plant remains. Possible entries
 #' include: "pollen", "plant macroremains" etc. Run
 #' \code{road_list_argument_values("plant_remains")} to display
@@ -169,102 +170,6 @@ road_get_plantremains <- function(
 
   if (nrow(data) == 0 & nrow(assemblages) > 0)
   {
-    # continents_str <- ifelse(is.null(continents), "", paste("continents = (", toString(continents), ")"))
-    # subcontinents_str <- ifelse(is.null(subcontinents), "", paste("subcontinents = (", toString(subcontinents), ")"))
-    # countries_str <- ifelse(is.null(countries), "", paste("countries = (", toString(countries), ")"))
-    # locality_types_str <- ifelse(is.null(locality_types), "", paste("locality_types = (", toString(locality_types), ")"))
-    # cultural_periods_str <- ifelse(is.null(cultural_periods), "", paste("cultural_periods = (", toString(cultural_periods), ")"))
-    # 
-    # categories_str <- ifelse(is.null(categories), "", paste("categories = (", toString(categories), ")"))
-    # age_min_str <- ifelse(is.null(age_min), "", paste("age_min = (", age_min, ")"))
-    # age_max_str <- ifelse(is.null(age_max), "", paste("age_max = (", age_max, ")"))
-    # 
-    # plant_remains_str <- ifelse(is.null(plant_remains), "", paste("plant_remains = (", toString(plant_remains), ")"))
-    # plant_family_str <- ifelse(is.null(plant_family), "", paste("plant_family = (", toString(plant_family), ")"))
-    # plant_genus_str <- ifelse(is.null(plant_genus), "", paste("plant_genus = (", toString(plant_genus), ")"))
-    # plant_species_str <- ifelse(is.null(plant_species), "", paste("plant_species = (", toString(plant_species), ")"))
-    # 
-    # message(paste("One or more of the following used parameters caused the empty result set:
-    #               ",
-    #               continents_str,
-    #               subcontinents_str,
-    #               countries_str,
-    #               locality_types_str,
-    #               cultural_periods_str,
-    #               categories_str,
-    #               age_min_str,
-    #               age_max_str,
-    #               plant_remains_str,
-    #               plant_family_str,
-    #               plant_genus_str,
-    #               plant_species_str,
-    #               "
-    #    Please keep in mind, the data search needs exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
-    # 
-    # 
-    # 
-    # if ((is.vector(plant_remains) && is.vector(plant_family) && is.vector(plant_genus) && is.vector(plant_species))
-    #     || (is.vector(plant_remains) && is.vector(plant_family) && is.vector(plant_genus))
-    #     || (is.vector(plant_family) && is.vector(plant_genus) && is.vector(plant_species))
-    #     || (is.vector(plant_remains) && is.vector(plant_family) && is.vector(plant_species))
-    #     || (is.vector(plant_remains) && is.vector(plant_genus) && is.vector(plant_species))
-    #     || (is.vector(plant_remains) && is.vector(plant_family))
-    #     || (is.vector(plant_family) && is.vector(plant_genus))
-    #     || (is.vector(plant_genus) && is.vector(plant_species))
-    #     || (is.vector(plant_remains) && is.vector(plant_genus))
-    #     || (is.vector(plant_family) && is.vector(plant_species))
-    #     || (is.vector(plant_remains) && is.vector(plant_species))
-    # )
-    # {
-    #   if (is.null(plant_remains))
-    #   {
-    #     plant_remains_out <- c("")
-    #     pr <- ""
-    #   }
-    #   else
-    #   {
-    #     pr <- "plant_remains "
-    #     plant_remains_out <- plant_remains
-    #   }
-    #   if (is.null(plant_family))
-    #   {
-    #     plant_family_out <- c("")
-    #     pf <- ""
-    #   }
-    #   else
-    #   {
-    #     plant_family_out <- plant_family
-    #     pf <- "plant_family "
-    #   }
-    #   if (is.null(plant_genus))
-    #   {
-    #     plant_genus_out <- c("")
-    #     pg <- ""
-    #   }
-    #   else
-    #   {
-    #     plant_genus_out <- plant_genus
-    #     pg <- "plant_genus "
-    #   }
-    #   if (is.null(plant_species))
-    #   {
-    #     plant_species_out <- c("")
-    #     ps <- ""
-    #   }
-    #   else
-    #   {
-    #     plant_species_out <- plant_species
-    #     ps <- "plant_species"
-    #   }
-    #   cp <- expand.grid(remains = plant_remains_out, family = plant_family_out, genus = plant_genus_out, species = plant_species_out)
-    #   
-    #   cp <- cp %>% mutate(remains_family_genus_species = paste(remains, family, genus, species, sep = " "))
-    #   s <- paste(cp$remains_family_genus_species, collapse = "); (")
-    #   message(paste0("
-    #   Please keep in mind at least one of the the following combinations (", pr, pf, pg, ps, ")"," have to be in the database:
-    #               ", "(", s, ")"))
-    # }
-    
     print_null_result_message(continents = continents,
                               subcontinents = subcontinents,
                               countries = countries,

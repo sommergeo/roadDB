@@ -70,9 +70,10 @@ ornament). Run \code{road_list_argument_values("symbolic_artifacts_interpretatio
 to display possible values. The argument \code{symbolic_artifacts_interpretation} 
 is a string (one item) or vector of strings; defaults to NULL.}
 
-\item{assemblages}{list of assemblages; return value from function 
-\code{road_get_assemblages}. Can be used instead of the other locality and 
-assemblage parameters to filter the results.}
+\item{assemblages}{specifies a data frame necessarily containing columns 
+locality_id, assemblage_id. It can be  generated as return value of the 
+function 'road_get_assemblages'. It can be used instead of the locality 
+and assemblage search parameters to filter the results.}
 }
 \value{
 Database search result as a data frame with the information about 

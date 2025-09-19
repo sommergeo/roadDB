@@ -47,9 +47,10 @@
 #' as the baseline. The argument \code{age_min} is an integer; defaults to NULL.
 #' @param age_max specifies the maximum age in years before present, using 1950 CE
 #' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
-#' @param assemblages list of assemblages; return value from function
-#' \code{road_get_assemblages}. Can be used instead of the other locality and
-#' assemblage parameters to filter the results.
+#' @param assemblages specifies a data frame necessarily containing columns 
+#' locality_id, assemblage_id. It can be  generated as return value of the 
+#' function 'road_get_assemblages'. It can be used instead of the locality 
+#' and assemblage search parameters to filter the results.
 #' @param fauna_genus specifies the genus to which the described faunal remains
 #' is attributed to. Possible entries include: "Mammuthus", "Vulpes" etc.
 #' Run \code{road_list_argument_values("fauna_genus")} to
@@ -138,37 +139,6 @@ road_get_paleofauna <- function(
 
   if (nrow(data) == 0 && nrow(assemblages) > 0)
   {
-    # continents_str <- ifelse(is.null(continents), "", paste("continents = (", toString(continents), ")"))
-    # subcontinents_str <- ifelse(is.null(subcontinents), "", paste("subcontinents = (", toString(subcontinents), ")"))
-    # countries_str <- ifelse(is.null(countries), "", paste("countries = (", toString(countries), ")"))
-    # locality_types_str <- ifelse(is.null(locality_types), "", paste("locality_types = (", toString(locality_types), ")"))
-    # cultural_periods_str <- ifelse(is.null(cultural_periods), "", paste("cultural_periods = (", toString(cultural_periods), ")"))
-    # 
-    # categories_str <- ifelse(is.null(categories), "", paste("categories = (", toString(categories), ")"))
-    # age_min_str <- ifelse(is.null(age_min), "", paste("age_min = (", age_min, ")"))
-    # age_max_str <- ifelse(is.null(age_max), "", paste("age_max = (", age_max, ")"))
-    # 
-    # fauna_genus_str <- ifelse(is.null(fauna_genus), "", paste("fauna_genus = (", toString(fauna_genus), ")"))
-    # fauna_species_str <- ifelse(is.null(fauna_species), "", paste("fauna_species = (", toString(fauna_species), ")"))
-    # 
-    # message(paste("One or more of the following parameters caused the empty result set:
-    #               ",
-    #               fauna_genus_str,
-    #               fauna_species_str,
-    #               "
-    #   Please keep in mind, the data search needs exact parameter values. To get exact values for a given parameter 'p' you can use the function road_list_parameter_values('p')."))
-    # if (is.vector(fauna_genus) && is.vector(fauna_species))
-    # {
-    #   genus <- ""
-    #   cp <- expand.grid(genus = fauna_genus, species = fauna_species)
-    #   
-    #   cp <- cp %>% mutate(genus_species = paste(genus, species, sep = " "))
-    #   s <- paste(cp$genus_species, collapse = "; ")
-    #   message(paste("
-    #   Please keep in mind at least one of the the following combinations (fauna_genus fauna_species) have to be in the database::
-    #               ", s))
-    # }
-    # 
     print_null_result_message(continents = continents,
                               subcontinents = subcontinents,
                               countries = countries,

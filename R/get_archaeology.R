@@ -44,9 +44,10 @@
 #' as the baseline. The argument \code{age_min} is an integer; defaults to NULL.
 #' @param age_max specifies the maximum age in years before present, using 1950 CE 
 #' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
-#' @param assemblages list of assemblages; return value from function 
-#' \code{road_get_assemblages}. Can be used instead of the other locality and 
-#' assemblage parameters to filter the results.
+#' @param assemblages specifies a data frame necessarily containing columns 
+#' locality_id, assemblage_id. It can be  generated as return value of the 
+#' function 'road_get_assemblages'. It can be used instead of the locality 
+#' and assemblage search parameters to filter the results.
 #' @param tool_list specifies values that can be entered for various tool types. 
 #' Tool types can contain 1) chipped tool types like scraper end, scraper side, 
 #' scraper, carinated, burin, handaxe, chopper, cleaver, point, point unifacial, 
@@ -187,9 +188,10 @@ road_get_lithic_typology <- function(
 #' as the baseline. The argument \code{age_min} is an integer; defaults to NULL.
 #' @param age_max specifies the maximum age in years before present, using 1950 CE 
 #' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
-#' @param assemblages list of assemblages; return value from function 
-#' \code{road_get_assemblages}. Can be used instead of the other locality and 
-#' assemblage parameters to filter the results.
+#' @param assemblages specifies a data frame necessarily containing columns 
+#' locality_id, assemblage_id. It can be  generated as return value of the 
+#' function 'road_get_assemblages'. It can be used instead of the locality 
+#' and assemblage search parameters to filter the results.
 #' @param raw_material_list specifies lithic raw materials (e.g. quartz, chert, flint). 
 #' Consider the function \code{road_get_organic_tools()} for non-lithic raw materials.
 #' Run \code{road_list_argument_values("raw_material_list")} to display possible values.
@@ -344,9 +346,10 @@ road_get_lithic_raw_material <- function(
 #' as the baseline. The argument \code{age_min} is an integer; defaults to NULL.
 #' @param age_max specifies the maximum age in years before present, using 1950 CE 
 #' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
-#' @param assemblages list of assemblages; return value from function 
-#' \code{road_get_assemblages}. Can be used instead of the other locality and 
-#' assemblage parameters to filter the results.
+#' @param assemblages specifies a data frame necessarily containing columns 
+#' locality_id, assemblage_id. It can be  generated as return value of the 
+#' function 'road_get_assemblages'. It can be used instead of the locality 
+#' and assemblage search parameters to filter the results.
 #' @param organic_tools_interpretation specifies interpreted organic tool types 
 #' (e.g. lance/spear, point, retoucher). 
 #' Run \code{road_list_argument_values("organic_tools_interpretation")} 
@@ -485,9 +488,10 @@ road_get_organic_tools <- function(
 #' as the baseline. The argument \code{age_min} is an integer; defaults to NULL.
 #' @param age_max specifies the maximum age in years before present, using 1950 CE 
 #' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
-#' @param assemblages list of assemblages; return value from function 
-#' \code{road_get_assemblages}. Can be used instead of the other locality and 
-#' assemblage parameters to filter the results.
+#' @param assemblages specifies a data frame necessarily containing columns 
+#' locality_id, assemblage_id. It can be  generated as return value of the 
+#' function 'road_get_assemblages'. It can be used instead of the locality 
+#' and assemblage search parameters to filter the results.
 #' @param symbolic_artifacts_interpretation specifies the interpretation of 
 #' symbolic artifacts (e.g. abstract, anthropomorphic, zoomorphic, instrument, 
 #' ornament). Run \code{road_list_argument_values("symbolic_artifacts_interpretation")} 
@@ -635,9 +639,10 @@ road_get_symbolic_artifacts <- function(
 #' as the baseline. The argument \code{age_min} is an integer; defaults to NULL.
 #' @param age_max specifies the maximum age in years before present, using 1950 CE 
 #' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
-#' @param assemblages list of assemblages; return value from function 
-#' \code{road_get_assemblages}. Can be used instead of the other locality and 
-#' assemblage parameters to filter the results.
+#' @param assemblages specifies a data frame necessarily containing columns 
+#' locality_id, assemblage_id. It can be  generated as return value of the 
+#' function 'road_get_assemblages'. It can be used instead of the locality 
+#' and assemblage search parameters to filter the results.
 #' @param feature_interpretation specifies archaeological features present in 
 #' the archaeological assemblage (e.g. bedding, burial, butchering event).
 #' Run \code{road_list_argument_values("feature_interpretation")} to display 
@@ -768,9 +773,10 @@ road_get_feature <- function(
 #' as the baseline. The argument \code{age_min} is an integer; defaults to NULL.
 #' @param age_max specifies the maximum age in years before present, using 1950 CE 
 #' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
-#' @param assemblages list of assemblages; return value from function 
-#' \code{road_get_assemblages}. Can be used instead of the other locality and 
-#' assemblage parameters to filter the results.
+#' @param assemblages specifies a data frame necessarily containing columns 
+#' locality_id, assemblage_id. It can be  generated as return value of the 
+#' function 'road_get_assemblages'. It can be used instead of the locality 
+#' and assemblage search parameters to filter the results.
 #' @param miscellaneous_finds_material specifies material of the miscellaneous 
 #' finds (e.g. shell, ochre, ostrich eggshell).
 #' Run \code{road_list_argument_values("miscellaneous_finds_material")} to 

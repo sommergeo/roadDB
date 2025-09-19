@@ -39,9 +39,10 @@
 #' as the baseline. The argument \code{age_min} is an integer; defaults to NULL.
 #' @param age_max specifies the maximum age in years before present, using 1950 CE 
 #' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
-#' @param assemblages list of assemblages; return value from function 
-#' \code{road_get_assemblages}. Can be used instead of the other locality and 
-#' assemblage parameters to filter the results.
+#' @param assemblages specifies a data frame necessarily containing columns 
+#' locality_id, assemblage_id. It can be  generated as return value of the 
+#' function 'road_get_assemblages'. It can be used instead of the locality 
+#' and assemblage search parameters to filter the results.
 #' @param dating_methods specifies the method of temporal analysis (e.g. 14C, OSL, IRSL).
 #' Run \code{road_list_argument_values("dating_methods")} to display possible values.
 #' The argument \code{dating_methods} is a string (one item) or vector of strings 

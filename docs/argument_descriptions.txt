@@ -50,6 +50,11 @@ General arguments
 #' function 'road_get_assemblages'. It can be used instead of the locality 
 #' and assemblage search parameters to filter the results.
 
+# old assemblage description
+#' @param assemblages list of assemblages; return value from function 
+#' \code{road_get_assemblages}. Can be used instead of the other locality and 
+#' assemblage parameters to filter the results.
+
 Specific arguments
 
 #' @param dating_methods specifies the method of temporal analysis (e.g. 14C, OSL, IRSL).
