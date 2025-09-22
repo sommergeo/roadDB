@@ -75,9 +75,10 @@ symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains,
 plant remains. The argument \code{categories} is a string (one item) or 
 vector of strings (one or more items); defaults to NULL.}
 
-\item{assemblages}{list of assemblages; return value from function 
-\code{road_get_assemblages}. Can be used instead of the other locality and 
-assemblage parameters to filter the results.}
+\item{assemblages}{specifies a data frame necessarily containing columns 
+locality_id, assemblage_id. It can be  generated as return value of the 
+function 'road_get_assemblages'. It can be used instead of the locality 
+and assemblage search parameters to filter the results.}
 }
 \value{
 A data frame with absolute dating information. Rows represent individual dates, columns contain standard outputs and dating-related details on:
