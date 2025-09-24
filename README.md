@@ -16,6 +16,7 @@ As the ROAD database is exceptionally rich in information at the assemblage leve
 
 
 ## Functions
+### Core functions
 - road_get_localities()
 - road_get_assemblages()
 	- road_get_human_remains()
@@ -29,6 +30,10 @@ As the ROAD database is exceptionally rich in information at the assemblage leve
 		- road_get_feature()
 		- road_get_miscellaneous_finds()
 - road_get_dates()
+
+### Helper functions
+- road_list_argument_values()
+- road_summarize_archaeology()
 
 ### Arguments
 The following arguments are optional and can be used with every `road_get_*` function to constrain queries.
