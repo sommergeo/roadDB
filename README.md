@@ -33,42 +33,42 @@ As the ROAD database is exceptionally rich in information at the assemblage leve
 ### Arguments
 The following arguments are optional and can be used with every `road_get_*` function to constrain queries.
 
-| Argument                            | Type      | ROAD table / attribute                               | Example                                       |
-| ----------------------------------- | --------- | ---------------------------------------------------- | --------------------------------------------- |
-| `continents`                        | character | country_continent / continent                        | "Africa"                                      |
-| `subcontinents`                     | character | country_continent / region                           | "Southern Africa"                             |
-| `countries`                         | character | locality / country                                   | "South Africa"                                |
-| `locality_types`                    | character | locality / type                                      | "rock shelter"                                |
-| `categories`                        | character | assemblage / category                                | "symbolic artifacts, typology"                |
-| `age_min`                           | numeric   | archaeological_stratigraphy / age_min                | 20000                                         |
-| `age_max`                           | numeric   | archaeological_stratigraphy / age_max                | 3000000                                       |
-| `technocomplexes`                   | character | archaeological_stratigraphy /technocomplex           | "ESA/ Early Acheulean"                        |
-| `cultural_periods`                  | character | archaeological_stratigraphy / cultural_period        | "Middle Stone Age"                            |
+| Argument                            | Type      | ROAD table / attribute                               |Search type| Example                                       |
+| ----------------------------------- | --------- | ---------------------------------------------------- | --------- | --------------------------------------------- |
+| `continents`                        | character | country_continent / continent                        |exact      | "Africa"                                      |
+| `subcontinents`                     | character | country_continent / region                           || "Southern Africa"                             |
+| `countries`                         | character | locality / country                                   || "South Africa"                                |
+| `locality_types`                    | character | locality / type                                      || "rock shelter"                                |
+| `categories`                        | character | assemblage / category                                || "symbolic artifacts, typology"                |
+| `age_min`                           | numeric   | archaeological_stratigraphy / age_min                || 20000                                         |
+| `age_max`                           | numeric   | archaeological_stratigraphy / age_max                || 3000000                                       |
+| `technocomplexes`                   | character | archaeological_stratigraphy /technocomplex           || "ESA/ Early Acheulean"                        |
+| `cultural_periods`                  | character | archaeological_stratigraphy / cultural_period        || "Middle Stone Age"                            |
 
 
 The following arguments are optional and can be used with the corresponding `road_get_*` function to constrain queries.
 
-| Argument                            | Type      | ROAD table / attribute                               | Example(s)                                    |
-| ----------------------------------- | --------- | ---------------------------------------------------- | --------------------------------------------- |
-| `dating_methods`                    | character | assemblage_age / dating_method,                      |  "U series (uranium-thorium) dating",         |
-|                                     |           | archaeological_layer_age / dating_method,            |  "ESR (electron spin resonance) dating",      |
-|                                     |           | geological_layer_age / dating_method                 |  "14C (radiocarbon) dating"                   |
-| `material_dated`                    | character | assemblage_age / material_dated,                     |  "flint", "limestone", "tephra"               |       
-|                                     |           | archaeological_layer_age / material_dated,           |  "lithic burnt",                              |
-|                                     |           | geological_layer_age / material_dated                |  "bone"                                       |
-| `tool_list`                         | character | typology / tool_list                                 |  "core 29, bladelet 136, blade 1090"          |  
-| `raw_material_list`                 | character | raw_material / raw_material_list                     |  "ironstone banded"                           |
-| `transport_distance`                | character | raw_material / transport_distance                    |  "regional (6-20 km)"                         |
-| `organic_tools_interpretation`      | character | organic_tools / interpretation                       |  "harpoon", "worked", "retoucher"             |
-| `symbolic_artifacts_interpretation` | character | symbolic_artifacts / interpretation                  |  "anthropomorphic"                            |
-| `feature_interpretation`            | character | feature / interpretation                             |  "stone construction"                         |
-| `miscellaneous_finds_material`      | character | miscellaneous_finds / material                       |  "ostrich egg shell", "metal"                 |
-| `human_genus`                       | character | publication_desc_humanremains / genus                |  "Homo", "Paranthropus"                       |
-| `human_species`                     | character | publication_desc_humanremains / species              |  "sapiens rhodesiensis", "cf. sapiens"        |
-| `plant_remains`                     | character | plantremains / plant_remains                         |  "phytoliths", "plant macroremains"           |
-| `plant_family`                      | character | plant_taxonomy / family                              |  "Anarcadiaceae",    "Phyllanthaceae"         |
-| `plant_genus`                       | character | plant_taxonomy / genus                               |  "Jasione", "Larix/Picea"                     |
-| `plant_species`                     | character | plant_taxonomy / species                             |  "Potamogeton gramineus L."                   |
-| `fauna_genus`                       | character | taxonomical_classification / genus                   |  "Lemniscomys", "Hipposideros"                |
-| `fauna_species`                     | character | paleofauna / species                                 |  "cf. germanicus", "atapuerquensis"           |
+| Argument                            | Type      | ROAD table / attribute                               | Search type | Example(s)                                    |
+| ----------------------------------- | --------- | ---------------------------------------------------- | ----------- | --------------------------------- |
+| `dating_methods`                    | character | assemblage_age / dating_method,                      ||  "U series (uranium-thorium) dating",         |
+|                                     |           | archaeological_layer_age / dating_method,            ||  "ESR (electron spin resonance) dating",      |
+|                                     |           | geological_layer_age / dating_method                 ||  "14C (radiocarbon) dating"                   |
+| `material_dated`                    | character | assemblage_age / material_dated,                     ||  "flint", "limestone", "tephra"               |       
+|                                     |           | archaeological_layer_age / material_dated,           ||  "lithic burnt",                              |
+|                                     |           | geological_layer_age / material_dated                ||  "bone"                                       |
+| `tool_list`                         | character | typology / tool_list                                 ||  "core 29, bladelet 136, blade 1090"          |  
+| `raw_material_list`                 | character | raw_material / raw_material_list                     ||  "ironstone banded"                           |
+| `transport_distance`                | character | raw_material / transport_distance                    ||  "regional (6-20 km)"                         |
+| `organic_tools_interpretation`      | character | organic_tools / interpretation                       ||  "harpoon", "worked", "retoucher"             |
+| `symbolic_artifacts_interpretation` | character | symbolic_artifacts / interpretation                  ||  "anthropomorphic"                            |
+| `feature_interpretation`            | character | feature / interpretation                             ||  "stone construction"                         |
+| `miscellaneous_finds_material`      | character | miscellaneous_finds / material                       ||  "ostrich egg shell", "metal"                 |
+| `human_genus`                       | character | publication_desc_humanremains / genus                ||  "Homo", "Paranthropus"                       |
+| `human_species`                     | character | publication_desc_humanremains / species              ||  "sapiens rhodesiensis", "cf. sapiens"        |
+| `plant_remains`                     | character | plantremains / plant_remains                         ||  "phytoliths", "plant macroremains"           |
+| `plant_family`                      | character | plant_taxonomy / family                              ||  "Anarcadiaceae",    "Phyllanthaceae"         |
+| `plant_genus`                       | character | plant_taxonomy / genus                               ||  "Jasione", "Larix/Picea"                     |
+| `plant_species`                     | character | plant_taxonomy / species                             ||  "Potamogeton gramineus L."                   |
+| `fauna_genus`                       | character | taxonomical_classification / genus                   ||  "Lemniscomys", "Hipposideros"                |
+| `fauna_species`                     | character | paleofauna / species                                 ||  "cf. germanicus", "atapuerquensis"           |
 
