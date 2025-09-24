@@ -2,3 +2,4 @@
 ^LICENSE\.md$
 ^docs$
 ^\.Rproj\.user$
+^vignettes/articles$

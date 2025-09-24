@@ -1,0 +1,278 @@
+---
+title: "roadDB"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+
+
+Welcome to the R implementation of the *ROCEEH Out of Africa Database* — or simply *ROAD*. This tutorial will introduce the core concepts and guide you through your first steps with the `roadDB` package. In addition, it will offer ideas on how to use `roadDB` alongside other resources available in the R ecosystem.
+
+But first, let's start with the installation.
+
+
+
+
+# Get started
+
+### Install roadDB
+You only need to install the package once on your R setup, so you can skip this step if it's already installed. Currently, the latest version of `roadDB` can be installed from GitHub. In the future, a stable release will also be available on CRAN.
+
+```{r install, eval=FALSE, include=TRUE}
+# Github installation
+install(devtools)
+devtools::install_github("sommergeo/roadDB")
+
+# CRAN installation (will be made available later)
+# install.packages(roadDB)
+```
+
+### Load roadDB
+After the library has been installed, you can load it every time you run an R session. This will make all the functions available for that session.
+
+```{r setup}
+# Load the library
+library(roadDB)
+```
+
+### First query
+Now you are ready to run your first query and inspect the results directly in the R console:
+
+```{r first_query, eval=FALSE, include=TRUE}
+road_get_localities(cultural_period='Middle Paleolithic')
+```
+
+
+# Basic prinicples
+## ROCEEH Out of Africa Database
+`roadDB` is an R package designed to provide simplified access to the [ROCEEH Out of Africa Database (ROAD)](https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php). Developed over the past 18 years by the [ROCEEH research center](https://www.hadw-bw.de/en/research/research-center/roceeh) (The Role of Culture in Early Expansions of Humans), ROAD integrates a wealth of archaeological, anthropological, and paleoenvironmental data from both Africa and Eurasia, covering a timeframe from 3 million to 20,000 years before present.
+The database currently encompasses information on over 28,000 assemblages and 2,600 localities, derived from more than 6,300 publications in over 10 languages. ROAD offers structured data with a high level of both quantity and detail, making it an invaluable resource for quantitative and computational analysis.
+However, due to its complexity and expert-level focus, the database can be challenging to navigate and analyze directly. This is why `roadDB` package was implemented as a short-cut into the R ecosystem.
+
+## R implementation
+The package aims to provide a simplified, intuitive, and convenient interface for accessing the ROAD database by following a few core principles:
+
+* `roadDB` adopts structures and naming conventions familiar to R users. Instead of writing complex SQL queries, users can retrieve data using **functions**, defined by **arguments**, and receive the results as clean **data frames**.
+  
+* The resulting data frames follow the [tidy data](https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html) standard, which means:
+
+    - Each **variable** is a column; each column is a variable.
+    - Each **observation** is a row; each row is an observation. 
+    - Each **value** is a cell; each cell is a single value.
+
+## Background architecture
+The roadDB functions are essentially wrappers around complex SQL queries. They interact with a remote copy of the official ROAD database, which is updated four times per year. The current database version is displayed each time you load the package using `library(roadDB)`.
+As a result, query results may change over time and might not always reflect the most recent data available through the browser-based interface of ROAD. Keep in mind that ROAD is a continuously expanding database.
+Because the package relies on a remote server connection, it requires an active internet connection. Occasionally, the server may experience downtime for maintenance or security checks, particularly during the Christmas holidays.
+
+# How to use roadDB
+The use of `roadDB` can be summarized as follows:
+
+* **Functions** starting with `road_get_*` define the structure and content of the output table.
+* **Arguments** are optional and allow you to refine your queries using filters.
+* **Helper functions** assist in writing more effective and accurate queries.
+
+## road_get_* functions
+The `road_get_*` functions are used to query data from the ROAD server. They support three **Levels of Detail (LOD)**, which determine the granularity of the returned data frame. Accordingly, each *row* (or *observation*) in the output will represent a **locality**, an **assemblage**, or a specific **date**, depending on the selected level of detail (see fig. 1)
+
+![](../../docs/levels_of_detail.svg){width=100%}
+**Fig 1:** Three levels of detail determine the granularity of data frame.
+
+Since ROAD contains extensive information at the assemblage level—and because different types of assemblages may include diverse and sometimes unique sets of *columns* (or *variables*)—additional subordinate functions are provided to handle these cases. A large number of these functions are specifically related to archaeological content. The available functions include:
+
+* `road_get_localities()`
+* `road_get_assemblages()`
+    - `road_get_human_remains()`
+    - `road_get_paleofauna()`
+    - `road_get_paleobotany()`
+    - `road_get_lithic_typology()`
+    - `road_get_lithic_raw_material()`
+    - `road_get_organic_tools()`
+    - `road_get_symbolic_artifacts()`
+    - `road_get_feature()`
+    - `road_get_miscellaneous_finds()`
+* `road_get_dates()`
+
+
+## Arguments
+Arguments allow you to refine the queries made through the road_get_* functions. They are optional—if no arguments are provided, the query returns all available information from ROAD.
+In practice, however, most research questions require more focused data. You can tailor your query to your needs by filtering, for example, by continent or cultural_period. Arguments can also be combined, and you may supply a single value or a list of values.
+
+```{r arguments_example, eval=FALSE, include=TRUE}
+# Single argument
+road_get_localities(cultural_period='MSA')  # Single arguments
+
+# Multiple arguments
+road_get_localities(cultural_period=c('MSA','LSA'), countries='South Africa')
+
+# Lists of arguments
+road_get_localities(cultural_period=c('MSA','LSA'), countries=c('South Africa','Namibia'))
+```
+
+**General arguments** are available for all road_get_* functions. These arguments provide flexible ways to filter and refine your queries. They include:
+
+| Argument            | Type      | Example                                       |
+| ------------------- | --------- | --------------------------------------------- |
+| `continents`        | character | "Africa"                                      |
+| `subcontinents`     | character | "Southern Africa"                             |
+| `countries`         | character | "South Africa"                                |
+| `locality_types`    | character | "rock shelter"                                |
+| `categories`        | character | "symbolic artifacts, typology"                |
+| `age_min`           | numeric   | 20000                                         |
+| `age_max`           | numeric   | 3000000                                       |
+| `technocomplexes`   | character | "ESA/ Early Acheulean"                        |
+| `cultural_periods`  | character | "Middle Stone Age"                            |
+
+**Function-specific arguments** are only available for certain road_get_* functions. These arguments refine queries in ways that are unique to the corresponding function:
+
+| Argument                            | Type      | Example(s)                                |
+|-------------------------------------|-----------|-------------------------------------------|
+| `dating_methods`                    | character | "U series (uranium-thorium) dating"       |
+| `material_dated`                    | character | "bone"                                    |
+| `tool_list`                         | character | "bladelet"                                |
+| `raw_material_list`                 | character | "ironstone banded"                        |
+| `transport_distance`                | character | "regional (6–20 km)"                      |
+| `organic_tools_interpretation`      | character | "retoucher"                               |
+| `symbolic_artifacts_interpretation` | character | "anthropomorphic"                         |
+| `feature_interpretation`            | character | "stone construction"                      |
+| `miscellaneous_finds_material`      | character | "ostrich egg shell"                       |
+| `human_genus`                       | character | "Homo"                                    |
+| `human_species`                     | character | "sapiens"                                 |
+| `plant_remains`                     | character | "phytoliths"                              |
+| `plant_family`                      | character | "Anarcadiaceae"                           |
+| `plant_genus`                       | character | "Jasione"                                 |
+| `plant_species`                     | character | "Potamogeton gramineus L."                |
+| `fauna_genus`                       | character | "Lemniscomys", "Hipposideros"             |
+| `fauna_species`                     | character | "atapuerquensis"                          |
+
+## Helper functions
+
+#### help()
+
+Each function in ROAD comes with detailed documentation, accessible through the standard help() function in R. The documentation describes what the function does, the arguments it accepts, the columns it returns, and how to interpret them.
+
+```{r helper_help, eval=FALSE, include=TRUE}
+# Examples
+help(road_get_localities)
+help(road_get_lithic_typology)
+help(road_get_dates)
+```
+
+
+#### road_list_argument_values()
+
+If you are unsure which values are valid for a given argument, use road_list_argument_values().
+For instance, you might not know how specific archaeological technocomplexes are spelled in ROAD, or which human genera are available. This helper function returns all unique values for the specified argument, allowing you to explore available options before constructing your query.
+
+```{r helper_argument, eval=FALSE, include=TRUE}
+# Examples
+road_list_argument_values("countries")
+road_list_argument_values("cultural_periods")
+road_list_argument_values("human_genus")
+```
+
+#### road_summarize_archaeology()
+
+When working with archaeological data, it can be helpful to summarize content across multiple road_get_* functions.
+For example, you may want to identify all datasets containing the term "egg shell". The summary table shows which road_get_* functions include the term, and in which columns it appears. This allows you to refine and target your queries more effectively.
+
+```{r helper_summarize, eval=FALSE, include=TRUE}
+# Find 'egg shell'
+road_summarize_archaeology('egg shell')
+```
+```{r echo=FALSE}
+head(road_summarize_archaeology('egg shell'),4)
+```
+
+
+# Examples
+## Example #1: Localities
+
+### Query localities
+You can retrieve a table of all localities stored in ROAD using the function `road_get_localities()`.
+Table 1 shows the first few rows of more than 2,000 localities currently available. Each locality is represented as a row, with attributes stored in the columns.
+To explore the complete dataset interactively, you can use the View() function in RStudio.
+
+```{r localities}
+# Query all localities
+localities <- road_get_localities()
+```
+```{r eval=FALSE, include=TRUE}
+# Display the dataset
+View(localities)
+```
+
+**Table 1:** Output of the function `road_get_loclities()` with all localities in ROAD.
+
+```{r echo=FALSE}
+DT::datatable(
+  localities,  # Display more rows if you want
+  options = list(
+    scrollX = TRUE,       # Adds horizontal scrollbar
+    pageLength = 5,      # Rows per page
+    autoWidth = TRUE
+  ),
+  class = c('nowrap', 'cell-border')
+)
+```
+
+### Refined query
+You can narrow down your results by adding optional arguments to `road_get_localities()`.
+For example, the query below retrieves only sites from the African continent that are attributed to the Middle Stone Age.
+
+**Table 2:** Output of the function `road_get_loclities()` filtered for the African continent and the Middle Stone Age.
+```{r}
+# Query selected localities
+african_msa_localities <- road_get_localities(continents = "Africa", cultural_periods = "MSA")
+```
+```{r eval=FALSE, include=TRUE}
+# Display the dataset
+View(african_msa_localities)
+```
+```{r echo=FALSE}
+DT::datatable(
+  african_msa_localities,  # Display more rows if you want
+  options = list(
+    scrollX = TRUE,       # Adds horizontal scrollbar
+    pageLength = 5,      # Rows per page
+    autoWidth = TRUE
+  ),
+  class = c('nowrap', 'cell-border')
+)
+```
+
+### Display map
+Since the dataset contains geographical coordinates in the columns `coord_x` and `coord_y`, you can easily convert the results into a spatial object with the `sf` package and visualize them on an interactive map using `tmap`.
+
+```{r ex1_map, out.width="100%", message=FALSE, warning=FALSE}
+# Load geospatial libraries
+library(sf)     # for spatial objects
+library(tmap)   # for visualization
+
+# Use coordinate columns to create a spatial dataset
+afican_msa_sf <- st_as_sf(african_msa_localities, 
+                          coords = c("coord_x", "coord_y"), 
+                          crs = 4326)  # WGS84 (lat/lon)
+
+# Choose mapping engine
+tmap_mode("view")  # or "plot" for static map
+
+# Create map
+tm_shape(afican_msa_sf) +
+  tm_basemap("OpenStreetMap") +
+  tm_dots()
+
+```
+
+
