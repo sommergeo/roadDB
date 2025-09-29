@@ -77,3 +77,47 @@ The following arguments are optional and can be used with the corresponding `roa
 | `fauna_genus`                       | character | taxonomical_classification / genus                   ||  "Lemniscomys", "Hipposideros"                |
 | `fauna_species`                     | character | paleofauna / species                                 ||  "cf. germanicus", "atapuerquensis"           |
 
+
+| Attribute                                 | Funktion                                     | Type                 |
+| ----------------------------------------- | -------------------------------------------- | -------------------- |
+| `locality_id`                             |  `road_get_*`                                | character            |
+| `continent`                               |  `road_get_*`                                | character            |
+| `subcontinent`                            |  `road_get_*`                                | character            |
+| `country`                                 |  `road_get_*`                                | character            |
+| `coord_x`                                 |  `road_get_*`                                | number               |
+| `coord_y`                                 |  `road_get_*`                                | number               |
+| `locality_types`                          |  `road_get_*`                                | character            |
+| `categories`                              |  `road_get_*`                                | character            |
+| `cultural_periods`                        |  `road_get_*`                                | character            |
+| `technocomplexes`                         |  `road_get_*`                                | character            |
+| `subset_min_age`                          |  `road_get_localities`                       | number               |
+| `subset_max_age`                          |  `road_get_localities`                       | number               |
+| `locality_min_age`                        |  `road_get_localities`                       | number               |
+| `locality_max_age`                        |  `road_get_localities`                       | number               |
+| `humanremains`                            |  `road_get_assemblages*`                     | boolean              |
+| `archaeology`                             |  `road_get_assemblages*`                     | boolean              |
+| `plantremains`                            |  `road_get_assemblages*`                     | boolean              |
+| `paleofauna`                              |  `road_get_assemblages*`                     | boolean              |
+| `min_age`                                 |  `road_get_*` (except `road_get_localities`) | number               |
+| `max_age`                                 |  `road_get_*` (except `road_get_localities`) | number               |
+| `assemblage_name`                         |  `road_get_*` (except `road_get_localities`) | character            |
+| `comments`                                |  `road_get_*` (except `road_get_localities`) | character            |
+| `tool_list`                               |  `road_get_lithic_typology`                  | character            |
+| `typology`                                |  `road_get_lithic_typology`                  | character            |
+| `percentage`                              |  `road_get_lithic_typology`                  | character            |
+| `raw_material_list`                       |  `road_get_lithic_raw_material`              | character            |
+| `transport_distance`                      |  `road_get_lithic_raw_material`              | character            |
+| `percentage`                              |  `road_get_lithic_raw_material`              | character            |
+| `organic_tools_interpretation`            |  `road_get_organic_tools`                    | character            |
+| `organic_raw_material`                    |  `road_get_organic_tools`                    | character            |
+| `organic_tools_technology`                |  `road_get_organic_tools`                    | character            |
+| `number`                                  |  `road_get_organic_tools`                    | character            |
+| `symbolic_artifacts_interpretation`       |  `road_get_symbolic_artifacts`               | character            |
+| `symbolic_artifacts_category`             |  `road_get_symbolic_artifacts`               | character            |
+| `symbolic_artifacts_material`             |   `road_get_symbolic_artifacts`              | character            |
+| `symbolic_artifacts_raw_material_source`  |  `road_get_symbolic_artifacts`               | character            |
+| `symbolic_artifacts_technology`           |  `road_get_symbolic_artifacts`               | character            |
+| `miscellaneous_finds_material`            |  `road_get_miscellaneous_finds`              | character            |
+| `miscellaneous_finds_raw_material_source` |  `road_get_miscellaneous_finds`              | character            |
+| `number`                                  |  `road_get_miscellaneous_finds`              | character            |
+
