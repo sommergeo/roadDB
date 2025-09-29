@@ -122,6 +122,8 @@ road_list_argument_values <- function(function_argument)
   )
 
   if (function_argument == "assemblages") return(paste0("The argument 'assemblages' is a data frame necessarily containing columns ", cm_assemblages_locality_idlocality, ", ", cm_assemblages_idassemblage, ". It can be  generated as return value of the function 'road_get_assemblages'. It can be used instead of the other locality and assemblage search parameters to filter the results."))
+  if (function_argument == "term") return(paste0("The argument 'term' is a string containing an archaeological search term. For this search term the 'road_summarize_archaeology' function provides a quick overview of the presence of a given search term across archaeology-related tables/attributes in the ROAD database and archaeology-related 'road_get_*' functions."))
+
   if (function_argument == "dating_methods" || function_argument == "material_dated")
     table_names <- c("geological_layer_age", "archaeological_layer_age", "assemblage_age")
 
@@ -204,11 +206,18 @@ road_list_values <- function (table_names, attribute_name)
 
 #' Get an Overview of the ROAD Archaeology Database
 #'
-#' The `road_summarize_archaeology` function provides a quick overview of the presence of a given search term across archaeology-related `road_get_*` functions in the ROAD database.
-#' It queries all relevant functions and returns a list indicating whether each function contains the search term. This helps you identify the appropriate `road_get_*` functions for your query.
-#' Once identified, you can further query these functions to retrieve the relevant assemblages.
+#' The `road_summarize_archaeology` function provides a quick overview of the
+#'  presence of a given search term across archaeology-related tables/attributes 
+#'  in the ROAD database and archaeology-related `road_get_*` functions.
+#' It queries all relevant functions and returns a list indicating whether 
+#' each function contains the search term. This helps you identify the appropriate 
+#' `road_get_*` functions for your query.
+#' Once identified, you can further query these functions to retrieve the 
+#' relevant assemblages.
 #'
-#' Background: The ROAD archaeology database is rich in categorized data, where archaeological findings are grouped according to their characteristics. These categories can be accessed using a variety of `road_get_*` functions, such as:
+#' Background: The ROAD archaeology database is rich in categorized data, where 
+#' archaeological findings are grouped according to their characteristics. These 
+#' categories can be accessed using a variety of `road_get_*` functions, such as:
 #'
 #' - `road_get_lithic_typology()`
 #' - `road_get_lithic_raw_material()`
@@ -217,7 +226,9 @@ road_list_values <- function (table_names, attribute_name)
 #' - `road_get_feature()`
 #' - `road_get_miscellaneous_finds()`
 #'
-#' Some search terms may not be easily categorized, while others may appear across multiple categories depending on contextual interpretations. This function assists in identifying the most relevant categories for your search.
+#' Some search terms may not be easily categorized, while others may appear 
+#' across multiple categories depending on contextual interpretations. This 
+#' function assists in identifying the most relevant categories for your search.
 #'
 #' @param term A string containing the search term (one item).
 #'
