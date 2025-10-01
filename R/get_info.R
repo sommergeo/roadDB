@@ -243,87 +243,87 @@ road_summarize_archaeology <- function(term)
     stop("No term is given.")
   else
     query <- paste0("SELECT * FROM ( ",
-                    "SELECT '", term, "' AS term, 'typology' AS table_, 'typology' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'typology' AS road_get_, 'typology' AS attribute, count(*) AS hit_number 
                    FROM typology WHERE typology ILIKE '%", term, "%'", 
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'typology' AS table_, 'tool_list' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'typology' AS road_get_, 'tool_list' AS attribute, count(*) AS hit_number 
                    FROM typology WHERE tool_list ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'typology' AS table_, 'comments' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'typology' AS road_get_, 'comments' AS attribute, count(*) AS hit_number 
                    FROM typology WHERE comments ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'technology' AS table_, 'technology' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'technology' AS road_get_, 'technology' AS attribute, count(*) AS hit_number 
                    FROM technology WHERE technology ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'technology' AS table_, 'technology_type' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'technology' AS road_get_, 'technology_type' AS attribute, count(*) AS hit_number 
                    FROM technology WHERE technology_type ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'technology' AS table_, 'product_list' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'technology' AS road_get_, 'product_list' AS attribute, count(*) AS hit_number 
                    FROM technology WHERE product_list ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'technology' AS table_, 'comments' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'technology' AS road_get_, 'comments' AS attribute, count(*) AS hit_number 
                    FROM technology WHERE comments ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'function' AS table_, 'functional_traces' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'function' AS road_get_, 'functional_traces' AS attribute, count(*) AS hit_number 
                    FROM function WHERE functional_traces ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'function' AS table_, 'function_list' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'function' AS road_get_, 'function_list' AS attribute, count(*) AS hit_number 
                    FROM function WHERE function_list ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'function' AS table_, 'comments' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'function' AS road_get_, 'comments' AS attribute, count(*) AS hit_number 
                    FROM function WHERE comments ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'raw_material' AS table_, 'raw_material_list' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'raw_material' AS road_get_, 'raw_material_list' AS attribute, count(*) AS hit_number 
                    FROM raw_material WHERE raw_material_list ILIKE '%", term, "%'", 
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'raw_material' AS table_, 'comments' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'raw_material' AS road_get_, 'comments' AS attribute, count(*) AS hit_number 
                    FROM raw_material WHERE comments ILIKE '%", term, "%'", 
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'symbolic_artifacts' AS table_, 'material' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'symbolic_artifacts' AS road_get_, 'material' AS attribute, count(*) AS hit_number 
                    FROM symbolic_artifacts WHERE material ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'symbolic_artifacts' AS table_, 'interpretation' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'symbolic_artifacts' AS road_get_, 'interpretation' AS attribute, count(*) AS hit_number 
                    FROM symbolic_artifacts WHERE interpretation ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'symbolic_artifacts' AS table_, 'technology' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'symbolic_artifacts' AS road_get_, 'technology' AS attribute, count(*) AS hit_number 
                    FROM symbolic_artifacts WHERE technology ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'symbolic_artifacts' AS table_, 'category' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'symbolic_artifacts' AS road_get_, 'category' AS attribute, count(*) AS hit_number 
                    FROM symbolic_artifacts WHERE category ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'symbolic_artifacts' AS table_, 'raw_material_source' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'symbolic_artifacts' AS road_get_, 'raw_material_source' AS attribute, count(*) AS hit_number 
                    FROM symbolic_artifacts WHERE raw_material_source ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'symbolic_artifacts' AS table_, 'comments' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'symbolic_artifacts' AS road_get_, 'comments' AS attribute, count(*) AS hit_number 
                    FROM symbolic_artifacts WHERE comments ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'organic_tools' AS table_, 'organic_raw_material' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'organic_tools' AS road_get_, 'organic_raw_material' AS attribute, count(*) AS hit_number 
                    FROM organic_tools WHERE organic_raw_material ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'organic_tools' AS table_, 'interpretation' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'organic_tools' AS road_get_, 'interpretation' AS attribute, count(*) AS hit_number 
                    FROM organic_tools WHERE interpretation ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'organic_tools' AS table_, 'technology' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'organic_tools' AS road_get_, 'technology' AS attribute, count(*) AS hit_number 
                    FROM organic_tools WHERE technology ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'organic_tools' AS table_, 'comments' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'organic_tools' AS road_get_, 'comments' AS attribute, count(*) AS hit_number 
                    FROM organic_tools WHERE comments ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'miscellaneous_finds' AS table_, 'raw_material_source' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'miscellaneous_finds' AS road_get_, 'raw_material_source' AS attribute, count(*) AS hit_number 
                    FROM miscellaneous_finds WHERE raw_material_source ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'miscellaneous_finds' AS table_, 'material' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'miscellaneous_finds' AS road_get_, 'material' AS attribute, count(*) AS hit_number 
                    FROM miscellaneous_finds WHERE material ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'miscellaneous_finds' AS table_, 'comments' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'miscellaneous_finds' AS road_get_, 'comments' AS attribute, count(*) AS hit_number 
                    FROM miscellaneous_finds WHERE comments ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'feature' AS table_, 'interpretation' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'feature' AS road_get_, 'interpretation' AS attribute, count(*) AS hit_number 
                    FROM feature WHERE interpretation ILIKE '%", term, "%'",
                     " UNION ",
-                    "SELECT '", term, "' AS term, 'feature' AS table_, 'comments' AS attribute, count(*) AS hit_number 
+                    "SELECT '", term, "' AS term, 'feature' AS road_get_, 'comments' AS attribute, count(*) AS hit_number 
                    FROM feature WHERE comments ILIKE '%", term, "%'",
-                    " ) as foo ORDER BY hit_number DESC,table_, attribute "
+                    " ) as foo ORDER BY hit_number DESC,road_get_, attribute "
     )
 
   data <- road_run_query(query)
