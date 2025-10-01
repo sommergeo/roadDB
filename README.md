@@ -78,6 +78,8 @@ The following arguments are optional and can be used with the corresponding `roa
 | `fauna_species`                     | character | paleofauna / species                                 | exact       |  "cf. germanicus", "atapuerquensis"           |
 
 
+The following table provides an overview of return attributes.
+
 | Attribute                                 | Funktion                                     | Type                 |
 | ----------------------------------------- | -------------------------------------------- | -------------------- |
 | `locality_id`                             |  `road_get_*`                                | character            |
@@ -100,7 +102,7 @@ The following arguments are optional and can be used with the corresponding `roa
 | `paleofauna`                              |  `road_get_assemblages*`                     | boolean              |
 | `min_age`                                 |  `road_get_*` (except `road_get_localities`) | number               |
 | `max_age`                                 |  `road_get_*` (except `road_get_localities`) | number               |
-| `assemblage_name`                         |  `road_get_*` (except `road_get_localities`) | character            |
+| `assemblage_name`                         |  `road_get_*` (except `localities`,`assemblages`) | character            |
 | `comments`                                |  `road_get_*` (except `road_get_localities`) | character            |
 | `tool_list`                               |  `road_get_lithic_typology`                  | character            |
 | `typology`                                |  `road_get_lithic_typology`                  | character            |
@@ -114,10 +116,23 @@ The following arguments are optional and can be used with the corresponding `roa
 | `number`                                  |  `road_get_organic_tools`                    | character            |
 | `symbolic_artifacts_interpretation`       |  `road_get_symbolic_artifacts`               | character            |
 | `symbolic_artifacts_category`             |  `road_get_symbolic_artifacts`               | character            |
-| `symbolic_artifacts_material`             |   `road_get_symbolic_artifacts`              | character            |
+| `symbolic_artifacts_material`             |  `road_get_symbolic_artifacts`               | character            |
 | `symbolic_artifacts_raw_material_source`  |  `road_get_symbolic_artifacts`               | character            |
 | `symbolic_artifacts_technology`           |  `road_get_symbolic_artifacts`               | character            |
+| `feature_interpretation`                  |  `road_get_feature`                          | character            |
 | `miscellaneous_finds_material`            |  `road_get_miscellaneous_finds`              | character            |
 | `miscellaneous_finds_raw_material_source` |  `road_get_miscellaneous_finds`              | character            |
-| `number`                                  |  `road_get_miscellaneous_finds`              | character            |
+| `number`                                  |  `road_get_miscellaneous_finds`              | number               |
+| `humanremains_category`                   |  `road_get_human_remains`                    | character            |
+| `genus`                                   |  `road_get_human_remains`                    | character            |
+| `species`                                 |  `road_get_human_remains`                    | character            |
+| `age`                                     |  `road_get_human_remains`                    | character            |
+| `sex`                                     |  `road_get_human_remains`                    | character            |
+| `skeletal_element`                        |  `road_get_human_remains`                    | character            |
+| `fauna_genus`                             |  `road_get_paleofauna`                       | character            |
+| `fauna_species`                           |  `road_get_paleofauna`                       | character            |
+| `plant_remains`                           |  `road_get_plantremains`                     | character            |
+| `plant_family`                            |  `road_get_plantremains`                     | character            |
+| `plant_genus`                             |  `road_get_plantremains`                     | character            |
+| `plant_species`                           |  `road_get_plantremains`                     | character            |
 
