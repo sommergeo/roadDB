@@ -102,7 +102,7 @@ The following table provides an overview of return attributes.
 | `paleofauna`                              |  `road_get_assemblages*`                     | boolean              |
 | `min_age`                                 |  `road_get_*` (except `road_get_localities`) | number               |
 | `max_age`                                 |  `road_get_*` (except `road_get_localities`) | number               |
-| `assemblage_name`                         |  `road_get_*` (except `localities`,`assemblages`) | character            |
+| `assemblage_name`                         |  `road_get_*` (except `road_get_localities`) | character            |
 | `comments`                                |  `road_get_*` (except `road_get_localities`) | character            |
 | `tool_list`                               |  `road_get_lithic_typology`                  | character            |
 | `typology`                                |  `road_get_lithic_typology`                  | character            |
