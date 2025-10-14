@@ -206,7 +206,7 @@ parameter_to_vector <- function(parameter)
   return(parameter)
 }
 
-
+# this function adds locality or assemblage columns
 add_locality_columns <- function(data, localities = NULL, assemblages = NULL)
 {
   if (is.null(localities) && is.null(assemblages))
@@ -241,6 +241,8 @@ add_locality_columns <- function(data, localities = NULL, assemblages = NULL)
       cm_assemblages_categories,
       cm_geological_stratigraphy_age_min,
       cm_geological_stratigraphy_age_max,
+      cm_assemblage_in_geolayer_geolayer_name,
+      cm_assemblage_in_archlayer_archlayer_name,
       cm_cultural_periods,
       cm_technocomplexes
     )
