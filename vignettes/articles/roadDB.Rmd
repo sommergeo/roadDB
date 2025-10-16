@@ -1,6 +1,10 @@
 ---
-title: "roadDB"
-output: rmarkdown::html_vignette
+title: "roadDB: An R package for exploring human prehistory with the ROCEEH Out of Africa Database"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2         # Show headings up to level 2 (##)
+    #toc_float: true      # Make the TOC float on the side
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
@@ -86,7 +90,8 @@ The use of `roadDB` can be summarized as follows:
 ## road_get_* functions
 The `road_get_*` functions are used to query data from the ROAD server. They support three **Levels of Detail (LOD)**, which determine the granularity of the returned data frame. Accordingly, each *row* (or *observation*) in the output will represent a **locality**, an **assemblage**, or a specific **date**, depending on the selected level of detail (see fig. 1)
 
-![](../../docs/levels_of_detail.svg){width=100%}
+![](../../docs/levels_of_detail.svg){width=350px}
+
 **Fig 1:** Three levels of detail determine the granularity of data frame.
 
 Since ROAD contains extensive information at the assemblage level—and because different types of assemblages may include diverse and sometimes unique sets of *columns* (or *variables*)—additional subordinate functions are provided to handle these cases. A large number of these functions are specifically related to archaeological content. The available functions include:
@@ -111,7 +116,7 @@ In practice, however, most research questions require more focused data. You can
 
 ```{r arguments_example, eval=FALSE, include=TRUE}
 # Single argument
-road_get_localities(cultural_period='MSA')  # Single arguments
+road_get_localities(cultural_period='MSA')
 
 # Multiple arguments
 road_get_localities(cultural_period=c('MSA','LSA'), countries='South Africa')
@@ -134,27 +139,28 @@ road_get_localities(cultural_period=c('MSA','LSA'), countries=c('South Africa','
 | `technocomplexes`   | character | "ESA/ Early Acheulean"                        |
 | `cultural_periods`  | character | "Middle Stone Age"                            |
 
-**Function-specific arguments** are only available for certain road_get_* functions. These arguments refine queries in ways that are unique to the corresponding function:
+**Function-specific arguments** are only available for certain road_get_* functions. These arguments refine queries in ways that are unique to the corresponding function. Some of them use *exact* search terms, whereas others user *fuzzy* search.
 
-| Argument                            | Type      | Example(s)                                |
-|-------------------------------------|-----------|-------------------------------------------|
-| `dating_methods`                    | character | "U series (uranium-thorium) dating"       |
-| `material_dated`                    | character | "bone"                                    |
-| `tool_list`                         | character | "bladelet"                                |
-| `raw_material_list`                 | character | "ironstone banded"                        |
-| `transport_distance`                | character | "regional (6–20 km)"                      |
-| `organic_tools_interpretation`      | character | "retoucher"                               |
-| `symbolic_artifacts_interpretation` | character | "anthropomorphic"                         |
-| `feature_interpretation`            | character | "stone construction"                      |
-| `miscellaneous_finds_material`      | character | "ostrich egg shell"                       |
-| `human_genus`                       | character | "Homo"                                    |
-| `human_species`                     | character | "sapiens"                                 |
-| `plant_remains`                     | character | "phytoliths"                              |
-| `plant_family`                      | character | "Anarcadiaceae"                           |
-| `plant_genus`                       | character | "Jasione"                                 |
-| `plant_species`                     | character | "Potamogeton gramineus L."                |
-| `fauna_genus`                       | character | "Lemniscomys", "Hipposideros"             |
-| `fauna_species`                     | character | "atapuerquensis"                          |
+| Argument                            | Type      | Search Type | Example(s)                          |
+| ----------------------------------- | --------- | ----------- | ----------------------------------- |
+| `dating_methods`                    | character | exact       | "U series (uranium-thorium) dating" |
+| `material_dated`                    | character | exact       | "bone"                              |
+| `tool_list`                         | character | contains    | "bladelet"                          |
+| `raw_material_list`                 | character | contains    | "ironstone banded"                  |
+| `transport_distance`                | character | exact       | "regional (6–20 km)"                |
+| `organic_tools_interpretation`      | character | contains    | "retoucher"                         |
+| `symbolic_artifacts_interpretation` | character | contains    | "anthropomorphic"                   |
+| `feature_interpretation`            | character | exact       | "stone construction"                |
+| `miscellaneous_finds_material`      | character | exact       | "ostrich egg shell"                 |
+| `human_genus`                       | character | exact       | "Homo"                              |
+| `human_species`                     | character | exact       | "sapiens"                           |
+| `plant_remains`                     | character | exact       | "phytoliths"                        |
+| `plant_family`                      | character | exact       | "Anarcadiaceae"                     |
+| `plant_genus`                       | character | exact       | "Jasione"                           |
+| `plant_species`                     | character | exact       | "Potamogeton gramineus L."          |
+| `fauna_genus`                       | character | exact       | "Lemniscomys"                       |
+| `fauna_species`                     | character | exact       | "atapuerquensis"                    |
+
 
 ## Helper functions
 
@@ -207,25 +213,13 @@ To explore the complete dataset interactively, you can use the View() function i
 ```{r localities}
 # Query all localities
 localities <- road_get_localities()
-```
-```{r eval=FALSE, include=TRUE}
-# Display the dataset
-View(localities)
+
+head(localities)  # head() shows the first 6 rows of a dataset
 ```
 
 **Table 1:** Output of the function `road_get_loclities()` with all localities in ROAD.
 
-```{r echo=FALSE}
-DT::datatable(
-  localities,  # Display more rows if you want
-  options = list(
-    scrollX = TRUE,       # Adds horizontal scrollbar
-    pageLength = 5,      # Rows per page
-    autoWidth = TRUE
-  ),
-  class = c('nowrap', 'cell-border')
-)
-```
+
 
 ### Refined query
 You can narrow down your results by adding optional arguments to `road_get_localities()`.
@@ -235,21 +229,7 @@ For example, the query below retrieves only sites from the African continent tha
 ```{r}
 # Query selected localities
 african_msa_localities <- road_get_localities(continents = "Africa", cultural_periods = "MSA")
-```
-```{r eval=FALSE, include=TRUE}
-# Display the dataset
-View(african_msa_localities)
-```
-```{r echo=FALSE}
-DT::datatable(
-  african_msa_localities,  # Display more rows if you want
-  options = list(
-    scrollX = TRUE,       # Adds horizontal scrollbar
-    pageLength = 5,      # Rows per page
-    autoWidth = TRUE
-  ),
-  class = c('nowrap', 'cell-border')
-)
+head(african_msa_localities)
 ```
 
 ### Display map
@@ -275,4 +255,86 @@ tm_shape(afican_msa_sf) +
 
 ```
 
+You can extend this map with various functions included in the [`tmap`](https://r-tmap.github.io/tmap/) package.
+
+## Example #3: Dates
+Throughout this tutorial, you may have noticed the columns `age_min` and `age_max`, ROAD's own age estimates based on a combination of all available temporal information, including cultural and radiometric dates—essentially a best guess.
+
+However, if the temporal aspect is crucial for your research, for example a time series analysis, it is important to look at the actual data rather than aggregates.
+
+This is especially true for radiocarbon dates, which are stored uncalibrated in ROAD, and which require you to perform and customize your own age modelling.
+
+For this reason, we implemented `road_get_dates()`.
+
+
+### Calibrating radiocarbon dates
+![](Hohler_Fels_Halle_Achtal_Schelklingen.jpg){width=350px}
+
+**Fig 2:** Inside the UNESCO site "Hohle Fels" | [CC BY-SA Thilo Parg](https://commons.wikimedia.org/wiki/File:Hohler_Fels_Halle_Achtal_Schelklingen.jpg) 
+
+Let's have a look at Hohle Fels, a well-known Paleolithic cave site in the Swabian Jura with plenty of dates. First, we'll get an overview of all the available data, and then use [`tidyverse::filter()`](https://dplyr.tidyverse.org/reference/filter.html) to narrow down our results.
+
+*Try to answer these questions:*
+- *How many dates are there altogether?*
+- *How many radiocarbon dates are there?*
+- *Which technocomplexes are present at the site?*
+
+
+```{r message=FALSE, warning=FALSE}
+library(roadDB)
+library(tidyverse)
+
+# Load all dates
+all_dates <- road_get_dates() 
+
+# Now filter the column locality_id for the value "Hohle Fels"
+hohle_fels_dates <- filter(all_dates, locality_id == "Hohle Fels")
+
+```
+
+![](02_Kombi_Griffloecher.jpg){width=350px}
+
+**Fig 3:** Flute from the Aurignacian layers of Hohle Fels | H. Jensen/Universität Tübingen 
+
+Hohle Fels is known for a number of fascinating finds, including one nearly complete bone flute and fragments of three ivory flutes that were excavated from archaeological layer Vb ([Conard et al. 2009](https://www.nature.com/articles/nature08169)). The radiocarbon ages for this layer were derived from bone and charcoal and were analyzed at the Oxford Radiocarbon Accelerator Unit and the Leibniz Laboratory in Kiel.
+
+We'll calibrate layer Vb ages using the R package [`rcarbon`](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#binning), based on an excellent [introduction](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html) into the software. Since the site is located in the Northern Hemisphere, we'll use the "IntCal20" calibration curve ([Reimer et al. 2020](https://doi.org/10.1017/RDC.2020.41)).
+
+
+```{r message=FALSE, warning=FALSE, eval=TRUE}
+library(rcarbon)
+
+# Filter for archaeological layer Vb
+hohle_fels_Vb <- filter(hohle_fels_dates, archlayer=="AH Vb")
+
+# Extend filter for symbolic artifacts
+hohle_fels_Vb <- filter(hohle_fels_Vb, str_detect(categories, "symbolic artifacts"))
+
+# Calibrate
+hohle_fels_Vb_cal <- calibrate(x=hohle_fels_Vb$age,
+                           errors=hohle_fels_Vb$positive_standard_deviation,
+                           calCurves='intcal20')
+```
+
+Now the calibrated ages can be diyplayed with `summary()`.
+```{r message=FALSE}
+# Display calibrated ages
+summary(hohle_fels_Vb_cal)
+```
+
+You can also visualize the results with `plot()` and `multiplot()`.
+```{r}
+# Visualize the first date
+plot(hohle_fels_Vb_cal,1)
+```
+
+```{r}
+# Visiualize all dates, with numbers indicating row number
+multiplot(hohle_fels_Vb_cal,
+          decreasing=TRUE,
+          rescale=TRUE,
+          HPD=TRUE,
+          label.pos=0.9,
+          label.offset=-200) 
+```
 
