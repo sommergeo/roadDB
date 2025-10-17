@@ -257,6 +257,48 @@ tm_shape(afican_msa_sf) +
 
 You can extend this map with various functions included in the [`tmap`](https://r-tmap.github.io/tmap/) package.
 
+### Display a technocomplex
+Now we’ll generate a map for a technocomplex of your choice.
+Before selecting one, it’s helpful to get an overview of the available options. This is where the helper function `road_list_argument_values()` comes in — it allows us to list the unique values that can be used as arguments.
+
+**Use it to display all available technocomplexes, and then choose one that interests you.**
+
+```{r eval=FALSE}
+road_list_argument_values("technocomplexes")
+```
+```{r echo=FALSE}
+cat(paste0(paste(head(road_list_argument_values("technocomplexes")$technocomplex,40), collapse = ", "), ", and many more."))
+```
+
+Now, adapt the mapping workflow from above to display the technocomplex you selected.
+Use your chosen value as argument value in the `road_get_localities` function to generate a map specific to that culture.
+
+```{r, out.width="100%", message=FALSE, warning=FALSE}
+# Query Mousterian sites
+mousterian <- road_get_localities(technocomplexes = c("MP/ Mousterian - Eurasia", "MP/ Mousterian - Levant"))
+
+# Create spatial dataset
+mousterian_sf <- st_as_sf(mousterian, 
+                          coords = c("coord_x", "coord_y"), 
+                          crs = 4326)  # WGS84 (lat/lon)
+
+# Display map
+tm_shape(mousterian_sf) +
+  tm_basemap("OpenStreetMap") +
+  tm_dots(
+    col = "technocomplexes",
+    palette = "Set2")+
+  tm_layout(legend.outside = TRUE)
+
+```
+As you can see, the map can be customized using the arguments available in  [`tmap::tm_dots()`](https://r-tmap.github.io/tmap/reference/tm_symbols.html). In this example, we visualize different technocomplex categories by setting the `col` argument (which determines what variable is used for coloring — here, `mousterian$technocomplexes`) and the palette argument (which specifies the color scheme to use).
+
+Once you have transferred your dataset to a spatial datatype, there are many interresting packages available for spatial analysis of your data, for example:
+- [`spatstat`](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) for spatial point pattern analysis, kernel density, etc.
+- [`spatial`]() for interpolation, Kriging and point pattern analysis
+- [`gstat`]() for modelling, prediction and simulation
+
+
 ## Example #3: Dates
 Throughout this tutorial, you may have noticed the columns `age_min` and `age_max`, ROAD's own age estimates based on a combination of all available temporal information, including cultural and radiometric dates—essentially a best guess.
 
@@ -298,7 +340,7 @@ hohle_fels_dates <- filter(all_dates, locality_id == "Hohle Fels")
 
 Hohle Fels is known for a number of fascinating finds, including one nearly complete bone flute and fragments of three ivory flutes that were excavated from archaeological layer Vb ([Conard et al. 2009](https://www.nature.com/articles/nature08169)). The radiocarbon ages for this layer were derived from bone and charcoal and were analyzed at the Oxford Radiocarbon Accelerator Unit and the Leibniz Laboratory in Kiel.
 
-We'll calibrate layer Vb ages using the R package [`rcarbon`](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#binning), based on an excellent [introduction](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html) into the software. Since the site is located in the Northern Hemisphere, we'll use the "IntCal20" calibration curve ([Reimer et al. 2020](https://doi.org/10.1017/RDC.2020.41)).
+We'll calibrate layer Vb ages using the R package [`rcarbon`](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html). Since the site is located in the Northern Hemisphere, we'll use the "IntCal20" calibration curve ([Reimer et al. 2020](https://doi.org/10.1017/RDC.2020.41)).
 
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
@@ -323,12 +365,12 @@ summary(hohle_fels_Vb_cal)
 ```
 
 You can also visualize the results with `plot()` and `multiplot()`.
-```{r}
+```{r message=FALSE, warning=FALSE}
 # Visualize the first date
 plot(hohle_fels_Vb_cal,1)
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 # Visiualize all dates, with numbers indicating row number
 multiplot(hohle_fels_Vb_cal,
           decreasing=TRUE,
@@ -338,3 +380,8 @@ multiplot(hohle_fels_Vb_cal,
           label.offset=-200) 
 ```
 
+The radiocarbon analyses were based on an excellent [introduction](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html) into the [`rcarbon`] software. Using this you can extend your `roadDB` workflow to create [Summed Probability Distributions (SPDs)](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#aggregating-14c-dates-summed-probability-distributions-spd), [temporal composite kernel density estimates (CKDE)}(https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#composite-kernel-density-estimates-ckde) or [spatio-temporal](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#spatial-analysis) analyses, for example.
+
+# Further Reading
+[Ben Marwick: How To Do Archaeological Science Using R](How To Do Archaeological Science Using R)
+[Open-Archaeo: A list of open source archaeological software and resources](https://github.com/zackbatist/open-archaeo)
