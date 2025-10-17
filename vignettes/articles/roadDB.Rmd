@@ -330,6 +330,26 @@ Once you have transferred your dataset to a spatial datatype, there are many int
 - [`gstat`]() for modelling, prediction and simulation
 
 
+## Example #2: Assemblages
+
+### 2.1 
+
+```{r}
+road_summarize_archaeology('egg shell')
+```
+
+```{r}
+eggshell_misc <- road_get_miscellaneous_finds()
+eggshell_misc <- filter(eggshell_misc, str_detect(miscellaneous_finds_material, 'egg shell'))
+
+eggshell_symbolic <- road_get_symbolic_artifacts()
+eggshell_symbolic <- filter(eggshell_symbolic, str_detect(symbolic_artifacts_material, 'egg shell'))
+
+eggshell_combined <- full_join(eggshell_misc, eggshell_symbolic, by = c("locality_id", "assemblage_id", "continent", "subcontinent", "country", "locality_types", "coord_x", "coord_y", "assemblage_name", "categories", "age_min", "age_max", "cultural_periods", "technocomplexes"))
+
+```
+
+
 ## Example #3: Dates
 Throughout this tutorial, you may have noticed the columns `age_min` and `age_max`, ROAD's own age estimates based on a combination of all available temporal information, including cultural and radiometric dates — essentially a best guess.
 
