@@ -92,7 +92,7 @@ The `road_get_*` functions are used to query data from the ROAD server. They sup
 
 ![](../../docs/levels_of_detail.svg){width=350px}
 
-**Fig 1:** Three levels of detail determine the granularity of data frame.
+**Fig 1:** Three levels of detail determine the granularity of a data frame.
 
 Since ROAD contains extensive information at the assemblage level—and because different types of assemblages may include diverse and sometimes unique sets of *columns* (or *variables*)—additional subordinate functions are provided to handle these cases. A large number of these functions are specifically related to archaeological content. The available functions include:
 
@@ -139,7 +139,7 @@ road_get_localities(cultural_period=c('MSA','LSA'), countries=c('South Africa','
 | `technocomplexes`   | character | "ESA/ Early Acheulean"                        |
 | `cultural_periods`  | character | "Middle Stone Age"                            |
 
-**Function-specific arguments** are only available for certain road_get_* functions. These arguments refine queries in ways that are unique to the corresponding function. Some of them use *exact* search terms, whereas others user *fuzzy* search.
+**Function-specific arguments** are only available for certain road_get_* functions. These arguments refine queries in ways that are unique to the corresponding function. Some of them use *exact* search terms, whereas others use *fuzzy/contains* search.
 
 | Argument                            | Type      | Search Type | Example(s)                          |
 | ----------------------------------- | --------- | ----------- | ----------------------------------- |
