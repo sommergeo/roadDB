@@ -97,7 +97,6 @@ The use of `roadDB` can be summarized as follows:
 The `road_get_*` functions are used to query data from the ROAD server. They support three **Levels of Detail (LOD)**, which determine the granularity of the returned data frame. Accordingly, each *row* (or *observation*) in the output will represent a **locality**, an **assemblage**, or a specific **date**, depending on the selected level of detail (see fig. 1)
 
 ![](../../docs/levels_of_detail.svg){width=350px}
-
 **Figure 1:** Three levels of detail determine the granularity of data frame.
 
 Since ROAD contains extensive information at the assemblage level—and because different types of assemblages may include diverse and sometimes unique sets of *columns* (or *variables*)—additional subordinate functions are provided to handle these cases.
