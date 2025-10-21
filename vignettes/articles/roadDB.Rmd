@@ -394,7 +394,7 @@ combined <- rbind(mous_levallois, mous_tools)
 
 Now we have our combined dataset and we are ready for plotting.
 
-```{r}
+```{r fig.width=7, fig.height=7}
 # Plot the combined data in a bar plot
 ggplot(combined, aes(x = fct_infreq(country), # x-axis = countries ordered by how often they appear
                      fill = source)) + # colour of the bars is determined on the source columns
