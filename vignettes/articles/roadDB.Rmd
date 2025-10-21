@@ -228,6 +228,25 @@ head(road_summarize_archaeology('egg shell'),4)
 
 
 # Examples
+The following examples demonstrate how to query data from ROAD and seamlessly use the results with external R packages. Before you begin, please ensure that the required packages are installed on your system. If not, install them using the instructions provided below.
+
+```{r, eval=FALSE, include=TRUE}
+# Install packages (needs to be done only once)
+install.packages("tidyverse")
+install.packages("sf")
+install.packages("tmap")
+install.packages("rcarbon")
+```
+```{r, warning=FALSE, message=FALSE}
+library(roadDB)
+library(tidyverse)
+library(sf)
+library(tmap)
+library(rcarbon)
+```
+
+
+
 ## Example #1: Localities
 
 ### 1.1 Query localities
@@ -378,9 +397,6 @@ First, we'll get an overview of all the available data, and then use [`tidyverse
 
 
 ```{r message=FALSE, warning=FALSE}
-library(roadDB)
-library(tidyverse)
-
 # Load all dates
 all_dates <- road_get_dates() 
 
@@ -409,6 +425,7 @@ We'll calibrate layer Vb ages using the R package [`rcarbon`](https://cran.r-pro
 ### 3.2 Calibrate
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
+# Load radiocarbon library
 library(rcarbon)
 
 # Calibrate
