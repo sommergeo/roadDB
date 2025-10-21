@@ -2,13 +2,13 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="14.142061mm"
-   height="12.247458mm"
-   viewBox="0 0 14.142061 12.247458"
+   width="4.3899999cm"
+   height="5.0799999cm"
+   viewBox="0 0 43.899996 50.799998"
    version="1.1"
    id="svg1"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
-   sodipodi:docname="roadDB_logo.svg"
+   sodipodi:docname="roadDB_sticker.svg"
    inkscape:export-filename="roadDB_logo2.svg"
    inkscape:export-xdpi="375.37668"
    inkscape:export-ydpi="375.37668"
@@ -26,13 +26,13 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#505050"
      inkscape:document-units="mm"
-     inkscape:zoom="9.0225589"
-     inkscape:cx="41.063739"
-     inkscape:cy="19.229578"
-     inkscape:window-width="1600"
-     inkscape:window-height="829"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:zoom="2"
+     inkscape:cx="73.75"
+     inkscape:cy="88.75"
+     inkscape:window-width="1920"
+     inkscape:window-height="1111"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      inkscape:export-bgcolor="#ffffff00" />
@@ -106,22 +106,19 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(2.38125,-156.10417)">
+     transform="matrix(0.98242163,0,0,0.98242163,1.7954175,-151.98297)">
+    <path
+       d="m 92.375488,184.75048 -80.000011,-46.188 V 46.184494 L 92.375488,-5.0008496e-4 172.3755,46.184494 v 92.377986 z"
+       id="path1"
+       style="fill:#fafafa;stroke:none;stroke-width:5.54509;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
+       inkscape:label="Background"
+       transform="matrix(0.27050966,0,0,0.27050966,-4.4252285,155.56853)" />
     <g
-       style="fill:#f9f9f9;stroke:#1e3283;stroke-width:2.63507;stroke-dasharray:none;stroke-opacity:1"
-       id="g29"
-       transform="matrix(0.07530637,0,0,0.07530638,-2.266682,155.27147)"
-       inkscape:label="Hexagon">
-      <path
-         d="m 0,92.375 46.188,-80 h 92.378 l 46.185,80 -46.185,80 H 46.188 Z"
-         id="path1"
-         style="fill:#f9f9f9;stroke:#1e3283;stroke-width:2.63507;stroke-dasharray:none;stroke-opacity:1" />
-    </g>
-    <g
-       id="g1">
+       id="g1"
+       transform="matrix(3.5921218,0,0,3.5921218,3.7169696,-402.18548)">
       <g
          id="g28"
-         transform="matrix(0.04127282,0,0,-0.0412728,-3.1639015,171.35809)"
+         transform="matrix(0.03958209,0,0,-0.03958207,-2.842178,170.98407)"
          clip-path="url(#clipPath55)"
          inkscape:label="ROCEEH Logo">
         <g
@@ -159,29 +156,35 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-size:2.11667px;line-height:2.11666px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;text-anchor:middle;fill:#1e3283;fill-opacity:1;stroke:#ffffff;stroke-width:0.529167;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
-       x="4.6707306"
-       y="166.84373"
+       style="font-size:7.60333px;line-height:7.6033px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;text-anchor:middle;display:inline;fill:#1e3283;fill-opacity:1;stroke:#ffffff;stroke-width:1.90083;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+       x="20.494802"
+       y="195.2368"
        id="text55"
-       inkscape:transform-center-y="-0.6614583"
+       inkscape:transform-center-y="-2.3759818"
        inkscape:label="roadDB"><tspan
          sodipodi:role="line"
          id="tspan55"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;line-height:2.11666px;font-family:Lato;-inkscape-font-specification:Lato;fill:#1e3283;fill-opacity:1;stroke:#ffffff;stroke-width:0.529167;stroke-dasharray:none;stroke-opacity:1"
-         x="4.6707306"
-         y="166.84373">roadDB</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.60333px;line-height:7.6033px;font-family:Lato;-inkscape-font-specification:Lato;fill:#1e3283;fill-opacity:1;stroke:#ffffff;stroke-width:1.90083;stroke-dasharray:none;stroke-opacity:1"
+         x="20.494802"
+         y="195.2368">roadDB</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:2.11667px;line-height:2.11666px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;text-anchor:middle;fill:#1e3283;fill-opacity:1;stroke:none;stroke-width:0.198437;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
-       x="4.6707306"
-       y="166.31458"
+       style="font-size:7.60333px;line-height:7.6033px;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;letter-spacing:0px;text-anchor:middle;fill:#1e3283;fill-opacity:1;stroke:none;stroke-width:0.71281;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+       x="20.494802"
+       y="195.2368"
        id="text55-7"
-       inkscape:transform-center-y="-0.6614583"
+       inkscape:transform-center-y="-2.3759818"
        inkscape:label="roadDB"><tspan
          sodipodi:role="line"
          id="tspan55-1"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;line-height:2.11666px;font-family:Lato;-inkscape-font-specification:Lato;fill:#1e3283;fill-opacity:1;stroke:none;stroke-width:0.198437;stroke-opacity:1"
-         x="4.6707306"
-         y="166.31458">roadDB</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.60333px;line-height:7.6033px;font-family:Lato;-inkscape-font-specification:'Lato Bold';fill:#1e3283;fill-opacity:1;stroke:none;stroke-width:0.71281;stroke-opacity:1"
+         x="20.494802"
+         y="195.2368">roadDB</tspan></text>
+    <path
+       d="m 92.375488,184.75048 -80.000011,-46.188 V 46.184494 L 92.375488,-5.0008496e-4 172.3755,46.184494 v 92.377986 z"
+       id="path2"
+       style="fill:none;stroke:#1e3283;stroke-width:5.54509;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="Frame"
+       transform="matrix(0.27050966,0,0,0.27050966,-4.4252285,155.56853)" />
   </g>
 </svg>
