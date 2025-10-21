@@ -144,7 +144,7 @@ And second, the **function-specific arguments** (tab. 2), which are only availab
 Figure 2 gives a compact overview over all possible combinations of functions and arguments:
 
 ![](functions_and_arguments.png){width=690px}
-**Figure 2:** All possible combinations of functions and arguments. [Click here](https://sommergeo.com/roadDB/functions_and_arguments.PDF) for a PDF version.
+**Figure 2:** All possible combinations of functions and arguments. [Click here](https://sommergeo.com/roadDB/functions_and_arguments.pdf) for a PDF version.
 
 **Table 1:** General arguments are available for all `road_get_*` functions.
 
@@ -270,7 +270,6 @@ head(localities)  # head() shows the first 6 rows of a dataset
 You can narrow down your results by adding optional arguments to `road_get_localities()`.
 For example, the query below retrieves only sites from the African continent that are attributed to the Middle Stone Age.
 
-**Table 2:** Output of the function `road_get_loclities()` filtered for the African continent and the Middle Stone Age.
 ```{r}
 # Query selected localities
 african_msa_localities <- road_get_localities(continents = "Africa", cultural_periods = "MSA")
@@ -278,7 +277,7 @@ head(african_msa_localities)
 ```
 
 ### 1.3 Display a map
-Since the dataset contains geographical coordinates in the columns `coord_x` and `coord_y`, you can easily convert the results into a spatial object with the `sf` package and visualize them on an interactive map using `tmap`.
+Since the dataset contains geographical coordinates in the columns `coord_x` and `coord_y`, you can easily convert the results into a spatial object with the `sf` package and visualize them on an interactive map using the package `tmap`.
 
 ```{r ex1_map, out.width="100%", message=FALSE, warning=FALSE}
 # Load geospatial libraries
@@ -424,7 +423,7 @@ road_summarize_archaeology('ostrich egg shell')
 
 In the next step, we can use this information to run the appropriate query functions: `road_get_miscellaneous_finds()` and `road_get_symbolic_artifacts()`.
 
-We then combine the two data frames using the `tidyverse::full_join()` function.
+We then combine the two data frames using the [`tidyverse::full_join()`](https://dplyr.tidyverse.org/reference/mutate-joins.html) function.
 
 ```{r}
 # Query from miscellaneous finds
@@ -454,9 +453,10 @@ For Advanced Users
 
 *Adapt the plot from above to compare the outputs of both approaches. Try to understand how the differences in merging affect the final visualization.*
 ```{r}
-# Variant 1
+# Version 1
 eggshell_combined1 <- full_join(eggshell_misc, eggshell_symbolic, by = c("locality_id", "assemblage_id", "continent", "subcontinent", "country", "locality_types", "coord_x", "coord_y", "assemblage_name", "categories", "age_min", "age_max", "cultural_periods", "technocomplexes"))
 
+# Version 2
 eggshell_combined2 <- bind_rows(eggshell_misc, eggshell_symbolic)
 
 ```
@@ -558,3 +558,12 @@ The radiocarbon analyses were based on an excellent [introduction](https://cran.
 [Ben Marwick: How To Do Archaeological Science Using R](How To Do Archaeological Science Using R)
 
 [Open-Archaeo: A list of open source archaeological software and resources](https://github.com/zackbatist/open-archaeo)
+
+```{r eval=FALSE, include=FALSE}
+rmarkdown::render(
+  input = "vignettes/articles/roadDB.Rmd",
+  output_file = "tutorial.html",
+  output_dir = "docs"
+)
+```
+
