@@ -229,8 +229,9 @@ head(road_summarize_archaeology('egg shell'),4)
 
 
 # Examples
-The following examples demonstrate how to query data from ROAD and seamlessly use the results with external R packages. Before you begin, please ensure that the required packages are installed on your system. If not, install them using the instructions provided below.
+The following examples demonstrate how to query data from ROAD and seamlessly use the results with external R packages. 
 
+Before you begin, please ensure that the required packages are installed on your system. If they are not, install them using the instructions provided below.
 ```{r, eval=FALSE, include=TRUE}
 # Install packages (needs to be done only once)
 install.packages("tidyverse")
@@ -239,13 +240,13 @@ install.packages("tmap")
 install.packages("rcarbon")
 ```
 ```{r, warning=FALSE, message=FALSE}
+# Load libraries (every time you run this tutorial)
 library(roadDB)
 library(tidyverse)
 library(sf)
 library(tmap)
 library(rcarbon)
 ```
-
 
 
 ## Example #1: Localities
@@ -350,20 +351,52 @@ Once you have transferred your dataset to a spatial datatype, there are many int
 
 ## Example #2: Assemblages
 
-### 2.1 
+### 2.1 Ostrich egg shells
+
+Ostrich eggshells are an interesting material with a variety of uses. In this exercise, we'll create a quick graph to visualize their appearance across different cultural periods.
+
+First, we can use `road_summarize_archaeology()` to get an overview of the tables in which these items can be found. The search term *ostrich eggshell* appears in two tables: `miscellaneous finds` and `symbolic artifacts`. In these tables, the term is found in the attributes `material` and `comments`, and the hit count indicates how many rows contain these items.
 
 ```{r}
-road_summarize_archaeology('egg shell')
+road_summarize_archaeology('ostrich egg shell')
 ```
 
-```{r}
-eggshell_misc <- road_get_miscellaneous_finds()
-eggshell_misc <- filter(eggshell_misc, str_detect(miscellaneous_finds_material, 'egg shell'))
+In the next step, we can use this information to run the appropriate query functions: `road_get_miscellaneous_finds()` and `road_get_symbolic_artifacts()`.
 
+We then combine the two data frames using the `tidyverse::full_join()` function.
+
+```{r}
+# Query from miscellaneous finds
+eggshell_misc <- road_get_miscellaneous_finds(miscellaneous_finds_material='ostrich egg shell')
+
+# Query from 
 eggshell_symbolic <- road_get_symbolic_artifacts()
-eggshell_symbolic <- filter(eggshell_symbolic, str_detect(symbolic_artifacts_material, 'egg shell'))
+eggshell_symbolic <- filter(eggshell_symbolic, str_detect(symbolic_artifacts_material, 'ostrich egg shell'))
 
 eggshell_combined <- full_join(eggshell_misc, eggshell_symbolic, by = c("locality_id", "assemblage_id", "continent", "subcontinent", "country", "locality_types", "coord_x", "coord_y", "assemblage_name", "categories", "age_min", "age_max", "cultural_periods", "technocomplexes"))
+```
+
+Finally, we can visualize the results in a simple bar chart.
+```{r fig.width=7}
+ggplot(eggshell_combined, aes(y = cultural_periods)) +
+  geom_bar() +
+  labs(
+    title = "Ostrich egg shells",
+    x = "Number of assemblages",
+    y = "Cultural period")
+```
+
+
+For Advanced Users
+
+*What is the difference between these two ways of merging the two data frames?*
+
+*Adapt the plot from above to compare the outputs of both approaches. Try to understand how the differences in merging affect the final visualization.*
+```{r}
+# Variant 1
+eggshell_combined1 <- full_join(eggshell_misc, eggshell_symbolic, by = c("locality_id", "assemblage_id", "continent", "subcontinent", "country", "locality_types", "coord_x", "coord_y", "assemblage_name", "categories", "age_min", "age_max", "cultural_periods", "technocomplexes"))
+
+eggshell_combined2 <- bind_rows(eggshell_misc, eggshell_symbolic)
 
 ```
 
