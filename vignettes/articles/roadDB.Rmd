@@ -129,7 +129,7 @@ Arguments can also be combined, and you may supply a single value or a list of v
 road_get_localities(cultural_period='MSA')
 
 # Multiple arguments
-road_get_localities(cultural_period=c('MSA','LSA'), countries='South Africa')
+road_get_localities(cultural_period='MSA', countries='South Africa')
 
 # Lists of arguments
 road_get_localities(cultural_period=c('MSA','LSA'), countries=c('South Africa','Namibia'))
@@ -551,7 +551,7 @@ multiplot(hohle_fels_Vb_cal,
           label.offset=-200) 
 ```
 
-The radiocarbon analyses were based on an excellent [introduction](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html) into the [`rcarbon`] software. Using this you can extend your `roadDB` workflow to create [Summed Probability Distributions (SPDs)](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#aggregating-14c-dates-summed-probability-distributions-spd), [temporal composite kernel density estimates (CKDE)}(https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#composite-kernel-density-estimates-ckde) or [spatio-temporal](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#spatial-analysis) analyses, for example.
+The radiocarbon analyses were based on an excellent [introduction](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html) into the [`rcarbon`] software. Using this you can extend your `roadDB` workflow to create [Summed Probability Distributions (SPDs)](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#aggregating-14c-dates-summed-probability-distributions-spd), [temporal composite kernel density estimates (CKDE)](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#composite-kernel-density-estimates-ckde) or [spatio-temporal](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#spatial-analysis) analyses, for example.
 
 # Further Reading
 
