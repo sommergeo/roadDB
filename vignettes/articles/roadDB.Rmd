@@ -18,9 +18,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-
-
-
 Welcome to the R implementation of the *ROCEEH Out of Africa Database* — or simply *ROAD*. This tutorial will introduce the core concepts and guide you through your first steps with the `roadDB` package. In addition, it will offer ideas on how to use `roadDB` alongside other resources available in the R ecosystem.
 
 But first, let's start with the installation.
@@ -31,8 +28,9 @@ But first, let's start with the installation.
 # Get started
 
 ### Install R, RStudio and RTools
-Please install a current version of the statistical software `R` and the Integrated Development Environment (IDE) `RStudio` from [https://posit.co/download/rstudio-desktop/]().
-Then, please install Rtools from [https://cran.r-project.org/bin/windows/Rtools/]().
+Please install the current version of the statistical software `R` and the Integrated Development Environment (IDE) `RStudio` from [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/).
+
+Then, please install Rtools from [https://cran.r-project.org/bin/windows/Rtools/](https://cran.r-project.org/bin/windows/Rtools/).
 
 
 ### Install roadDB
@@ -45,6 +43,15 @@ devtools::install_github("sommergeo/roadDB")
 
 # CRAN installation (will be made available later)
 # install.packages(roadDB)
+```
+
+If everything worked so far, go ahead and install these additional packages — they’ll be used in the upcoming examples:
+```{r, eval=FALSE, include=TRUE}
+# Install packages (needs to be done only once)
+install.packages("tidyverse")
+install.packages("sf")
+install.packages("tmap")
+install.packages("rcarbon")
 ```
 
 ### Load roadDB
@@ -63,7 +70,9 @@ my_query <- road_get_localities(cultural_period='Middle Paleolithic')
 ```
 
 
-# Basic prinicples
+
+
+# Basic principles
 ## ROCEEH Out of Africa Database
 `roadDB` is an R package designed to provide simplified access to the [ROCEEH Out of Africa Database (ROAD)](https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php).
 
@@ -71,7 +80,7 @@ Developed over the past 18 years by the [ROCEEH research center](https://www.had
 
 The database currently encompasses information on over 28,000 assemblages and 2,600 localities, derived from more than 6,300 publications in over 10 languages. ROAD offers structured data with a high level of both quantity and detail, making it an invaluable resource for quantitative and computational analysis.
 
-However, due to its complexity and expert-level focus, the database can be challenging to navigate and analyze directly. This is why `roadDB` package was implemented as a short-cut into the R ecosystem.
+However, due to its complexity and expert-level focus, the database can be challenging to navigate and analyze directly. This is why the `roadDB` package was implemented as a short-cut into the R ecosystem.
 
 ## R implementation
 The package aims to provide a simplified, intuitive, and convenient interface for accessing the ROAD database by following a few core principles:
@@ -87,7 +96,7 @@ The package aims to provide a simplified, intuitive, and convenient interface fo
 ## Background architecture
 The roadDB functions are essentially wrappers around complex SQL queries. They interact with a remote copy of the official ROAD database, which is updated four times per year. The current database version is displayed each time you load the package using `library(roadDB)`.
 
-As a result, query results may change over time and might not always reflect the most recent data available through the browser-based interface of ROAD. Keep in mind that ROAD is a continuously expanding database.
+As a result, query results may change over time and might not always reflect the most recent data available through the browser-based interface of ROAD. Keep in mind that ROAD is continuously expanding.
 
 Because the package relies on a remote server connection, it requires an active internet connection. Occasionally, the server may experience downtime for maintenance or security checks, particularly during the Christmas holidays.
 
@@ -144,11 +153,11 @@ The package provides two sets of arguments:
 
 First, the **general arguments** (tab. 1) which are available for all `road_get_*` functions. These arguments provide flexible ways to filter and refine your queries.
 
-And second, the **function-specific arguments** (tab. 2), which are only available for certain `road_get_*` functions. These arguments refine queries in ways that are unique to the corresponding function. Some of them use *exact* search terms, whereas others use *fuzzy* search.
-
-Figure 2 gives a compact overview over all possible combinations of functions and arguments:
+And second, the **function-specific arguments** (tab. 2), which are only available for certain `road_get_*` functions. These arguments refine queries in ways that are unique to the corresponding function. Some of them use *exact* search terms, whereas others use *fuzzy* search. Figure 2 gives a compact overview over all possible combinations of functions and arguments:
 
 ![](functions_and_arguments.png){width=690px}
+
+
 **Figure 2:** All possible combinations of functions and arguments. [Click here](https://sommergeo.com/roadDB/functions_and_arguments.pdf) for a PDF version.
 
 **Table 1:** General arguments are available for all `road_get_*` functions.
@@ -165,7 +174,7 @@ Figure 2 gives a compact overview over all possible combinations of functions an
 | `technocomplexes`   | character | "ESA/ Early Acheulean"                        |
 | `cultural_periods`  | character | "Middle Stone Age"                            |
 
-**Table 2:** Function-specific arguments are available for certain `road_get_functions`.
+**Table 2:** Function-specific arguments are available for certain `road_get_*` functions.
 
 | Argument                            | Type      | Search Type | Example(s)                          |
 | ----------------------------------- | --------- | ----------- | ----------------------------------- |
@@ -232,17 +241,12 @@ head(road_summarize_archaeology('egg shell'),4)
 ```
 
 
+
+
 # Examples
 The following examples demonstrate how to query data from ROAD and seamlessly use the results with external R packages. 
 
-Before you begin, please ensure that the required packages are installed on your system. If they are not, install them using the instructions provided below.
-```{r, eval=FALSE, include=TRUE}
-# Install packages (needs to be done only once)
-install.packages("tidyverse")
-install.packages("sf")
-install.packages("tmap")
-install.packages("rcarbon")
-```
+Before you begin, please ensure that the required packages are installed on your system. If they are not, install them using the instructions provided above
 ```{r, warning=FALSE, message=FALSE}
 # Load libraries (every time you run this tutorial)
 library(roadDB)
@@ -255,7 +259,7 @@ library(rcarbon)
 
 ## Example #1: Localities
 
-### 1.1 Query localities
+### 1.1 Map the Middle Stone Age
 You can retrieve a table of all localities stored in ROAD using the function `road_get_localities()`.
 
 Table 1 shows the first few rows of more than 2,000 localities currently available. Each locality is represented as a row, with attributes stored in the columns.
@@ -269,9 +273,6 @@ localities <- road_get_localities()
 head(localities)  # head() shows the first 6 rows of a dataset
 ```
 
-
-
-### 1.2 Refine queries
 You can narrow down your results by adding optional arguments to `road_get_localities()`.
 For example, the query below retrieves only sites from the African continent that are attributed to the Middle Stone Age.
 
@@ -281,7 +282,7 @@ african_msa_localities <- road_get_localities(continents = "Africa", cultural_pe
 head(african_msa_localities)
 ```
 
-### 1.3 Display a map
+
 Since the dataset contains geographical coordinates in the columns `coord_x` and `coord_y`, you can easily convert the results into a spatial object with the `sf` package and visualize them on an interactive map using the package `tmap`.
 
 ```{r ex1.2_map, out.width="100%", eval=FALSE, include=TRUE}
@@ -290,7 +291,7 @@ library(sf)     # for spatial objects
 library(tmap)   # for visualization
 
 # Use coordinate columns to create a spatial dataset
-afican_msa_sf <- st_as_sf(african_msa_localities, 
+african_msa_sf <- st_as_sf(african_msa_localities, 
                           coords = c("coord_x", "coord_y"), 
                           crs = 4326)  # WGS84 (lat/lon)
 
@@ -298,7 +299,7 @@ afican_msa_sf <- st_as_sf(african_msa_localities,
 tmap_mode("plot")  # or "view" for interactive map
 
 # Create map
-tm_shape(afican_msa_sf) +
+tm_shape(african_msa_sf) +
   tm_basemap("OpenStreetMap") +
   tm_dots()
 ```
@@ -309,7 +310,7 @@ library(sf)     # for spatial objects
 library(tmap)   # for visualization
 
 # Use coordinate columns to create a spatial dataset
-afican_msa_sf <- st_as_sf(african_msa_localities, 
+african_msa_sf <- st_as_sf(african_msa_localities, 
                           coords = c("coord_x", "coord_y"), 
                           crs = 4326)  # WGS84 (lat/lon)
 
@@ -317,14 +318,15 @@ afican_msa_sf <- st_as_sf(african_msa_localities,
 tmap_mode("view")  # or "plot" for static map
 
 # Create map
-tm_shape(afican_msa_sf) +
+tm_shape(african_msa_sf) +
   tm_basemap("OpenStreetMap") +
   tm_dots()
 ```
 
 You can extend this map with various functions included in the [`tmap`](https://r-tmap.github.io/tmap/) package.
 
-### 1.4 Map a technocomplex
+### 1.4 Map a technocomplex of your choice
+
 Now we’ll generate a map for a technocomplex of your choice.
 
 Before selecting one, it’s helpful to get an overview of the available options. This is where the helper function `road_list_argument_values()` comes in — it allows us to list the unique values that can be used as arguments.
@@ -388,7 +390,7 @@ As you can see, the map can be customized using the arguments available in  [`tm
 
 In this example, we visualize different technocomplex categories by setting the `col` argument (which determines what variable is used for coloring — here, `mousterian$technocomplexes`) and the palette argument (which specifies the color scheme to use).
 
-Once you have transferred your dataset to a spatial datatype, there are many interresting packages available, that make use of the spatial data in ROAD:
+Once you have transferred your dataset to a spatial data type, there are many interesting packages available, that make use of the spatial data in ROAD:
 - [`spatstat`](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) for spatial point pattern analysis, kernel density, etc.
 - [`spatial`]() for interpolation, Kriging and point pattern analysis
 - [`gstat`]() for modelling, prediction and simulation
@@ -396,7 +398,7 @@ Once you have transferred your dataset to a spatial datatype, there are many int
 
 ## Example #2: Assemblages
 
-Moving to the next levet of detail (LOD) of roadDB we will now query assemblages. In the same way as we are able to make a query for all localitites in ROAD, we can similarly query for all assemblages that make up those localities.
+Moving to the next level of detail (LOD) of roadDB we will now query assemblages. In the same way as we are able to make a query for all localities in ROAD, we can similarly query for all assemblages that make up those localities.
 
 ```{r}
 # We can query all assemblages in ROAD
@@ -418,7 +420,7 @@ plants <- road_get_plantremains()
 
 ### 2.1 Lithic Tools
 
-If we stay with our Mousterian people or a bit, we can go into more detail and look at the lithic tools that are present at the localities using the `road_get_lithictypology()` function. But since the Mousterian concept exists in many different classifications, we need to now the excact technocomplexes to query. Using the `road_list_argument_values()` function.
+If we stay with our Mousterian people for a bit, we can go into more detail and look at the lithic tools that are present at the localities using the `road_get_lithictypology()` function. But since the Mousterian concept exists in many different classifications, we need to now the exact technocomplexes to query. Using the `road_list_argument_values()` function.
 
 ```{r}
 techno <- road_list_argument_values("technocomplexes")
@@ -438,7 +440,7 @@ mous_tools <- road_get_lithic_typology(technocomplexes = df_mousterian)
 
 We can then inspect our result.
 
-So this tool list as a bit hard to get an overview of, but if we know what were looking for, then we can specify this using the `tool_list()` function which can be used together with the `road_get_lithic_typology()` function. We can first use the `road_list_argument_values()` function to see what our choices are.
+This tool list as a bit hard to get an overview of, but if we know what we´re  looking for, then we can specify this using the `tool_list()` function which can be used together with the `road_get_lithic_typology()` function. We can first use the `road_list_argument_values()` function to see what our choices are.
 
 ```{r eval=FALSE}
 road_list_argument_values("tool_list")
@@ -447,7 +449,7 @@ road_list_argument_values("tool_list")
 cat(paste0(paste(head(road_list_argument_values("tool_list")$tool_list,40), collapse = ", "), ", and many more."))
 ```
 
-This gives us an alphabetical list of all *tool types*. Let us look for all instances of Levallois technology, a defining elemnent of the Mousterian tradition. The term *Levallois* occurs in many different cases and in combination with many different words/categories. Luckily, we do not need the entire entry as the `tool_list()` function conducts a *fuzzy* search and we can therefore just enter *levallois*.
+This gives us an alphabetical list of all *tool types*. Let us look for all instances of Levallois technology, a defining element of the Mousterian tradition. The term *Levallois* occurs in many different cases and in combination with many different words/categories. Luckily, we do not need the entire entry as the `tool_list()` function conducts a *fuzzy* search and we can therefore just enter *levallois*.
 
 ```{r}
 mous_levallois <- road_get_lithic_typology(technocomplexes = df_mousterian,
@@ -487,9 +489,9 @@ ggplot(combined, aes(x = fct_infreq(country), # x-axis = countries ordered by ho
 
 ### 2.2 Ostrich egg shells
 
-Ostrich eggshells are an interesting material with a variety of uses. In this exercise, we'll create a quick graph to visualize their appearance across different cultural periods.
+Ostrich egg shells are an interesting material with a variety of uses. In this exercise, we'll create a quick graph to visualize their appearance across different cultural periods.
 
-First, we can use `road_summarize_archaeology()` to get an overview of the tables in which these items can be found. The search term *ostrich eggshell* appears in two tables: `miscellaneous finds` and `symbolic artifacts`. In these tables, the term is found in the attributes `material` and `comments`, and the hit count indicates how many rows contain these items.
+First, we can use `road_summarize_archaeology()` to get an overview of the tables in which these items can be found. The search term *ostrich egg shell* appears in two tables: `miscellaneous finds` and `symbolic artifacts`. In these tables, the term is found in the attributes `material` and `comments`, and the hit count indicates how many rows contain these items.
 
 ```{r}
 road_summarize_archaeology('ostrich egg shell')
@@ -548,7 +550,7 @@ This is especially true for radiocarbon ages, which are stored as uncalibrated d
 For this reason, we implemented `road_get_dates()`.
 
 
-### 3.1 Filter dates
+### Radiocarbon calibration
 
 Let's have a look at Hohle Fels, a well-known Paleolithic cave site in the Swabian Jura with plenty of dates. 
 
@@ -593,8 +595,6 @@ hohle_fels_Vb <- filter(hohle_fels_Vb, str_detect(categories, "symbolic artifact
 
 We'll calibrate layer Vb ages using the R package [`rcarbon`](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html). Since the site is located in the Northern Hemisphere, we'll use the "IntCal20" calibration curve ([Reimer et al. 2020](https://doi.org/10.1017/RDC.2020.41)).
 
-### 3.2 Calibrate
-
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 # Load radiocarbon library
 library(rcarbon)
@@ -605,7 +605,7 @@ hohle_fels_Vb_cal <- calibrate(x=hohle_fels_Vb$age,
                            calCurves='intcal20')
 ```
 
-Now the calibrated ages can be diyplayed with `summary()`.
+Now the calibrated ages can be displayed using `summary()`.
 ```{r message=FALSE}
 # Display calibrated ages
 summary(hohle_fels_Vb_cal)
@@ -618,7 +618,7 @@ plot(hohle_fels_Vb_cal,1)
 ```
 
 ```{r message=FALSE, warning=FALSE}
-# Visiualize all dates, with numbers indicating row number
+# Visualize all dates, with numbers indicating row number
 multiplot(hohle_fels_Vb_cal,
           decreasing=TRUE,
           rescale=TRUE,
@@ -627,11 +627,11 @@ multiplot(hohle_fels_Vb_cal,
           label.offset=-200) 
 ```
 
-The radiocarbon analyses were based on an excellent [introduction](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html) into the [`rcarbon`] software. Using this you can extend your `roadDB` workflow to create [Summed Probability Distributions (SPDs)](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#aggregating-14c-dates-summed-probability-distributions-spd), [temporal composite kernel density estimates (CKDE)](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#composite-kernel-density-estimates-ckde) or [spatio-temporal](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#spatial-analysis) analyses, for example.
+The radiocarbon analyses were based on an excellent [introduction](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html) into the [`rcarbon`] software. Using this, you can extend your `roadDB` workflow to create [Summed Probability Distributions (SPDs)](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#aggregating-14c-dates-summed-probability-distributions-spd), [temporal composite kernel density estimates (CKDE)](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#composite-kernel-density-estimates-ckde) or [spatio-temporal](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#spatial-analysis) analyses, for example.
 
 # Further Reading
 
-[Ben Marwick: How To Do Archaeological Science Using R](How To Do Archaeological Science Using R)
+[Ben Marwick: How To Do Archaeological Science Using R](https://benmarwick.github.io/aswr/)
 
 [Open-Archaeo: A list of open source archaeological software and resources](https://github.com/zackbatist/open-archaeo)
 
@@ -639,7 +639,6 @@ The radiocarbon analyses were based on an excellent [introduction](https://cran.
 rmarkdown::render(
   input = "vignettes/articles/roadDB.Rmd",
   output_file = "tutorial.html",
-  output_dir = "docs"
-)
+  output_dir = "docs")
 ```
 
