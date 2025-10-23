@@ -351,32 +351,59 @@ Once you have transferred your dataset to a spatial datatype, there are many int
 
 Moving to the next levet of detail (LOD) of roadDB we will now query assemblages. In the same way as we are able to make a query for all localitites in ROAD, we can similarly query for all assemblages that make up those localities.
 
+```{r}
+# We can query all assemblages in ROAD
+assemblages <- road_get_assemblages()
+
+# Or we can make more specific queries
+lithic_typology <- road_get_lithic_typology()
+lithic_raw_mat <- road_get_lithic_raw_material()
+organic_tools <- road_get_organic_tools()
+symbolic <- road_get_symbolic_artifacts()
+feature <- road_get_feature()
+mix <- road_get_miscellaneous_finds()
+people <- road_get_human_remains()
+animals <- road_get_paleofauna()
+plants <- road_get_plantremains()
+
+```
+
+
 ### 2.1 Lithic Tools
 
-If we stay with our Mousterian people or a bit, we can go into more detail and look at the lithic tools that are present at the localities using the `road_get_lithictypology()` function.
+If we stay with our Mousterian people or a bit, we can go into more detail and look at the lithic tools that are present at the localities using the `road_get_lithictypology()` function. But since the Mousterian concept exists in many different classifications, we need to now the excact technocomplexes to query. Using the `road_list_argument_values()` function.
 
 ```{r}
-mous_tools <- road_get_lithic_typology(technocomplexes = c("MP/ Mousterian - Eurasia", 
-                                                           "MP/ Mousterian - Levant"))
+techno <- road_list_argument_values("technocomplexes")
+```
+
+We can then take our new *techno* data frame and grab all technocomplexes that contain the word *Mousterian*.
+
+```{r}
+df_mousterian <- techno[grepl("mousterian", techno$technocomplex, ignore.case = TRUE), ]
+```
+
+And use this new data frame to gather all lithic typology data in ROAD that stems from a Mousterian context.
+
+```{r}
+mous_tools <- road_get_lithic_typology(technocomplexes = df_mousterian)
 ```
 
 We can then inspect our result.
 
-```{r}
-head(mous_tools)
-```
-
 So this tool list as a bit hard to get an overview of, but if we know what were looking for, then we can specify this using the `tool_list()` function which can be used together with the `road_get_lithic_typology()` function. We can first use the `road_list_argument_values()` function to see what our choices are.
 
-```{r}
+```{r eval=FALSE}
 road_list_argument_values("tool_list")
 ```
+```{r echo=FALSE}
+cat(paste0(paste(head(road_list_argument_values("tool_list")$tool_list,40), collapse = ", "), ", and many more."))
+```
 
-This gives us an alphabetical list of all *tool types*. Let us look for all instances of Levallois technology, a defining elemnent of the Mousterian tradition. The term *Levallois* occurs in many different cases and in combination with many different words/categories. Luckily, we do not need the entire entry with the `tool_list()` function and can just enter *levallois*.
+This gives us an alphabetical list of all *tool types*. Let us look for all instances of Levallois technology, a defining elemnent of the Mousterian tradition. The term *Levallois* occurs in many different cases and in combination with many different words/categories. Luckily, we do not need the entire entry as the `tool_list()` function conducts a *fuzzy* search and we can therefore just enter *levallois*.
 
 ```{r}
-mous_levallois <- road_get_lithic_typology(technocomplexes = c("MP/ Mousterian - Eurasia", 
-                                                               "MP/ Mousterian - Levant"),
+mous_levallois <- road_get_lithic_typology(technocomplexes = df_mousterian,
                                            tool_list = "levallois")
 ```
 
