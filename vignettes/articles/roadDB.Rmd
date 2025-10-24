@@ -45,6 +45,16 @@ devtools::install_github("sommergeo/roadDB")
 # install.packages(roadDB)
 ```
 
+### Load roadDB
+After the library has been installed, you can load it every time you run an R session. This will make all the functions available for that session.
+
+```{r setup}
+# Load the library
+library(roadDB)
+```
+
+
+### Install external packages
 If everything worked so far, go ahead and install these additional packages — they’ll be used in the upcoming examples:
 ```{r, eval=FALSE, include=TRUE}
 # Install packages (needs to be done only once)
@@ -54,13 +64,16 @@ install.packages("tmap")
 install.packages("rcarbon")
 ```
 
-### Load roadDB
-After the library has been installed, you can load it every time you run an R session. This will make all the functions available for that session.
-
-```{r setup}
-# Load the library
+Before you begin, please ensure that the required packages are installed on your system. If they are not, install them using the instructions provided above
+```{r, warning=FALSE, message=FALSE}
+# Load libraries (every time you run this tutorial)
 library(roadDB)
+library(tidyverse)
+library(sf)
+library(tmap)
+library(rcarbon)
 ```
+
 
 ### First query
 Now you are ready to run your first query and inspect the results directly in the R console:
@@ -241,20 +254,8 @@ head(road_summarize_archaeology('egg shell'),4)
 ```
 
 
-
-
 # Examples
 The following examples demonstrate how to query data from ROAD and seamlessly use the results with external R packages. 
-
-Before you begin, please ensure that the required packages are installed on your system. If they are not, install them using the instructions provided above
-```{r, warning=FALSE, message=FALSE}
-# Load libraries (every time you run this tutorial)
-library(roadDB)
-library(tidyverse)
-library(sf)
-library(tmap)
-library(rcarbon)
-```
 
 
 ## Example #1: Localities
@@ -325,7 +326,7 @@ tm_shape(african_msa_sf) +
 
 You can extend this map with various functions included in the [`tmap`](https://r-tmap.github.io/tmap/) package.
 
-### 1.4 Map a technocomplex of your choice
+### 1.2 Map a technocomplex of your choice
 
 Now we’ll generate a map for a technocomplex of your choice.
 
@@ -499,44 +500,37 @@ road_summarize_archaeology('ostrich egg shell')
 
 In the next step, we can use this information to run the appropriate query functions: `road_get_miscellaneous_finds()` and `road_get_symbolic_artifacts()`.
 
-We then combine the two data frames using the [`tidyverse::full_join()`](https://dplyr.tidyverse.org/reference/mutate-joins.html) function.
+We then combine the two data frames using the [`merge`](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/merge) function.
 
 ```{r}
 # Query from miscellaneous finds
 eggshell_misc <- road_get_miscellaneous_finds() # download whole dataframe
-eggshell_misc <- filter(eggshell_misc, str_detect(miscellaneous_finds_material, 'ostrich egg shell')) # filter for search string
+eggshell_misc <- eggshell_misc[grepl("ostrich egg shell", eggshell_misc$miscellaneous_finds_material), ] # filter rows for search pattern
 
 # Query from symbolic artifacts
 eggshell_symbolic <- road_get_symbolic_artifacts() # download whole dataframe
-eggshell_symbolic <- filter(eggshell_symbolic, str_detect(symbolic_artifacts_material, 'ostrich egg shell')) # filter for search string
+eggshell_symbolic <- eggshell_symbolic[grepl("ostrich egg shell", eggshell_symbolic$symbolic_artifacts_material), ] # filter rows for search pattern
 
-# Combine results
-eggshell_combined <- full_join(eggshell_misc, eggshell_symbolic, by = c("locality_id", "assemblage_id", "continent", "subcontinent", "country", "locality_types", "coord_x", "coord_y", "assemblage_name", "categories", "age_min", "age_max", "cultural_periods", "technocomplexes"))
+# Combine dataframes
+eggshell_combined <- merge(
+  eggshell_misc,
+  eggshell_symbolic,
+  by = c("locality_id", "assemblage_id", "continent", "subcontinent", "country",
+         "locality_types", "coord_x", "coord_y", "assemblage_name", "categories",
+         "age_min", "age_max", "cultural_periods", "technocomplexes"),
+  all = TRUE
+)
 ```
 
 Finally, we can visualize the results in a simple bar chart.
 ```{r fig.width=7}
+# Plot the ostrich egg shell distribution over cultural periods
 ggplot(eggshell_combined, aes(y = cultural_periods)) +
   geom_bar() +
   labs(
     title = "Ostrich egg shells",
     x = "Number of assemblages",
     y = "Cultural period")
-```
-
-
-For Advanced Users
-
-*What is the difference between these two ways of merging the two data frames?*
-
-*Adapt the plot from above to compare the outputs of both approaches. Try to understand how the differences in merging affect the final visualization.*
-```{r}
-# Version 1
-eggshell_combined1 <- full_join(eggshell_misc, eggshell_symbolic, by = c("locality_id", "assemblage_id", "continent", "subcontinent", "country", "locality_types", "coord_x", "coord_y", "assemblage_name", "categories", "age_min", "age_max", "cultural_periods", "technocomplexes"))
-
-# Version 2
-eggshell_combined2 <- bind_rows(eggshell_misc, eggshell_symbolic)
-
 ```
 
 
@@ -558,7 +552,15 @@ Let's have a look at Hohle Fels, a well-known Paleolithic cave site in the Swabi
 
 **Figure 3:** Inside the UNESCO site "Hohle Fels" | [CC BY-SA Thilo Parg](https://commons.wikimedia.org/wiki/File:Hohler_Fels_Halle_Achtal_Schelklingen.jpg)
 
-First, we'll get an overview of all the available data, and then use [`tidyverse::filter()`](https://dplyr.tidyverse.org/reference/filter.html) to narrow down our results.
+First, we'll get an overview of all the available data, and then use `grepl()` to narrow down our results to rows, where the column `locality_id` contains the value "Hohle Fels".
+
+```{r message=FALSE, warning=FALSE}
+# Load all dates
+all_dates <- road_get_dates() 
+
+# Now filter the column locality_id for the value "Hohle Fels"
+hohle_fels_dates <- all_dates[grepl("Hohle Fels", all_dates$locality_id), ]
+```
 
 *Try to answer these questions:*
 
@@ -569,28 +571,18 @@ First, we'll get an overview of all the available data, and then use [`tidyverse
 - *Which technocomplexes are present at the site?*
 
 
-```{r message=FALSE, warning=FALSE}
-# Load all dates
-all_dates <- road_get_dates() 
-
-# Now filter the column locality_id for the value "Hohle Fels"
-hohle_fels_dates <- filter(all_dates, locality_id == "Hohle Fels")
-
-```
-
 ![](02_Kombi_Griffloecher.jpg){width=350px}
 
 **Figure 4:** Flute from the Aurignacian layers of Hohle Fels | H. Jensen/Universität Tübingen 
 
 Hohle Fels is known for a number of fascinating finds, including one nearly complete bone flute and fragments of three ivory flutes that were excavated from archaeological layer Vb ([Conard et al. 2009](https://www.nature.com/articles/nature08169)). The radiocarbon ages for this layer were derived from bone and charcoal and were analyzed at the Oxford Radiocarbon Accelerator Unit and the Leibniz Laboratory in Kiel.
-We can extend our filter to select this archaeological layer. With [`str_detect`]() we can also address specific terms withing cells.
+We can extend our filter to select this specific archaeological layer and symbolic artifats.
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 # Filter for archaeological layer Vb
-hohle_fels_Vb <- filter(hohle_fels_dates, archlayer=="AH Vb")
-
+hohle_fels_Vb <- hohle_fels_dates[grepl("AH Vb", hohle_fels_dates$archlayer), ]
 # Extend filter for symbolic artifacts
-hohle_fels_Vb <- filter(hohle_fels_Vb, str_detect(categories, "symbolic artifacts"))
+hohle_fels_Vb <- hohle_fels_Vb[grepl("symbolic artifacts", hohle_fels_Vb$categories), ]
 ```
 
 We'll calibrate layer Vb ages using the R package [`rcarbon`](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html). Since the site is located in the Northern Hemisphere, we'll use the "IntCal20" calibration curve ([Reimer et al. 2020](https://doi.org/10.1017/RDC.2020.41)).
@@ -627,7 +619,7 @@ multiplot(hohle_fels_Vb_cal,
           label.offset=-200) 
 ```
 
-The radiocarbon analyses were based on an excellent [introduction](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html) into the [`rcarbon`] software. Using this, you can extend your `roadDB` workflow to create [Summed Probability Distributions (SPDs)](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#aggregating-14c-dates-summed-probability-distributions-spd), [temporal composite kernel density estimates (CKDE)](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#composite-kernel-density-estimates-ckde) or [spatio-temporal](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#spatial-analysis) analyses, for example.
+The radiocarbon analyses were based on an [introduction](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html) into the [`rcarbon`] software. Using this, you can extend your `roadDB` workflow to create [Summed Probability Distributions (SPD)](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#aggregating-14c-dates-summed-probability-distributions-spd), [temporal composite kernel density estimates (CKDE)](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#composite-kernel-density-estimates-ckde) or [spatio-temporal](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#spatial-analysis) analyses, for example.
 
 # Further Reading
 
