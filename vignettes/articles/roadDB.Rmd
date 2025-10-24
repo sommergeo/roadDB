@@ -23,14 +23,12 @@ Welcome to the R implementation of the *ROCEEH Out of Africa Database* — or si
 But first, let's start with the installation.
 
 
-
-
 # Get started
 
 ### Install R, RStudio and RTools
 Please install the current version of the statistical software `R` and the Integrated Development Environment (IDE) `RStudio` from [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/).
 
-Then, please install Rtools from [https://cran.r-project.org/bin/windows/Rtools/](https://cran.r-project.org/bin/windows/Rtools/).
+If you use windows, please also install `Rtools` from [https://cran.r-project.org/bin/windows/Rtools/](https://cran.r-project.org/bin/windows/Rtools/).
 
 
 ### Install roadDB
@@ -53,6 +51,12 @@ After the library has been installed, you can load it every time you run an R se
 library(roadDB)
 ```
 
+### First query
+Now you are ready to run your first query:
+
+```{r first_query, eval=FALSE, include=TRUE}
+my_query <- road_get_localities(cultural_period='Middle Paleolithic')
+```
 
 ### Install external packages
 If everything worked so far, go ahead and install these additional packages — they’ll be used in the upcoming examples:
@@ -75,14 +79,12 @@ library(rcarbon)
 ```
 
 
-### First query
-Now you are ready to run your first query and inspect the results directly in the R console:
-
-```{r first_query, eval=FALSE, include=TRUE}
-my_query <- road_get_localities(cultural_period='Middle Paleolithic')
-```
 
 
+### Useful downloads
+- Crosstable of functions and arguments [PDF](https://sommergeo.com/roadDB/functions_and_arguments.pdf)
+- Tutorial script [PDF](https://sommergeo.com/roadDB/tutorial-script.pdf)
+- Functions used in the tutorial [PDF](https://sommergeo.com/roadDB/tutorial-functions.pdf)
 
 
 # Basic principles
