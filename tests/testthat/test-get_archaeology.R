@@ -24,7 +24,7 @@ test_that("road_get_lithic_typology()", {
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
-  expect_equal(ncol(result_all_columns), 18)
+  expect_equal(ncol(result_all_columns), 20)
 
   # Check that the percentage column is within the expected range (0 to 100), or NA is allowed
   expect_true(
@@ -72,7 +72,7 @@ test_that("road_get_lithic_raw_material()", {
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
-  expect_equal(ncol(result_all_columns), 18)
+  expect_equal(ncol(result_all_columns), 20)
 
   # Check that the percentage column is within the expected range (0 to 100), or NA is allowed
   expect_true(
@@ -120,7 +120,7 @@ test_that("road_get_organic_tools()", {
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
-  expect_equal(ncol(result_all_columns), 19)
+  expect_equal(ncol(result_all_columns), 21)
 
   result_filter1 <- road_get_organic_tools(organic_tools_interpretation = "abrader/polisher")
   expect_true(
@@ -162,7 +162,7 @@ test_that("road_get_symbolic_artifacts()", {
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
-  expect_equal(ncol(result_all_columns), 20)
+  expect_equal(ncol(result_all_columns), 22)
 
   result_filter1 <- road_get_symbolic_artifacts(symbolic_artifacts_interpretation = "abstract")
   expect_true(
@@ -201,7 +201,7 @@ test_that("road_get_feature()", {
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
-  expect_equal(ncol(result_all_columns), 16)
+  expect_equal(ncol(result_all_columns), 18)
 
   result_filter1 <- road_get_feature(feature_interpretation = "bedding")
   expect_true(
@@ -242,7 +242,7 @@ test_that("road_get_miscellaneous_finds()", {
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
-  expect_equal(ncol(result_all_columns), 18)
+  expect_equal(ncol(result_all_columns), 20)
 
   result_filter1 <- road_get_miscellaneous_finds(miscellaneous_finds_material = "wood fossil")
   expect_true(

@@ -28,7 +28,7 @@ test_that("road_get_dates() returns the correct data types", {
   
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result, "data.frame")
-  expect_equal(ncol(result), 23)
+  expect_equal(ncol(result), 25)
   expect_true(nrow(road_get_dates()) > 0)
 })
 

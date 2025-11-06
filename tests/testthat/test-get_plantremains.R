@@ -25,7 +25,7 @@ test_that("road_get_plantremains() returns the correct data types", {
   # Check if the result is a data frame and has the expected number of rows 
   # and columns
   expect_s3_class(result_all_columns, "data.frame")
-  expect_equal(ncol(result_all_columns), 18)
+  expect_equal(ncol(result_all_columns), 20)
   expect_true(nrow(road_get_plantremains()) > 0)
 })
 
