@@ -172,9 +172,9 @@ road_get_localities_internal <- function(
 #' plant remains. The argument \code{categories} is a string (one item) or
 #' vector of strings (one or more items); defaults to NULL.
 #' @param age_min specifies the minimum age in years before present, using 1950 CE
-#' as the baseline. The argument \code{age_min} is an integer; defaults to NULL.
+#' as the baseline. If possible the argument \code{age_min} will be converted to an integer; defaults to NULL.
 #' @param age_max specifies the maximum age in years before present, using 1950 CE
-#' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
+#' as the baseline. If possible the argument \code{age_max} will be converted to an integer; defaults to NULL.
 #'
 #' @return A data frame with location information. Rows represent individual locations, columns contain location-related details on:
 #' @return \code{continent}, \code{subcontinent}, \code{country}: The attributes specify the geopolitical information of the locality.
@@ -187,7 +187,7 @@ road_get_localities_internal <- function(
 #' @return \code{locality_min_age}, \code{locality_max_age}: The attributes specify the overall minimum and maximum age of all assemblages associated with this locality.
 #'
 #' @export
-#' 
+#'
 #' @importFrom dplyr all_of
 #' @importFrom dplyr select
 #'
@@ -217,62 +217,62 @@ road_get_localities <- function(
                                           categories = categories,
                                           age_min = age_min,
                                           age_max = age_max)
-  
+
   assemblages_selected <- select(assemblages, dplyr::all_of(c(cm_locality_idlocality,
-                                                cm_geopolitical_units_continent, 
-                                                cm_geopolitical_units_continent_region, 
+                                                cm_geopolitical_units_continent,
+                                                cm_geopolitical_units_continent_region,
                                                 cm_locality_country,
-                                                cm_locality_types, cm_locality_x, 
+                                                cm_locality_types, cm_locality_x,
                                                 cm_locality_y, cm_cultural_periods,
                                                 cm_technocomplexes, cm_assemblages_categories,
-                                                cm_geological_stratigraphy_age_min, 
+                                                cm_geological_stratigraphy_age_min,
                                                 cm_geological_stratigraphy_age_max)))
-  
-  
+
+
   if (!is.null(assemblages) && nrow(assemblages) != 0)
   {
-    
-    assemblages_all_info <- road_get_assemblages(continents = continents, 
-                                                 subcontinents = subcontinents, 
-                                                 countries = countries, 
+
+    assemblages_all_info <- road_get_assemblages(continents = continents,
+                                                 subcontinents = subcontinents,
+                                                 countries = countries,
                                                  locality_types = locality_types)
     assemblages_ages <- assemblages_all_info %>% dplyr::select(dplyr::all_of(c(cm_locality_idlocality,
                                                           cm_geological_stratigraphy_age_min,
                                                           cm_geological_stratigraphy_age_max)))
-    
+
     #assemblages_ages <- select(assemblages_all_info, c(cm_locality_idlocality,
     #                                                      cm_geological_stratigraphy_age_min,
     #                                                      cm_geological_stratigraphy_age_max))
-    
-    #ages_min_max <- assemblages_ages %>% group_by(locality_id) %>% summarise(locality_min_age = min(age_min), 
+
+    #ages_min_max <- assemblages_ages %>% group_by(locality_id) %>% summarise(locality_min_age = min(age_min),
     #                                                           locality_max_age = max(age_max))
-    
-    ages_min_max <- dplyr::summarise(dplyr::group_by(assemblages_ages, .data$locality_id), locality_min_age = min(age_min), 
+
+    ages_min_max <- dplyr::summarise(dplyr::group_by(assemblages_ages, .data$locality_id), locality_min_age = min(age_min),
                               locality_max_age = max(age_max))
-    
-    
+
+
     assemblages_selected <- dplyr::select(assemblages, dplyr::all_of(c(cm_locality_idlocality,
-                                                  cm_geopolitical_units_continent, 
-                                                  cm_geopolitical_units_continent_region, 
+                                                  cm_geopolitical_units_continent,
+                                                  cm_geopolitical_units_continent_region,
                                                   cm_locality_country,
-                                                  cm_locality_types, cm_locality_x, 
+                                                  cm_locality_types, cm_locality_x,
                                                   cm_locality_y, cm_cultural_periods,
                                                   cm_technocomplexes, cm_assemblages_categories,
-                                                  cm_geological_stratigraphy_age_min, 
+                                                  cm_geological_stratigraphy_age_min,
                                                   cm_geological_stratigraphy_age_max)))
-    
+
     # data_tmp <- assemblages_selected %>% group_by(c(cm_locality_idlocality,
-    #                                                 cm_geopolitical_units_continent, 
-    #                                                 cm_geopolitical_units_continent_region, 
+    #                                                 cm_geopolitical_units_continent,
+    #                                                 cm_geopolitical_units_continent_region,
     #                                                 cm_locality_country,
-    #                                                 cm_locality_types, cm_locality_x, 
-    #                                                 cm_locality_y)) %>% 
+    #                                                 cm_locality_types, cm_locality_x,
+    #                                                 cm_locality_y)) %>%
     #                 summarise(categories = well_formed_string_to_string_without_duplicates(paste0(categories, collapse = ", ")),
     #                 cultural_periods = well_formed_string_to_string_without_duplicates(paste0(cultural_periods, collapse = ", ")),
     #                 technocomplexes = well_formed_string_to_string_without_duplicates(paste0(technocomplexes, collapse = ", ")),
     #                 subset_min_age = min(age_min),
     #                 subset_max_age = max(age_max))
-    
+
     .data <- c()
     data_tmp <- assemblages_selected %>% dplyr::group_by(.data$locality_id, .data$continent, .data$subcontinent,
                                                   .data$country, .data$locality_types, .data$coord_x, .data$coord_y,
@@ -281,7 +281,7 @@ road_get_localities <- function(
                                                                   technocomplexes = well_formed_string_to_string_without_duplicates(paste0(technocomplexes, collapse = ", ")),
                                                                   subset_min_age = min(age_min),
                                                                   subset_max_age = max(age_max))
-    
+
     # data_tmp <- dplyr::summarise(dplyr::group_by(assemblages_selected, .data$locality_id, .data$continent,
     #                                .data$subcontinent,
     #                                .data$country, .data$locality_types, .data$coord_x, .data$coord_y
@@ -290,9 +290,9 @@ road_get_localities <- function(
     #                                    technocomplexes = well_formed_string_to_string_without_duplicates(paste0(.data$technocomplexes, collapse = ", ")),
     #                                    subset_min_age = min(.data$age_min),
     #                                    subset_max_age = max(.data$age_max))
-    # 
+    #
     #categories <- subset(data_tmp, select = categories)
-    
+
     data <- dplyr::inner_join(data_tmp, ages_min_max, by = c(cm_locality_idlocality), #"locality_id"),
                       copy = FALSE, na_matches = "na")
 
