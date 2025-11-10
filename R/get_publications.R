@@ -12,8 +12,8 @@ road_get_publications <- function (
     publication_df <- rbind(publication_df, publ)
   }
   # publication_df %>% group_by(Locality) %>% summarise(Publication = paste0(Publication, collapse = "\n"), .groups = "drop")
-  # publication_df %>% group_by(Locality) %>% mutate(PublicationS = paste(Publication, collapse = "\n"))
-  publication_df %>% group_by(Localitoooy) %>% mutate(PublicationS = summarise(count = n(), .groups = 'drop'))
+  publication_df %>% group_by(Locality) %>% mutate(PublicationS = paste(Publication, collapse = "\n"))
+  # publication_df %>% group_by(Locality) %>% mutate(PublicationS = summarise(count = n(), .groups = 'drop'))
   return (publication_df)
 }
 
