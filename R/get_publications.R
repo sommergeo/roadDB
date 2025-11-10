@@ -2,23 +2,25 @@ road_get_publications <- function (
    localities = NULL
 ) 
 {
-  publication_df <- data.frame(matrix(ncol = 2, nrow = 1))
+  publication_df <- data.frame(matrix(ncol = 2, nrow = 0))
   colnames(publication_df) <- c('Locality', 'Publication')
   
   # localities can be string, vector or data frame
   # if localities is a vector
   for (locality in localities) {
     publ <- get_publication_reference(locality)
-    new_row <- c(locality, publ)
-    publication_df <- rbind(publication_df[1,], new_row)
+    publication_df <- rbind(publication_df, publ)
   }
+  # publication_df %>% group_by(Locality) %>% summarise(Publication = paste0(Publication, collapse = "\n"), .groups = "drop")
+  # publication_df %>% group_by(Locality) %>% mutate(PublicationS = paste(Publication, collapse = "\n"))
+  publication_df %>% group_by(Localitoooy) %>% mutate(PublicationS = summarise(count = n(), .groups = 'drop'))
   return (publication_df)
 }
 
 get_publication_reference <- function (
     locality = NULL
 ) 
-{      
+{ 
     query = paste0("SELECT * FROM (
                   SELECT DISTINCT edition.volume, edition.publication_year as year, publication_type, publication.title, publication.author, publication.pages, publication_desc_assemblage.assemblage_idlocality AS idlocality, publication_source.title as source_title, publisher, publication_place, editor, publication.comments as comments, publication_source.comments as source_comments, url, access_date, doi FROM edition, publication, publication_desc_assemblage, publication_source WHERE (publication_source.id_source = edition.publication_source_id_source and publication.edition_idedition = edition.idedition and publication.edition_id_source = edition.publication_source_id_source and publication_desc_assemblage.publication_idpublication = publication.idpublication and publication_desc_assemblage.publication_idedition = publication.edition_idedition and publication_desc_assemblage.publication_id_source = publication.edition_id_source and assemblage_idlocality = '", locality, "')
                         UNION
@@ -41,12 +43,10 @@ get_publication_reference <- function (
     
     data <- road_run_query(query)
     
-    publications <- ''
+    publications <- data.frame(matrix(ncol = 2, nrow = 0))
+    colnames(publications) <- c('Locality', 'Publication')
 
     for (r in 1:nrow(data))   
-     # for (c in 1:ncol(data))
-     # for (c in colnames(data))
-      # print(paste("Row", r, "and column",c, "have values of", data[r,c]))
     {
       publication <- ''
       author <- ''
@@ -155,11 +155,12 @@ get_publication_reference <- function (
         publication <- paste0(authorTmp, ', ', year, title, source)
       }
       
-      print(paste("Row", r, "and", title))
-      publications <- paste(publications, publication, sep = "\r")
+      #if (r == 1) 
+      publications[nrow(publications) + 1, ] <- c(locality, publication)
+      #else publications[nrow(publications) + 1, ] <- c("", publication)
+      
     } #for (r in 1:nrow(data))
     
     # cat(publications)
     return(publications)
-    #return(data)
 }
