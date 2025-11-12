@@ -35,10 +35,10 @@
 #' symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains, 
 #' plant remains. The argument \code{categories} is a string (one item) or 
 #' vector of strings (one or more items); defaults to NULL.
-#' @param age_min specifies the minimum age in years before present, using 1950 CE 
-#' as the baseline. The argument \code{age_min} is an integer; defaults to NULL.
-#' @param age_max specifies the maximum age in years before present, using 1950 CE 
-#' as the baseline. The argument \code{age_max} is an integer; defaults to NULL.
+#' @param age_min specifies the minimum age in years before present, using 1950 CE
+#' as the baseline. If possible the argument \code{age_min} will be converted to an integer; defaults to NULL.
+#' @param age_max specifies the maximum age in years before present, using 1950 CE
+#' as the baseline. If possible the argument \code{age_max} will be converted to an integer; defaults to NULL.
 #' @param assemblages specifies a data frame necessarily containing columns 
 #' locality_id, assemblage_id. It can be  generated as return value of the 
 #' function 'road_get_assemblages'. It can be used instead of the locality 
@@ -243,6 +243,114 @@ road_get_dates <- function (
   data <- road_run_query(query)
   
   data <- add_locality_columns(data, assemblages = assemblages)
+  
+  return(data)
+}
+
+road_get_dates_alternativ <- function (
+    continents = NULL, 
+    subcontinents = NULL, 
+    countries = NULL, 
+    locality_types = NULL, 
+    cultural_periods = NULL, 
+    technocomplexes = NULL,
+    dating_methods = NULL, 
+    material_dated = NULL, 
+    age_min = NULL, 
+    age_max = NULL, 
+    categories = NULL, 
+    assemblages = NULL
+) 
+{
+  if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
+    stop("Parameters 'min_age' and 'max_age' have to be integers.")
+  
+  if (!is.null(age_min) && !is.null(age_max) && age_min > age_max)
+    stop("Parameter 'min_age' can not be bigger than 'max_age'.")
+  
+  localities <- road_get_localities_internal(continents = continents, 
+                                             subcontinents = subcontinents, 
+                                             countries = countries, 
+                                             locality_types = locality_types, 
+                                             cultural_periods = cultural_periods,
+                                             technocomplexes = technocomplexes)
+  
+  # calculate assemblage_condition
+  # To do: !is.null(categories or continents or...) AND !is.null(assemblages)  ---> Warnung an den Benutzer
+  #if (is.null(assemblages)) assemblages <- road_get_assemblages(continents = continents, 
+  #                                                              subcontinents = subcontinents, 
+  #                                                              countries = countries, 
+  #                                                              locality_types = locality_types, 
+  #                                                              cultural_periods = cultural_periods,
+  #                                                              categories = categories)
+  
+  #assemblage_condition <- get_assemblage_condition(query_start = "AND ", assemblages = assemblages)
+  
+  # select fields
+  select_fields_gla <- c(
+    paste0("geological_layer_age.geolayer_idlocality AS  ", cm_locality_idlocality),
+    paste0("-1 AS ", cm_assemblages_idassemblage),
+    paste0("geological_layer_age.geolayer_name AS ", cm_geolayer_geolayer_name),
+    paste0("'-1' AS ", cm_archlayer_archlayer_name),
+    paste0("age AS ", cm_age),
+    paste0("negative_standard_deviation AS ", cm_negative_standard_deviation),
+    paste0("positive_standard_deviation AS ", cm_positive_standard_deviation),
+    paste0("material_dated AS ", cm_material_dated),
+    paste0("dating_method AS ", cm_dating_method),
+    paste0("laboratory_idlaboratory AS ", cm_laboratory_idlaboratory)
+  )
+  
+  select_fields_ala <- c(
+    paste0("archaeological_layer_age.archlayer_idlocality AS ", cm_locality_idlocality),
+    paste0("-1 AS ", cm_assemblages_idassemblage),
+    paste0("'-1' AS ", cm_geolayer_geolayer_name),
+    paste0("archaeological_layer_age.archlayer_name AS ", cm_archlayer_archlayer_name),
+    paste0("age AS ", cm_age),
+    paste0("negative_standard_deviation AS ", cm_negative_standard_deviation),
+    paste0("positive_standard_deviation AS ", cm_positive_standard_deviation),
+    paste0("material_dated AS ", cm_material_dated),
+    paste0("dating_method AS ", cm_dating_method),
+    paste0("laboratory_idlaboratory AS ", cm_laboratory_idlaboratory)
+  )
+  
+  select_fields_asa <- c(
+    paste0("assemblage_age.assemblage_idlocality AS ", cm_locality_idlocality),
+    paste0("assemblage_age.assemblage_idassemblage AS ", cm_assemblages_idassemblage),
+    paste0("'-1' AS ", cm_geolayer_geolayer_name),
+    paste0("'-1' AS ", cm_archlayer_archlayer_name),
+    paste0("age AS ", cm_age),
+    paste0("negative_standard_deviation AS ", cm_negative_standard_deviation),
+    paste0("positive_standard_deviation AS ", cm_positive_standard_deviation),
+    paste0("material_dated AS ", cm_material_dated),
+    paste0("dating_method AS ", cm_dating_method),
+    paste0("laboratory_idlaboratory AS ", cm_laboratory_idlaboratory)
+  )
+  
+  query <- paste0("SELECT * FROM (SELECT ", paste(select_fields_gla, collapse = ", "),
+                  " FROM geological_layer_age ",
+                  "UNION
+            SELECT ", paste(select_fields_ala, collapse = ", "), 
+                  " FROM archaeological_layer_age ",
+                  "UNION
+            SELECT ", paste(select_fields_asa, collapse = ", "),
+                  " FROM assemblage_age ",
+                  ") as foo ",
+                  "WHERE TRUE ",
+                  # assemblage_condition,
+                  query_check_intersection("AND ", dating_methods, "dating_method "),
+                  query_check_intersection("AND ", material_dated, "material_dated "),
+                  parameter_to_query("AND age  <= ", age_max, " "),
+                  parameter_to_query("AND age  >= ", age_min, " "),
+                  query_check_intersection("AND ", technocomplexes, "technocomplex"),
+                  " ORDER BY ", cm_locality_idlocality)
+                  # , ", ", cm_geolayer_geolayer_name, ", ", cm_archlayer_archlayer_name)
+  
+  # message(query)
+  
+  data <- road_run_query(query)
+  
+  # data <- add_locality_columns(data, assemblages = assemblages)
+  data <- add_locality_columns(data, localities = localities)
   
   return(data)
 }
