@@ -59,11 +59,11 @@ symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains,
 plant remains. The argument \code{categories} is a string (one item) or 
 vector of strings (one or more items); defaults to NULL.}
 
-\item{age_min}{specifies the minimum age in years before present, using 1950 CE 
-as the baseline. The argument \code{age_min} is an integer; defaults to NULL.}
+\item{age_min}{specifies the minimum age in years before present, using 1950 CE
+as the baseline. If possible the argument \code{age_min} will be converted to an integer; defaults to NULL.}
 
-\item{age_max}{specifies the maximum age in years before present, using 1950 CE 
-as the baseline. The argument \code{age_max} is an integer; defaults to NULL.}
+\item{age_max}{specifies the maximum age in years before present, using 1950 CE
+as the baseline. If possible the argument \code{age_max} will be converted to an integer; defaults to NULL.}
 
 \item{raw_material_list}{specifies lithic raw materials (e.g. quartz, chert, flint). 
 Consider the function \code{road_get_organic_tools()} for non-lithic raw materials.

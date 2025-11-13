@@ -63,11 +63,11 @@ The argument \code{dating_methods} is a string (one item) or vector of strings
 to display possible values. The argument \code{datied_material} is a string 
 (one item) or vector of strings (one or more items); defaults to NULL.}
 
-\item{age_min}{specifies the minimum age in years before present, using 1950 CE 
-as the baseline. The argument \code{age_min} is an integer; defaults to NULL.}
+\item{age_min}{specifies the minimum age in years before present, using 1950 CE
+as the baseline. If possible the argument \code{age_min} will be converted to an integer; defaults to NULL.}
 
-\item{age_max}{specifies the maximum age in years before present, using 1950 CE 
-as the baseline. The argument \code{age_max} is an integer; defaults to NULL.}
+\item{age_max}{specifies the maximum age in years before present, using 1950 CE
+as the baseline. If possible the argument \code{age_max} will be converted to an integer; defaults to NULL.}
 
 \item{categories}{specifies the assemblage category/categories with the classes 
 human remains, raw material, typology, technology, function, organic tools, 

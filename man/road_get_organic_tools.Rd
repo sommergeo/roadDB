@@ -58,11 +58,11 @@ symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains,
 plant remains. The argument \code{categories} is a string (one item) or 
 vector of strings (one or more items); defaults to NULL.}
 
-\item{age_min}{specifies the minimum age in years before present, using 1950 CE 
-as the baseline. The argument \code{age_min} is an integer; defaults to NULL.}
+\item{age_min}{specifies the minimum age in years before present, using 1950 CE
+as the baseline. If possible the argument \code{age_min} will be converted to an integer; defaults to NULL.}
 
-\item{age_max}{specifies the maximum age in years before present, using 1950 CE 
-as the baseline. The argument \code{age_max} is an integer; defaults to NULL.}
+\item{age_max}{specifies the maximum age in years before present, using 1950 CE
+as the baseline. If possible the argument \code{age_max} will be converted to an integer; defaults to NULL.}
 
 \item{organic_tools_interpretation}{specifies interpreted organic tool types 
 (e.g. lance/spear, point, retoucher). 
