@@ -1,6 +1,6 @@
 #' @importFrom glue trim
 
-road_get_publications <- function (
+road_get_publication <- function (
    localities = NULL
 ) 
 {
@@ -8,14 +8,30 @@ road_get_publications <- function (
   colnames(publication_df) <- c('Locality', 'Publication')
   
   # localities can be string, vector or data frame
-  # if localities is a vector
-  for (locality in localities) {
-    publ <- get_publication_reference(locality)
+  if ( is.string(localities))
+  {
+    publ <- get_publication_reference(localities)
     publication_df <- rbind(publication_df, publ)
   }
-  # publication_df %>% group_by(Locality) %>% summarise(Publication = paste0(Publication, collapse = "\n"), .groups = "drop")
-  # publication_df %>% group_by(Locality) %>% mutate(PublicationS = paste(Publication, collapse = "\n"))
-  # publication_df %>% group_by(Locality) %>% mutate(PublicationS = summarise(count = n(), .groups = 'drop'))
+  else
+  {
+    if (is.data.frame(localities)) 
+       {
+         locality_vector <- localities$locality_id
+         for (locality in locality_vector) {
+           publ <- get_publication_reference(locality)
+           publication_df <- rbind(publication_df, publ)
+         }
+       }
+    else {
+     # if localities is a vector
+      for (locality in localities) {
+        publ <- get_publication_reference(locality)
+        publication_df <- rbind(publication_df, publ)
+      }
+    }
+  }
+
   return (publication_df)
 }
 
@@ -47,7 +63,9 @@ get_publication_reference <- function (
     
     publications <- data.frame(matrix(ncol = 2, nrow = 0))
     colnames(publications) <- c('Locality', 'Publication')
-
+    
+    #if (dim(data) == NULL || dim(data)[1] == 0) return(publications)
+    
     for (r in 1:nrow(data))   
     {
       publication <- ''
@@ -72,8 +90,11 @@ get_publication_reference <- function (
       isWebPage <- F
 
       if (!is.na(data[r,'publication_type'])) publication_type <- tolower(data[r,'publication_type'])
+      else publication_type <- ''
       if (!is.na(data[r,'comments'])) comments <- data[r,'comments']
+      else comments <- ''
       if (!is.na(data[r,'source_comments'])) source_comments <- data[r,'source_comments']
+      else source_comments <- ''
       
       sco <- tolower(substr(source_comments, 0, 4))
       co <- tolower(substr(comments, 0, 4))

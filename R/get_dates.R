@@ -248,17 +248,17 @@ road_get_dates <- function (
 }
 
 road_get_dates_alternativ <- function (
-    continents = NULL, 
-    subcontinents = NULL, 
-    countries = NULL, 
-    locality_types = NULL, 
-    cultural_periods = NULL, 
-    technocomplexes = NULL,
-    dating_methods = NULL, 
-    material_dated = NULL, 
-    age_min = NULL, 
-    age_max = NULL, 
-    categories = NULL, 
+    # continents = NULL, 
+    # subcontinents = NULL, 
+    # countries = NULL, 
+    # locality_types = NULL, 
+    # cultural_periods = NULL, 
+    # technocomplexes = NULL,
+    # dating_methods = NULL, 
+    # material_dated = NULL, 
+    # age_min = NULL, 
+    # age_max = NULL,
+    # categories = NULL,
     assemblages = NULL
 ) 
 {
