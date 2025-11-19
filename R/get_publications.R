@@ -1,3 +1,4 @@
+#' @export
 #' @importFrom glue trim
 
 road_get_publication <- function (
