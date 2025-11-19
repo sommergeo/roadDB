@@ -266,11 +266,12 @@ get_assemblage_condition <- function(query_start = "", assemblages = NULL, local
 
   if (nrow(assemblages) == 0) return(paste0(query_start, " FALSE "))
   
-  locality_assemblage_list <- paste(assemblages$locality_id, assemblages$assemblage_id, sep = ", ")
-
+  assemblages$locality_assemblage_cols <- paste(assemblages$locality_id, assemblages$assemblage_id, sep = ", ")
+  #locality_assemblage_cols <- paste(assemblages$locality_id, assemblages$assemblage_id, sep = ", ")
+  
   query_locality_assemblage_list_str <- ""
   query_locality_assemblage_list_str <- paste(
-    sapply(locality_assemblage_list, function(x) paste0("'", x, "'")),
+    sapply(assemblages$locality_assemblage_cols, function(x) paste0("'", x, "'")),
     collapse = ", "
   )
 
@@ -289,6 +290,84 @@ get_assemblage_condition <- function(query_start = "", assemblages = NULL, local
   }
   
   return(assemblage_condition)
+}
+
+# calculate geolayer_condition
+get_geolayer_condition <- function(query_start = "", assemblages = NULL, locality_id_column_name = cm_locality_idlocality, geolayer_column_name = cm_geolayer_geolayer_name)
+{
+  if (nrow(assemblages) == 0) return(paste0(query_start, " FALSE "))
+  
+  assemblages$locality_geolayer_cols <- ''
+  
+  for (r in 1:nrow(assemblages))   
+  {
+    tt <- unlist(strsplit(assemblages[r,'geolayers'], ', '))
+    assemblages[r,'locality_geolayer_cols'] <- paste(assemblages[r,'locality_id'], tt, sep = ', ', collapse = '%%')
+  }
+
+  locality_geolayer_str <- paste(assemblages$locality_geolayer_cols, collapse = '%%')
+  locality_geolayer_vec <- unlist(strsplit(locality_geolayer_str, '%%'))
+
+  query_locality_geolayer_list_str <- ""
+  query_locality_geolayer_list_str <- paste(
+    sapply(locality_geolayer_vec, function(x) paste0("'", x, "'")),
+    collapse = ", "
+  )
+  
+  geolayer_condition <- ""
+  if (!is.null(query_locality_geolayer_list_str) && query_locality_geolayer_list_str != "")
+  {
+    geolayer_condition <- paste0(
+      query_start,
+      locality_id_column_name,
+      " || ', ' || ",
+      geolayer_column_name,
+      " IN (",
+      query_locality_geolayer_list_str,
+      ")"
+    )
+  }
+  #message(geolayer_condition)
+  return(geolayer_condition)
+}
+
+# calculate archlayer_condition
+get_archlayer_condition <- function(query_start = "", assemblages = NULL, locality_id_column_name = cm_locality_idlocality, archlayer_column_name = cm_archlayer_archlayer_name)
+{
+  if (nrow(assemblages) == 0) return(paste0(query_start, " FALSE "))
+  
+  assemblages$locality_archlayer_cols <- ''
+  
+  for (r in 1:nrow(assemblages))   
+  {
+    tt <- unlist(strsplit(assemblages[r,'archlayers'], ', '))
+    assemblages[r,'locality_archlayer_cols'] <- paste(assemblages[r,'locality_id'], tt, sep = ', ', collapse = '%%')
+  }
+  
+  locality_archlayer_str <- paste(assemblages$locality_archlayer_cols, collapse = '%%')
+  locality_archlayer_vec <- unlist(strsplit(locality_archlayer_str, '%%'))
+  
+  query_locality_archlayer_list_str <- ""
+  query_locality_archlayer_list_str <- paste(
+    sapply(locality_archlayer_vec, function(x) paste0("'", x, "'")),
+    collapse = ", "
+  )
+  
+  archlayer_condition <- ""
+  if (!is.null(query_locality_archlayer_list_str) && query_locality_archlayer_list_str != "")
+  {
+    archlayer_condition <- paste0(
+      query_start,
+      locality_id_column_name,
+      " || ', ' || ",
+      archlayer_column_name,
+      " IN (",
+      query_locality_archlayer_list_str,
+      ")"
+    )
+  }
+  #message(archlayer_condition)
+  return(archlayer_condition)
 }
 
 # 
