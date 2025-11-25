@@ -16,22 +16,22 @@
 #' most of the time it's more sensible to enter them as single strings and not
 #' as vectors with multiple search words to recieve useful results.
 #'
-#' @param continents specifies the continent(s) (e.g. Africa, Europe, Asia).
-#' Run \code{road_list_argument_values("continents")} to display possible values.
-#' The argument \code{continents} is a string (one item) or vector of strings
+#' @param continent specifies the continent(s) (e.g. Africa, Europe, Asia).
+#' Run \code{road_list_argument_values("continent")} to display possible values.
+#' The argument \code{continent} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param subcontinents specifies the continental region(s) (e.g. Southern Europe).
-#' Run \code{road_list_argument_values("subcontinents")} to display possible values.
-#' The argument \code{subcontinents} is a string (one item) or vector of strings
+#' @param subcontinent specifies the continental region(s) (e.g. Southern Europe).
+#' Run \code{road_list_argument_values("subcontinent")} to display possible values.
+#' The argument \code{subcontinent} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param countries specifies the name of the country where a locality is situated
-#' (e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("countries")}
+#' @param country specifies the name of the country where a locality is situated
+#' (e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("country")}
 #' to display possible values.
-#' The argument \code{countries} is a string (one item) or vector of strings
+#' The argument \code{country} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param locality_types specifies the type of locality (e.g. cave, rockshelter, open air).
-#' Run \code{road_list_argument_values("locality_types")} to display possible values.
-#' The argument \code{locality_types} is a string (one item) or vector of strings
+#' @param locality_type specifies the type of locality (e.g. cave, rockshelter, open air).
+#' Run \code{road_list_argument_values("locality_type")} to display possible values.
+#' The argument \code{locality_type} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
 #' @param cultural_periods specifies the main cultural epoch(s) and includes the
 #' Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age
@@ -43,10 +43,10 @@
 #' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
 #' The argument \code{technocomplexes} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param categories specifies the assemblage category/categories with the classes
+#' @param category specifies the assemblage category with the classes
 #' human remains, raw material, typology, technology, function, organic tools,
 #' symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains,
-#' plant remains. The argument \code{categories} is a string (one item) or
+#' plant remains. The argument \code{category} is a string (one item) or
 #' vector of strings (one or more items); defaults to NULL.
 #' @param age_min specifies the minimum age in years before present, using 1950 CE
 #' as the baseline. If possible the argument \code{age_min} will be converted to an integer; defaults to NULL.
@@ -93,17 +93,17 @@
 #' @export
 #'
 #' @examples
-#' road_get_human_remains(subcontinents = "East Africa", human_genus = c('Paranthropus'))
-#' road_get_human_remains(subcontinents = 'Caucasus', human_genus = 'Homo', 
+#' road_get_human_remains(subcontinent = "East Africa", human_genus = c('Paranthropus'))
+#' road_get_human_remains(subcontinent = 'Caucasus', human_genus = 'Homo', 
 #'                        human_species = 'neanderthalensis')
 road_get_human_remains <- function(
-    continents = NULL,
-    subcontinents = NULL,
-    countries = NULL,
-    locality_types = NULL,
+    continent = NULL,
+    subcontinent = NULL,
+    country = NULL,
+    locality_type = NULL,
     cultural_periods = NULL,
     technocomplexes = NULL,
-    categories = NULL,
+    category = NULL,
     age_min = NULL,
     age_max = NULL,
     assemblages = NULL,
@@ -112,16 +112,16 @@ road_get_human_remains <- function(
 )
 {
   # calculate assemblage_condition
-  if ((!is.null(categories) || !is.null(age_min) || !is.null(age_max)) && !is.null(assemblages))
-    warning("No assemblage search for categories or age_min/age_max is performed because a non-empty assemblage list was passed")
+  if ((!is.null(category) || !is.null(age_min) || !is.null(age_max)) && !is.null(assemblages))
+    warning("No assemblage search for category or age_min/age_max is performed because a non-empty assemblage list was passed")
 
-  if (is.null(assemblages))  assemblages <- road_get_assemblages(continents = continents, 
-                                                                 subcontinents = subcontinents, 
-                                                                 countries = countries, 
-                                                                 locality_types = locality_types, 
+  if (is.null(assemblages))  assemblages <- road_get_assemblages(continent = continent, 
+                                                                 subcontinent = subcontinent, 
+                                                                 country = country, 
+                                                                 locality_type = locality_type, 
                                                                  cultural_periods = cultural_periods, 
                                                                  technocomplexes = technocomplexes, 
-                                                                 categories = categories, 
+                                                                 category = category, 
                                                                  age_min = age_min, 
                                                                  age_max = age_max)
 
@@ -173,13 +173,13 @@ road_get_human_remains <- function(
 
   if (nrow(data) == 0 && nrow(assemblages) > 0)
   {
-    print_null_result_message(continents = continents,
-                              subcontinents = subcontinents,
-                              countries = countries,
-                              locality_types = locality_types,
+    print_null_result_message(continent = continent,
+                              subcontinent = subcontinent,
+                              country = country,
+                              locality_type = locality_type,
                               cultural_periods = cultural_periods,
                               technocomplexes = technocomplexes,
-                              categories = categories,
+                              category = category,
                               age_min = age_min,
                               age_max = age_max,
                               genus = human_genus,

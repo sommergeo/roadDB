@@ -5,13 +5,13 @@
 \title{Get paleofauna finds from ROAD database}
 \usage{
 road_get_paleofauna(
-  continents = NULL,
-  subcontinents = NULL,
-  countries = NULL,
-  locality_types = NULL,
+  continent = NULL,
+  subcontinent = NULL,
+  country = NULL,
+  locality_type = NULL,
   cultural_periods = NULL,
   technocomplexes = NULL,
-  categories = NULL,
+  category = NULL,
   age_min = NULL,
   age_max = NULL,
   assemblages = NULL,
@@ -20,25 +20,25 @@ road_get_paleofauna(
 )
 }
 \arguments{
-\item{continents}{specifies the continent(s) (e.g. Africa, Europe, Asia).
-Run \code{road_list_argument_values("continents")} to display possible values.
-The argument \code{continents} is a string (one item) or vector of strings
+\item{continent}{specifies the continent(s) (e.g. Africa, Europe, Asia).
+Run \code{road_list_argument_values("continent")} to display possible values.
+The argument \code{continent} is a string (one item) or vector of strings
 (one or more items); defaults to NULL.}
 
-\item{subcontinents}{specifies the continental region(s) (e.g. Southern Europe).
-Run \code{road_list_argument_values("subcontinents")} to display possible values.
-The argument \code{subcontinents} is a string (one item) or vector of strings
+\item{subcontinent}{specifies the continental region(s) (e.g. Southern Europe).
+Run \code{road_list_argument_values("subcontinent")} to display possible values.
+The argument \code{subcontinent} is a string (one item) or vector of strings
 (one or more items); defaults to NULL.}
 
-\item{countries}{specifies the name of the country where a locality is situated
-(e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("countries")}
+\item{country}{specifies the name of the country where a locality is situated
+(e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("country")}
 to display possible values.
-The argument \code{countries} is a string (one item) or vector of strings
+The argument \code{country} is a string (one item) or vector of strings
 (one or more items); defaults to NULL.}
 
-\item{locality_types}{specifies the type of locality (e.g. cave, rockshelter, open air).
-Run \code{road_list_argument_values("locality_types")} to display possible values.
-The argument \code{locality_types} is a string (one item) or vector of strings
+\item{locality_type}{specifies the type of locality (e.g. cave, rockshelter, open air).
+Run \code{road_list_argument_values("locality_type")} to display possible values.
+The argument \code{locality_type} is a string (one item) or vector of strings
 (one or more items); defaults to NULL.}
 
 \item{cultural_periods}{specifies the main cultural epoch(s) and includes the
@@ -53,10 +53,10 @@ Run \code{road_list_argument_values("technocomplexes")} to display possible valu
 The argument \code{technocomplexes} is a string (one item) or vector of strings
 (one or more items); defaults to NULL.}
 
-\item{categories}{specifies the assemblage category/categories with the classes
+\item{category}{specifies the assemblage category with the classes
 human remains, raw material, typology, technology, function, organic tools,
 symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains,
-plant remains. The argument \code{categories} is a string (one item) or
+plant remains. The argument \code{category} is a string (one item) or
 vector of strings (one or more items); defaults to NULL.}
 
 \item{age_min}{specifies the minimum age in years before present, using 1950 CE
@@ -102,7 +102,7 @@ If genus and species are both specified, most of the time it's more sensible to 
 single strings and not as vectors with multiple search words to recieve useful results.
 }
 \examples{
-road_get_paleofauna(countries = c("Spain", "Portugal"), fauna_genus = "Mammuthus")
-road_get_paleofauna(continents = "Arfica", fauna_genus = "Vulpes",
+road_get_paleofauna(country = c("Spain", "Portugal"), fauna_genus = "Mammuthus")
+road_get_paleofauna(continent = "Arfica", fauna_genus = "Vulpes",
                     fauna_species = "vulpes")
 }

@@ -40,11 +40,11 @@ The following arguments are optional and can be used with every `road_get_*` fun
 
 | Argument                            | Type      | ROAD table / attribute                               | Search type | Example                                       |
 | ----------------------------------- | --------- | ---------------------------------------------------- | ----------- | --------------------------------------------- |
-| `continents`                        | character | country_continent / continent                        | exact       | "Africa"                                      |
-| `subcontinents`                     | character | country_continent / region                           | exact       | "Southern Africa"                             |
-| `countries`                         | character | locality / country                                   | exact       | "South Africa"                                |
-| `locality_types`                    | character | locality / type                                      | exact       | "rock shelter"                                |
-| `categories`                        | character | assemblage / category                                | exact       | "symbolic artifacts, typology"                |
+| `continent`                         | character | country_continent / continent                        | exact       | "Africa"                                      |
+| `subcontinent`                      | character | country_continent / region                           | exact       | "Southern Africa"                             |
+| `country`                           | character | locality / country                                   | exact       | "South Africa"                                |
+| `locality_type`                     | character | locality / type                                      | exact       | "rock shelter"                                |
+| `category`                          | character | assemblage / category                                | exact       | "symbolic artifacts, typology"                |
 | `age_min`                           | numeric   | archaeological_stratigraphy / age_min                | exact       | 20000                                         |
 | `age_max`                           | numeric   | archaeological_stratigraphy / age_max                | exact       | 3000000                                       |
 | `technocomplexes`                   | character | archaeological_stratigraphy /technocomplex           | exact       | "ESA/ Early Acheulean"                        |
@@ -88,8 +88,8 @@ The following table provides an overview of return attributes.
 | `country`                                 |  `road_get_*`                                | character            |
 | `coord_x`                                 |  `road_get_*`                                | number               |
 | `coord_y`                                 |  `road_get_*`                                | number               |
-| `locality_types`                          |  `road_get_*`                                | character            |
-| `categories`                              |  `road_get_*`                                | character            |
+| `locality_type`                          |  `road_get_*`                                | character            |
+| `category`                              |  `road_get_*`                                | character            |
 | `cultural_periods`                        |  `road_get_*`                                | character            |
 | `technocomplexes`                         |  `road_get_*`                                | character            |
 | `subset_min_age`                          |  `road_get_localities`                       | number               |

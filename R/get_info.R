@@ -8,8 +8,8 @@
 #' @return List of attribute values.
 #' @export
 #'
-#' @examples road_list_argument_values("locality_types")
-#' @examples road_list_argument_values("subcontinents")
+#' @examples road_list_argument_values("locality_type")
+#' @examples road_list_argument_values("subcontinent")
 #' @examples road_list_argument_values("dating_methods")
 road_list_argument_values <- function(function_argument)
 {
@@ -20,17 +20,17 @@ road_list_argument_values <- function(function_argument)
   table_names <- NULL
 
   attribute_name <- case_when(
-    function_argument == "continents"
+    function_argument == "continent"
       ~ "continent",
-    function_argument == "subcontinents"
+    function_argument == "subcontinent"
       ~ "continent_region",
-    function_argument == "countries"
+    function_argument == "country"
       ~ "country",
-    function_argument == "locality_types"
+    function_argument == "locality_type"
       ~ "type",
     function_argument == "cultural_periods"
       ~ "cultural_period",
-    function_argument == "categories"
+    function_argument == "category"
       ~ "category",
     function_argument == "dating_methods"
       ~ "dating_method",
@@ -74,17 +74,17 @@ road_list_argument_values <- function(function_argument)
   )
 
   table_names <- case_when(
-    function_argument == "continents"
+    function_argument == "continent"
       ~ "geopolitical_units",
-    function_argument == "subcontinents"
+    function_argument == "subcontinent"
       ~ "geopolitical_units",
-    function_argument == "countries"
+    function_argument == "country"
       ~ "locality",
-    function_argument == "locality_types"
+    function_argument == "locality_type"
       ~ "locality",
     function_argument == "cultural_periods"
       ~ "archaeological_stratigraphy",
-    function_argument == "categories"
+    function_argument == "category"
       ~ "assemblage",
     function_argument == "technocomplexes"
       ~ "archaeological_stratigraphy",

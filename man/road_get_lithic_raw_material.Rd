@@ -5,13 +5,13 @@
 \title{Get lithic raw material from ROAD database}
 \usage{
 road_get_lithic_raw_material(
-  continents = NULL,
-  subcontinents = NULL,
-  countries = NULL,
-  locality_types = NULL,
+  continent = NULL,
+  subcontinent = NULL,
+  country = NULL,
+  locality_type = NULL,
   cultural_periods = NULL,
   technocomplexes = NULL,
-  categories = NULL,
+  category = NULL,
   age_min = NULL,
   age_max = NULL,
   raw_material_list = NULL,
@@ -20,25 +20,25 @@ road_get_lithic_raw_material(
 )
 }
 \arguments{
-\item{continents}{specifies the continent(s) (e.g. Africa, Europe, Asia).
-Run \code{road_list_argument_values("continents")} to display possible values.
-The argument \code{continents} is a string (one item) or vector of strings 
+\item{continent}{specifies the continent(s) (e.g. Africa, Europe, Asia).
+Run \code{road_list_argument_values("continent")} to display possible values.
+The argument \code{continent} is a string (one item) or vector of strings 
 (one or more items); defaults to NULL.}
 
-\item{subcontinents}{specifies the continental region(s) (e.g. Southern Europe). 
-Run \code{road_list_argument_values("subcontinents")} to display possible values.
-The argument \code{subcontinents} is a string (one item) or vector of strings 
+\item{subcontinent}{specifies the continental region(s) (e.g. Southern Europe). 
+Run \code{road_list_argument_values("subcontinent")} to display possible values.
+The argument \code{subcontinent} is a string (one item) or vector of strings 
 (one or more items); defaults to NULL.}
 
-\item{countries}{specifies the name of the country where a locality is situated 
-(e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("countries")} 
+\item{country}{specifies the name of the country where a locality is situated 
+(e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("country")} 
 to display possible values.
-The argument \code{countries} is a string (one item) or vector of strings 
+The argument \code{country} is a string (one item) or vector of strings 
 (one or more items); defaults to NULL.}
 
-\item{locality_types}{specifies the type of locality (e.g. cave, rockshelter, open air).
-Run \code{road_list_argument_values("locality_types")} to display possible values.
-The argument \code{locality_types} is a string (one item) or vector of strings 
+\item{locality_type}{specifies the type of locality (e.g. cave, rockshelter, open air).
+Run \code{road_list_argument_values("locality_type")} to display possible values.
+The argument \code{locality_type} is a string (one item) or vector of strings 
 (one or more items); defaults to NULL.}
 
 \item{cultural_periods}{specifies the main cultural epoch(s) and includes the 
@@ -53,10 +53,10 @@ Run \code{road_list_argument_values("technocomplexes")} to display possible valu
 The argument \code{technocomplexes} is a string (one item) or vector of strings 
 (one or more items); defaults to NULL.}
 
-\item{categories}{specifies the assemblage category/categories with the classes 
+\item{category}{specifies the assemblage category with the classes 
 human remains, raw material, typology, technology, function, organic tools, 
 symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains, 
-plant remains. The argument \code{categories} is a string (one item) or 
+plant remains. The argument \code{category} is a string (one item) or 
 vector of strings (one or more items); defaults to NULL.}
 
 \item{age_min}{specifies the minimum age in years before present, using 1950 CE
@@ -71,7 +71,7 @@ Run \code{road_list_argument_values("raw_material_list")} to display possible va
 The argument \code{raw_material_list} is a string (one item) or vector of strings 
 (one or more items); defaults to NULL.}
 
-\item{transport_distance}{specifies one of the five categories, each 
+\item{transport_distance}{specifies one of the five category, each 
 distinguished by specific intervals of transport for the raw materials present 
 in the assemblage.
 The five classes of transport distance are:
@@ -115,7 +115,7 @@ Use the parameters to filter the results or omit them to retrieve a broader
 dataset.
 }
 \examples{
-road_get_lithic_raw_material(subcontinents = "South Asia", raw_material_list = c("limestone"))
-road_get_lithic_raw_material(subcontinents = c("Caucasus"), locality_types = "cave",
+road_get_lithic_raw_material(subcontinent = "South Asia", raw_material_list = c("limestone"))
+road_get_lithic_raw_material(subcontinent = c("Caucasus"), locality_type = "cave",
                              raw_material_list = c("chalcedony", "limestone"))
 }

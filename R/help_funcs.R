@@ -2,7 +2,7 @@
 
 # column names
 cm_locality_idlocality <- "locality_id"
-cm_locality_types <- "locality_types"
+cm_locality_type <- "locality_type"
 cm_geopolitical_units_continent <- "continent"
 cm_geopolitical_units_continent_region <- "subcontinent"
 cm_locality_country <- "country"
@@ -13,7 +13,7 @@ cm_technocomplexes <- "technocomplexes"
 cm_assemblages_locality_idlocality <- "locality_id"
 cm_assemblages_idassemblage <- "assemblage_id"
 cm_assemblages_name <- "assemblage_name"
-cm_assemblages_categories <- "categories"
+cm_assemblages_category <- "category"
 cm_geological_stratigraphy_age_min <- "age_min"
 cm_geological_stratigraphy_age_max <- "age_max"
 
@@ -219,7 +219,7 @@ add_locality_columns <- function(data, localities = NULL, assemblages = NULL)
       cm_geopolitical_units_continent,
       cm_geopolitical_units_continent_region,
       cm_locality_country,
-      cm_locality_types,
+      cm_locality_type,
       cm_locality_x,
       cm_locality_y
     )
@@ -234,11 +234,11 @@ add_locality_columns <- function(data, localities = NULL, assemblages = NULL)
       cm_geopolitical_units_continent,
       cm_geopolitical_units_continent_region,
       cm_locality_country,
-      cm_locality_types,
+      cm_locality_type,
       cm_locality_x,
       cm_locality_y,
       cm_assemblages_name,
-      cm_assemblages_categories,
+      cm_assemblages_category,
       cm_geological_stratigraphy_age_min,
       cm_geological_stratigraphy_age_max,
       cm_assemblage_in_geolayer_geolayer_name,
@@ -260,8 +260,8 @@ get_assemblage_condition <- function(query_start = "", assemblages = NULL, local
 {
   # I am not sure, if it is better to do the assemblage search hier or in the caller function
   # so this comments is an reminder
-  # To do: !is.null(categories) AND !is.null(assemblages)  ---> Warnung an den Benutzer
-  #if (is.null(assemblages)) assemblages <- road_get_assemblages(categories = categories, 
+  # To do: !is.null(category) AND !is.null(assemblages)  ---> Warnung an den Benutzer
+  #if (is.null(assemblages)) assemblages <- road_get_assemblages(category = category, 
   #                                                             age_min = age_min, age_max = age_max, localities = localities)
 
   if (nrow(assemblages) == 0) return(paste0(query_start, " FALSE "))
@@ -372,13 +372,13 @@ get_archlayer_condition <- function(query_start = "", assemblages = NULL, locali
 
 # 
 print_null_result_message <- function(
-    continents = NULL,
-    subcontinents = NULL,
-    countries = NULL,
-    locality_types = NULL,
+    continent = NULL,
+    subcontinent = NULL,
+    country = NULL,
+    locality_type = NULL,
     cultural_periods = NULL,
     technocomplexes = NULL,
-    categories = NULL,
+    category = NULL,
     age_min = NULL,
     age_max = NULL,
     tool_list = NULL,
@@ -398,14 +398,14 @@ print_null_result_message <- function(
     fauna_species = NULL
 )
 {
-  continents_str <- ifelse(is.null(continents), "", paste("continents = (", toString(continents), ")"))
-  subcontinents_str <- ifelse(is.null(subcontinents), "", paste("subcontinents = (", toString(subcontinents), ")"))
-  countries_str <- ifelse(is.null(countries), "", paste("countries = (", toString(countries), ")"))
-  locality_types_str <- ifelse(is.null(locality_types), "", paste("locality_types = (", toString(locality_types), ")"))
+  continent_str <- ifelse(is.null(continent), "", paste("continent = (", toString(continent), ")"))
+  subcontinent_str <- ifelse(is.null(subcontinent), "", paste("subcontinent = (", toString(subcontinent), ")"))
+  country_str <- ifelse(is.null(country), "", paste("country = (", toString(country), ")"))
+  locality_type_str <- ifelse(is.null(locality_type), "", paste("locality_type = (", toString(locality_type), ")"))
   cultural_periods_str <- ifelse(is.null(cultural_periods), "", paste("cultural_periods = (", toString(cultural_periods), ")"))
   
   technocomplexes_str <- ifelse(is.null(technocomplexes), "", paste("technocomplexes = (", toString(technocomplexes), ")"))
-  categories_str <- ifelse(is.null(categories), "", paste("categories = (", toString(categories), ")"))
+  category_str <- ifelse(is.null(category), "", paste("category = (", toString(category), ")"))
   age_min_str <- ifelse(is.null(age_min), "", paste("age_min = (", age_min, ")"))
   age_max_str <- ifelse(is.null(age_max), "", paste("age_max = (", age_max, ")"))
   
@@ -430,13 +430,13 @@ print_null_result_message <- function(
   
   message(paste("One or more of the following arguments caused the empty result set:
                   ",
-                continents_str,
-                subcontinents_str,
-                countries_str,
-                locality_types_str,
+                continent_str,
+                subcontinent_str,
+                country_str,
+                locality_type_str,
                 cultural_periods_str,
                 technocomplexes_str,
-                categories_str,
+                category_str,
                 age_min_str,
                 age_max_str,
                 tool_list_str,

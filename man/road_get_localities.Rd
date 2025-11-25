@@ -5,37 +5,37 @@
 \title{Get localities from ROAD Database}
 \usage{
 road_get_localities(
-  continents = NULL,
-  subcontinents = NULL,
-  countries = NULL,
-  locality_types = NULL,
+  continent = NULL,
+  subcontinent = NULL,
+  country = NULL,
+  locality_type = NULL,
   cultural_periods = NULL,
   technocomplexes = NULL,
-  categories = NULL,
+  category = NULL,
   age_min = NULL,
   age_max = NULL
 )
 }
 \arguments{
-\item{continents}{specifies the continent(s) (e.g. Africa, Europe, Asia).
-Run \code{road_list_argument_values("continents")} to display possible values.
-The argument\code{continents} is a string (one item) or vector of strings
+\item{continent}{specifies the continent(s) (e.g. Africa, Europe, Asia).
+Run \code{road_list_argument_values("continent")} to display possible values.
+The argument\code{continent} is a string (one item) or vector of strings
 (one or more items); defaults to NULL.}
 
-\item{subcontinents}{specifies the continental region(s) (e.g. Southern Europe).
-Run \code{road_list_argument_values("subcontinents")} to display possible values.
-The argument \code{subcontinents} is a string (one item) or vector of strings
+\item{subcontinent}{specifies the continental region(s) (e.g. Southern Europe).
+Run \code{road_list_argument_values("subcontinent")} to display possible values.
+The argument \code{subcontinent} is a string (one item) or vector of strings
 (one or more items); defaults to NULL.}
 
-\item{countries}{specifies the name of the country where a locality is situated
-(e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("countries")}
+\item{country}{specifies the name of the country where a locality is situated
+(e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("country")}
 to display possible values.
-The argument \code{countries} is a string (one item) or vector of strings
+The argument \code{country} is a string (one item) or vector of strings
 (one or more items); defaults to NULL.}
 
-\item{locality_types}{specifies the type of locality (e.g. cave, rockshelter, open air).
-Run \code{road_list_argument_values("locality_types")} to display possible values.
-The argument \code{locality_types} is a string (one item) or vector of strings
+\item{locality_type}{specifies the type of locality (e.g. cave, rockshelter, open air).
+Run \code{road_list_argument_values("locality_type")} to display possible values.
+The argument \code{locality_type} is a string (one item) or vector of strings
 (one or more items); defaults to NULL.}
 
 \item{cultural_periods}{specifies the main cultural epoch(s) and includes the
@@ -50,10 +50,10 @@ Run \code{road_list_argument_values("technocomplexes")} to display possible valu
 The argument \code{technocomplexes} is a string (one item) or vector of strings
 (one or more items); defaults to NULL.}
 
-\item{categories}{specifies the assemblage category/categories with the classes
+\item{category}{specifies the assemblage category with the classes
 human remains, raw material, typology, technology, function, organic tools,
 symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains,
-plant remains. The argument \code{categories} is a string (one item) or
+plant remains. The argument \code{category} is a string (one item) or
 vector of strings (one or more items); defaults to NULL.}
 
 \item{age_min}{specifies the minimum age in years before present, using 1950 CE
@@ -71,7 +71,7 @@ A data frame with location information. Rows represent individual locations, col
 
 \code{coord_x}, \code{coord_y}: The attributes specify the geographic coordinates (longitude and latitude) of the locality.
 
-\code{categories}: Specifies the categories of the findings associated with the locality. If there are multiple, they are returned in a comma separated list.
+\code{category}: Specifies the category of the findings associated with the locality. If there are multiple, they are returned in a comma separated list.
 
 \code{cultural_periods}: Specifies the cultural epoch(s) associated with the locality. If there are multiple, they are returned in a comma separated list.
 
@@ -96,8 +96,8 @@ them to have a broader result set. All parameters are optional and should be
 omitted or set to NULL when not used.
 }
 \examples{
-df <- road_get_localities(continents = "Europe", countries = c("Germany"),
+df <- road_get_localities(continent = "Europe", country = c("Germany"),
                     locality_type = c("basin", "quarry"))
-df <- road_get_localities(countries = c("Germany", "France"),
+df <- road_get_localities(country = c("Germany", "France"),
                     cultural_periods = "Epipaleolithic")
 }

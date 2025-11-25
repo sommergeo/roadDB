@@ -14,22 +14,22 @@
 #' category, age or omit them to have a broader result set.
 #' All parameters are optional and should be omitted or set to NULL when not used.
 #'
-#' @param continents specifies the continent(s) (e.g. Africa, Europe, Asia).
-#' Run \code{road_list_argument_values("continents")} to display possible values.
-#' The argument \code{continents} is a string (one item) or vector of strings
+#' @param continent specifies the continent(s) (e.g. Africa, Europe, Asia).
+#' Run \code{road_list_argument_values("continent")} to display possible values.
+#' The argument \code{continent} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param subcontinents specifies the continental region(s) (e.g. Southern Europe).
-#' Run \code{road_list_argument_values("subcontinents")} to display possible values.
-#' The argument \code{subcontinents} is a string (one item) or vector of strings
+#' @param subcontinent specifies the continental region(s) (e.g. Southern Europe).
+#' Run \code{road_list_argument_values("subcontinent")} to display possible values.
+#' The argument \code{subcontinent} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param countries specifies the name of the country where a locality is situated
-#' (e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("countries")}
+#' @param country specifies the name of the country where a locality is situated
+#' (e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("country")}
 #' to display possible values.
-#' The argument \code{countries} is a string (one item) or vector of strings
+#' The argument \code{country} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param locality_types specifies the type of locality (e.g. cave, rockshelter, open air).
-#' Run \code{road_list_argument_values("locality_types")} to display possible values.
-#' The argument \code{locality_types} is a string (one item) or vector of strings
+#' @param locality_type specifies the type of locality (e.g. cave, rockshelter, open air).
+#' Run \code{road_list_argument_values("locality_type")} to display possible values.
+#' The argument \code{locality_type} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
 #' @param cultural_periods specifies the main cultural epoch(s) and includes the
 #' Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age
@@ -41,10 +41,10 @@
 #' Run \code{road_list_argument_values("technocomplex")} to display possible values.
 #' The argument \code{technocomplex} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param categories specifies the assemblage category/categories with the classes
+#' @param category specifies the assemblage category with the classes
 #' human remains, raw material, typology, technology, function, organic tools,
 #' symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains,
-#' plant remains. The argument \code{categories} is a string (one item) or
+#' plant remains. The argument \code{category} is a string (one item) or
 #' vector of strings (one or more items); defaults to NULL.
 #' @param age_min specifies the minimum age in years before present, using 1950 CE
 #' as the baseline. If possible the argument \code{age_min} will be converted to an integer; defaults to NULL.
@@ -57,18 +57,18 @@
 #' @export
 #'
 #' @examples
-#' road_get_assemblages(countries = c("Germany", "France"), age_min = 300000L,
-#'                      categories = c("miscellaneous finds"))
-#' road_get_assemblages(subcontinents = c("Caucasus"), categories = "human remains",
+#' road_get_assemblages(country = c("Germany", "France"), age_min = 300000L,
+#'                      category = c("miscellaneous finds"))
+#' road_get_assemblages(subcontinent = c("Caucasus"), category = "human remains",
 #'                      age_max = 100000L)
 road_get_assemblages <- function(
-    continents = NULL,
-    subcontinents = NULL,
-    countries = NULL,
-    locality_types = NULL,
+    continent = NULL,
+    subcontinent = NULL,
+    country = NULL,
+    locality_type = NULL,
     cultural_periods = NULL,
     technocomplexes = NULL, 
-    categories = NULL,
+    category = NULL,
     age_min = NULL,
     age_max = NULL
 )
@@ -84,10 +84,10 @@ road_get_assemblages <- function(
   if (!is.null(age_min) && !is.null(age_max) && age_min > age_max)
     stop("Parameter 'min_age' can not be bigger than 'max_age'.")
 
-  localities <- road_get_localities_internal(continents = continents,
-                                    subcontinents = subcontinents,
-                                    countries = countries,
-                                    locality_types = locality_types,
+  localities <- road_get_localities_internal(continent = continent,
+                                    subcontinent = subcontinent,
+                                    country = country,
+                                    locality_type = locality_type,
                                     cultural_periods = cultural_periods,
                                     technocomplexes = technocomplexes)
 
@@ -101,7 +101,7 @@ road_get_assemblages <- function(
     paste0("assemblage.locality_idlocality AS ", cm_assemblages_locality_idlocality),
     paste0("assemblage.idassemblage AS ", cm_assemblages_idassemblage),
     paste0("assemblage.name AS ", cm_assemblages_name),
-    paste0("assemblage.category AS ", cm_assemblages_categories),
+    paste0("assemblage.category AS ", cm_assemblages_category),
     paste0("MIN(geological_stratigraphy.age_min) AS ", cm_geological_stratigraphy_age_min),
     paste0("MAX(geological_stratigraphy.age_max) AS ", cm_geological_stratigraphy_age_max),
     paste0("STRING_AGG(DISTINCT assemblage_in_geolayer.geolayer_name, ', ') AS ", cm_assemblage_in_geolayer_geolayer_name),
@@ -153,7 +153,7 @@ road_get_assemblages <- function(
     "archaeological_layer.archstratigraphy_idarchstrat = archaeological_stratigraphy.idarchstrat",
     # WHERE
     "WHERE assemblage.locality_idlocality IN (", query_localities, ")",
-    query_check_intersection("AND ", categories, "assemblage.category"),
+    query_check_intersection("AND ", category, "assemblage.category"),
     parameter_to_query("AND ", age_min, " <= geological_stratigraphy.age_max"),
     parameter_to_query("AND ", age_max, " >= geological_stratigraphy.age_min"),
     parameter_to_query(
@@ -189,13 +189,13 @@ road_get_assemblages <- function(
 
   if (nrow(data) == 0 & nrow(localities) > 0)
   {
-    print_null_result_message(continents = continents,
-                              subcontinents = subcontinents,
-                              countries = countries,
-                              locality_types = locality_types,
+    print_null_result_message(continent = continent,
+                              subcontinent = subcontinent,
+                              country = country,
+                              locality_type = locality_type,
                               cultural_periods = cultural_periods,
                               technocomplexes = technocomplexes,
-                              categories = categories,
+                              category = category,
                               age_min = age_min,
                               age_max = age_max)
   }
