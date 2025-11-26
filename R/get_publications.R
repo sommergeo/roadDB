@@ -1,7 +1,7 @@
 #' @export
 #' @importFrom glue trim
 
-road_get_publication <- function (
+road_get_publications <- function (
    localities = NULL
 ) 
 {
