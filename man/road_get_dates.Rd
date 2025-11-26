@@ -4,77 +4,9 @@
 \alias{road_get_dates}
 \title{Retrieve Dating Information for Assemblages, Geolayers, and Archlayers from the ROAD Database}
 \usage{
-road_get_dates(
-  continent = NULL,
-  subcontinent = NULL,
-  country = NULL,
-  locality_type = NULL,
-  cultural_periods = NULL,
-  technocomplexes = NULL,
-  dating_methods = NULL,
-  material_dated = NULL,
-  age_min = NULL,
-  age_max = NULL,
-  category = NULL,
-  assemblages = NULL
-)
+road_get_dates(assemblages = NULL)
 }
 \arguments{
-\item{continent}{specifies the continent(s) (e.g. Africa, Europe, Asia).
-Run \code{road_list_argument_values("continent")} to display possible values.
-The argument \code{continent} is a string (one item) or vector of strings 
-(one or more items); defaults to NULL.}
-
-\item{subcontinent}{specifies the continental region(s) (e.g. Southern Europe). 
-Run \code{road_list_argument_values("subcontinent")} to display possible values.
-The argument \code{subcontinent} is a string (one item) or vector of strings 
-(one or more items); defaults to NULL.}
-
-\item{country}{specifies the name of the country where a locality is situated 
-(e.g. Germany, Kenya, Saudi Arabia). Run \code{road_list_argument_values("country")} 
-to display possible values.
-The argument \code{country} is a string (one item) or vector of strings 
-(one or more items); defaults to NULL.}
-
-\item{locality_type}{specifies the type of locality (e.g. cave, rockshelter, open air).
-Run \code{road_list_argument_values("locality_type")} to display possible values.
-The argument \code{locality_type} is a string (one item) or vector of strings 
-(one or more items); defaults to NULL.}
-
-\item{cultural_periods}{specifies the main cultural epoch(s) and includes the 
-Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age 
-(Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
-to display possible values. The argument \code{cultural_periods} is a string 
-(one item) or vector of strings (one or more items); defaults to NULL.}
-
-\item{technocomplexes}{specifies an archaeological culture or named stone tool 
-industry (e.g. Oldowan, Acheulean, Mousterian).
-Run \code{road_list_argument_values("technocomplexes")} to display possible values.
-The argument \code{technocomplexes} is a string (one item) or vector of strings 
-(one or more items); defaults to NULL.}
-
-\item{dating_methods}{specifies the method of temporal analysis (e.g. 14C, OSL, IRSL).
-Run \code{road_list_argument_values("dating_methods")} to display possible values.
-The argument \code{dating_methods} is a string (one item) or vector of strings 
-(one or more items); defaults to NULL.}
-
-\item{material_dated}{(string) specifies the material used for temporal analysis 
-(e.g. bone, tooth, antler). Run \code{road_list_argument_values("material_dated")} 
-to display possible values. The argument \code{datied_material} is a string 
-(one item) or vector of strings (one or more items); defaults to NULL.}
-
-\item{age_min}{specifies the minimum age in years before present, using 1950 CE
-as the baseline. If possible the argument \code{age_min} will be converted to an integer; defaults to NULL.}
-
-\item{age_max}{specifies the maximum age in years before present, using 1950 CE
-as the baseline. If possible the argument \code{age_max} will be converted to an integer; defaults to NULL.}
-
-\item{category}{specifies the assemblage category with the classes 
-human remains, raw material, typology, technology, function, organic tools, 
-symbolic artifacts, feature, miscellaneous finds, paleofauna, animal remains, 
-plant remains. The argument \code{category} is a string (one item) or 
-vector of strings (one or more items); defaults to NULL.}
-
 \item{assemblages}{specifies a data frame necessarily containing columns 
 locality_id, assemblage_id. It can be  generated as return value of the 
 function 'road_get_assemblages'. It can be used instead of the locality 
@@ -132,13 +64,4 @@ tools, such as the \pkg{rcarbon} package available on CRAN
 (see: \url{https://cran.r-project.org/web/packages/rcarbon/index.html}).
 
 All parameters are optional. If not used, omit them or set them to NULL.
-}
-\examples{
-road_get_dates(dating_methods = c("14C (radiocarbon) dating", "U series (uranium-thorium) dating"))
-road_get_dates(material_dated = c("coprolite", "ivory"), 
-               age_min = 10000L, 
-               age_max = 50000L, 
-               dating_method = "14C (radiocarbon) dating")
-road_get_dates(country = c("Germany", "France"), 
-               cultural_periods = "Middle Paleolithic")                         
 }

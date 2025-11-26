@@ -47,8 +47,8 @@ The following arguments are optional and can be used with every `road_get_*` fun
 | `category`                          | character | assemblage / category                                | exact       | "symbolic artifacts, typology"                |
 | `age_min`                           | numeric   | archaeological_stratigraphy / age_min                | exact       | 20000                                         |
 | `age_max`                           | numeric   | archaeological_stratigraphy / age_max                | exact       | 3000000                                       |
-| `technocomplexes`                   | character | archaeological_stratigraphy /technocomplex           | exact       | "ESA/ Early Acheulean"                        |
-| `cultural_periods`                  | character | archaeological_stratigraphy / cultural_period        | exact       | "Middle Stone Age"                            |
+| `technocomplex`                     | character | archaeological_stratigraphy /technocomplex           | exact       | "ESA/ Early Acheulean"                        |
+| `cultural_period`                   | character | archaeological_stratigraphy / cultural_period        | exact       | "Middle Stone Age"                            |
 
 
 The following arguments are optional and can be used with the corresponding `road_get_*` function to constrain queries.
@@ -88,10 +88,10 @@ The following table provides an overview of return attributes.
 | `country`                                 |  `road_get_*`                                | character            |
 | `coord_x`                                 |  `road_get_*`                                | number               |
 | `coord_y`                                 |  `road_get_*`                                | number               |
-| `locality_type`                          |  `road_get_*`                                | character            |
-| `category`                              |  `road_get_*`                                | character            |
-| `cultural_periods`                        |  `road_get_*`                                | character            |
-| `technocomplexes`                         |  `road_get_*`                                | character            |
+| `locality_type`                           |  `road_get_*`                                | character            |
+| `category`                                |  `road_get_*`                                | character            |
+| `cultural_period `                        |  `road_get_*`                                | character            |
+| `technocomplex`                           |  `road_get_*`                                | character            |
 | `subset_min_age`                          |  `road_get_localities`                       | number               |
 | `subset_max_age`                          |  `road_get_localities`                       | number               |
 | `locality_min_age`                        |  `road_get_localities`                       | number               |

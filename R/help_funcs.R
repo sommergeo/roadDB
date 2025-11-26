@@ -8,8 +8,8 @@ cm_geopolitical_units_continent_region <- "subcontinent"
 cm_locality_country <- "country"
 cm_locality_x <- "coord_x"
 cm_locality_y <- "coord_y"
-cm_cultural_periods <- "cultural_periods"
-cm_technocomplexes <- "technocomplexes"
+cm_cultural_period <- "cultural_period"
+cm_technocomplex <- "technocomplex"
 cm_assemblages_locality_idlocality <- "locality_id"
 cm_assemblages_idassemblage <- "assemblage_id"
 cm_assemblages_name <- "assemblage_name"
@@ -243,8 +243,8 @@ add_locality_columns <- function(data, localities = NULL, assemblages = NULL)
       cm_geological_stratigraphy_age_max,
       cm_assemblage_in_geolayer_geolayer_name,
       cm_assemblage_in_archlayer_archlayer_name,
-      cm_cultural_periods,
-      cm_technocomplexes
+      cm_cultural_period,
+      cm_technocomplex
     )
     assemblages <- assemblages[, column_selection]
     data <- merge(x = assemblages, y = data, by = c(cm_locality_idlocality, 
@@ -376,8 +376,8 @@ print_null_result_message <- function(
     subcontinent = NULL,
     country = NULL,
     locality_type = NULL,
-    cultural_periods = NULL,
-    technocomplexes = NULL,
+    cultural_period = NULL,
+    technocomplex = NULL,
     category = NULL,
     age_min = NULL,
     age_max = NULL,
@@ -402,9 +402,9 @@ print_null_result_message <- function(
   subcontinent_str <- ifelse(is.null(subcontinent), "", paste("subcontinent = (", toString(subcontinent), ")"))
   country_str <- ifelse(is.null(country), "", paste("country = (", toString(country), ")"))
   locality_type_str <- ifelse(is.null(locality_type), "", paste("locality_type = (", toString(locality_type), ")"))
-  cultural_periods_str <- ifelse(is.null(cultural_periods), "", paste("cultural_periods = (", toString(cultural_periods), ")"))
+  cultural_period_str <- ifelse(is.null(cultural_period), "", paste("cultural_period = (", toString(cultural_period), ")"))
   
-  technocomplexes_str <- ifelse(is.null(technocomplexes), "", paste("technocomplexes = (", toString(technocomplexes), ")"))
+  technocomplex_str <- ifelse(is.null(technocomplex), "", paste("technocomplex = (", toString(technocomplex), ")"))
   category_str <- ifelse(is.null(category), "", paste("category = (", toString(category), ")"))
   age_min_str <- ifelse(is.null(age_min), "", paste("age_min = (", age_min, ")"))
   age_max_str <- ifelse(is.null(age_max), "", paste("age_max = (", age_max, ")"))
@@ -434,8 +434,8 @@ print_null_result_message <- function(
                 subcontinent_str,
                 country_str,
                 locality_type_str,
-                cultural_periods_str,
-                technocomplexes_str,
+                cultural_period_str,
+                technocomplex_str,
                 category_str,
                 age_min_str,
                 age_max_str,

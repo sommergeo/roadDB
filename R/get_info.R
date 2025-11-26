@@ -28,7 +28,7 @@ road_list_argument_values <- function(function_argument)
       ~ "country",
     function_argument == "locality_type"
       ~ "type",
-    function_argument == "cultural_periods"
+    function_argument == "cultural_period"
       ~ "cultural_period",
     function_argument == "category"
       ~ "category",
@@ -36,7 +36,7 @@ road_list_argument_values <- function(function_argument)
       ~ "dating_method",
     function_argument == "material_dated"
       ~ "material_dated",
-    function_argument == "technocomplexes"
+    function_argument == "technocomplex"
       ~ "technocomplex",
     function_argument == "tool_list"
       ~ "tool_list",
@@ -82,11 +82,11 @@ road_list_argument_values <- function(function_argument)
       ~ "locality",
     function_argument == "locality_type"
       ~ "locality",
-    function_argument == "cultural_periods"
+    function_argument == "cultural_period"
       ~ "archaeological_stratigraphy",
     function_argument == "category"
       ~ "assemblage",
-    function_argument == "technocomplexes"
+    function_argument == "technocomplex"
       ~ "archaeological_stratigraphy",
     function_argument == "tool_list"
       ~ "typology",

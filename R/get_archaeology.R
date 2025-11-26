@@ -25,15 +25,15 @@
 #' Run \code{road_list_argument_values("locality_type")} to display possible values.
 #' The argument \code{locality_type} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
-#' @param cultural_periods specifies the main cultural epoch(s) and includes the 
+#' @param cultural_period specifies the main cultural epoch(s) and includes the 
 #' Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age 
-#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
-#' to display possible values. The argument \code{cultural_periods} is a string 
+#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_period")} 
+#' to display possible values. The argument \code{cultural_period} is a string 
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplexes specifies an archaeological culture or named stone tool 
+#' @param technocomplex specifies an archaeological culture or named stone tool 
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
-#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
-#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
+#' Run \code{road_list_argument_values("technocomplex")} to display possible values.
+#' The argument \code{technocomplex} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param category specifies the assemblage category with the classes 
 #' human remains, raw material, typology, technology, function, organic tools, 
@@ -78,8 +78,8 @@ road_get_lithic_typology <- function(
     subcontinent = NULL,
     country = NULL,
     locality_type = NULL,
-    cultural_periods = NULL,
-    technocomplexes = NULL,
+    cultural_period = NULL,
+    technocomplex = NULL,
     category = NULL,
     age_min = NULL,
     age_max = NULL,
@@ -93,8 +93,8 @@ road_get_lithic_typology <- function(
                                                                 subcontinent = subcontinent, 
                                                                 country = country, 
                                                                 locality_type = locality_type, 
-                                                                cultural_periods = cultural_periods, 
-                                                                technocomplexes = technocomplexes, 
+                                                                cultural_period = cultural_period, 
+                                                                technocomplex = technocomplex, 
                                                                 category = category, 
                                                                 age_min = age_min, 
                                                                 age_max = age_max)
@@ -128,8 +128,8 @@ road_get_lithic_typology <- function(
                               subcontinent = subcontinent,
                               country = country,
                               locality_type = locality_type,
-                              cultural_periods = cultural_periods,
-                              technocomplexes = technocomplexes,
+                              cultural_period = cultural_period,
+                              technocomplex = technocomplex,
                               category = category,
                               age_min = age_min,
                               age_max = age_max,
@@ -169,15 +169,15 @@ road_get_lithic_typology <- function(
 #' Run \code{road_list_argument_values("locality_type")} to display possible values.
 #' The argument \code{locality_type} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
-#' @param cultural_periods specifies the main cultural epoch(s) and includes the 
+#' @param cultural_period specifies the main cultural epoch(s) and includes the 
 #' Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age 
-#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
-#' to display possible values. The argument \code{cultural_periods} is a string 
+#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_period")} 
+#' to display possible values. The argument \code{cultural_period} is a string 
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplexes specifies an archaeological culture or named stone tool 
+#' @param technocomplex specifies an archaeological culture or named stone tool 
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
-#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
-#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
+#' Run \code{road_list_argument_values("technocomplex")} to display possible values.
+#' The argument \code{technocomplex} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param category specifies the assemblage category with the classes 
 #' human remains, raw material, typology, technology, function, organic tools, 
@@ -233,8 +233,8 @@ road_get_lithic_raw_material <- function(
     subcontinent = NULL,
     country = NULL,
     locality_type = NULL,
-    cultural_periods = NULL,
-    technocomplexes = NULL,
+    cultural_period = NULL,
+    technocomplex = NULL,
     category = NULL,
     age_min = NULL,
     age_max = NULL,
@@ -249,8 +249,8 @@ road_get_lithic_raw_material <- function(
                                                                 subcontinent = subcontinent, 
                                                                 country = country, 
                                                                 locality_type = locality_type, 
-                                                                cultural_periods = cultural_periods, 
-                                                                technocomplexes = technocomplexes, 
+                                                                cultural_period = cultural_period, 
+                                                                technocomplex = technocomplex, 
                                                                 category = category, 
                                                                 age_min = age_min, 
                                                                 age_max = age_max)
@@ -286,8 +286,8 @@ road_get_lithic_raw_material <- function(
                               subcontinent = subcontinent,
                               country = country,
                               locality_type = locality_type,
-                              cultural_periods = cultural_periods,
-                              technocomplexes = technocomplexes,
+                              cultural_period = cultural_period,
+                              technocomplex = technocomplex,
                               category = category,
                               age_min = age_min,
                               age_max = age_max,
@@ -327,15 +327,15 @@ road_get_lithic_raw_material <- function(
 #' Run \code{road_list_argument_values("locality_type")} to display possible values.
 #' The argument \code{locality_type} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
-#' @param cultural_periods specifies the main cultural epoch(s) and includes the 
+#' @param cultural_period specifies the main cultural epoch(s) and includes the 
 #' Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age 
-#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
-#' to display possible values. The argument \code{cultural_periods} is a string 
+#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_period")} 
+#' to display possible values. The argument \code{cultural_period} is a string 
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplexes specifies an archaeological culture or named stone tool 
+#' @param technocomplex specifies an archaeological culture or named stone tool 
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
-#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
-#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
+#' Run \code{road_list_argument_values("technocomplex")} to display possible values.
+#' The argument \code{technocomplex} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param category specifies the assemblage category with the classes 
 #' human remains, raw material, typology, technology, function, organic tools, 
@@ -377,8 +377,8 @@ road_get_organic_tools <- function(
     subcontinent = NULL,
     country = NULL,
     locality_type = NULL,
-    cultural_periods = NULL,
-    technocomplexes = NULL,
+    cultural_period = NULL,
+    technocomplex = NULL,
     category = NULL,
     age_min = NULL,
     age_max = NULL,
@@ -393,8 +393,8 @@ road_get_organic_tools <- function(
                                                                 subcontinent = subcontinent, 
                                                                 country = country, 
                                                                 locality_type = locality_type, 
-                                                                cultural_periods = cultural_periods, 
-                                                                technocomplexes = technocomplexes, 
+                                                                cultural_period = cultural_period, 
+                                                                technocomplex = technocomplex, 
                                                                 category = category, 
                                                                 age_min = age_min, 
                                                                 age_max = age_max)
@@ -429,8 +429,8 @@ road_get_organic_tools <- function(
                               subcontinent = subcontinent,
                               country = country,
                               locality_type = locality_type,
-                              cultural_periods = cultural_periods,
-                              technocomplexes = technocomplexes,
+                              cultural_period = cultural_period,
+                              technocomplex = technocomplex,
                               category = category,
                               age_min = age_min,
                               age_max = age_max,
@@ -469,15 +469,15 @@ road_get_organic_tools <- function(
 #' Run \code{road_list_argument_values("locality_type")} to display possible values.
 #' The argument \code{locality_type} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
-#' @param cultural_periods specifies the main cultural epoch(s) and includes the 
+#' @param cultural_period specifies the main cultural epoch(s) and includes the 
 #' Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age 
-#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
-#' to display possible values. The argument \code{cultural_periods} is a string 
+#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_period")} 
+#' to display possible values. The argument \code{cultural_period} is a string 
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplexes specifies an archaeological culture or named stone tool 
+#' @param technocomplex specifies an archaeological culture or named stone tool 
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
-#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
-#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
+#' Run \code{road_list_argument_values("technocomplex")} to display possible values.
+#' The argument \code{technocomplex} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param category specifies the assemblage category with the classes 
 #' human remains, raw material, typology, technology, function, organic tools, 
@@ -529,8 +529,8 @@ road_get_symbolic_artifacts <- function(
     subcontinent = NULL,
     country = NULL,
     locality_type = NULL,
-    cultural_periods = NULL,
-    technocomplexes = NULL,
+    cultural_period = NULL,
+    technocomplex = NULL,
     category = NULL,
     age_min = NULL,
     age_max = NULL,
@@ -543,8 +543,8 @@ road_get_symbolic_artifacts <- function(
                                                                 subcontinent = subcontinent, 
                                                                 country = country, 
                                                                 locality_type = locality_type, 
-                                                                cultural_periods = cultural_periods, 
-                                                                technocomplexes = technocomplexes, 
+                                                                cultural_period = cultural_period, 
+                                                                technocomplex = technocomplex, 
                                                                 category = category, 
                                                                 age_min = age_min, 
                                                                 age_max = age_max)
@@ -582,8 +582,8 @@ road_get_symbolic_artifacts <- function(
                               subcontinent = subcontinent,
                               country = country,
                               locality_type = locality_type,
-                              cultural_periods = cultural_periods,
-                              technocomplexes = technocomplexes,
+                              cultural_period = cultural_period,
+                              technocomplex = technocomplex,
                               category = category,
                               age_min = age_min,
                               age_max = age_max,
@@ -620,15 +620,15 @@ road_get_symbolic_artifacts <- function(
 #' Run \code{road_list_argument_values("locality_type")} to display possible values.
 #' The argument \code{locality_type} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
-#' @param cultural_periods specifies the main cultural epoch(s) and includes the 
+#' @param cultural_period specifies the main cultural epoch(s) and includes the 
 #' Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age 
-#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
-#' to display possible values. The argument \code{cultural_periods} is a string 
+#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_period")} 
+#' to display possible values. The argument \code{cultural_period} is a string 
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplexes specifies an archaeological culture or named stone tool 
+#' @param technocomplex specifies an archaeological culture or named stone tool 
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
-#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
-#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
+#' Run \code{road_list_argument_values("technocomplex")} to display possible values.
+#' The argument \code{technocomplex} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param category specifies the assemblage category with the classes 
 #' human remains, raw material, typology, technology, function, organic tools, 
@@ -667,8 +667,8 @@ road_get_feature <- function(
     subcontinent = NULL,
     country = NULL,
     locality_type = NULL,
-    cultural_periods = NULL,
-    technocomplexes = NULL,
+    cultural_period = NULL,
+    technocomplex = NULL,
     category = NULL,
     age_min = NULL,
     age_max = NULL,
@@ -681,8 +681,8 @@ road_get_feature <- function(
                                                                 subcontinent = subcontinent, 
                                                                 country = country, 
                                                                 locality_type = locality_type, 
-                                                                cultural_periods = cultural_periods, 
-                                                                technocomplexes = technocomplexes, 
+                                                                cultural_period = cultural_period, 
+                                                                technocomplex = technocomplex, 
                                                                 category = category, 
                                                                 age_min = age_min, 
                                                                 age_max = age_max)
@@ -714,8 +714,8 @@ road_get_feature <- function(
                               subcontinent = subcontinent,
                               country = country,
                               locality_type = locality_type,
-                              cultural_periods = cultural_periods,
-                              technocomplexes = technocomplexes,
+                              cultural_period = cultural_period,
+                              technocomplex = technocomplex,
                               category = category,
                               age_min = age_min,
                               age_max = age_max,
@@ -754,15 +754,15 @@ road_get_feature <- function(
 #' Run \code{road_list_argument_values("locality_type")} to display possible values.
 #' The argument \code{locality_type} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
-#' @param cultural_periods specifies the main cultural epoch(s) and includes the 
+#' @param cultural_period specifies the main cultural epoch(s) and includes the 
 #' Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age 
-#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
-#' to display possible values. The argument \code{cultural_periods} is a string 
+#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_period")} 
+#' to display possible values. The argument \code{cultural_period} is a string 
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplexes specifies an archaeological culture or named stone tool 
+#' @param technocomplex specifies an archaeological culture or named stone tool 
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
-#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
-#' The argument \code{technocomplexes} is a string (one item) or vector of strings 
+#' Run \code{road_list_argument_values("technocomplex")} to display possible values.
+#' The argument \code{technocomplex} is a string (one item) or vector of strings 
 #' (one or more items); defaults to NULL.
 #' @param category specifies the assemblage category with the classes 
 #' human remains, raw material, typology, technology, function, organic tools, 
@@ -815,8 +815,8 @@ road_get_miscellaneous_finds <- function(
     subcontinent = NULL,
     country = NULL,
     locality_type = NULL,
-    cultural_periods = NULL,
-    technocomplexes = NULL,
+    cultural_period = NULL,
+    technocomplex = NULL,
     category = NULL,
     age_min = NULL,
     age_max = NULL,
@@ -829,8 +829,8 @@ road_get_miscellaneous_finds <- function(
                                                                 subcontinent = subcontinent, 
                                                                 country = country, 
                                                                 locality_type = locality_type, 
-                                                                cultural_periods = cultural_periods, 
-                                                                technocomplexes = technocomplexes, 
+                                                                cultural_period = cultural_period, 
+                                                                technocomplex = technocomplex, 
                                                                 category = category, 
                                                                 age_min = age_min, 
                                                                 age_max = age_max)
@@ -864,8 +864,8 @@ road_get_miscellaneous_finds <- function(
                               subcontinent = subcontinent,
                               country = country,
                               locality_type = locality_type,
-                              cultural_periods = cultural_periods,
-                              technocomplexes = technocomplexes,
+                              cultural_period = cultural_period,
+                              technocomplex = technocomplex,
                               category = category,
                               age_min = age_min,
                               age_max = age_max,

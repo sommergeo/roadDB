@@ -28,15 +28,15 @@
 # Run \code{road_list_argument_values("locality_type")} to display possible values.
 # The argument \code{locality_type} is a string (one item) or vector of strings
 # (one or more items); defaults to NULL.
-# @param cultural_periods specifies the main cultural epoch(s) and includes the
+# @param cultural_period specifies the main cultural epoch(s) and includes the
 # Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age
-# (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")}
-# to display possible values. The argument \code{cultural_periods} is a string
+# (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_period")}
+# to display possible values. The argument \code{cultural_period} is a string
 # (one item) or vector of strings (one or more items); defaults to NULL.
-# @param technocomplexes specifies an archaeological culture or named stone tool
+# @param technocomplex specifies an archaeological culture or named stone tool
 # industry (e.g. Oldowan, Acheulean, Mousterian).
-# Run \code{road_list_argument_values("technocomplexes")} to display possible values.
-# The argument \code{technocomplexes} is a string (one item) or vector of strings
+# Run \code{road_list_argument_values("technocomplex")} to display possible values.
+# The argument \code{technocomplex} is a string (one item) or vector of strings
 # (one or more items); defaults to NULL.
 #
 # @details
@@ -47,21 +47,21 @@
 # @return \code{continent}, \code{subcontinent}, \code{country}: The attributes specify the geopolitical information of the locality.
 # @return \code{locality_type}: The attribute specifies the type of locality (e.g. cave, rockshelter, open air).
 # @return \code{coord_x}, \code{coord_y}: The attributes specify the geographic coordinates (longitude and latitude) of the locality.
-# @return \code{cultural_periods}: The attribute specifies the cultural epoch(s) associated with the locality. If there are multiple, they are returned in a comma separated list.
-# @return \code{technocomplexes}: The attribute specifies the archaeological culture or named stone tool industry associated with the locality. If there are multiple, they are returned in a comma separated list.
+# @return \code{cultural_period}: The attribute specifies the cultural epoch(s) associated with the locality. If there are multiple, they are returned in a comma separated list.
+# @return \code{technocomplex}: The attribute specifies the archaeological culture or named stone tool industry associated with the locality. If there are multiple, they are returned in a comma separated list.
 #
 # @examples
 # df <- road_get_localities_internal(continent = "Europe", country = c("Germany"),
 #                     locality_type = c("basin", "quarry"))
 # df <- road_get_localities_internal(country =
-#                 c("Germany", "France"), cultural_periods = "Epipaleolithic")
+#                 c("Germany", "France"), cultural_period = "Epipaleolithic")
 road_get_localities_internal <- function(
     continent = NULL,
     subcontinent = NULL,
     country = NULL,
     locality_type = NULL,
-    cultural_periods = NULL,
-    technocomplexes = NULL
+    cultural_period = NULL,
+    technocomplex = NULL
 )
 {
   # select fields
@@ -73,8 +73,8 @@ road_get_localities_internal <- function(
     paste0("locality.type AS ", cm_locality_type),
     paste0("locality.x AS ", cm_locality_x),
     paste0("locality.y AS ", cm_locality_y),
-    paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.cultural_period, ', ') AS ", cm_cultural_periods),
-    paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.technocomplex, ', ') AS ", cm_technocomplexes)
+    paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.cultural_period, ', ') AS ", cm_cultural_period),
+    paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.technocomplex, ', ') AS ", cm_technocomplex)
   )
   
   # order by
@@ -100,13 +100,13 @@ road_get_localities_internal <- function(
     parameter_to_query("AND geopolitical_units.continent_region IN (", subcontinent, ")"),
     parameter_to_query("AND locality.country IN (", country, ")"),
     parameter_to_query("AND string_to_array(locality.type, ', ') && array[", locality_type, "]"),
-    parameter_to_query("AND archaeological_stratigraphy.cultural_period IN (", cultural_periods, ")"),
-    parameter_to_query("AND archaeological_stratigraphy.technocomplex IN (", technocomplexes, ")"),
+    parameter_to_query("AND archaeological_stratigraphy.cultural_period IN (", cultural_period, ")"),
+    parameter_to_query("AND archaeological_stratigraphy.technocomplex IN (", technocomplex, ")"),
     # parameter_to_query(
     #   "AND locality.idlocality IN
     #     (SELECT DISTINCT locality_idlocality FROM archaeological_layer 
     #     LEFT JOIN archaeological_stratigraphy ON archaeological_layer.archstratigraphy_idarchstrat = archaeological_stratigraphy.idarchstrat 
-    #     WHERE archaeological_stratigraphy.cultural_period IN (", cultural_periods, "))"
+    #     WHERE archaeological_stratigraphy.cultural_period IN (", cultural_period, "))"
     # ),
     "GROUP BY locality.idlocality, geopolitical_units.continent, geopolitical_units.continent_region, locality.country, locality.type, locality.x, locality.y",
     query_order_by
@@ -119,8 +119,8 @@ road_get_localities_internal <- function(
                               subcontinent = subcontinent,
                               country = country,
                               locality_type = locality_type,
-                              cultural_periods = cultural_periods,
-                              technocomplexes = technocomplexes)
+                              cultural_period = cultural_period,
+                              technocomplex = technocomplex)
 
   return(data)
 }
@@ -156,15 +156,15 @@ road_get_localities_internal <- function(
 #' Run \code{road_list_argument_values("locality_type")} to display possible values.
 #' The argument \code{locality_type} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param cultural_periods specifies the main cultural epoch(s) and includes the
+#' @param cultural_period specifies the main cultural epoch(s) and includes the
 #' Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age
-#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")}
-#' to display possible values. The argument \code{cultural_periods} is a string
+#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_period")}
+#' to display possible values. The argument \code{cultural_period} is a string
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplexes specifies an archaeological culture or named stone tool
+#' @param technocomplex specifies an archaeological culture or named stone tool
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
-#' Run \code{road_list_argument_values("technocomplexes")} to display possible values.
-#' The argument \code{technocomplexes} is a string (one item) or vector of strings
+#' Run \code{road_list_argument_values("technocomplex")} to display possible values.
+#' The argument \code{technocomplex} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
 #' @param category specifies the assemblage category with the classes
 #' human remains, raw material, typology, technology, function, organic tools,
@@ -181,8 +181,8 @@ road_get_localities_internal <- function(
 #' @return \code{locality_type}: The attribute specifies the type of locality (e.g. cave, rockshelter, open air).
 #' @return \code{coord_x}, \code{coord_y}: The attributes specify the geographic coordinates (longitude and latitude) of the locality.
 #' @return \code{category}: Specifies the category of the findings associated with the locality. If there are multiple, they are returned in a comma separated list.
-#' @return \code{cultural_periods}: Specifies the cultural epoch(s) associated with the locality. If there are multiple, they are returned in a comma separated list.
-#' @return \code{technocomplexes}: Specifies the archaeological culture or named stone tool industry associated with the locality. If there are multiple, they are returned in a comma separated list.
+#' @return \code{cultural_period}: Specifies the cultural epoch(s) associated with the locality. If there are multiple, they are returned in a comma separated list.
+#' @return \code{technocomplex}: Specifies the archaeological culture or named stone tool industry associated with the locality. If there are multiple, they are returned in a comma separated list.
 #' @return \code{subset_min_age}, \code{subset_max_age}: The attributes specify the minimum and maximum age of all assemblages associated with the locality that match the search criteria.
 #' @return \code{locality_min_age}, \code{locality_max_age}: The attributes specify the overall minimum and maximum age of all assemblages associated with this locality.
 #'
@@ -195,14 +195,14 @@ road_get_localities_internal <- function(
 #' df <- road_get_localities(continent = "Europe", country = c("Germany"),
 #'                     locality_type = c("basin", "quarry"))
 #' df <- road_get_localities(country = c("Germany", "France"),
-#'                     cultural_periods = "Epipaleolithic")
+#'                     cultural_period = "Epipaleolithic")
 road_get_localities <- function(
     continent = NULL,
     subcontinent = NULL,
     country = NULL,
     locality_type = NULL,
-    cultural_periods = NULL,
-    technocomplexes = NULL,
+    cultural_period = NULL,
+    technocomplex = NULL,
     category = NULL,
     age_min = NULL,
     age_max = NULL
@@ -212,8 +212,8 @@ road_get_localities <- function(
                                           subcontinent = subcontinent,
                                           country = country,
                                           locality_type = locality_type,
-                                          cultural_periods = cultural_periods,
-                                          technocomplexes = technocomplexes,
+                                          cultural_period = cultural_period,
+                                          technocomplex = technocomplex,
                                           category = category,
                                           age_min = age_min,
                                           age_max = age_max)
@@ -223,8 +223,8 @@ road_get_localities <- function(
                                                 cm_geopolitical_units_continent_region,
                                                 cm_locality_country,
                                                 cm_locality_type, cm_locality_x,
-                                                cm_locality_y, cm_cultural_periods,
-                                                cm_technocomplexes, cm_assemblages_category,
+                                                cm_locality_y, cm_cultural_period,
+                                                cm_technocomplex, cm_assemblages_category,
                                                 cm_geological_stratigraphy_age_min,
                                                 cm_geological_stratigraphy_age_max)))
 
@@ -256,8 +256,8 @@ road_get_localities <- function(
                                                   cm_geopolitical_units_continent_region,
                                                   cm_locality_country,
                                                   cm_locality_type, cm_locality_x,
-                                                  cm_locality_y, cm_cultural_periods,
-                                                  cm_technocomplexes, cm_assemblages_category,
+                                                  cm_locality_y, cm_cultural_period,
+                                                  cm_technocomplex, cm_assemblages_category,
                                                   cm_geological_stratigraphy_age_min,
                                                   cm_geological_stratigraphy_age_max)))
 
@@ -268,8 +268,8 @@ road_get_localities <- function(
     #                                                 cm_locality_type, cm_locality_x,
     #                                                 cm_locality_y)) %>%
     #                 summarise(category = well_formed_string_to_string_without_duplicates(paste0(category, collapse = ", ")),
-    #                 cultural_periods = well_formed_string_to_string_without_duplicates(paste0(cultural_periods, collapse = ", ")),
-    #                 technocomplexes = well_formed_string_to_string_without_duplicates(paste0(technocomplexes, collapse = ", ")),
+    #                 cultural_period = well_formed_string_to_string_without_duplicates(paste0(cultural_period, collapse = ", ")),
+    #                 technocomplex = well_formed_string_to_string_without_duplicates(paste0(technocomplex, collapse = ", ")),
     #                 subset_min_age = min(age_min),
     #                 subset_max_age = max(age_max))
 
@@ -277,8 +277,8 @@ road_get_localities <- function(
     data_tmp <- assemblages_selected %>% dplyr::group_by(.data$locality_id, .data$continent, .data$subcontinent,
                                                   .data$country, .data$locality_type, .data$coord_x, .data$coord_y,
                                                   ) %>% dplyr::summarise(category = well_formed_string_to_string_without_duplicates(paste0(category, collapse = ", ")),
-                                                                  cultural_periods = well_formed_string_to_string_without_duplicates(paste0(cultural_periods, collapse = ", ")),
-                                                                  technocomplexes = well_formed_string_to_string_without_duplicates(paste0(technocomplexes, collapse = ", ")),
+                                                                  cultural_period = well_formed_string_to_string_without_duplicates(paste0(cultural_period, collapse = ", ")),
+                                                                  technocomplex = well_formed_string_to_string_without_duplicates(paste0(technocomplex, collapse = ", ")),
                                                                   subset_min_age = min(age_min),
                                                                   subset_max_age = max(age_max))
 
@@ -286,8 +286,8 @@ road_get_localities <- function(
     #                                .data$subcontinent,
     #                                .data$country, .data$locality_type, .data$coord_x, .data$coord_y
     #                                 ), category = well_formed_string_to_string_without_duplicates(paste0(.data$category, collapse = ", ")),
-    #                                    cultural_periods = well_formed_string_to_string_without_duplicates(paste0(.data$cultural_periods, collapse = ", ")),
-    #                                    technocomplexes = well_formed_string_to_string_without_duplicates(paste0(.data$technocomplexes, collapse = ", ")),
+    #                                    cultural_period = well_formed_string_to_string_without_duplicates(paste0(.data$cultural_period, collapse = ", ")),
+    #                                    technocomplex = well_formed_string_to_string_without_duplicates(paste0(.data$technocomplex, collapse = ", ")),
     #                                    subset_min_age = min(.data$age_min),
     #                                    subset_max_age = max(.data$age_max))
     #
@@ -304,7 +304,7 @@ road_get_localities <- function(
                                     cm_geopolitical_units_continent_region, 
                                     cm_locality_country,
                                     cm_locality_type, cm_locality_x, 
-                                    cm_locality_y, cm_cultural_periods,
-                                    cm_technocomplexes, cm_assemblages_category
+                                    cm_locality_y, cm_cultural_period,
+                                    cm_technocomplex, cm_assemblages_category
                                     ))))
 }

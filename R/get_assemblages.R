@@ -31,12 +31,12 @@
 #' Run \code{road_list_argument_values("locality_type")} to display possible values.
 #' The argument \code{locality_type} is a string (one item) or vector of strings
 #' (one or more items); defaults to NULL.
-#' @param cultural_periods specifies the main cultural epoch(s) and includes the
+#' @param cultural_period specifies the main cultural epoch(s) and includes the
 #' Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age
-#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")}
-#' to display possible values. The argument \code{cultural_periods} is a string
+#' (Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_period")}
+#' to display possible values. The argument \code{cultural_period} is a string
 #' (one item) or vector of strings (one or more items); defaults to NULL.
-#' @param technocomplexes specifies an archaeological culture or named stone tool
+#' @param technocomplex specifies an archaeological culture or named stone tool
 #' industry (e.g. Oldowan, Acheulean, Mousterian).
 #' Run \code{road_list_argument_values("technocomplex")} to display possible values.
 #' The argument \code{technocomplex} is a string (one item) or vector of strings
@@ -66,8 +66,8 @@ road_get_assemblages <- function(
     subcontinent = NULL,
     country = NULL,
     locality_type = NULL,
-    cultural_periods = NULL,
-    technocomplexes = NULL, 
+    cultural_period = NULL,
+    technocomplex = NULL, 
     category = NULL,
     age_min = NULL,
     age_max = NULL
@@ -88,8 +88,8 @@ road_get_assemblages <- function(
                                     subcontinent = subcontinent,
                                     country = country,
                                     locality_type = locality_type,
-                                    cultural_periods = cultural_periods,
-                                    technocomplexes = technocomplexes)
+                                    cultural_period = cultural_period,
+                                    technocomplex = technocomplex)
 
   query_localities <- paste(
     sapply(localities[cm_locality_idlocality], function(x) paste0("'", x, "'")),
@@ -106,8 +106,8 @@ road_get_assemblages <- function(
     paste0("MAX(geological_stratigraphy.age_max) AS ", cm_geological_stratigraphy_age_max),
     paste0("STRING_AGG(DISTINCT assemblage_in_geolayer.geolayer_name, ', ') AS ", cm_assemblage_in_geolayer_geolayer_name),
     paste0("STRING_AGG(DISTINCT assemblage_in_archlayer.archlayer_name, ', ') AS ", cm_assemblage_in_archlayer_archlayer_name),
-    paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.cultural_period, ', ') AS ", cm_cultural_periods),
-    paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.technocomplex, ', ') AS ", cm_technocomplexes)
+    paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.cultural_period, ', ') AS ", cm_cultural_period),
+    paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.technocomplex, ', ') AS ", cm_technocomplex)
   )
 
   # combine query parts
@@ -165,7 +165,7 @@ road_get_assemblages <- function(
           AND archaeological_layer.name = assemblage_in_archlayer.archlayer_name
         LEFT JOIN archaeological_stratigraphy ON
           archaeological_layer.archstratigraphy_idarchstrat = archaeological_stratigraphy.idarchstrat
-        WHERE archaeological_stratigraphy.cultural_period IN (", cultural_periods, "))"
+        WHERE archaeological_stratigraphy.cultural_period IN (", cultural_period, "))"
     ),
     parameter_to_query(
       "AND (assemblage.locality_idlocality, assemblage.idassemblage) IN (
@@ -176,7 +176,7 @@ road_get_assemblages <- function(
           AND archaeological_layer.name = assemblage_in_archlayer.archlayer_name
         LEFT JOIN archaeological_stratigraphy ON
           archaeological_layer.archstratigraphy_idarchstrat = archaeological_stratigraphy.idarchstrat
-        WHERE archaeological_stratigraphy.technocomplex IN (", technocomplexes, "))"
+        WHERE archaeological_stratigraphy.technocomplex IN (", technocomplex, "))"
     ),
     # GROUP and ORDER
     "GROUP BY assemblage.locality_idlocality, assemblage.idassemblage, assemblage.name, 
@@ -193,8 +193,8 @@ road_get_assemblages <- function(
                               subcontinent = subcontinent,
                               country = country,
                               locality_type = locality_type,
-                              cultural_periods = cultural_periods,
-                              technocomplexes = technocomplexes,
+                              cultural_period = cultural_period,
+                              technocomplex = technocomplex,
                               category = category,
                               age_min = age_min,
                               age_max = age_max)

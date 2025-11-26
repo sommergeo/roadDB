@@ -9,8 +9,8 @@ road_get_localities(
   subcontinent = NULL,
   country = NULL,
   locality_type = NULL,
-  cultural_periods = NULL,
-  technocomplexes = NULL,
+  cultural_period = NULL,
+  technocomplex = NULL,
   category = NULL,
   age_min = NULL,
   age_max = NULL
@@ -38,16 +38,16 @@ Run \code{road_list_argument_values("locality_type")} to display possible values
 The argument \code{locality_type} is a string (one item) or vector of strings
 (one or more items); defaults to NULL.}
 
-\item{cultural_periods}{specifies the main cultural epoch(s) and includes the
+\item{cultural_period}{specifies the main cultural epoch(s) and includes the
 Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age
-(Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")}
-to display possible values. The argument \code{cultural_periods} is a string
+(Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_period")}
+to display possible values. The argument \code{cultural_period} is a string
 (one item) or vector of strings (one or more items); defaults to NULL.}
 
-\item{technocomplexes}{specifies an archaeological culture or named stone tool
+\item{technocomplex}{specifies an archaeological culture or named stone tool
 industry (e.g. Oldowan, Acheulean, Mousterian).
-Run \code{road_list_argument_values("technocomplexes")} to display possible values.
-The argument \code{technocomplexes} is a string (one item) or vector of strings
+Run \code{road_list_argument_values("technocomplex")} to display possible values.
+The argument \code{technocomplex} is a string (one item) or vector of strings
 (one or more items); defaults to NULL.}
 
 \item{category}{specifies the assemblage category with the classes
@@ -73,9 +73,9 @@ A data frame with location information. Rows represent individual locations, col
 
 \code{category}: Specifies the category of the findings associated with the locality. If there are multiple, they are returned in a comma separated list.
 
-\code{cultural_periods}: Specifies the cultural epoch(s) associated with the locality. If there are multiple, they are returned in a comma separated list.
+\code{cultural_period}: Specifies the cultural epoch(s) associated with the locality. If there are multiple, they are returned in a comma separated list.
 
-\code{technocomplexes}: Specifies the archaeological culture or named stone tool industry associated with the locality. If there are multiple, they are returned in a comma separated list.
+\code{technocomplex}: Specifies the archaeological culture or named stone tool industry associated with the locality. If there are multiple, they are returned in a comma separated list.
 
 \code{subset_min_age}, \code{subset_max_age}: The attributes specify the minimum and maximum age of all assemblages associated with the locality that match the search criteria.
 
@@ -99,5 +99,5 @@ omitted or set to NULL when not used.
 df <- road_get_localities(continent = "Europe", country = c("Germany"),
                     locality_type = c("basin", "quarry"))
 df <- road_get_localities(country = c("Germany", "France"),
-                    cultural_periods = "Epipaleolithic")
+                    cultural_period = "Epipaleolithic")
 }

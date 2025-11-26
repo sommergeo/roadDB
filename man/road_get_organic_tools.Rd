@@ -9,8 +9,8 @@ road_get_organic_tools(
   subcontinent = NULL,
   country = NULL,
   locality_type = NULL,
-  cultural_periods = NULL,
-  technocomplexes = NULL,
+  cultural_period = NULL,
+  technocomplex = NULL,
   category = NULL,
   age_min = NULL,
   age_max = NULL,
@@ -40,16 +40,16 @@ Run \code{road_list_argument_values("locality_type")} to display possible values
 The argument \code{locality_type} is a string (one item) or vector of strings 
 (one or more items); defaults to NULL.}
 
-\item{cultural_periods}{specifies the main cultural epoch(s) and includes the 
+\item{cultural_period}{specifies the main cultural epoch(s) and includes the 
 Eurasian Paleolithic (Lower, Middle, Upper, Epi-) and the African Stone Age 
-(Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_periods")} 
-to display possible values. The argument \code{cultural_periods} is a string 
+(Earlier, Middle, Later). Run \code{road_list_argument_values("cultural_period")} 
+to display possible values. The argument \code{cultural_period} is a string 
 (one item) or vector of strings (one or more items); defaults to NULL.}
 
-\item{technocomplexes}{specifies an archaeological culture or named stone tool 
+\item{technocomplex}{specifies an archaeological culture or named stone tool 
 industry (e.g. Oldowan, Acheulean, Mousterian).
-Run \code{road_list_argument_values("technocomplexes")} to display possible values.
-The argument \code{technocomplexes} is a string (one item) or vector of strings 
+Run \code{road_list_argument_values("technocomplex")} to display possible values.
+The argument \code{technocomplex} is a string (one item) or vector of strings 
 (one or more items); defaults to NULL.}
 
 \item{category}{specifies the assemblage category with the classes 
