@@ -254,6 +254,7 @@ road_get_dates <- function (assemblages = NULL)
 {
   localities <- road_get_localities_internal()
 
+  
   if (is.null(assemblages))
   {
     assemblage_condition <- ''

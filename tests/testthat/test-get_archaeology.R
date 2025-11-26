@@ -113,7 +113,7 @@ test_that("road_get_organic_tools()", {
   expect_equal(class(result_all_columns$age_max), "integer")
   expect_equal(class(result_all_columns$cultural_period), "character")
   expect_equal(class(result_all_columns$technocomplex), "character")
-  expect_equal(class(result_all_columns$organic_tools_interpretation), "character")
+  expect_equal(class(result_all_columns$organic_tool_interpretation), "character")
   expect_equal(class(result_all_columns$organic_raw_material), "character")
   expect_equal(class(result_all_columns$number), "integer")
   expect_equal(class(result_all_columns$comments), "character")
@@ -122,10 +122,10 @@ test_that("road_get_organic_tools()", {
   expect_s3_class(result_all_columns, "data.frame")
   expect_equal(ncol(result_all_columns), 21)
 
-  result_filter1 <- road_get_organic_tools(organic_tools_interpretation = "abrader/polisher")
+  result_filter1 <- road_get_organic_tools(organic_tool_interpretation = "abrader/polisher")
   expect_true(
-    all(grepl("abrader/polisher", result_filter1$organic_tools_interpretation, ignore.case = TRUE)),
-    info = "Some values in the organic_tools_interpretation column do not contain the string 'abrader/polisher'"
+    all(grepl("abrader/polisher", result_filter1$organic_tool_interpretation, ignore.case = TRUE)),
+    info = "Some values in the organic_tool_interpretation column do not contain the string 'abrader/polisher'"
   )
   # Check if there is at least one row in the result
   expect_true(
@@ -154,7 +154,7 @@ test_that("road_get_symbolic_artifacts()", {
   expect_equal(class(result_all_columns$age_max), "integer")
   expect_equal(class(result_all_columns$cultural_period), "character")
   expect_equal(class(result_all_columns$technocomplex), "character")
-  expect_equal(class(result_all_columns$symbolic_artifacts_interpretation), "character")
+  expect_equal(class(result_all_columns$symbolic_artifact_interpretation), "character")
   expect_equal(class(result_all_columns$symbolic_artifacts_category), "character")
   expect_equal(class(result_all_columns$symbolic_artifacts_material), "character")
   expect_equal(class(result_all_columns$symbolic_artifacts_raw_material_source), "character")
@@ -164,10 +164,10 @@ test_that("road_get_symbolic_artifacts()", {
   expect_s3_class(result_all_columns, "data.frame")
   expect_equal(ncol(result_all_columns), 22)
 
-  result_filter1 <- road_get_symbolic_artifacts(symbolic_artifacts_interpretation = "abstract")
+  result_filter1 <- road_get_symbolic_artifacts(symbolic_artifact_interpretation = "abstract")
   expect_true(
-    all(grepl("abstract", result_filter1$symbolic_artifacts_interpretation, ignore.case = TRUE)),
-    info = "Some values in the symbolic_artifacts_interpretation column do not contain the string 'abstract'"
+    all(grepl("abstract", result_filter1$symbolic_artifact_interpretation, ignore.case = TRUE)),
+    info = "Some values in the symbolic_artifact_interpretation column do not contain the string 'abstract'"
   )
   # Check if there is at least one row in the result
   expect_true(

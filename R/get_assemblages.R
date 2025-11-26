@@ -120,7 +120,7 @@ road_get_assemblages <- function(
     "WHEN (assemblage.locality_idlocality, assemblage.idassemblage) IN (SELECT assemblage_idlocality, assemblage_idassemblage FROM humanremains) 
        THEN true",
     "ELSE false",
-    "END AS humanremains,",
+    "END AS human_remains,",
     "CASE",
     "WHEN category LIKE '%paleofauna%' THEN true",
     "ELSE false",
@@ -132,7 +132,7 @@ road_get_assemblages <- function(
     "CASE",
     "WHEN category LIKE '%plant remains%' THEN true",
     "ELSE false",
-    "END AS plantremains",
+    "END AS plant_remains",
     # FROM
     "FROM assemblage",
     "LEFT JOIN assemblage_in_geolayer ON",

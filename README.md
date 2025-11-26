@@ -55,17 +55,11 @@ The following arguments are optional and can be used with the corresponding `roa
 
 | Argument                            | Type      | ROAD table / attribute                               | Search type | Example(s)                                    |
 | ----------------------------------- | --------- | ---------------------------------------------------- | ----------- | --------------------------------------------- |
-| `dating_methods`                    | character | assemblage_age / dating_method,                      | exact       | "U series (uranium-thorium) dating",          |
-|                                     |           | archaeological_layer_age / dating_method,            | exact       | "ESR (electron spin resonance) dating",       |
-|                                     |           | geological_layer_age / dating_method                 | exact       | "14C (radiocarbon) dating"                    |
-| `material_dated`                    | character | assemblage_age / material_dated,                     | exact       |  "flint", "limestone", "tephra"               |       
-|                                     |           | archaeological_layer_age / material_dated,           | exact       |  "lithic burnt",                              |
-|                                     |           | geological_layer_age / material_dated                | exact       |  "bone"                                       |
 | `tool_list`                         | character | typology / tool_list                                 | contains    |  "core 29, bladelet 136, blade 1090"          |  
 | `raw_material_list`                 | character | raw_material / raw_material_list                     | contains    |  "ironstone banded"                           |
 | `transport_distance`                | character | raw_material / transport_distance                    | exact       |  "regional (6-20 km)"                         |
-| `organic_tools_interpretation`      | character | organic_tools / interpretation                       | contains    |  "harpoon", "worked", "retoucher"             |
-| `symbolic_artifacts_interpretation` | character | symbolic_artifacts / interpretation                  | contains    |  "anthropomorphic"                            |
+| `organic_tool_interpretation`       | character | organic_tools / interpretation                       | contains    |  "harpoon", "worked", "retoucher"             |
+| `symbolic_artifact_interpretation`  | character | symbolic_artifacts / interpretation                  | contains    |  "anthropomorphic"                            |
 | `feature_interpretation`            | character | feature / interpretation                             | exact       |  "stone construction"                         |
 | `miscellaneous_finds_material`      | character | miscellaneous_finds / material                       | exact       |  "ostrich egg shell", "metal"                 |
 | `human_genus`                       | character | publication_desc_humanremains / genus                | exact       |  "Homo", "Paranthropus"                       |
@@ -92,14 +86,14 @@ The following table provides an overview of return attributes.
 | `category`                                |  `road_get_*`                                | character            |
 | `cultural_period `                        |  `road_get_*`                                | character            |
 | `technocomplex`                           |  `road_get_*`                                | character            |
-| `subset_min_age`                          |  `road_get_localities`                       | number               |
-| `subset_max_age`                          |  `road_get_localities`                       | number               |
-| `locality_min_age`                        |  `road_get_localities`                       | number               |
-| `locality_max_age`                        |  `road_get_localities`                       | number               |
-| `humanremains`                            |  `road_get_assemblages*`                     | boolean              |
-| `archaeology`                             |  `road_get_assemblages*`                     | boolean              |
-| `plantremains`                            |  `road_get_assemblages*`                     | boolean              |
-| `paleofauna`                              |  `road_get_assemblages*`                     | boolean              |
+| `subset_age_min`                          |  `road_get_localities`                       | number               |
+| `subset_age_max`                          |  `road_get_localities`                       | number               |
+| `locality_age_min`                        |  `road_get_localities`                       | number               |
+| `locality_age_max`                        |  `road_get_localities`                       | number               |
+| `human_remains`                           |  `road_get_assemblages`                      | boolean              |
+| `archaeology`                             |  `road_get_assemblages`                      | boolean              |
+| `plant_remains`                           |  `road_get_assemblages`                      | boolean              |
+| `paleofauna`                              |  `road_get_assemblages`                      | boolean              |
 | `min_age`                                 |  `road_get_*` (except `road_get_localities`) | number               |
 | `max_age`                                 |  `road_get_*` (except `road_get_localities`) | number               |
 | `assemblage_name`                         |  `road_get_*` (except `road_get_localities`) | character            |
@@ -110,11 +104,11 @@ The following table provides an overview of return attributes.
 | `raw_material_list`                       |  `road_get_lithic_raw_material`              | character            |
 | `transport_distance`                      |  `road_get_lithic_raw_material`              | character            |
 | `percentage`                              |  `road_get_lithic_raw_material`              | character            |
-| `organic_tools_interpretation`            |  `road_get_organic_tools`                    | character            |
+| `organic_tool_interpretation`             |  `road_get_organic_tools`                    | character            |
 | `organic_raw_material`                    |  `road_get_organic_tools`                    | character            |
 | `organic_tools_technology`                |  `road_get_organic_tools`                    | character            |
 | `number`                                  |  `road_get_organic_tools`                    | character            |
-| `symbolic_artifacts_interpretation`       |  `road_get_symbolic_artifacts`               | character            |
+| `symbolic_artifact_interpretation`        |  `road_get_symbolic_artifacts`               | character            |
 | `symbolic_artifacts_category`             |  `road_get_symbolic_artifacts`               | character            |
 | `symbolic_artifacts_material`             |  `road_get_symbolic_artifacts`               | character            |
 | `symbolic_artifacts_raw_material_source`  |  `road_get_symbolic_artifacts`               | character            |

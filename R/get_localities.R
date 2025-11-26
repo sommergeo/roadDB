@@ -183,8 +183,8 @@ road_get_localities_internal <- function(
 #' @return \code{category}: Specifies the category of the findings associated with the locality. If there are multiple, they are returned in a comma separated list.
 #' @return \code{cultural_period}: Specifies the cultural epoch(s) associated with the locality. If there are multiple, they are returned in a comma separated list.
 #' @return \code{technocomplex}: Specifies the archaeological culture or named stone tool industry associated with the locality. If there are multiple, they are returned in a comma separated list.
-#' @return \code{subset_min_age}, \code{subset_max_age}: The attributes specify the minimum and maximum age of all assemblages associated with the locality that match the search criteria.
-#' @return \code{locality_min_age}, \code{locality_max_age}: The attributes specify the overall minimum and maximum age of all assemblages associated with this locality.
+#' @return \code{subset_age_min}, \code{subset_age_max}: The attributes specify the minimum and maximum age of all assemblages associated with the locality that match the search criteria.
+#' @return \code{locality_age_min}, \code{locality_age_max}: The attributes specify the overall minimum and maximum age of all assemblages associated with this locality.
 #'
 #' @export
 #'
@@ -244,11 +244,11 @@ road_get_localities <- function(
     #                                                      cm_geological_stratigraphy_age_min,
     #                                                      cm_geological_stratigraphy_age_max))
 
-    #ages_min_max <- assemblages_ages %>% group_by(locality_id) %>% summarise(locality_min_age = min(age_min),
-    #                                                           locality_max_age = max(age_max))
+    #ages_min_max <- assemblages_ages %>% group_by(locality_id) %>% summarise(locality_age_min = min(age_min),
+    #                                                           locality_age_max = max(age_max))
 
-    ages_min_max <- dplyr::summarise(dplyr::group_by(assemblages_ages, .data$locality_id), locality_min_age = min(age_min),
-                              locality_max_age = max(age_max))
+    ages_min_max <- dplyr::summarise(dplyr::group_by(assemblages_ages, .data$locality_id), locality_age_min = min(age_min),
+                              locality_age_max = max(age_max))
 
 
     assemblages_selected <- dplyr::select(assemblages, dplyr::all_of(c(cm_locality_idlocality,
@@ -270,8 +270,8 @@ road_get_localities <- function(
     #                 summarise(category = well_formed_string_to_string_without_duplicates(paste0(category, collapse = ", ")),
     #                 cultural_period = well_formed_string_to_string_without_duplicates(paste0(cultural_period, collapse = ", ")),
     #                 technocomplex = well_formed_string_to_string_without_duplicates(paste0(technocomplex, collapse = ", ")),
-    #                 subset_min_age = min(age_min),
-    #                 subset_max_age = max(age_max))
+    #                 subset_age_min = min(age_min),
+    #                 subset_age_max = max(age_max))
 
     .data <- c()
     data_tmp <- assemblages_selected %>% dplyr::group_by(.data$locality_id, .data$continent, .data$subcontinent,
@@ -279,8 +279,8 @@ road_get_localities <- function(
                                                   ) %>% dplyr::summarise(category = well_formed_string_to_string_without_duplicates(paste0(category, collapse = ", ")),
                                                                   cultural_period = well_formed_string_to_string_without_duplicates(paste0(cultural_period, collapse = ", ")),
                                                                   technocomplex = well_formed_string_to_string_without_duplicates(paste0(technocomplex, collapse = ", ")),
-                                                                  subset_min_age = min(age_min),
-                                                                  subset_max_age = max(age_max))
+                                                                  subset_age_min = min(age_min),
+                                                                  subset_age_max = max(age_max))
 
     # data_tmp <- dplyr::summarise(dplyr::group_by(assemblages_selected, .data$locality_id, .data$continent,
     #                                .data$subcontinent,
@@ -288,8 +288,8 @@ road_get_localities <- function(
     #                                 ), category = well_formed_string_to_string_without_duplicates(paste0(.data$category, collapse = ", ")),
     #                                    cultural_period = well_formed_string_to_string_without_duplicates(paste0(.data$cultural_period, collapse = ", ")),
     #                                    technocomplex = well_formed_string_to_string_without_duplicates(paste0(.data$technocomplex, collapse = ", ")),
-    #                                    subset_min_age = min(.data$age_min),
-    #                                    subset_max_age = max(.data$age_max))
+    #                                    subset_age_min = min(.data$age_min),
+    #                                    subset_age_max = max(.data$age_max))
     #
     #category <- subset(data_tmp, select = category)
 

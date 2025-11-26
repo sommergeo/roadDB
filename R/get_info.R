@@ -44,9 +44,9 @@ road_list_argument_values <- function(function_argument)
       ~ "raw_material_list",
     function_argument == "transport_distance"
       ~ "transport_distance",
-    function_argument == "organic_tools_interpretation"
+    function_argument == "organic_tool_interpretation"
       ~ "interpretation",
-    function_argument == "symbolic_artifacts_interpretation"
+    function_argument == "symbolic_artifact_interpretation"
       ~ "interpretation",
     function_argument == "feature_interpretation"
       ~ "interpretation",
@@ -94,9 +94,9 @@ road_list_argument_values <- function(function_argument)
       ~ "raw_material",
     function_argument == "transport_distance"
       ~ "raw_material",
-    function_argument == "organic_tools_interpretation"
+    function_argument == "organic_tool_interpretation"
       ~ "organic_tools",
-    function_argument == "symbolic_artifacts_interpretation"
+    function_argument == "symbolic_artifact_interpretation"
       ~ "symbolic_artifacts",
     function_argument == "feature_interpretation"
       ~ "feature",

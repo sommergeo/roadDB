@@ -46,13 +46,12 @@ cm_tool_list <- "tool_list"
 cm_typology <- "typology"
 cm_raw_material_list <- "raw_material_list"
 cm_transport_distance <- "transport_distance"
-cm_organic_tools_interpretation <- "organic_tools_interpretation"
+cm_organic_tool_interpretation <- "organic_tool_interpretation"
 cm_feature_interpretation <- "feature_interpretation"
 cm_miscellaneous_finds_material <- "miscellaneous_finds_material"
-cm_organic_tools_interpretation <- "organic_tools_interpretation"
 cm_organic_raw_material <- "organic_raw_material"
 cm_organic_tools_technology <- "organic_tools_technology"
-cm_symbolic_artifacts_interpretation <- "symbolic_artifacts_interpretation"
+cm_symbolic_artifact_interpretation <- "symbolic_artifact_interpretation"
 cm_symbolic_artifacts_category <- "symbolic_artifacts_category"
 cm_symbolic_artifacts_material <- "symbolic_artifacts_material"
 cm_symbolic_artifacts_technology <- "symbolic_artifacts_technology"
@@ -384,8 +383,8 @@ print_null_result_message <- function(
     tool_list = NULL,
     raw_material_list = NULL,
     transport_distance = NULL,
-    organic_tools_interpretation = NULL,
-    symbolic_artifacts_interpretation = NULL,
+    organic_tool_interpretation = NULL,
+    symbolic_artifact_interpretation = NULL,
     feature_interpretation = NULL,
     miscellaneous_finds_material = NULL,
     genus = NULL,
@@ -412,8 +411,8 @@ print_null_result_message <- function(
   tool_list_str <- ifelse(is.null(tool_list), "", paste("tool_list = (", toString(tool_list), ")"))
   transport_distance_str <- ifelse(is.null(transport_distance), "", paste("transport_distance = (", toString(transport_distance), ")"))
   raw_material_list_str <- ifelse(is.null(raw_material_list), "", paste("raw_material_list = (", toString(raw_material_list), ")"))
-  organic_tools_interpretation_str <- ifelse(is.null(organic_tools_interpretation), "", paste("organic_tools_interpretation = (", toString(organic_tools_interpretation), ")"))
-  symbolic_artifacts_interpretation_str <- ifelse(is.null(symbolic_artifacts_interpretation), "", paste("symbolic_artifacts_interpretation = (", toString(symbolic_artifacts_interpretation), ")"))
+  organic_tool_interpretation_str <- ifelse(is.null(organic_tool_interpretation), "", paste("organic_tool_interpretation = (", toString(organic_tool_interpretation), ")"))
+  symbolic_artifact_interpretation_str <- ifelse(is.null(symbolic_artifact_interpretation), "", paste("symbolic_artifact_interpretation = (", toString(symbolic_artifact_interpretation), ")"))
   feature_interpretation_str <- ifelse(is.null(feature_interpretation), "", paste("feature_interpretation = (", toString(feature_interpretation), ")"))
   miscellaneous_finds_material_str <- ifelse(is.null(miscellaneous_finds_material), "", paste("miscellaneous_finds_material = (", toString(miscellaneous_finds_material), ")"))
   
@@ -442,8 +441,8 @@ print_null_result_message <- function(
                 tool_list_str,
                 raw_material_list_str,
                 transport_distance_str,
-                organic_tools_interpretation_str,
-                symbolic_artifacts_interpretation_str,
+                organic_tool_interpretation_str,
+                symbolic_artifact_interpretation_str,
                 feature_interpretation_str,
                 miscellaneous_finds_material_str,
                 human_genus_str,

@@ -14,7 +14,7 @@ road_get_organic_tools(
   category = NULL,
   age_min = NULL,
   age_max = NULL,
-  organic_tools_interpretation = NULL,
+  organic_tool_interpretation = NULL,
   assemblages = NULL
 )
 }
@@ -64,10 +64,10 @@ as the baseline. If possible the argument \code{age_min} will be converted to an
 \item{age_max}{specifies the maximum age in years before present, using 1950 CE
 as the baseline. If possible the argument \code{age_max} will be converted to an integer; defaults to NULL.}
 
-\item{organic_tools_interpretation}{specifies interpreted organic tool types 
+\item{organic_tool_interpretation}{specifies interpreted organic tool types 
 (e.g. lance/spear, point, retoucher). 
-Run \code{road_list_argument_values("organic_tools_interpretation")} 
-to display possible values. The argument \code{organic_tools_interpretation} 
+Run \code{road_list_argument_values("organic_tool_interpretation")} 
+to display possible values. The argument \code{organic_tool_interpretation} 
 is a string (one item) or vector of strings; defaults to NULL.}
 
 \item{assemblages}{specifies a data frame necessarily containing columns 
@@ -101,6 +101,6 @@ geographical location, cultural periods, tool interpretation, and assemblages.
 Use the parameters to filter the results or omit them for broader results.
 }
 \examples{
-road_get_organic_tools(continent = c("Europe"), organic_tools_interpretation = "fishhook")
-road_get_organic_tools(continent = "Africa", organic_tools_interpretation = c("fishhook"))
+road_get_organic_tools(continent = c("Europe"), organic_tool_interpretation = "fishhook")
+road_get_organic_tools(continent = "Africa", organic_tool_interpretation = c("fishhook"))
 }

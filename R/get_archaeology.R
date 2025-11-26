@@ -350,10 +350,10 @@ road_get_lithic_raw_material <- function(
 #' locality_id, assemblage_id. It can be  generated as return value of the 
 #' function 'road_get_assemblages'. It can be used instead of the locality 
 #' and assemblage search parameters to filter the results.
-#' @param organic_tools_interpretation specifies interpreted organic tool types 
+#' @param organic_tool_interpretation specifies interpreted organic tool types 
 #' (e.g. lance/spear, point, retoucher). 
-#' Run \code{road_list_argument_values("organic_tools_interpretation")} 
-#' to display possible values. The argument \code{organic_tools_interpretation} 
+#' Run \code{road_list_argument_values("organic_tool_interpretation")} 
+#' to display possible values. The argument \code{organic_tool_interpretation} 
 #' is a string (one item) or vector of strings; defaults to NULL.
 #'
 #' @return Database search result as a data frame with the information about 
@@ -370,8 +370,8 @@ road_get_lithic_raw_material <- function(
 #' @export
 #'
 #' @examples
-#' road_get_organic_tools(continent = c("Europe"), organic_tools_interpretation = "fishhook")
-#' road_get_organic_tools(continent = "Africa", organic_tools_interpretation = c("fishhook"))
+#' road_get_organic_tools(continent = c("Europe"), organic_tool_interpretation = "fishhook")
+#' road_get_organic_tools(continent = "Africa", organic_tool_interpretation = c("fishhook"))
 road_get_organic_tools <- function(
     continent = NULL,
     subcontinent = NULL,
@@ -382,7 +382,7 @@ road_get_organic_tools <- function(
     category = NULL,
     age_min = NULL,
     age_max = NULL,
-    organic_tools_interpretation = NULL,
+    organic_tool_interpretation = NULL,
     assemblages = NULL
 )
 {
@@ -404,7 +404,7 @@ road_get_organic_tools <- function(
   select_fields <- c(
     paste0("assemblage_idlocality AS ", cm_locality_idlocality),
     paste0("assemblage_idassemblage AS ", cm_assemblages_idassemblage),
-    paste0("interpretation AS ", cm_organic_tools_interpretation),
+    paste0("interpretation AS ", cm_organic_tool_interpretation),
     paste0("organic_raw_material AS ", cm_organic_raw_material),
     paste0("technology AS ", cm_organic_tools_technology),
     "number",
@@ -417,7 +417,7 @@ road_get_organic_tools <- function(
     "FROM organic_tools",
     "WHERE",
     assemblage_condition,
-    query_values_in_string("AND ", organic_tools_interpretation, "interpretation")
+    query_values_in_string("AND ", organic_tool_interpretation, "interpretation")
   )
 
   data <- road_run_query(query)
@@ -434,7 +434,7 @@ road_get_organic_tools <- function(
                               category = category,
                               age_min = age_min,
                               age_max = age_max,
-                              organic_tools_interpretation = organic_tools_interpretation)
+                              organic_tool_interpretation = organic_tool_interpretation)
   }
 
   data <- add_locality_columns(data, assemblages = assemblages)
@@ -492,10 +492,10 @@ road_get_organic_tools <- function(
 #' locality_id, assemblage_id. It can be  generated as return value of the 
 #' function 'road_get_assemblages'. It can be used instead of the locality 
 #' and assemblage search parameters to filter the results.
-#' @param symbolic_artifacts_interpretation specifies the interpretation of 
+#' @param symbolic_artifact_interpretation specifies the interpretation of 
 #' symbolic artifacts (e.g. abstract, anthropomorphic, zoomorphic, instrument, 
-#' ornament). Run \code{road_list_argument_values("symbolic_artifacts_interpretation")} 
-#' to display possible values. The argument \code{symbolic_artifacts_interpretation} 
+#' ornament). Run \code{road_list_argument_values("symbolic_artifact_interpretation")} 
+#' to display possible values. The argument \code{symbolic_artifact_interpretation} 
 #' is a string (one item) or vector of strings; defaults to NULL.
 #'
 #' @return Database search result as a data frame with the information about 
@@ -522,8 +522,8 @@ road_get_organic_tools <- function(
 #' @export
 #'
 #' @examples
-#' road_get_symbolic_artifacts(symbolic_artifacts_interpretation = c("instrument"))
-#' road_get_symbolic_artifacts(continent = "Africa", symbolic_artifacts_interpretation = "zoomorphic")
+#' road_get_symbolic_artifacts(symbolic_artifact_interpretation = c("instrument"))
+#' road_get_symbolic_artifacts(continent = "Africa", symbolic_artifact_interpretation = "zoomorphic")
 road_get_symbolic_artifacts <- function(
     continent = NULL,
     subcontinent = NULL,
@@ -534,7 +534,7 @@ road_get_symbolic_artifacts <- function(
     category = NULL,
     age_min = NULL,
     age_max = NULL,
-    symbolic_artifacts_interpretation = NULL,
+    symbolic_artifact_interpretation = NULL,
     assemblages = NULL
 ) {
   # calculate assemblage_condition
@@ -556,7 +556,7 @@ road_get_symbolic_artifacts <- function(
   select_fields <- c(
     paste0("assemblage_idlocality AS ", cm_locality_idlocality),
     paste0("assemblage_idassemblage AS ", cm_assemblages_idassemblage),
-    paste0("interpretation AS ", cm_symbolic_artifacts_interpretation),
+    paste0("interpretation AS ", cm_symbolic_artifact_interpretation),
     paste0("category AS ", cm_symbolic_artifacts_category),
     paste0("material AS ", cm_symbolic_artifacts_material),
     paste0("technology AS ", cm_symbolic_artifacts_technology),
@@ -570,7 +570,7 @@ road_get_symbolic_artifacts <- function(
     "FROM symbolic_artifacts",
     "WHERE",
     assemblage_condition,
-    query_values_in_string("AND ", symbolic_artifacts_interpretation, "interpretation")
+    query_values_in_string("AND ", symbolic_artifact_interpretation, "interpretation")
   )
 
   data <- road_run_query(query)
@@ -587,7 +587,7 @@ road_get_symbolic_artifacts <- function(
                               category = category,
                               age_min = age_min,
                               age_max = age_max,
-                              symbolic_artifacts_interpretation = symbolic_artifacts_interpretation
+                              symbolic_artifact_interpretation = symbolic_artifact_interpretation
     )
   }
 

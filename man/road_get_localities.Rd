@@ -77,9 +77,9 @@ A data frame with location information. Rows represent individual locations, col
 
 \code{technocomplex}: Specifies the archaeological culture or named stone tool industry associated with the locality. If there are multiple, they are returned in a comma separated list.
 
-\code{subset_min_age}, \code{subset_max_age}: The attributes specify the minimum and maximum age of all assemblages associated with the locality that match the search criteria.
+\code{subset_age_min}, \code{subset_age_max}: The attributes specify the minimum and maximum age of all assemblages associated with the locality that match the search criteria.
 
-\code{locality_min_age}, \code{locality_max_age}: The attributes specify the overall minimum and maximum age of all assemblages associated with this locality.
+\code{locality_age_min}, \code{locality_age_max}: The attributes specify the overall minimum and maximum age of all assemblages associated with this locality.
 }
 \description{
 The \strong{\code{road_get_localities}} fetches data of archaeological

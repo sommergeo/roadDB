@@ -14,7 +14,7 @@ road_get_symbolic_artifacts(
   category = NULL,
   age_min = NULL,
   age_max = NULL,
-  symbolic_artifacts_interpretation = NULL,
+  symbolic_artifact_interpretation = NULL,
   assemblages = NULL
 )
 }
@@ -64,10 +64,10 @@ as the baseline. If possible the argument \code{age_min} will be converted to an
 \item{age_max}{specifies the maximum age in years before present, using 1950 CE
 as the baseline. If possible the argument \code{age_max} will be converted to an integer; defaults to NULL.}
 
-\item{symbolic_artifacts_interpretation}{specifies the interpretation of 
+\item{symbolic_artifact_interpretation}{specifies the interpretation of 
 symbolic artifacts (e.g. abstract, anthropomorphic, zoomorphic, instrument, 
-ornament). Run \code{road_list_argument_values("symbolic_artifacts_interpretation")} 
-to display possible values. The argument \code{symbolic_artifacts_interpretation} 
+ornament). Run \code{road_list_argument_values("symbolic_artifact_interpretation")} 
+to display possible values. The argument \code{symbolic_artifact_interpretation} 
 is a string (one item) or vector of strings; defaults to NULL.}
 
 \item{assemblages}{specifies a data frame necessarily containing columns 
@@ -111,6 +111,6 @@ cultural periods, artifact interpretation, and assemblages. Use the parameters
 to filter the results or omit them to retrieve a broader dataset.
 }
 \examples{
-road_get_symbolic_artifacts(symbolic_artifacts_interpretation = c("instrument"))
-road_get_symbolic_artifacts(continent = "Africa", symbolic_artifacts_interpretation = "zoomorphic")
+road_get_symbolic_artifacts(symbolic_artifact_interpretation = c("instrument"))
+road_get_symbolic_artifacts(continent = "Africa", symbolic_artifact_interpretation = "zoomorphic")
 }

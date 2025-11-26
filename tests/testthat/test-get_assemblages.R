@@ -19,10 +19,10 @@ test_that("road_get_assemblages() returns the correct data types", {
   expect_equal(class(result_all_columns$age_max), "integer")
   expect_equal(class(result_all_columns$geolayers), "character")
   expect_equal(class(result_all_columns$archlayers), "character")
-  expect_equal(class(result_all_columns$humanremains), "logical")
+  expect_equal(class(result_all_columns$human_remains), "logical")
   expect_equal(class(result_all_columns$paleofauna), "logical")
   expect_equal(class(result_all_columns$archaeology), "logical")
-  expect_equal(class(result_all_columns$plantremains), "logical")
+  expect_equal(class(result_all_columns$plant_remains), "logical")
   
   # Check if the result is a data frame and has the expected number of rows 
   # and columns

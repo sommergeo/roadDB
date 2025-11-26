@@ -27,23 +27,23 @@ test_that("road_get_localities() returns the correct data types", {
 # Testing whether the information about the function is helpful
 help(road_get_localities)
 
-road_list_argument_values("continent") # Works
-road_list_argument_values("subcontinent") # when running this it returns nothing
-road_list_argument_values("country") # Works, but very last on list is "the"
-road_list_argument_values("locality_type") # when running this it returns nothing
-road_list_argument_values("cultural_period") # the very first row here is "Age", also, there is no "Middle Paleolithic" as used in one of the examples?
+# road_list_argument_values("continent") # Works
+# road_list_argument_values("subcontinent") # when running this it returns nothing
+# road_list_argument_values("country") # Works, but very last on list is "the"
+# road_list_argument_values("locality_type") # when running this it returns nothing
+# road_list_argument_values("cultural_period") # the very first row here is "Age", also, there is no "Middle Paleolithic" as used in one of the examples?
 
 # # testing examples
 
-ESA_Africa <- road_get_localities(continent = "Africa", cultural_period = "ESA") # Works
+# ESA_Africa <- road_get_localities(continent = "Africa", cultural_period = "ESA") # Works
 
-ESA <- road_get_localities(cultural_period = "ESA") # Works
+# ESA <- road_get_localities(cultural_period = "ESA") # Works
 
-pal <- road_get_localities(cultural_period = "Paleolithic") # No Paleolithic in the world?
+# pal <- road_get_localities(cultural_period = "Paleolithic") # No Paleolithic in the world?
 
-DE_middle_pal <- road_get_localities(country = "Germany", cultural_period = c("ESA/MSA", "LP/MP", "MP/UP", "MSA", "MSA/LSA")) # Returns nothing?
+# DE_middle_pal <- road_get_localities(country = "Germany", cultural_period = c("ESA/MSA", "LP/MP", "MP/UP", "MSA", "MSA/LSA")) # Returns nothing?
 
-test_example <- road_get_localities(country = c("Germany", "France"), cultural_period = "Middle Paleolithic") # This example from the help function works, but no "Middle Paleolithic" in the list of cultural periods?
+# test_example <- road_get_localities(country = c("Germany", "France"), cultural_period = "Middle Paleolithic") # This example from the help function works, but no "Middle Paleolithic" in the list of cultural periods?
 
 # ## Looking into cultural periods with play example ##
 # # getting all sites in the from Europe, Africa and Asia
