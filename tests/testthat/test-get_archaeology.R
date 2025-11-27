@@ -20,7 +20,7 @@ test_that("road_get_lithic_typology()", {
   expect_equal(class(result_all_columns$tool_list), "character")
   expect_equal(class(result_all_columns$typology), "character")
   expect_equal(class(result_all_columns$percentage), "integer")
-  expect_equal(class(result_all_columns$comments), "character")
+  expect_equal(class(result_all_columns$comment), "character")
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
@@ -68,7 +68,7 @@ test_that("road_get_lithic_raw_material()", {
   expect_equal(class(result_all_columns$raw_material_list), "character")
   expect_equal(class(result_all_columns$transport_distance), "character")
   expect_equal(class(result_all_columns$percentage), "integer")
-  expect_equal(class(result_all_columns$comments), "character")
+  expect_equal(class(result_all_columns$comment), "character")
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
@@ -116,7 +116,7 @@ test_that("road_get_organic_tools()", {
   expect_equal(class(result_all_columns$organic_tool_interpretation), "character")
   expect_equal(class(result_all_columns$organic_raw_material), "character")
   expect_equal(class(result_all_columns$number), "integer")
-  expect_equal(class(result_all_columns$comments), "character")
+  expect_equal(class(result_all_columns$comment), "character")
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
@@ -155,10 +155,10 @@ test_that("road_get_symbolic_artifacts()", {
   expect_equal(class(result_all_columns$cultural_period), "character")
   expect_equal(class(result_all_columns$technocomplex), "character")
   expect_equal(class(result_all_columns$symbolic_artifact_interpretation), "character")
-  expect_equal(class(result_all_columns$symbolic_artifacts_category), "character")
-  expect_equal(class(result_all_columns$symbolic_artifacts_material), "character")
-  expect_equal(class(result_all_columns$symbolic_artifacts_raw_material_source), "character")
-  expect_equal(class(result_all_columns$comments), "character")
+  expect_equal(class(result_all_columns$symbolic_artifact_category), "character")
+  expect_equal(class(result_all_columns$symbolic_artifact_material), "character")
+  expect_equal(class(result_all_columns$symbolic_artifact_raw_material_source), "character")
+  expect_equal(class(result_all_columns$comment), "character")
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
@@ -197,7 +197,7 @@ test_that("road_get_feature()", {
   expect_equal(class(result_all_columns$cultural_period), "character")
   expect_equal(class(result_all_columns$technocomplex), "character")
   expect_equal(class(result_all_columns$feature_interpretation), "character")
-  expect_equal(class(result_all_columns$comments), "character")
+  expect_equal(class(result_all_columns$comment), "character")
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")
@@ -235,10 +235,10 @@ test_that("road_get_miscellaneous_finds()", {
   expect_equal(class(result_all_columns$age_max), "integer")
   expect_equal(class(result_all_columns$cultural_period), "character")
   expect_equal(class(result_all_columns$technocomplex), "character")
-  expect_equal(class(result_all_columns$miscellaneous_finds_material), "character")
-  expect_equal(class(result_all_columns$miscellaneous_finds_raw_material_source), "character")
+  expect_equal(class(result_all_columns$miscellaneous_find_material), "character")
+  expect_equal(class(result_all_columns$miscellaneous_find_raw_material_source), "character")
   expect_equal(class(result_all_columns$number), "integer")
-  expect_equal(class(result_all_columns$comments), "character")
+  expect_equal(class(result_all_columns$comment), "character")
 
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result_all_columns, "data.frame")

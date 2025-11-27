@@ -82,7 +82,7 @@ road_get_assemblages <- function(
     if (is.na(age_max)) stop("Parameter 'age_max' could not be converted to integer.")
   }
   if (!is.null(age_min) && !is.null(age_max) && age_min > age_max)
-    stop("Parameter 'min_age' can not be bigger than 'max_age'.")
+    stop("Parameter 'age_min' can not be bigger than 'age_max'.")
 
   localities <- road_get_localities_internal(continent = continent,
                                     subcontinent = subcontinent,

@@ -87,7 +87,7 @@ vector of strings; defaults to NULL.}
 A data frame with human remains information. Rows represent individual
 human remains finds, columns contain standard outputs and human remains-related details on:
 
-\code{humanremains_id}: Unique identifier for each human remains entry per assemblage.
+\code{human_remains_id}: Unique identifier for each human remains entry per assemblage.
 
 \code{genus}: The genus to which the described fossil is attributed to.
 
@@ -106,7 +106,7 @@ assign their position in the dental arch. The appellations "upper" and "lower" a
 through a subscript or superscript number but written as words. Possible examples include: upper
 L M1, R humeral epiphysis, natural endocast, etc.
 
-\code{humanremains_category}: The attribute category indicates the element group to which the fossil belongs.
+\code{human_remains_category}: The attribute category indicates the element group to which the fossil belongs.
 C for cranial bones, D for dental remains, P for postcranial bones, E for natural endocasts,
 I for imprints that are negative molds of body parts, including footprints, S for sediment (containing human aDNA).
 }

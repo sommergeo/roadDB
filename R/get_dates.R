@@ -126,10 +126,10 @@
 # ) 
 # {
 #   if ((!is.null(age_min) && !is.integer(age_min)) || (!is.null(age_max) && !is.integer(age_max)))
-#     stop("Parameters 'min_age' and 'max_age' have to be integers.")
+#     stop("Parameters 'age_min' and 'age_max' have to be integers.")
 #   
 #   if (!is.null(age_min) && !is.null(age_max) && age_min > age_max)
-#     stop("Parameter 'min_age' can not be bigger than 'max_age'.")
+#     stop("Parameter 'age_min' can not be bigger than 'age_max'.")
 #   
 #   # calculate assemblage_condition
 #   # To do: !is.null(category or continent or...) AND !is.null(assemblages)  ---> Warnung an den Benutzer

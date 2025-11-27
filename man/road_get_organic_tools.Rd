@@ -81,12 +81,12 @@ organic tool finds. Rows represent organic tool finds and contain standard
 information like locality name, geographic information, cultural period, 
 locality type, assemblage category, dating and organic tools-related details:
 
-\code{organic tools interpretation}: List of organic tool types of 
+\code{organic tool interpretation}: List of organic tool types of 
 the given record.
 
 \code{organic raw material}: Material from which an organic tool is made.
 
-\code{organic tools technology}: List of actions used to manufacture 
+\code{organic tool technology}: List of actions used to manufacture 
 organic tools of the given record.
 
 \code{number}: Number of individual pieces for the organic raw 

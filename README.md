@@ -94,10 +94,10 @@ The following table provides an overview of return attributes.
 | `archaeology`                             |  `road_get_assemblages`                      | boolean              |
 | `plant_remains`                           |  `road_get_assemblages`                      | boolean              |
 | `paleofauna`                              |  `road_get_assemblages`                      | boolean              |
-| `min_age`                                 |  `road_get_*` (except `road_get_localities`) | number               |
-| `max_age`                                 |  `road_get_*` (except `road_get_localities`) | number               |
+| `age_min`                                 |  `road_get_*` (except `road_get_localities`) | number               |
+| `age_max`                                 |  `road_get_*` (except `road_get_localities`) | number               |
 | `assemblage_name`                         |  `road_get_*` (except `road_get_localities`) | character            |
-| `comments`                                |  `road_get_*` (except `road_get_localities`) | character            |
+| `comment`                                 |   archaeological `road_get_*`                | character            |
 | `tool_list`                               |  `road_get_lithic_typology`                  | character            |
 | `typology`                                |  `road_get_lithic_typology`                  | character            |
 | `percentage`                              |  `road_get_lithic_typology`                  | character            |
@@ -106,18 +106,19 @@ The following table provides an overview of return attributes.
 | `percentage`                              |  `road_get_lithic_raw_material`              | character            |
 | `organic_tool_interpretation`             |  `road_get_organic_tools`                    | character            |
 | `organic_raw_material`                    |  `road_get_organic_tools`                    | character            |
-| `organic_tools_technology`                |  `road_get_organic_tools`                    | character            |
+| `organic_tool_technology`                 |  `road_get_organic_tools`                    | character            |
 | `number`                                  |  `road_get_organic_tools`                    | character            |
 | `symbolic_artifact_interpretation`        |  `road_get_symbolic_artifacts`               | character            |
-| `symbolic_artifacts_category`             |  `road_get_symbolic_artifacts`               | character            |
-| `symbolic_artifacts_material`             |  `road_get_symbolic_artifacts`               | character            |
-| `symbolic_artifacts_raw_material_source`  |  `road_get_symbolic_artifacts`               | character            |
-| `symbolic_artifacts_technology`           |  `road_get_symbolic_artifacts`               | character            |
+| `symbolic_artifact_category`              |  `road_get_symbolic_artifacts`               | character            |
+| `symbolic_artifact_material`              |  `road_get_symbolic_artifacts`               | character            |
+| `symbolic_artifact_raw_material_source`   |  `road_get_symbolic_artifacts`               | character            |
+| `symbolic_artifact_technology`            |  `road_get_symbolic_artifacts`               | character            |
 | `feature_interpretation`                  |  `road_get_feature`                          | character            |
-| `miscellaneous_finds_material`            |  `road_get_miscellaneous_finds`              | character            |
-| `miscellaneous_finds_raw_material_source` |  `road_get_miscellaneous_finds`              | character            |
+| `miscellaneous_find_material`             |  `road_get_miscellaneous_finds`              | character            |
+| `miscellaneous_find_raw_material_source`  |  `road_get_miscellaneous_finds`              | character            |
 | `number`                                  |  `road_get_miscellaneous_finds`              | number               |
-| `humanremains_category`                   |  `road_get_human_remains`                    | character            |
+| `human_remains_id`                        |  `road_get_human_remains`                    | number               |
+| `human_remains_category`                  |  `road_get_human_remains`                    | character            |
 | `genus`                                   |  `road_get_human_remains`                    | character            |
 | `species`                                 |  `road_get_human_remains`                    | character            |
 | `age`                                     |  `road_get_human_remains`                    | character            |

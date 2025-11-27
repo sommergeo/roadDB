@@ -21,20 +21,21 @@ cm_assemblage_in_geolayer_geolayer_name <- "geolayers"
 cm_geolayer_geolayer_name <- "geolayer"
 cm_assemblage_in_archlayer_archlayer_name <- "archlayers"
 cm_archlayer_archlayer_name <- "archlayer"
+cm_comments <- "comment"
 cm_age <- "age"
 cm_negative_standard_deviation <- "negative_standard_deviation"
 cm_positive_standard_deviation <- "positive_standard_deviation"
 cm_material_dated <- "material_dated"
 cm_dating_method <- "dating_method"
 cm_laboratory_idlaboratory <- "laboratory_idlaboratory"
-#cm_humanremains_genus_species_str <- "genus_species_str"
-cm_humanremains_genus <- "genus"
-cm_humanremains_species <- "species"
-cm_humanremains_age <- "age"
-cm_humanremains_sex <- "sex"
-cm_humanremains_skeletal_element <- "skeletal_element"
-cm_humanremains_category <- "humanremains_category"
-cm_humanremains_idhumanremains <- "humanremains_id"
+#cm_human_remains_genus_species_str <- "genus_species_str"
+cm_human_remains_genus <- "genus"
+cm_human_remains_species <- "species"
+cm_human_remains_age <- "age"
+cm_human_remains_sex <- "sex"
+cm_human_remains_skeletal_element <- "skeletal_element"
+cm_human_remains_category <- "human_remains_category"
+cm_human_remains_idhuman_remains <- "human_remains_id"
 cm_archaeological_category <- "archaeological_category"
 cm_paleoflora_plant_remains <- "plant_remains"
 cm_plant_taxonomy_family <- "plant_family"
@@ -48,17 +49,16 @@ cm_raw_material_list <- "raw_material_list"
 cm_transport_distance <- "transport_distance"
 cm_organic_tool_interpretation <- "organic_tool_interpretation"
 cm_feature_interpretation <- "feature_interpretation"
-cm_miscellaneous_finds_material <- "miscellaneous_finds_material"
 cm_organic_raw_material <- "organic_raw_material"
-cm_organic_tools_technology <- "organic_tools_technology"
+cm_organic_tool_technology <- "organic_tool_technology"
 cm_symbolic_artifact_interpretation <- "symbolic_artifact_interpretation"
-cm_symbolic_artifacts_category <- "symbolic_artifacts_category"
-cm_symbolic_artifacts_material <- "symbolic_artifacts_material"
-cm_symbolic_artifacts_technology <- "symbolic_artifacts_technology"
-cm_symbolic_artifacts_raw_material_source <- "symbolic_artifacts_raw_material_source"
+cm_symbolic_artifact_category <- "symbolic_artifact_category"
+cm_symbolic_artifact_material <- "symbolic_artifact_material"
+cm_symbolic_artifact_technology <- "symbolic_artifact_technology"
+cm_symbolic_artifact_raw_material_source <- "symbolic_artifact_raw_material_source"
 cm_feature_interpretation <- "feature_interpretation"
-cm_miscellaneous_finds_material <- "miscellaneous_finds_material"
-cm_miscellaneous_finds_raw_material_source <- "miscellaneous_finds_raw_material_source"
+cm_miscellaneous_find_material <- "miscellaneous_find_material"
+cm_miscellaneous_find_raw_material_source <- "miscellaneous_find_raw_material_source"
 
 #' run query in ROAD database
 #' 
@@ -258,7 +258,7 @@ add_locality_columns <- function(data, localities = NULL, assemblages = NULL)
 get_assemblage_condition <- function(query_start = "", assemblages = NULL, locality_id_column_name = cm_locality_idlocality, assemblage_id_column_name = cm_assemblages_idassemblage)
 {
   # I am not sure, if it is better to do the assemblage search hier or in the caller function
-  # so this comments is an reminder
+  # so this comment is an reminder
   # To do: !is.null(category) AND !is.null(assemblages)  ---> Warnung an den Benutzer
   #if (is.null(assemblages)) assemblages <- road_get_assemblages(category = category, 
   #                                                             age_min = age_min, age_max = age_max, localities = localities)

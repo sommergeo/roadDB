@@ -5,7 +5,7 @@ test_that("road_get_human_remains() returns the correct data types", {
   # Check if the column types match the expected types
   expect_equal(class(result_all_columns$locality_id), "character")
   expect_equal(class(result_all_columns$assemblage_id), "integer")
-  expect_equal(class(result_all_columns$humanremains_id), "integer")
+  expect_equal(class(result_all_columns$human_remains_id), "integer")
   expect_equal(class(result_all_columns$continent), "character")
   expect_equal(class(result_all_columns$subcontinent), "character")
   expect_equal(class(result_all_columns$country), "character")

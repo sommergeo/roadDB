@@ -107,7 +107,7 @@ road_get_lithic_typology <- function(
     paste0("tool_list AS ", cm_tool_list),
     paste0("typology AS ", cm_typology),
     "percentage",
-    "comments"
+    paste0("comments AS ", cm_comments)
   )
 
   query <- paste(
@@ -263,7 +263,7 @@ road_get_lithic_raw_material <- function(
     paste0("raw_material_list AS ", cm_raw_material_list),
     paste0("transport_distance AS ", cm_transport_distance),
     "percentage",
-    "comments"
+    paste0("comments AS ", cm_comments)
   )
 
   query <- paste(
@@ -360,10 +360,10 @@ road_get_lithic_raw_material <- function(
 #' organic tool finds. Rows represent organic tool finds and contain standard 
 #' information like locality name, geographic information, cultural period, 
 #' locality type, assemblage category, dating and organic tools-related details:
-#' @return \code{organic tools interpretation}: List of organic tool types of 
+#' @return \code{organic tool interpretation}: List of organic tool types of 
 #' the given record.
 #' @return \code{organic raw material}: Material from which an organic tool is made.
-#' @return \code{organic tools technology}: List of actions used to manufacture 
+#' @return \code{organic tool technology}: List of actions used to manufacture 
 #' organic tools of the given record.
 #' @return \code{number}: Number of individual pieces for the organic raw 
 #' material in the assemblage.
@@ -406,9 +406,9 @@ road_get_organic_tools <- function(
     paste0("assemblage_idassemblage AS ", cm_assemblages_idassemblage),
     paste0("interpretation AS ", cm_organic_tool_interpretation),
     paste0("organic_raw_material AS ", cm_organic_raw_material),
-    paste0("technology AS ", cm_organic_tools_technology),
+    paste0("technology AS ", cm_organic_tool_technology),
     "number",
-    "comments"
+    paste0("comments AS ", cm_comments)
   )
 
   query <- paste(
@@ -557,11 +557,11 @@ road_get_symbolic_artifacts <- function(
     paste0("assemblage_idlocality AS ", cm_locality_idlocality),
     paste0("assemblage_idassemblage AS ", cm_assemblages_idassemblage),
     paste0("interpretation AS ", cm_symbolic_artifact_interpretation),
-    paste0("category AS ", cm_symbolic_artifacts_category),
-    paste0("material AS ", cm_symbolic_artifacts_material),
-    paste0("technology AS ", cm_symbolic_artifacts_technology),
-    paste0("raw_material_source AS ", cm_symbolic_artifacts_raw_material_source),
-    "comments"
+    paste0("category AS ", cm_symbolic_artifact_category),
+    paste0("material AS ", cm_symbolic_artifact_material),
+    paste0("technology AS ", cm_symbolic_artifact_technology),
+    paste0("raw_material_source AS ", cm_symbolic_artifact_raw_material_source),
+    paste0("comments AS ", cm_comments)
   )
 
   query <- paste(
@@ -693,7 +693,7 @@ road_get_feature <- function(
     paste0("assemblage_idlocality AS ", cm_locality_idlocality),
     paste0("assemblage_idassemblage AS ", cm_assemblages_idassemblage),
     paste0("interpretation AS ", cm_feature_interpretation),
-    "comments"
+    paste0("comments AS ", cm_comments)
   )
 
   query <- paste(
@@ -840,10 +840,10 @@ road_get_miscellaneous_finds <- function(
   select_fields <- c(
     paste0("assemblage_idlocality AS ", cm_locality_idlocality),
     paste0("assemblage_idassemblage AS ", cm_assemblages_idassemblage),
-    paste0("material AS ", cm_miscellaneous_finds_material),
-    paste0("raw_material_source AS ", cm_miscellaneous_finds_raw_material_source),
+    paste0("material AS ", cm_miscellaneous_find_material),
+    paste0("raw_material_source AS ", cm_miscellaneous_find_raw_material_source),
     "number",
-    "comments"
+    paste0("comments AS ", cm_comments)
   )
 
   query <- paste(

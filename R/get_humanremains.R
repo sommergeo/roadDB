@@ -70,7 +70,7 @@
 #'
 #' @return A data frame with human remains information. Rows represent individual
 #' human remains finds, columns contain standard outputs and human remains-related details on:
-#' @return \code{humanremains_id}: Unique identifier for each human remains entry per assemblage.
+#' @return \code{human_remains_id}: Unique identifier for each human remains entry per assemblage.
 #' @return \code{genus}: The genus to which the described fossil is attributed to.
 #' @return \code{species}: The species to which the described fossil is attributed to.
 #' @return \code{age}: The age class of the individual at death (e.g. infant, juvenile, adult, subadult, mature).
@@ -83,7 +83,7 @@
 #' assign their position in the dental arch. The appellations "upper" and "lower" are not expressed
 #' through a subscript or superscript number but written as words. Possible examples include: upper
 #' L M1, R humeral epiphysis, natural endocast, etc.
-#' @return \code{humanremains_category}: The attribute category indicates the element group to which the fossil belongs.
+#' @return \code{human_remains_category}: The attribute category indicates the element group to which the fossil belongs.
 #' C for cranial bones, D for dental remains, P for postcranial bones, E for natural endocasts,
 #' I for imprints that are negative molds of body parts, including footprints, S for sediment (containing human aDNA).
 #'
@@ -144,13 +144,13 @@ road_get_human_remains <- function(
   select_fields <- c(
     paste0("humanremains_idlocality AS ", cm_locality_idlocality),
     paste0("humanremains_idassemblage AS ", cm_assemblages_idassemblage),
-    paste0("humanremains_idhumanremains AS ", cm_humanremains_idhumanremains),
-    paste0("genus AS ", cm_humanremains_genus),
-    paste0("species AS ", cm_humanremains_species),
-    paste0("age AS ", cm_humanremains_age),
-    paste0("sex AS ", cm_humanremains_sex),
-    paste0("skeletal_element AS ", cm_humanremains_skeletal_element),
-    paste0("category AS ", cm_humanremains_category))
+    paste0("humanremains_idhumanremains AS ", cm_human_remains_idhuman_remains),
+    paste0("genus AS ", cm_human_remains_genus),
+    paste0("species AS ", cm_human_remains_species),
+    paste0("age AS ", cm_human_remains_age),
+    paste0("sex AS ", cm_human_remains_sex),
+    paste0("skeletal_element AS ", cm_human_remains_skeletal_element),
+    paste0("category AS ", cm_human_remains_category))
 
   # combine query parts
   query <- paste(
