@@ -144,15 +144,32 @@ road_get_plantremains <- function(
     plant_species_condition <- parameter_to_query("AND plant_species IN (", plant_species, ")")
   }
 
+  # select fields
+  select_fields <- c(
+    paste0("paleoflora.plantremains_idlocality AS ", cm_locality_idlocality),
+    paste0("paleoflora.plantremains_idassemblage AS ", cm_assemblages_idassemblage),
+    paste0("paleoflora.plantremains_plant_remains AS ", cm_paleoflora_plant_remains),
+    paste0("plant_taxonomy.family AS ", cm_plant_taxonomy_family),
+    paste0("plant_taxonomy.genus AS ", cm_plant_taxonomy_genus),
+    paste0("plant_taxonomy.species AS ", cm_plant_taxonomy_species),
+    paste0("element AS ", cm_paleoflora_element),
+    paste0("abundance AS ", cm_paleoflora_abundance),
+    paste0("relative_abundance AS ", cm_paleoflora_relative_abundance)
+  )
+  
   # combine query parts
   query <- paste(
     "SELECT DISTINCT * FROM ( SELECT DISTINCT",
-    paste0("paleoflora.plantremains_idlocality AS ", cm_locality_idlocality, ","),
-    paste0("paleoflora.plantremains_idassemblage AS ", cm_assemblages_idassemblage, ","),
-    paste0("paleoflora.plantremains_plant_remains AS ", cm_paleoflora_plant_remains, ","),
-    paste0("plant_taxonomy.family AS ", cm_plant_taxonomy_family, ","),
-    paste0("plant_taxonomy.genus AS ", cm_plant_taxonomy_genus, ","),
-    paste0("plant_taxonomy.species AS ", cm_plant_taxonomy_species),
+    paste(select_fields, collapse = ", "),
+    # paste0("paleoflora.plantremains_idlocality AS ", cm_locality_idlocality, ","),
+    # paste0("paleoflora.plantremains_idassemblage AS ", cm_assemblages_idassemblage, ","),
+    # paste0("paleoflora.plantremains_plant_remains AS ", cm_paleoflora_plant_remains, ","),
+    # paste0("plant_taxonomy.family AS ", cm_plant_taxonomy_family, ","),
+    # paste0("plant_taxonomy.genus AS ", cm_plant_taxonomy_genus, ","),
+    # paste0("plant_taxonomy.species AS ", cm_plant_taxonomy_species),
+    # paste0("element"),
+    # paste0("abundance"),
+    # paste0("relative_abundance"),
     "FROM paleoflora",
     "INNER JOIN plant_taxonomy ON paleoflora.plant_taxonomy_taxon = plant_taxonomy.taxon",
     ") as foo WHERE TRUE ",
