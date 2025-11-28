@@ -11,12 +11,14 @@ test_that("road_get_assemblages() returns the correct data types", {
   expect_equal(class(result_all_columns$locality_type), "character")
   expect_equal(class(result_all_columns$coord_x), "numeric")
   expect_equal(class(result_all_columns$coord_y), "numeric")
+  expect_equal(class(result_all_columns$coordinate_source), "character")
   expect_equal(class(result_all_columns$cultural_period), "character")
   expect_equal(class(result_all_columns$technocomplex), "character")
   expect_equal(class(result_all_columns$assemblage_name), "character")
   expect_equal(class(result_all_columns$category), "character")
   expect_equal(class(result_all_columns$age_min), "integer")
   expect_equal(class(result_all_columns$age_max), "integer")
+  expect_equal(class(result_all_columns$is_systematic), "character")
   expect_equal(class(result_all_columns$geolayers), "character")
   expect_equal(class(result_all_columns$archlayers), "character")
   expect_equal(class(result_all_columns$human_remains), "logical")
@@ -27,7 +29,7 @@ test_that("road_get_assemblages() returns the correct data types", {
   # Check if the result is a data frame and has the expected number of rows 
   # and columns
   expect_s3_class(result_all_columns, "data.frame")
-  expect_equal(ncol(result_all_columns), 20)
+  expect_equal(ncol(result_all_columns), 22)
   expect_true(nrow(road_get_assemblages()) > 0)
 })
 

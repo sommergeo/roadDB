@@ -11,11 +11,7 @@ test_that("road_get_dates() returns the correct data types", {
   expect_equal(class(result$locality_type), "character")
   expect_equal(class(result$coord_x), "numeric")
   expect_equal(class(result$coord_y), "numeric")
-  # expect_equal(class(result$assemblage_name), "character")
-  # expect_equal(class(result$category), "character")
-  # expect_equal(class(result$age_min), "integer")
-  # expect_equal(class(result$age_max), "integer")
-  # expect_equal(class(result$cultural_periods), "character")
+  expect_equal(class(result$coordinate_source), "character")
   expect_equal(class(result$geolayer), "character")
   expect_equal(class(result$archlayer), "character")
   expect_equal(class(result$age), "integer")
@@ -28,7 +24,7 @@ test_that("road_get_dates() returns the correct data types", {
   
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result, "data.frame")
-  expect_equal(ncol(result), 16)
+  expect_equal(ncol(result), 17)
   expect_true(nrow(road_get_dates()) > 0)
 })
 
