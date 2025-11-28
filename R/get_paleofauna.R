@@ -118,7 +118,10 @@ road_get_paleofauna <- function(
     paste0("assemblage_idlocality AS ", cm_locality_idlocality),
     paste0("assemblage_idassemblage AS ", cm_assemblages_idassemblage),
     paste0("genus AS ", cm_fauna_genus),
-    paste0("species AS ", cm_fauna_species)
+    paste0("species AS ", cm_fauna_species),
+    paste0("mni AS ", cm_fauna_mni),
+    paste0("method AS ", cm_fauna_mni_method),
+    paste0("nisp_anat AS ", cm_fauna_nisp)
   )
 
   # combine query parts
@@ -128,6 +131,11 @@ road_get_paleofauna <- function(
     " FROM paleofauna",
     "LEFT JOIN taxonomical_classification ON",
     "taxonomical_classification_id_t_c = idtaxonomical_classification",
+    "LEFT JOIN publication_desc_paleofauna ON",
+    "paleofauna.assemblage_idlocality = publication_desc_paleofauna.paleofauna_idlocality",
+    "AND paleofauna.assemblage_idassemblage = publication_desc_paleofauna.paleofauna_idassemblage",
+    "AND paleofauna.taxonomical_classification_id_t_c = publication_desc_paleofauna.paleofauna_idtaxonomical_classification",
+    "AND paleofauna.species = publication_desc_paleofauna.paleofauna_species",
     ") as foo WHERE TRUE ",
     assemblage_condition,
     fauna_genus_condition,

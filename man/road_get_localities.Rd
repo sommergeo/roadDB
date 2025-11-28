@@ -71,6 +71,8 @@ A data frame with location information. Rows represent individual locations, col
 
 \code{coord_x}, \code{coord_y}: The attributes specify the geographic coordinates (longitude and latitude) of the locality.
 
+\code{coordination_source}: The attribute  contains information about the source of coordinates for a locality.
+
 \code{category}: Specifies the category of the findings associated with the locality. If there are multiple, they are returned in a comma separated list.
 
 \code{cultural_period}: Specifies the cultural epoch(s) associated with the locality. If there are multiple, they are returned in a comma separated list.

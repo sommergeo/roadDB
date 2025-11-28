@@ -65,7 +65,7 @@ as the baseline. If possible the argument \code{age_max} will be converted to an
 \value{
 Database search result as a data frame with the information about
 assemblages like their geographic information, cultural period, locality type,
-assemblage category and dating.
+assemblage category, dating and quality of collection.
 }
 \description{
 The \strong{\code{road_get_assemblages}} fetches data of assemblages from ROAD database.

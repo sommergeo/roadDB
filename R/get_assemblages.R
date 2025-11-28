@@ -53,7 +53,7 @@
 #'
 #' @return Database search result as a data frame with the information about
 #' assemblages like their geographic information, cultural period, locality type,
-#' assemblage category and dating.
+#' assemblage category, dating and quality of collection.
 #' @export
 #'
 #' @examples
@@ -101,6 +101,8 @@ road_get_assemblages <- function(
     paste0("assemblage.locality_idlocality AS ", cm_assemblages_locality_idlocality),
     paste0("assemblage.idassemblage AS ", cm_assemblages_idassemblage),
     paste0("assemblage.name AS ", cm_assemblages_name),
+    #
+    paste0("is_systematic AS ", cm_is_systematic),
     paste0("assemblage.category AS ", cm_assemblages_category),
     paste0("MIN(geological_stratigraphy.age_min) AS ", cm_geological_stratigraphy_age_min),
     paste0("MAX(geological_stratigraphy.age_max) AS ", cm_geological_stratigraphy_age_max),
@@ -116,6 +118,12 @@ road_get_assemblages <- function(
     "SELECT DISTINCT",
     paste(select_fields, collapse = ", "),
     ",",
+    "CASE",
+    "WHEN (is_systematic = 3) THEN 'the assemblage was collected from an excavation or a controlled collection procedure (e.g., dry sieving, wet screening, pollen retrieval)'",
+    "WHEN (is_systematic = 2) THEN 'the assemblage results from a survey where exact x,y-coordinates of the locality are known'",
+    "WHEN (is_systematic = 1) THEN 'the assemblage results from opportunistic or random surface collections without context'",
+    "ELSE NULL",
+    "END AS", cm_is_systematic, ", ",
     "CASE",
     "WHEN (assemblage.locality_idlocality, assemblage.idassemblage) IN (SELECT assemblage_idlocality, assemblage_idassemblage FROM humanremains) 
        THEN true",

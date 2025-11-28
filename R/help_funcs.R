@@ -8,11 +8,13 @@ cm_geopolitical_units_continent_region <- "subcontinent"
 cm_locality_country <- "country"
 cm_locality_x <- "coord_x"
 cm_locality_y <- "coord_y"
+cm_coordinate_source <- "coordinate_source"
 cm_cultural_period <- "cultural_period"
 cm_technocomplex <- "technocomplex"
 cm_assemblages_locality_idlocality <- "locality_id"
 cm_assemblages_idassemblage <- "assemblage_id"
 cm_assemblages_name <- "assemblage_name"
+cm_is_systematic <- "is_systematic"
 cm_assemblages_category <- "category"
 cm_geological_stratigraphy_age_min <- "age_min"
 cm_geological_stratigraphy_age_max <- "age_max"
@@ -43,6 +45,9 @@ cm_plant_taxonomy_genus <- "plant_genus"
 cm_plant_taxonomy_species <- "plant_species"
 cm_fauna_genus <- "fauna_genus"
 cm_fauna_species <- "fauna_species"
+cm_fauna_mni <- "fauna_mni"
+cm_fauna_mni_method <- "mni_method"
+cm_fauna_nisp <- "nisp" 
 cm_tool_list <- "tool_list"
 cm_typology <- "typology"
 cm_raw_material_list <- "raw_material_list"
@@ -220,7 +225,8 @@ add_locality_columns <- function(data, localities = NULL, assemblages = NULL)
       cm_locality_country,
       cm_locality_type,
       cm_locality_x,
-      cm_locality_y
+      cm_locality_y,
+      cm_coordinate_source
     )
     localities <- localities[, column_selection]
     data <- merge(x = localities, y = data, by = cm_locality_idlocality, all.y = TRUE)

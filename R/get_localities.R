@@ -73,6 +73,7 @@ road_get_localities_internal <- function(
     paste0("locality.type AS ", cm_locality_type),
     paste0("locality.x AS ", cm_locality_x),
     paste0("locality.y AS ", cm_locality_y),
+    paste0("locality.coordinate_source AS ", cm_coordinate_source),
     paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.cultural_period, ', ') AS ", cm_cultural_period),
     paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.technocomplex, ', ') AS ", cm_technocomplex)
   )
@@ -180,6 +181,7 @@ road_get_localities_internal <- function(
 #' @return \code{continent}, \code{subcontinent}, \code{country}: The attributes specify the geopolitical information of the locality.
 #' @return \code{locality_type}: The attribute specifies the type of locality (e.g. cave, rockshelter, open air).
 #' @return \code{coord_x}, \code{coord_y}: The attributes specify the geographic coordinates (longitude and latitude) of the locality.
+#' @return \code{coordination_source}: The attribute  contains information about the source of coordinates for a locality.
 #' @return \code{category}: Specifies the category of the findings associated with the locality. If there are multiple, they are returned in a comma separated list.
 #' @return \code{cultural_period}: Specifies the cultural epoch(s) associated with the locality. If there are multiple, they are returned in a comma separated list.
 #' @return \code{technocomplex}: Specifies the archaeological culture or named stone tool industry associated with the locality. If there are multiple, they are returned in a comma separated list.
@@ -190,6 +192,9 @@ road_get_localities_internal <- function(
 #'
 #' @importFrom dplyr all_of
 #' @importFrom dplyr select
+#' @importFrom dplyr summarise
+#' @importFrom dplyr group_by
+#' @importFrom dplyr inner_join
 #'
 #' @examples
 #' df <- road_get_localities(continent = "Europe", country = c("Germany"),
@@ -218,12 +223,12 @@ road_get_localities <- function(
                                           age_min = age_min,
                                           age_max = age_max)
 
-  assemblages_selected <- select(assemblages, dplyr::all_of(c(cm_locality_idlocality,
+  assemblages_selected <- select(assemblages, all_of(c(cm_locality_idlocality,
                                                 cm_geopolitical_units_continent,
                                                 cm_geopolitical_units_continent_region,
                                                 cm_locality_country,
                                                 cm_locality_type, cm_locality_x,
-                                                cm_locality_y, cm_cultural_period,
+                                                cm_locality_y, cm_coordinate_source, cm_cultural_period,
                                                 cm_technocomplex, cm_assemblages_category,
                                                 cm_geological_stratigraphy_age_min,
                                                 cm_geological_stratigraphy_age_max)))
@@ -236,7 +241,7 @@ road_get_localities <- function(
                                                  subcontinent = subcontinent,
                                                  country = country,
                                                  locality_type = locality_type)
-    assemblages_ages <- assemblages_all_info %>% dplyr::select(dplyr::all_of(c(cm_locality_idlocality,
+    assemblages_ages <- assemblages_all_info %>% select(all_of(c(cm_locality_idlocality,
                                                           cm_geological_stratigraphy_age_min,
                                                           cm_geological_stratigraphy_age_max)))
 
@@ -247,16 +252,16 @@ road_get_localities <- function(
     #ages_min_max <- assemblages_ages %>% group_by(locality_id) %>% summarise(locality_age_min = min(age_min),
     #                                                           locality_age_max = max(age_max))
 
-    ages_min_max <- dplyr::summarise(dplyr::group_by(assemblages_ages, .data$locality_id), locality_age_min = min(age_min),
+    ages_min_max <- summarise(group_by(assemblages_ages, .data$locality_id), locality_age_min = min(age_min),
                               locality_age_max = max(age_max))
 
 
-    assemblages_selected <- dplyr::select(assemblages, dplyr::all_of(c(cm_locality_idlocality,
+    assemblages_selected <- select(assemblages, all_of(c(cm_locality_idlocality,
                                                   cm_geopolitical_units_continent,
                                                   cm_geopolitical_units_continent_region,
                                                   cm_locality_country,
-                                                  cm_locality_type, cm_locality_x,
-                                                  cm_locality_y, cm_cultural_period,
+                                                  cm_locality_type, cm_locality_x, cm_locality_y,
+                                                  cm_coordinate_source, cm_cultural_period,
                                                   cm_technocomplex, cm_assemblages_category,
                                                   cm_geological_stratigraphy_age_min,
                                                   cm_geological_stratigraphy_age_max)))
@@ -274,9 +279,9 @@ road_get_localities <- function(
     #                 subset_age_max = max(age_max))
 
     .data <- c()
-    data_tmp <- assemblages_selected %>% dplyr::group_by(.data$locality_id, .data$continent, .data$subcontinent,
-                                                  .data$country, .data$locality_type, .data$coord_x, .data$coord_y,
-                                                  ) %>% dplyr::summarise(category = well_formed_string_to_string_without_duplicates(paste0(category, collapse = ", ")),
+    data_tmp <- assemblages_selected %>% group_by(.data$locality_id, .data$continent, .data$subcontinent,
+                                                  .data$country, .data$locality_type, .data$coord_x, .data$coord_y, .data$coordinate_source,
+                                                  ) %>% summarise(category = well_formed_string_to_string_without_duplicates(paste0(category, collapse = ", ")),
                                                                   cultural_period = well_formed_string_to_string_without_duplicates(paste0(cultural_period, collapse = ", ")),
                                                                   technocomplex = well_formed_string_to_string_without_duplicates(paste0(technocomplex, collapse = ", ")),
                                                                   subset_age_min = min(age_min),
@@ -293,18 +298,18 @@ road_get_localities <- function(
     #
     #category <- subset(data_tmp, select = category)
 
-    data <- dplyr::inner_join(data_tmp, ages_min_max, by = c(cm_locality_idlocality), #"locality_id"),
+    data <- inner_join(data_tmp, ages_min_max, by = c(cm_locality_idlocality), #"locality_id"),
                       copy = FALSE, na_matches = "na")
 
     return(data)
   }
-  else return(dplyr::select(assemblages,
-                              dplyr::all_of(c(cm_locality_idlocality,
-                                    cm_geopolitical_units_continent, 
-                                    cm_geopolitical_units_continent_region, 
-                                    cm_locality_country,
-                                    cm_locality_type, cm_locality_x, 
-                                    cm_locality_y, cm_cultural_period,
-                                    cm_technocomplex, cm_assemblages_category
-                                    ))))
+  else return(select(assemblages,
+                     all_of(c(cm_locality_idlocality,
+                              cm_geopolitical_units_continent, 
+                              cm_geopolitical_units_continent_region, 
+                              cm_locality_country,
+                              cm_locality_type, cm_locality_x, 
+                              cm_locality_y, cm_coordinate_source, cm_cultural_period,
+                              cm_technocomplex, cm_assemblages_category
+                     ))))
 }
