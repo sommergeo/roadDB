@@ -101,8 +101,6 @@ road_get_assemblages <- function(
     paste0("assemblage.locality_idlocality AS ", cm_assemblages_locality_idlocality),
     paste0("assemblage.idassemblage AS ", cm_assemblages_idassemblage),
     paste0("assemblage.name AS ", cm_assemblages_name),
-    #
-    paste0("is_systematic AS ", cm_is_systematic),
     paste0("assemblage.category AS ", cm_assemblages_category),
     paste0("MIN(geological_stratigraphy.age_min) AS ", cm_geological_stratigraphy_age_min),
     paste0("MAX(geological_stratigraphy.age_max) AS ", cm_geological_stratigraphy_age_max),
