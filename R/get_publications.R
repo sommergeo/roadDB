@@ -1,6 +1,26 @@
+#' Get publication references from ROAD database
+#'
+#' The \strong{\code{road_get_publications}} fetches publication references for specified localities
+#' from the ROAD database. Publications are formatted according to standard bibliographic conventions
+#' and include books, journal articles, book chapters, theses, and web pages.
+#'
+#' @param localities specifies the locality or localities for which to retrieve publications.
+#' The parameter can be a string (single locality name), a vector of strings (multiple locality names),
+#' or a data frame with a \code{locality_id} column (e.g., from \code{road_get_localities()}).
+#' Defaults to NULL.
+#'
+#' @return A data frame with two columns:
+#' \item{Locality}{The locality identifier}
+#' \item{Publication}{The formatted publication reference}
+#'
 #' @export
-#' @importFrom glue trim
-
+#'
+#' @examples
+#' road_get_publications(localities = c("Apollo 11", "Berg Aukas"))
+#' 
+#' # Using result from road_get_localities
+#' locs <- road_get_localities(countries = "Germany")
+#' road_get_publications(localities = locs)
 road_get_publications <- function (
    localities = NULL
 ) 
@@ -36,6 +56,21 @@ road_get_publications <- function (
   return (publication_df)
 }
 
+#' Get formatted publication references for a single locality (internal helper function)
+#'
+#' Internal helper function that queries the ROAD database for all publications
+#' associated with a single locality and formats them according to bibliographic standards.
+#' The function searches across multiple publication description tables including assemblages,
+#' localities, human remains, paleofauna, geological layers, archaeological layers,
+#' geostratigraphy, vegetation, and climate.
+#'
+#' @param locality A single locality identifier (string). Required parameter.
+#'
+#' @return A data frame with two columns:
+#' \item{Locality}{The locality identifier}
+#' \item{Publication}{The formatted publication reference}
+#'
+#' @keywords internal
 get_publication_reference <- function (
     locality = NULL
 ) 
@@ -189,8 +224,27 @@ get_publication_reference <- function (
     return(publications)
 }
 
-
-
+#' Get BibTeX formatted publication references for a single locality (internal helper function)
+#'
+#' Internal helper function that queries the ROAD database for all publications
+#' associated with a single locality and formats them as BibTeX entries. The function
+#' generates proper BibTeX entries for different publication types including books,
+#' book chapters (inbook), journal articles, theses (PhD, Master's, Bachelor's),
+#' and unpublished works.
+#'
+#' @param locality A single locality identifier (string). Required parameter.
+#'
+#' @return A data frame with two columns:
+#' \item{Locality}{The locality identifier}
+#' \item{Publication}{The BibTeX formatted publication entry}
+#'
+#' @details The function automatically determines the correct BibTeX entry type
+#' (\code{@@book}, \code{@@inbook}, \code{@@article}, \code{@@phdthesis}, 
+#' \code{@@mastersthesis}, \code{@@bathesis}, \code{@@unpublished})
+#' based on publication metadata and includes all relevant fields such as author, title,
+#' journal/booktitle, publisher, year, pages, volume, DOI, and editor.
+#'
+#' @keywords internal
 get_publication_reference_bibtex <- function (
     locality = NULL
 ) 
@@ -292,7 +346,7 @@ get_publication_reference_bibtex <- function (
 
     else if (publication_type == "bathesis")
     {
-      entry_type <- "mastersthesis"
+      entry_type <- "bathesis"
       type <- "Thesis"
     }
 
