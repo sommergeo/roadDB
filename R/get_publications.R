@@ -188,3 +188,171 @@ get_publication_reference <- function (
     # cat(publications)
     return(publications)
 }
+
+
+
+get_publication_reference_bibtex <- function (
+    locality = NULL
+) 
+{ 
+  query = paste0("SELECT * FROM (
+    SELECT DISTINCT edition.volume, edition.publication_year as year, publication_type, publication.title, publication.author, publication.pages, publication_desc_assemblage.assemblage_idlocality AS idlocality, publication_source.title as source_title, publisher, publication_place, editor, publication.comments as comments, publication_source.comments as source_comments, url, access_date, doi FROM edition, publication, publication_desc_assemblage, publication_source WHERE (publication_source.id_source = edition.publication_source_id_source and publication.edition_idedition = edition.idedition and publication.edition_id_source = edition.publication_source_id_source and publication_desc_assemblage.publication_idpublication = publication.idpublication and publication_desc_assemblage.publication_idedition = publication.edition_idedition and publication_desc_assemblage.publication_id_source = publication.edition_id_source and assemblage_idlocality = '", locality, "')
+          UNION
+    SELECT DISTINCT edition.volume, edition.publication_year as year, publication_type, publication.title, publication.author, publication.pages, publication_desc_locality.locality_idlocality AS idlocality, publication_source.title as source_title, publisher, publication_place, editor, publication.comments as comments, publication_source.comments as source_comments, url, access_date, doi FROM edition, publication, publication_desc_locality, publication_source WHERE (publication_source.id_source = edition.publication_source_id_source and publication.edition_idedition = edition.idedition and publication.edition_id_source = edition.publication_source_id_source and publication_desc_locality.publication_idpublication = publication.idpublication and publication_desc_locality.publication_idedition = publication.edition_idedition and publication_desc_locality.publication_id_source = publication.edition_id_source and locality_idlocality = '", locality, "')
+          UNION
+    SELECT DISTINCT edition.volume, edition.publication_year as year, publication_type, publication.title, publication.author, publication.pages, publication_desc_humanremains.humanremains_idlocality AS idlocality, publication_source.title as source_title, publisher, publication_place, editor, publication.comments as comments, publication_source.comments as source_comments, url, access_date, doi FROM edition, publication, publication_desc_humanremains, publication_source WHERE (publication_source.id_source = edition.publication_source_id_source and publication.edition_idedition = edition.idedition and publication.edition_id_source = edition.publication_source_id_source and publication_desc_humanremains.publication_idpublication = publication.idpublication and publication_desc_humanremains.publication_idedition = publication.edition_idedition and publication_desc_humanremains.publication_id_source = publication.edition_id_source and humanremains_idlocality = '", locality, "')
+          UNION
+    SELECT DISTINCT edition.volume, edition.publication_year as year, publication_type, publication.title, publication.author, publication.pages, publication_desc_paleofauna.paleofauna_idlocality AS idlocality, publication_source.title as source_title, publisher, publication_place, editor, publication.comments as comments, publication_source.comments as source_comments, url, access_date, doi FROM edition, publication, publication_desc_paleofauna, publication_source WHERE (publication_source.id_source = edition.publication_source_id_source and publication.edition_idedition = edition.idedition and publication.edition_id_source = edition.publication_source_id_source and publication_desc_paleofauna.publication_idpublication = publication.idpublication and publication_desc_paleofauna.publication_idedition = publication.edition_idedition and publication_desc_paleofauna.publication_id_source = publication.edition_id_source and paleofauna_idlocality = '", locality, "')
+          UNION
+    SELECT DISTINCT edition.volume, edition.publication_year as year, publication_type, publication.title, publication.author, publication.pages, publication_desc_geolayer.geological_layer_idlocality AS idlocality, publication_source.title as source_title, publisher, publication_place, editor, publication.comments as comments, publication_source.comments as source_comments, url, access_date, doi FROM edition, publication, publication_desc_geolayer, publication_source WHERE (publication_source.id_source = edition.publication_source_id_source and publication.edition_idedition = edition.idedition and publication.edition_id_source = edition.publication_source_id_source and publication_desc_geolayer.publication_idpublication = publication.idpublication and publication_desc_geolayer.publication_idedition = publication.edition_idedition and publication_desc_geolayer.publication_id_source = publication.edition_id_source and geological_layer_idlocality = '", locality, "')
+          UNION
+    SELECT DISTINCT edition.volume, edition.publication_year as year, publication_type, publication.title, publication.author, publication.pages, publication_desc_archlayer.archaeologic_layer_idlocality AS idlocality, publication_source.title as source_title, publisher, publication_place, editor, publication.comments as comments, publication_source.comments as source_comments, url, access_date, doi FROM edition, publication, publication_desc_archlayer, publication_source WHERE (publication_source.id_source = edition.publication_source_id_source and publication.edition_idedition = edition.idedition and publication.edition_id_source = edition.publication_source_id_source and publication_desc_archlayer.publication_idpublication = publication.idpublication and publication_desc_archlayer.publication_idedition = publication.edition_idedition and publication_desc_archlayer.publication_id_source = publication.edition_id_source and archaeologic_layer_idlocality = '", locality, "')
+          UNION
+    SELECT DISTINCT edition.volume, edition.publication_year as year, publication_type, publication.title, publication.author, publication.pages, '", locality, "' AS idlocality, publication_source.title as source_title, publisher, publication_place, editor, publication.comments as comments, publication_source.comments as source_comments, url, access_date, doi FROM edition, publication, publication_desc_geostrat, publication_source WHERE (publication_source.id_source = edition.publication_source_id_source and publication.edition_idedition = edition.idedition and publication.edition_id_source = edition.publication_source_id_source and publication_desc_geostrat.publication_idpublication = publication.idpublication and publication_desc_geostrat.publication_idedition = publication.edition_idedition and publication_desc_geostrat.publication_id_source = publication.edition_id_source and geostratigraphy_idgeostrat in (SELECT geostrat_idgeostrat FROM geostrat_desc_geolayer WHERE geolayer_idlocality = '", locality, "'))
+          UNION
+    SELECT DISTINCT edition.volume, edition.publication_year as year, publication_type, publication.title, publication.author, publication.pages, '", locality, "' AS idlocality, publication_source.title as source_title, publisher, publication_place, editor, publication.comments as comments, publication_source.comments as source_comments, url, access_date, doi FROM edition, publication, publication_desc_vegetation, publication_source WHERE (publication_source.id_source = edition.publication_source_id_source and publication.edition_idedition = edition.idedition and publication.edition_id_source = edition.publication_source_id_source and publication_desc_vegetation.publication_idpublication = publication.idpublication and publication_desc_vegetation.publication_idedition = publication.edition_idedition and publication_desc_vegetation.publication_id_source = publication.edition_id_source and vegetation_idvegetation in (SELECT idvegetation FROM vegetation WHERE plantremains_idlocality = '", locality, "'))
+          UNION
+    SELECT DISTINCT edition.volume, edition.publication_year as year, publication_type, publication.title, publication.author, publication.pages, '", locality, "' AS idlocality, publication_source.title as source_title, publisher, publication_place, editor, publication.comments as comments, publication_source.comments as source_comments, url, access_date, doi FROM edition, publication, publication_desc_climate, publication_source WHERE (publication_source.id_source = edition.publication_source_id_source and publication.edition_idedition = edition.idedition and publication.edition_id_source = edition.publication_source_id_source and publication_desc_climate.publication_idpublication = publication.idpublication and publication_desc_climate.publication_idedition = publication.edition_idedition and publication_desc_climate.publication_id_source = publication.edition_id_source and climate_idclimate in (SELECT idclimate FROM climate WHERE assemblage_idlocality = '", locality, "'))
+          ) AS publications_all WHERE idlocality = '", locality, "' ORDER BY  idlocality, lower(author), year ASC"
+  )
+
+  data <- road_run_query(query)
+
+  publications <- data.frame(matrix(ncol = 2, nrow = 0))
+  colnames(publications) <- c("Locality", "Publication")
+
+  for (i in seq_len(nrow(data)))
+  {
+    row <- data[i, ]
+
+    publication_type <- ""
+    if (!is.na(row["publication_type"])) publication_type <- tolower(row["publication_type"])
+    comments <- ""
+    if (!is.na(row["comments"])) comments <- tolower(row["comments"])
+    source_comments <- ""
+    if (!is.na(row["source_comments"])) source_comments <- tolower(row["source_comments"])
+
+    address <- NA # book, inbook
+    if (!is.na(row["publication_place"])) address <- trimws(row["publication_place"])
+    author <- NA
+    if (!is.na(row["author"])) author <- trimws(row["author"])
+    booktitle <- NA # inbook
+    if (!is.na(row["source_title"])) booktitle <- sub("\\.$", "", trimws(row["source_title"]))
+    doi <- NA
+    if (!is.na(row["doi"])) doi <- trimws(row["doi"])
+    editor <- NA # inbook
+    if (!is.na(row["editor"])) editor <- trimws(row["editor"])
+    journal <- NA # article
+    if (!is.na(row["source_title"])) journal <- sub("\\.$", "", trimws(row["source_title"]))
+    pages <- NA
+    if (!is.na(row["pages"])) pages <- trimws(row["pages"])
+    publisher <- NA # book, inbook
+    if (!is.na(row["publisher"])) publisher <- trimws(row["publisher"])
+    title <- NA
+    if (!is.na(row["title"])) title <- sub("\\.$", "", trimws(row["title"]))
+    volume <- NA # article, inbook
+    if (!is.na(row["volume"])) volume <- trimws(row["volume"])
+    year <- NA
+    if (!is.na(row["year"]) && row["year"] != 0) year <- trimws(as.character(row["year"]))
+
+    # Book
+    if (
+      publication_type == "book" || substr(comments, 0, 4) == "book" || substr(source_comments, 0, 4) == "book"
+      || (!is.na(title) && tolower(title) == tolower(booktitle))
+    ) {
+      entry_type <- "book"
+      type <- "Book"
+    }
+
+    # In book
+    else if (publication_type == "inbook" || publication_type == "book section" || substr(comments, 0, 4) == "inbo" || substr(source_comments, 0, 4) == "inbo")
+    {
+      entry_type <- "inbook"
+      type <- "Book Section"
+    }
+
+    # Journal article
+    else if (publication_type == "journal article" || publication_type == "article")
+    {
+      entry_type <- "article"
+      type <- "Journal Article"
+    }
+
+    else if (publication_type == "phdthesis")
+    {
+      entry_type <- "phdthesis"
+      type <- "Thesis"
+    }
+
+    else if (publication_type == "mathesis")
+    {
+      entry_type <- "mastersthesis"
+      type <- "Thesis"
+    }
+
+    else if (publication_type == "bathesis")
+    {
+      entry_type <- "mastersthesis"
+      type <- "Thesis"
+    }
+
+    else if (publication_type == "unpublished work")
+    {
+      entry_type <- "unpublished"
+      type <- "Unpublished Work"
+    }
+
+    else
+    {
+      entry_type <- "article"
+      type <- "Journal Article"
+    }
+
+    struct_address <- ""
+    if (!is.na(address)) struct_address <- paste0("address = {", address, "},")
+    struct_author <- ""
+    if (!is.na(author)) struct_author <- paste0("author = {", author, "},")
+    struct_booktitle <- ""
+    if (!is.na(booktitle)) struct_booktitle <- paste0("booktitle = {", booktitle, "},")
+    struct_doi <- ""
+    if (!is.na(doi)) struct_doi <- paste0("DOI = {", doi, "},")
+    struct_editor <- ""
+    if (!is.na(editor)) struct_editor <- paste0("editor = {", editor, "},")
+    struct_journal <- ""
+    if (!is.na(journal)) struct_journal <- paste0("journal = {", journal, "},")
+    struct_pages <- ""
+    if (!is.na(pages)) struct_pages <- paste0("pages = {", pages, "},")
+    struct_publisher <- ""
+    if (!is.na(publisher)) struct_publisher <- paste0("publisher = {", publisher, "},")
+    struct_title <- ""
+    if (!is.na(title)) struct_title <- paste0("title = {", sub("\\.$", "", title), "},")
+    struct_volume <- ""
+    if (!is.na(volume)) struct_volume <- paste0("volume = {", volume, "},")
+    struct_year <- ""
+    if (!is.na(year)) struct_year <- paste0("year = {", year, "},")
+
+    struct_source <- ""
+    if (entry_type == "inbook") struct_source = struct_booktitle
+    else if (entry_type == "article") struct_source = struct_journal
+
+    publication <- paste0(
+      "@", entry_type, "{",
+        struct_author,
+        struct_title,
+        struct_source,
+        struct_pages,
+        struct_year,
+        struct_publisher,
+        struct_address,
+        struct_editor,
+        struct_volume,
+        struct_doi,
+        "type = {", type, "}",
+      "}"
+    )
+
+    publications[nrow(publications) + 1, ] <- c(locality, publication)
+  }
+
+  return(publications)
+}
