@@ -86,10 +86,12 @@ The following table provides an overview of return attributes.
 | `category`                                |  `road_get_*`                                | character            |
 | `cultural_period `                        |  `road_get_*`                                | character            |
 | `technocomplex`                           |  `road_get_*`                                | character            |
+| `coordinate_source`                       |  `road_get_localities`                       | character            |
 | `subset_age_min`                          |  `road_get_localities`                       | number               |
 | `subset_age_max`                          |  `road_get_localities`                       | number               |
 | `locality_age_min`                        |  `road_get_localities`                       | number               |
 | `locality_age_max`                        |  `road_get_localities`                       | number               |
+| `is_systematic`                           |  `road_get_assemblages`                      | character            |
 | `human_remains`                           |  `road_get_assemblages`                      | boolean              |
 | `archaeology`                             |  `road_get_assemblages`                      | boolean              |
 | `plant_remains`                           |  `road_get_assemblages`                      | boolean              |
@@ -126,8 +128,14 @@ The following table provides an overview of return attributes.
 | `skeletal_element`                        |  `road_get_human_remains`                    | character            |
 | `fauna_genus`                             |  `road_get_paleofauna`                       | character            |
 | `fauna_species`                           |  `road_get_paleofauna`                       | character            |
+| `mni`                                     |  `road_get_paleofauna`                       | number               |
+| `mni_method`                              |  `road_get_paleofauna`                       | character            |
+| `nisp`                                    |  `road_get_paleofauna`                       | number               |
 | `plant_remains`                           |  `road_get_plantremains`                     | character            |
 | `plant_family`                            |  `road_get_plantremains`                     | character            |
 | `plant_genus`                             |  `road_get_plantremains`                     | character            |
 | `plant_species`                           |  `road_get_plantremains`                     | character            |
+| `element`                                 |  `road_get_plantremains`                     | character            |
+| `abundance`                               |  `road_get_plantremains`                     | number               |
+| `relative_abundance`                      |  `road_get_plantremains`                     | number               |
 
