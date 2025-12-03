@@ -92,6 +92,8 @@ The following table provides an overview of return attributes.
 | `locality_age_min`                        |  `road_get_localities`                       | number               |
 | `locality_age_max`                        |  `road_get_localities`                       | number               |
 | `is_systematic`                           |  `road_get_assemblages`                      | character            |
+| `geolayer`                                |  `road_get_*` (except `road_get_localities`) | character            |
+| `archlayer`                               |  `road_get_*` (except `road_get_localities`) | character            |
 | `human_remains`                           |  `road_get_assemblages`                      | boolean              |
 | `archaeology`                             |  `road_get_assemblages`                      | boolean              |
 | `plant_remains`                           |  `road_get_assemblages`                      | boolean              |
@@ -138,4 +140,10 @@ The following table provides an overview of return attributes.
 | `element`                                 |  `road_get_plantremains`                     | character            |
 | `abundance`                               |  `road_get_plantremains`                     | number               |
 | `relative_abundance`                      |  `road_get_plantremains`                     | number               |
+| `age`                                     |  `road_get_dates`                            | number               |
+| `negative_standard_deviation`             |  `road_get_dates`                            | number               |
+| `positive_standard_deviation`             |  `road_get_dates`                            | number               |
+| `material_dated`                          |  `road_get_dates`                            | character               |
+| `dating_method`                           |  `road_get_dates`                            | character               |
+| `laboratory_idlaboratory`                 |  `road_get_dates`                            | character               |
 
