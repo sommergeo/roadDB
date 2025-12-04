@@ -70,6 +70,8 @@ road_get_publications <- function (
 #' \item{Locality}{The locality identifier}
 #' \item{Publication}{The formatted publication reference}
 #' @importFrom glue trim
+#' @importFrom stringr str_replace_all
+#' @importFrom stringr str_replace
 #'
 #' @keywords internal
 get_publication_reference <- function (
@@ -139,6 +141,9 @@ get_publication_reference <- function (
       sco <- tolower(substr(source_comments, 0, 4))
       co <- tolower(substr(comments, 0, 4))
       
+      #message(tolower(trim(data[r,'source_title'])))
+      #message(tolower(trim(data[r,'title'])))
+      
       if (publication_type == 'book' || sco == 'book' || co == 'book' || tolower(trim(data[r,'title'])) == tolower(trim(data[r,'source_title'])))
         isBook <- T
       else 
@@ -152,7 +157,12 @@ get_publication_reference <- function (
       if (publication_type == 'bathesis') isBaThesis <- T
       if (publication_type == 'web page') isWebPage <- T
       
+      # NNN
       title <- paste0(' ', trim(data[r,'title']))
+      if (substr_right(title, 1) != '.' && substr_right(title, 1) != '?' && substr_right(title, 1) != '!')
+      {
+        title <- paste0(title, ".")
+      }
       
       if (!is.na(data[r,'editor'])) editor <- trim(data[r,'editor'])
       if (!is.na(data[r,'year']) && data[r,'year'] != 0) year <- paste0(' ', data[r,'year'], '.')
@@ -183,11 +193,17 @@ get_publication_reference <- function (
       {
         if (editor != '' && isInBook)
         {
-          editorTmp <- editor
+          editorTmp <- str_replace_all(editor, c(" and " = ", ", ".and " = ", ", ",and " = ", "))
           source <- paste0(source, ' In: ', editorTmp, ' (Eds.). ')
         }
-        source <- paste0(source, trim(data[r,'source_title']))
-        if (isPhdThesis || isMaThesis || isBaThesis) source <- paste0(source, '.')
+        source_title <- trim(data[r,'source_title'])
+        publ_title <- trim(data[r,'title'])
+        if (str_replace_all(source_title, c("," = "", "." = "", " " = "")) != str_replace_all(publ_title, c("," = "", "." = "", " " = "")))
+          source <- paste0(source, trim(data[r,'source_title']))
+    message(source)
+        if (isPhdThesis || isMaThesis || isBaThesis) 
+          if (substr_right(source, 1) != "." && substr_right(source, 1) != "?" && substr_right(source, 1) != "!" && trim(source) != "")
+            source <- paste0(source, '.')
         if (isPhdThesis) source <- paste0(source, ' Doctoral Thesis')
         if (isMaThesis) source <- paste0(source, " Master's Thesis")
         if (isBaThesis) source <- paste0(source, " Bachelor's Thesis")
@@ -213,8 +229,12 @@ get_publication_reference <- function (
           else source <- paste0(source, ', ', data[r,'pages'], '.')
         }
         
-        authorTmp <- author
-        publication <- paste0(authorTmp, ', ', year, title, source)
+        if (substr_right(source, 1) != "." && trim(source) != "")
+          source <- paste0(source, '.')
+        source <- paste0(" ", source)
+        #message(source)
+        authorTmp <- str_replace_all(author, c(" and " = ", ", ".and " = ", ", ",and " = ", "))
+        publication <- paste0(authorTmp, ', ', year, publ_title, source)
       }
       
       #if (r == 1) 
