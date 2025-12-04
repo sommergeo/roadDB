@@ -581,4 +581,9 @@ well_formed_string_to_string_without_duplicates <- function(str_with_duplikates 
   return(paste0(v, collapse = ", "))
   
 }
-  
+
+#  Returns the last n characters from a string x
+substr_right <- function(x, n)
+{
+  substr(x, nchar(x) - n + 1, nchar(x))
+}
