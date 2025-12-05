@@ -141,9 +141,6 @@ get_publication_reference <- function (
       sco <- tolower(substr(source_comments, 0, 4))
       co <- tolower(substr(comments, 0, 4))
       
-      #message(tolower(trim(data[r,'source_title'])))
-      #message(tolower(trim(data[r,'title'])))
-      
       if (publication_type == 'book' || sco == 'book' || co == 'book' || tolower(trim(data[r,'title'])) == tolower(trim(data[r,'source_title'])))
         isBook <- T
       else 
@@ -196,11 +193,13 @@ get_publication_reference <- function (
           editorTmp <- str_replace_all(editor, c(" and " = ", ", ".and " = ", ", ",and " = ", "))
           source <- paste0(source, ' In: ', editorTmp, ' (Eds.). ')
         }
-        source_title <- trim(data[r,'source_title'])
-        publ_title <- trim(data[r,'title'])
-        if (str_replace_all(source_title, c("," = "", "." = "", " " = "")) != str_replace_all(publ_title, c("," = "", "." = "", " " = "")))
+        #source_title <- trim(data[r,'source_title'])
+        #publ_title <- trim(data[r,'title'])
+        source <- trim(data[r,'source_title'])
+        title <- trim(data[r,'title'])
+        if (str_replace_all(source, c("," = "", "." = "", " " = "")) != str_replace_all(title, c("," = "", "." = "", " " = "")))
           source <- paste0(source, trim(data[r,'source_title']))
-    message(source)
+  
         if (isPhdThesis || isMaThesis || isBaThesis) 
           if (substr_right(source, 1) != "." && substr_right(source, 1) != "?" && substr_right(source, 1) != "!" && trim(source) != "")
             source <- paste0(source, '.')
@@ -232,9 +231,9 @@ get_publication_reference <- function (
         if (substr_right(source, 1) != "." && trim(source) != "")
           source <- paste0(source, '.')
         source <- paste0(" ", source)
-        #message(source)
+    
         authorTmp <- str_replace_all(author, c(" and " = ", ", ".and " = ", ", ",and " = ", "))
-        publication <- paste0(authorTmp, ', ', year, publ_title, source)
+        publication <- paste0(authorTmp, ', ', year, title, source)
       }
       
       #if (r == 1) 
