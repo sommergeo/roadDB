@@ -38,7 +38,8 @@ road_get_publications <- function (
   {
     if (is.data.frame(localities)) 
        {
-         locality_vector <- localities$locality_id
+         locality_vector_tmp <- localities$locality_id
+         locality_vector <- unique(locality_vector_tmp)
          for (locality in locality_vector) {
            publ <- get_publication_reference(locality)
            publication_df <- rbind(publication_df, publ)
@@ -46,7 +47,8 @@ road_get_publications <- function (
        }
     else {
      # if localities is a vector
-      for (locality in localities) {
+      locality_vector <- unique(localities)
+      for (locality in locality_vector) {
         publ <- get_publication_reference(locality)
         publication_df <- rbind(publication_df, publ)
       }
@@ -112,9 +114,9 @@ get_publication_reference <- function (
     for (r in 1:nrow(data))   
     {
       publication <- ''
-      author <- ''
-      title <- ''
-      year <- ''
+      author <- ' '
+      title <- ' '
+      year <- ' '
       source <- ''
       publisher <- ''
       publication_place <- ''
@@ -155,10 +157,10 @@ get_publication_reference <- function (
       if (publication_type == 'web page') isWebPage <- T
       
       # NNN
-      title <- paste0(' ', trim(data[r,'title']))
+      title <- paste0(title, trim(data[r,'title']))
       if (substr_right(title, 1) != '.' && substr_right(title, 1) != '?' && substr_right(title, 1) != '!')
       {
-        title <- paste0(title, ".")
+        title <- paste0(" ", title, ".")
       }
       
       if (!is.na(data[r,'editor'])) editor <- trim(data[r,'editor'])
@@ -193,12 +195,19 @@ get_publication_reference <- function (
           editorTmp <- str_replace_all(editor, c(" and " = ", ", ".and " = ", ", ",and " = ", "))
           source <- paste0(source, ' In: ', editorTmp, ' (Eds.). ')
         }
-        #source_title <- trim(data[r,'source_title'])
-        #publ_title <- trim(data[r,'title'])
+        
         source <- trim(data[r,'source_title'])
-        title <- trim(data[r,'title'])
-        if (str_replace_all(source, c("," = "", "." = "", " " = "")) != str_replace_all(title, c("," = "", "." = "", " " = "")))
-          source <- paste0(source, trim(data[r,'source_title']))
+        # sourceToCmp <- str_replace_all(source, c("," = "", "." = "", " " = ""))
+        # titleToCmp <- str_replace_all(title, c("," = "", "." = "", " " = ""))
+        # #if (str_replace_all(source, c("," = "", "." = "", " " = "")) != str_replace_all(title, c("," = "", "." = "", " " = "")))
+        # if (tolower(sourceToCmp) != tolower(titleToCmp))
+        # {
+        #   message(source)
+        #   message(title)
+        #   message("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+        #   source <- '' #paste0(source, trim(data[r,'source_title']))
+        #   message(source)
+        # }
   
         if (isPhdThesis || isMaThesis || isBaThesis) 
           if (substr_right(source, 1) != "." && substr_right(source, 1) != "?" && substr_right(source, 1) != "!" && trim(source) != "")
