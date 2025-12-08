@@ -1,9 +1,11 @@
 .onAttach <- function(libname, pkgname)
 {
   packageStartupMessage("
-  Dear user, welcome to roadDB 1.0.
-  Please note the following:
-    The roadDB package executes SQL queries in ROAD_5.12.2025. 
-    ROAD_5.12.2025 is a ROAD copy created on December 5, 2025.
-    This ROAD copy is updated every three months.")
+  This package utilizes a regularly updated version of ROAD, 
+  so results may vary over time.
+  
+  An active internet connection is required, and the server may occasionally be
+  offline. For the current ROAD version and scheduled downtime, please refer 
+  to https://github.com/sommergeo/roadDB
+ ")
 }
