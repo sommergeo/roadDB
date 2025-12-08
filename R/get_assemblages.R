@@ -51,9 +51,27 @@
 #' @param age_max specifies the maximum age in years before present, using 1950 CE
 #' as the baseline. If possible the argument \code{age_max} will be converted to an integer; defaults to NULL.
 #'
-#' @return Database search result as a data frame with the information about
-#' assemblages like their geographic information, cultural period, locality type,
-#' assemblage category, dating and quality of collection.
+#' @return A data frame with assemblage information. Rows represent individual assemblages, columns contain:
+#' @return \code{locality_id}: The unique identifier for the locality where the assemblage was found.
+#' @return \code{continent}, \code{subcontinent}, \code{country}: The attributes specify the geopolitical information of the locality.
+#' @return \code{locality_type}: The attribute specifies the type of locality (e.g. cave, rockshelter, open air).
+#' @return \code{coord_x}, \code{coord_y}: The attributes specify the geographic coordinates (longitude and latitude) of the locality.
+#' @return \code{coordinate_source}: The source of the geographic coordinates.
+#' @return \code{assemblage_id}: The unique identifier for the assemblage.
+#' @return \code{assemblage_name}: The name or designation of the assemblage.
+#' @return \code{category}: The assemblage category (e.g., human remains, raw material, typology, paleofauna, plant remains).
+#' @return \code{age_min}: The minimum age of the assemblage in years before present (BP), based on associated geological stratigraphy.
+#' @return \code{age_max}: The maximum age of the assemblage in years before present (BP), based on associated geological stratigraphy.
+#' @return \code{geolayers}: The name(s) of the geological layer(s) associated with the assemblage.
+#' @return \code{archlayers}: The name(s) of the archaeological layer(s) associated with the assemblage.
+#' @return \code{cultural_period}: The cultural period(s) associated with the assemblage (e.g., Lower Paleolithic, Middle Stone Age).
+#' @return \code{technocomplex}: The archaeological culture(s) or stone tool industry/industries associated with the assemblage (e.g., Acheulean, Mousterian).
+#' @return \code{is_systematic}: Description of the collection method quality (excavation, survey, or opportunistic collection).
+#' @return \code{human_remains}: Logical value indicating whether the assemblage contains human remains.
+#' @return \code{paleofauna}: Logical value indicating whether the assemblage contains paleofauna.
+#' @return \code{archaeology}: Logical value indicating whether the assemblage contains archaeological finds.
+#' @return \code{plant_remains}: Logical value indicating whether the assemblage contains plant remains.
+#'
 #' @export
 #'
 #' @examples
@@ -193,7 +211,7 @@ road_get_assemblages <- function(
 
   data <- road_run_query(query)
 
-  if (nrow(data) == 0 & nrow(localities) > 0)
+  if (nrow(data) == 0 && nrow(localities) > 0)
   {
     print_null_result_message(continent = continent,
                               subcontinent = subcontinent,
