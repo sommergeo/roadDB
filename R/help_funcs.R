@@ -19,9 +19,9 @@ cm_assemblages_category <- "category"
 cm_geological_stratigraphy_age_min <- "age_min"
 cm_geological_stratigraphy_age_max <- "age_max"
 
-cm_assemblage_in_geolayer_geolayer_name <- "geolayers"
+cm_assemblage_in_geolayer_geolayer_name <- "geolayer"
 cm_geolayer_geolayer_name <- "geolayer"
-cm_assemblage_in_archlayer_archlayer_name <- "archlayers"
+cm_assemblage_in_archlayer_archlayer_name <- "archlayer"
 cm_archlayer_archlayer_name <- "archlayer"
 cm_comments <- "comment"
 cm_age <- "age"
@@ -309,7 +309,7 @@ get_geolayer_condition <- function(query_start = "", assemblages = NULL, localit
   
   for (r in 1:nrow(assemblages))   
   {
-    tt <- unlist(strsplit(assemblages[r,'geolayers'], ', '))
+    tt <- unlist(strsplit(assemblages[r,'geolayer'], ', '))
     assemblages[r,'locality_geolayer_cols'] <- paste(assemblages[r,'locality_id'], tt, sep = ', ', collapse = '%%')
   }
 
@@ -348,7 +348,7 @@ get_archlayer_condition <- function(query_start = "", assemblages = NULL, locali
   
   for (r in 1:nrow(assemblages))   
   {
-    tt <- unlist(strsplit(assemblages[r,'archlayers'], ', '))
+    tt <- unlist(strsplit(assemblages[r,'archlayer'], ', '))
     assemblages[r,'locality_archlayer_cols'] <- paste(assemblages[r,'locality_id'], tt, sep = ', ', collapse = '%%')
   }
   
@@ -581,4 +581,9 @@ well_formed_string_to_string_without_duplicates <- function(str_with_duplikates 
   return(paste0(v, collapse = ", "))
   
 }
-  
+
+#  Returns the last n characters from a string x
+substr_right <- function(x, n)
+{
+  substr(x, nchar(x) - n + 1, nchar(x))
+}
