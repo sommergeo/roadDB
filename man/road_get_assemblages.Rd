@@ -63,9 +63,45 @@ as the baseline. If possible the argument \code{age_min} will be converted to an
 as the baseline. If possible the argument \code{age_max} will be converted to an integer; defaults to NULL.}
 }
 \value{
-Database search result as a data frame with the information about
-assemblages like their geographic information, cultural period, locality type,
-assemblage category, dating and quality of collection.
+A data frame with assemblage information. Rows represent individual assemblages, columns contain:
+
+\code{locality_id}: The unique identifier for the locality where the assemblage was found.
+
+\code{continent}, \code{subcontinent}, \code{country}: The attributes specify the geopolitical information of the locality.
+
+\code{locality_type}: The attribute specifies the type of locality (e.g. cave, rockshelter, open air).
+
+\code{coord_x}, \code{coord_y}: The attributes specify the geographic coordinates (longitude and latitude) of the locality.
+
+\code{coordinate_source}: The source of the geographic coordinates.
+
+\code{assemblage_id}: The unique identifier for the assemblage.
+
+\code{assemblage_name}: The name or designation of the assemblage.
+
+\code{category}: The assemblage category (e.g., human remains, raw material, typology, paleofauna, plant remains).
+
+\code{age_min}: The minimum age of the assemblage in years before present (BP), based on associated geological stratigraphy.
+
+\code{age_max}: The maximum age of the assemblage in years before present (BP), based on associated geological stratigraphy.
+
+\code{geolayers}: The name(s) of the geological layer(s) associated with the assemblage.
+
+\code{archlayers}: The name(s) of the archaeological layer(s) associated with the assemblage.
+
+\code{cultural_period}: The cultural period(s) associated with the assemblage (e.g., Lower Paleolithic, Middle Stone Age).
+
+\code{technocomplex}: The archaeological culture(s) or stone tool industry/industries associated with the assemblage (e.g., Acheulean, Mousterian).
+
+\code{is_systematic}: Description of the collection method quality (excavation, survey, or opportunistic collection).
+
+\code{human_remains}: Logical value indicating whether the assemblage contains human remains.
+
+\code{paleofauna}: Logical value indicating whether the assemblage contains paleofauna.
+
+\code{archaeology}: Logical value indicating whether the assemblage contains archaeological finds.
+
+\code{plant_remains}: Logical value indicating whether the assemblage contains plant remains.
 }
 \description{
 The \strong{\code{road_get_assemblages}} fetches data of assemblages from ROAD database.

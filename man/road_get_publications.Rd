@@ -4,13 +4,16 @@
 \alias{road_get_publications}
 \title{Get publication references from ROAD database}
 \usage{
-road_get_publications(localities = NULL)
+road_get_publications(localities = NULL, bibtex = F)
 }
 \arguments{
 \item{localities}{specifies the locality or localities for which to retrieve publications.
 The parameter can be a string (single locality name), a vector of strings (multiple locality names),
 or a data frame with a \code{locality_id} column (e.g., from \code{road_get_localities()}).
 Defaults to NULL.}
+
+\item{bibtex}{specifies if results - publication references, will be formatted as BibTeX.
+Defaults to FALSE.}
 }
 \value{
 A data frame with two columns:

@@ -65,3 +65,7 @@ tools, such as the \pkg{rcarbon} package available on CRAN
 
 All parameters are optional. If not used, omit them or set them to NULL.
 }
+\examples{
+assemblages <- road_get_assemblages(country="Slovenia")
+road_get_dates(assemblages)
+}
