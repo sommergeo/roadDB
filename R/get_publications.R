@@ -25,6 +25,160 @@ road_get_publications <- function (
    localities = NULL
 ) 
 {
+  if (is.null(localities)) {
+    query = "SELECT DISTINCT edition.volume, edition.publication_year as year, publication_type, publication.title, publication.author, publication.pages, publication_source.title as source_title, publisher, publication_place, editor, publication.comments as comments, publication_source.comments as source_comments, url, access_date, doi FROM edition, publication, publication_source 
+             WHERE (publication_source.id_source = edition.publication_source_id_source 
+               and publication.edition_idedition = edition.idedition 
+               and publication.edition_id_source = edition.publication_source_id_source)"
+    data <- road_run_query(query)
+    # return(data)
+    
+    publications <- data.frame(matrix(ncol = 1, nrow = 0))
+    colnames(publications) <- c('Publication')
+    
+    for (r in 1:nrow(data))   
+    {
+      publication <- ''
+      author <- ' '
+      title <- ' '
+      year <- ' '
+      source <- ''
+      publisher <- ''
+      publication_place <- ''
+      editor <- ''
+      url <- ''
+      access_date <- ''
+      publication_type <- ''
+      comments <- ''
+      source_comments <- ''
+      isBook <- F
+      isInBook <- F
+      isPhdThesis <- F
+      isMaThesis <- F
+      isBaThesis <- F
+      isJournalArticle <- F
+      isWebPage <- F
+      sco <- ''
+      co <- ''
+      
+      if (!is.na(data[r,'publication_type'])) publication_type <- tolower(data[r,'publication_type'])
+      if (!is.na(data[r,'comments'])) comments <- data[r,'comments']
+      if (!is.na(data[r,'source_comments'])) source_comments <- data[r,'source_comments']
+      
+      sco <- tolower(substr(source_comments, 0, 4))
+      co <- tolower(substr(comments, 0, 4))
+      
+      if (publication_type == 'book' || sco == 'book' || co == 'book' || tolower(trim(data[r,'title'])) == tolower(trim(data[r,'source_title'])))
+        isBook <- T
+      else 
+        if (publication_type == 'inbook' || publication_type == 'book section' 
+            || sco == 'inbo' || co == 'inbo')
+          isInBook <- T
+      else isJournalArticle <- T
+      
+      if (publication_type == 'phdthesis') isPhdThesis <- T
+      if (publication_type == 'mathesis') isMaThesis <- T
+      if (publication_type == 'bathesis') isBaThesis <- T
+      if (publication_type == 'web page') isWebPage <- T
+      
+      # NNN
+      title <- paste0(title, trim(data[r,'title']))
+      if (substr_right(title, 1) != '.' && substr_right(title, 1) != '?' && substr_right(title, 1) != '!')
+      {
+        title <- paste0(" ", title, ".")
+      }
+      
+      if (!is.na(data[r,'editor'])) editor <- trim(data[r,'editor'])
+      if (!is.na(data[r,'year']) && data[r,'year'] != 0) year <- paste0(' ', data[r,'year'], '.')
+      else year <- ' (n.d.)'
+      
+      author <- trim(data[r,'author'])
+      if (!is.na(data[r,'publisher'])) publisher <- trim(data[r,'publisher'])
+      if (!is.na(data[r,'publication_place'])) publication_place <- trim(data[r,'publication_place'])
+      
+      if (!is.na(data[r,'url'])) url <- data[r,'url']
+      if (!is.na(data[r,'access_date'])) access_date <- data[r,'access_date']
+      
+      if (isWebPage)
+      {
+        if (publisher != '')
+        {
+          if (publication_place != '') source <- paste0(publisher, ', ', publication_place)
+          else source <- publisher
+        }
+        if (url != '' && trim(source) != '') source <- paste0(source, '. ', url)
+        else if (url != '') source <- url
+        if (trim(source) != '' && access_date != '') source <- paste0(source, ' (accessed ', access_date, ').' )
+        
+        publication <- paste0(author, year, title, source)
+        
+      }
+      else
+      {
+        if (editor != '' && isInBook)
+        {
+          editorTmp <- str_replace_all(editor, c(" and " = ", ", ".and " = ", ", ",and " = ", "))
+          source <- paste0(source, ' In: ', editorTmp, ' (Eds.). ')
+        }
+        
+        source <- trim(data[r,'source_title'])
+        # sourceToCmp <- str_replace_all(source, c("," = "", "." = "", " " = ""))
+        # titleToCmp <- str_replace_all(title, c("," = "", "." = "", " " = ""))
+        # #if (str_replace_all(source, c("," = "", "." = "", " " = "")) != str_replace_all(title, c("," = "", "." = "", " " = "")))
+        # if (tolower(sourceToCmp) != tolower(titleToCmp))
+        # {
+        #   message(source)
+        #   message(title)
+        #   message("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+        #   source <- '' #paste0(source, trim(data[r,'source_title']))
+        #   message(source)
+        # }
+        
+        if (isPhdThesis || isMaThesis || isBaThesis) 
+          if (substr_right(source, 1) != "." && substr_right(source, 1) != "?" && substr_right(source, 1) != "!" && trim(source) != "")
+            source <- paste0(source, '.')
+        if (isPhdThesis) source <- paste0(source, ' Doctoral Thesis')
+        if (isMaThesis) source <- paste0(source, " Master's Thesis")
+        if (isBaThesis) source <- paste0(source, " Bachelor's Thesis")
+        
+        if (publisher != '' && (isBook || isInBook || isPhdThesis || isMaThesis || isBaThesis))
+        {
+          if (trim(source) != '')
+          {
+            if (publication_place != '') source <- paste0(source, ', ', publisher, ', ', publication_place)
+            else source <- paste0(source, ', ', publisher)
+          }
+          else
+          {
+            if (publication_place != '') source <- paste0(publisher, ', ', publication_place)
+            else source <- publisher
+          }
+        }
+        if (!is.na(data[r,'volume']) && !(isBook || isInBook || isPhdThesis || isMaThesis || isBaThesis))
+          source <- paste0(trim(source), ' ', data[r,'volume'])
+        if (!is.na(data[r,'pages']) && !(isBook || isPhdThesis || isMaThesis || isBaThesis))
+        {
+          if (isInBook) source <- paste0(source, ', pp. ', data[r,'pages'], '.')
+          else source <- paste0(source, ', ', data[r,'pages'], '.')
+        }
+        
+        if (substr_right(source, 1) != "." && trim(source) != "")
+          source <- paste0(source, '.')
+        source <- paste0(" ", source)
+        
+        authorTmp <- str_replace_all(author, c(" and " = ", ", ".and " = ", ", ",and " = ", "))
+        publication <- paste0(authorTmp, ', ', year, title, source)
+      }
+      
+      #if (r == 1) 
+      publications[nrow(publications) + 1, ] <- c(publication)
+      #else publications[nrow(publications) + 1, ] <- c("", publication)
+      
+    } #for (r in 1:nrow(data))
+    
+    return(publications)
+    
+  }
   publication_df <- data.frame(matrix(ncol = 2, nrow = 0))
   colnames(publication_df) <- c('Locality', 'Publication')
   
