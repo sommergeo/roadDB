@@ -82,12 +82,12 @@ standard information like locality name, geographic information, cultural
 period, locality type, assemblage category, dating and miscellaneous 
 finds-related details
 
-\code{miscellaneous finds material}: Material of the miscellaneous 
+\code{miscellaneous find material}: Material of the miscellaneous 
 find. Some examples: beeswax, bitumen, clay, flax fiber, fossil, mineral 
 diverse (materials such as crystals), mineral pigment (colorants such as 
 ochre, hematite, limonite, goethite, specularite, etc.) ostrich eggshell
 
-\code{miscellaneous finds material source}: List with specific 
+\code{miscellaneous find material source}: List with specific 
 intervals of transport for the raw material used to manufacture the 
 miscellaneous finds. Five fixed types of material source are possible:
 \itemize{

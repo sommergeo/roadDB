@@ -1,6 +1,6 @@
 #' Get lithic typology from ROAD database
 #'
-#' The \strong{\code{road_get_lithic_typology}} fetches data of lithic finds 
+#' The \strong{\code{road_get_lithic_typologies}} fetches data of lithic finds 
 #' from ROAD databaseLithic typology refers to the classification of stone tools 
 #' based on their shape, technology, and function.This function enables you to 
 #' query lithic typology data from the ROAD database using various parameters such as
@@ -70,10 +70,10 @@
 #' @export
 #'
 #' @examples
-#' road_get_lithic_typology(continent = c("Asia"), tool_list = "adze")
-#' road_get_lithic_typology(subcontinent = "Eastern Europe", 
+#' road_get_lithic_typologies(continent = c("Asia"), tool_list = "adze")
+#' road_get_lithic_typologies(subcontinent = "Eastern Europe", 
 #'                          tool_list = c("bladelet burin spall"))
-road_get_lithic_typology <- function(
+road_get_lithic_typologies <- function(
     continent = NULL,
     subcontinent = NULL,
     country = NULL,
@@ -144,7 +144,7 @@ road_get_lithic_typology <- function(
 
 #' Get lithic raw material from ROAD database
 #'
-#' The \strong{\code{road_get_lithic_raw_material}} fetches data of lithic finds 
+#' The \strong{\code{road_get_lithic_raw_materials}} fetches data of lithic finds 
 #' from ROAD database. Lithic raw material refers to the types of stone used for 
 #' tool production in archaeological contexts. This function allows you to query 
 #' lithic raw material data from the ROAD database using parameters such as 
@@ -225,10 +225,10 @@ road_get_lithic_typology <- function(
 #' @export
 #'
 #' @examples
-#' road_get_lithic_raw_material(subcontinent = "South Asia", raw_material_list = c("limestone"))
-#' road_get_lithic_raw_material(subcontinent = c("Caucasus"), locality_type = "cave",
+#' road_get_lithic_raw_materials(subcontinent = "South Asia", raw_material_list = c("limestone"))
+#' road_get_lithic_raw_materials(subcontinent = c("Caucasus"), locality_type = "cave",
 #'                              raw_material_list = c("chalcedony", "limestone"))
-road_get_lithic_raw_material <- function(
+road_get_lithic_raw_materials <- function(
     continent = NULL,
     subcontinent = NULL,
     country = NULL,
@@ -599,7 +599,7 @@ road_get_symbolic_artifacts <- function(
 
 #' Get feature assemblages from ROAD database
 #'
-#' The \strong{\code{road_get_feature}} fetches data of feature finds from ROAD database. Feature assemblages refer to archaeological features such as hearths, pits, or structures found at a site.
+#' The \strong{\code{road_get_features}} fetches data of feature finds from ROAD database. Feature assemblages refer to archaeological features such as hearths, pits, or structures found at a site.
 #' This function enables you to query feature data from the ROAD database using parameters like geographical location,
 #' cultural periods, feature interpretation, and assemblages. Use the parameters to filter the results or omit them for broader results.
 #'
@@ -659,10 +659,10 @@ road_get_symbolic_artifacts <- function(
 #' @export
 #'
 #' @examples
-#' road_get_feature(continent = c("Europe", "Africa"), feature_interpretation = "textile imprints")
-#' road_get_feature(continent = "Africa", locality_type = c("cave"),
+#' road_get_features(continent = c("Europe", "Africa"), feature_interpretation = "textile imprints")
+#' road_get_features(continent = "Africa", locality_type = c("cave"),
 #'                  feature_interpretation = "bedding")
-road_get_feature <- function(
+road_get_features <- function(
     continent = NULL,
     subcontinent = NULL,
     country = NULL,
@@ -788,11 +788,11 @@ road_get_feature <- function(
 #' standard information like locality name, geographic information, cultural 
 #' period, locality type, assemblage category, dating and miscellaneous 
 #' finds-related details
-#' @return \code{miscellaneous finds material}: Material of the miscellaneous 
+#' @return \code{miscellaneous find material}: Material of the miscellaneous 
 #' find. Some examples: beeswax, bitumen, clay, flax fiber, fossil, mineral 
 #' diverse (materials such as crystals), mineral pigment (colorants such as 
 #' ochre, hematite, limonite, goethite, specularite, etc.) ostrich eggshell
-#' @return \code{miscellaneous finds material source}: List with specific 
+#' @return \code{miscellaneous find material source}: List with specific 
 #' intervals of transport for the raw material used to manufacture the 
 #' miscellaneous finds. Five fixed types of material source are possible:
 #' \itemize{

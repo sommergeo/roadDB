@@ -102,12 +102,12 @@ The following table provides an overview of return attributes.
 | `age_max`                                 |  `road_get_*` (except `road_get_localities`) | number               |
 | `assemblage_name`                         |  `road_get_*` (except `road_get_localities`) | character            |
 | `comment`                                 |   archaeological `road_get_*`                | character            |
-| `tool_list`                               |  `road_get_lithic_typology`                  | character            |
-| `typology`                                |  `road_get_lithic_typology`                  | character            |
-| `percentage`                              |  `road_get_lithic_typology`                  | character            |
-| `raw_material_list`                       |  `road_get_lithic_raw_material`              | character            |
-| `transport_distance`                      |  `road_get_lithic_raw_material`              | character            |
-| `percentage`                              |  `road_get_lithic_raw_material`              | character            |
+| `tool_list`                               |  `road_get_lithic_typologies`                  | character            |
+| `typology`                                |  `road_get_lithic_typologies`                  | character            |
+| `percentage`                              |  `road_get_lithic_typologies`                  | character            |
+| `raw_material_list`                       |  `road_get_lithic_raw_materials`              | character            |
+| `transport_distance`                      |  `road_get_lithic_raw_materials`              | character            |
+| `percentage`                              |  `road_get_lithic_raw_materials`              | character            |
 | `organic_tool_interpretation`             |  `road_get_organic_tools`                    | character            |
 | `organic_raw_material`                    |  `road_get_organic_tools`                    | character            |
 | `organic_tool_technology`                 |  `road_get_organic_tools`                    | character            |
@@ -117,7 +117,7 @@ The following table provides an overview of return attributes.
 | `symbolic_artifact_material`              |  `road_get_symbolic_artifacts`               | character            |
 | `symbolic_artifact_raw_material_source`   |  `road_get_symbolic_artifacts`               | character            |
 | `symbolic_artifact_technology`            |  `road_get_symbolic_artifacts`               | character            |
-| `feature_interpretation`                  |  `road_get_feature`                          | character            |
+| `feature_interpretation`                  |  `road_get_features`                          | character            |
 | `miscellaneous_find_material`             |  `road_get_miscellaneous_finds`              | character            |
 | `miscellaneous_find_raw_material_source`  |  `road_get_miscellaneous_finds`              | character            |
 | `number`                                  |  `road_get_miscellaneous_finds`              | number               |

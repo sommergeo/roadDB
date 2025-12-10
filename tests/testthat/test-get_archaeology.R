@@ -1,6 +1,6 @@
-test_that("road_get_lithic_typology()", {
+test_that("road_get_lithic_typologies()", {
   # Call function without any filters
-  result_all_columns <- road_get_lithic_typology()
+  result_all_columns <- road_get_lithic_typologies()
 
   # Check if the column types match the expected types
   expect_equal(class(result_all_columns$locality_id), "character")
@@ -33,7 +33,7 @@ test_that("road_get_lithic_typology()", {
   )
 
   # Filter for "flakes" in tool_list column
-  result_filter1 <- road_get_lithic_typology(tool_list = "flake")
+  result_filter1 <- road_get_lithic_typologies(tool_list = "flake")
   expect_true(
     all(grepl("flake", result_filter1$tool_list, ignore.case = TRUE)),
     info = "Some values in the tool_list column do not contain the string 'flake'"
@@ -46,9 +46,9 @@ test_that("road_get_lithic_typology()", {
 })
 
 
-test_that("road_get_lithic_raw_material()", {
+test_that("road_get_lithic_raw_materials()", {
   # Call function without any filters
-  result_all_columns <- road_get_lithic_raw_material()
+  result_all_columns <- road_get_lithic_raw_materials()
 
   # Check if the column types match the expected types
   expect_equal(class(result_all_columns$locality_id), "character")
@@ -81,7 +81,7 @@ test_that("road_get_lithic_raw_material()", {
   )
 
   # Filter for "flint" in raw_material_list column
-  result_filter1 <- road_get_lithic_raw_material(raw_material_list = "flint")
+  result_filter1 <- road_get_lithic_raw_materials(raw_material_list = "flint")
   expect_true(
     all(grepl("flint", result_filter1$raw_material_list, ignore.case = TRUE)),
     info = "Some values in the raw_material_list column do not contain the string 'flint'"
@@ -177,9 +177,9 @@ test_that("road_get_symbolic_artifacts()", {
 })
 
 
-test_that("road_get_feature()", {
+test_that("road_get_features()", {
   # Call function without any filters
-  result_all_columns <- road_get_feature()
+  result_all_columns <- road_get_features()
 
   # Check if the column types match the expected types
   expect_equal(class(result_all_columns$locality_id), "character")
@@ -203,7 +203,7 @@ test_that("road_get_feature()", {
   expect_s3_class(result_all_columns, "data.frame")
   expect_equal(ncol(result_all_columns), 18)
 
-  result_filter1 <- road_get_feature(feature_interpretation = "bedding")
+  result_filter1 <- road_get_features(feature_interpretation = "bedding")
   expect_true(
     all(grepl("bedding", result_filter1$feature_interpretation, ignore.case = TRUE)),
     info = "Some values in the feature_interpretation column do not contain the string 'bedding'"

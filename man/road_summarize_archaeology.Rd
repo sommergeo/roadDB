@@ -27,11 +27,11 @@ Background: The ROAD archaeology database is rich in categorized data, where
 archaeological findings are grouped according to their characteristics. These 
 categories can be accessed using a variety of `road_get_*` functions, such as:
 
-- `road_get_lithic_typology()`
-- `road_get_lithic_raw_material()`
+- `road_get_lithic_typologies()`
+- `road_get_lithic_raw_materials()`
 - `road_get_organic_tools()`
 - `road_get_symbolic_artifacts()`
-- `road_get_feature()`
+- `road_get_features()`
 - `road_get_miscellaneous_finds()`
 
 Some search terms may not be easily categorized, while others may appear 
