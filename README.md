@@ -70,6 +70,7 @@ The following arguments are optional and can be used with the corresponding `roa
 | `plant_species`                     | character | plant_taxonomy / species                             | exact       |  "Potamogeton gramineus L."                   |
 | `fauna_genus`                       | character | taxonomical_classification / genus                   | exact       |  "Lemniscomys", "Hipposideros"                |
 | `fauna_species`                     | character | paleofauna / species                                 | exact       |  "cf. germanicus", "atapuerquensis"           |
+| `bibtex`                            | character | publication / edition / publication_source           | exact       |  "F", "T", "False", "TRUE         "           |
 
 
 The following table provides an overview of return attributes.
@@ -143,7 +144,8 @@ The following table provides an overview of return attributes.
 | `age`                                     |  `road_get_dates`                            | number               |
 | `negative_standard_deviation`             |  `road_get_dates`                            | number               |
 | `positive_standard_deviation`             |  `road_get_dates`                            | number               |
-| `material_dated`                          |  `road_get_dates`                            | character               |
-| `dating_method`                           |  `road_get_dates`                            | character               |
-| `laboratory_idlaboratory`                 |  `road_get_dates`                            | character               |
+| `material_dated`                          |  `road_get_dates`                            | character            |
+| `dating_method`                           |  `road_get_dates`                            | character            |
+| `laboratory_idlaboratory`                 |  `road_get_dates`                            | character            |
+| `publication`                             |  `road_get_publications`                     | character            |
 

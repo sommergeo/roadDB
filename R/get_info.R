@@ -32,7 +32,7 @@ road_list_argument_values <- function(function_argument)
       ~ "cultural_period",
     function_argument == "category"
       ~ "category",
-    function_argument == "dating_methods"
+    function_argument == "dating_method"
       ~ "dating_method",
     function_argument == "material_dated"
       ~ "material_dated",
@@ -124,7 +124,7 @@ road_list_argument_values <- function(function_argument)
   if (function_argument == "assemblages") return(paste0("The argument 'assemblages' is a data frame necessarily containing columns ", cm_assemblages_locality_idlocality, ", ", cm_assemblages_idassemblage, ". It can be  generated as return value of the function 'road_get_assemblages'. It can be used instead of the other locality and assemblage search parameters to filter the results."))
   if (function_argument == "term") return(paste0("The argument 'term' is a string containing an archaeological search term. For this search term the 'road_summarize_archaeology' function provides a quick overview of the presence of a given search term across archaeology-related tables/attributes in the ROAD database and archaeology-related 'road_get_*' functions."))
 
-  if (function_argument == "dating_methods" || function_argument == "material_dated")
+  if (function_argument == "dating_method" || function_argument == "material_dated")
     table_names <- c("geological_layer_age", "archaeological_layer_age", "assemblage_age")
 
   if (is.null(attribute_name) || is.na(attribute_name)) stop(paste0("In roadDB there is no function with the argument '", function_argument, "'."))
