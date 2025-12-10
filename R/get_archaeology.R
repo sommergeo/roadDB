@@ -777,10 +777,10 @@ road_get_feature <- function(
 #' locality_id, assemblage_id. It can be  generated as return value of the 
 #' function 'road_get_assemblages'. It can be used instead of the locality 
 #' and assemblage search parameters to filter the results.
-#' @param miscellaneous_finds_material specifies material of the miscellaneous 
+#' @param miscellaneous_find_material specifies material of the miscellaneous 
 #' finds (e.g. shell, ochre, ostrich eggshell).
-#' Run \code{road_list_argument_values("miscellaneous_finds_material")} to 
-#' display possible values. The argument \code{miscellaneous_finds_material} is 
+#' Run \code{road_list_argument_values("miscellaneous_find_material")} to 
+#' display possible values. The argument \code{miscellaneous_find_material} is 
 #' a string (one item) or vector of strings; defaults to NULL.
 #'
 #' @return Database search result as a data frame with the information about 
@@ -807,9 +807,9 @@ road_get_feature <- function(
 #' @export
 #'
 #' @examples
-#' road_get_miscellaneous_finds(miscellaneous_finds_material = "wood fossil")
+#' road_get_miscellaneous_finds(miscellaneous_find_material = "wood fossil")
 #' road_get_miscellaneous_finds(continent = c("Africa"), locality_type = "open air",
-#'                              miscellaneous_finds_material = "shell")
+#'                              miscellaneous_find_material = "shell")
 road_get_miscellaneous_finds <- function(
     continent = NULL,
     subcontinent = NULL,
@@ -820,7 +820,7 @@ road_get_miscellaneous_finds <- function(
     category = NULL,
     age_min = NULL,
     age_max = NULL,
-    miscellaneous_finds_material = NULL,
+    miscellaneous_find_material = NULL,
     assemblages = NULL
 ) {
   # calculate assemblage_condition
@@ -852,7 +852,7 @@ road_get_miscellaneous_finds <- function(
     "FROM miscellaneous_finds",
     "WHERE",
     assemblage_condition,
-    parameter_to_query("AND material IN (", miscellaneous_finds_material, ")")
+    parameter_to_query("AND material IN (", miscellaneous_find_material, ")")
   )
 
   data <- road_run_query(query)
@@ -869,7 +869,7 @@ road_get_miscellaneous_finds <- function(
                               category = category,
                               age_min = age_min,
                               age_max = age_max,
-                              miscellaneous_finds_material = miscellaneous_finds_material)
+                              miscellaneous_find_material = miscellaneous_find_material)
   }
   
   data <- add_locality_columns(data, assemblages = assemblages)

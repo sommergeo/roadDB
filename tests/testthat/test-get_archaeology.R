@@ -244,10 +244,10 @@ test_that("road_get_miscellaneous_finds()", {
   expect_s3_class(result_all_columns, "data.frame")
   expect_equal(ncol(result_all_columns), 20)
 
-  result_filter1 <- road_get_miscellaneous_finds(miscellaneous_finds_material = "wood fossil")
+  result_filter1 <- road_get_miscellaneous_finds(miscellaneous_find_material = "wood fossil")
   expect_true(
-    all(grepl("wood fossil", result_filter1$miscellaneous_finds_material, ignore.case = TRUE)),
-    info = "Some values in the miscellaneous_finds_material column do not contain the string 'wood fossil'"
+    all(grepl("wood fossil", result_filter1$miscellaneous_find_material, ignore.case = TRUE)),
+    info = "Some values in the miscellaneous_find_material column do not contain the string 'wood fossil'"
   )
   # Check if there is at least one row in the result
   expect_true(

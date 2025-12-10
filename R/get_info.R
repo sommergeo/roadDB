@@ -50,7 +50,7 @@ road_list_argument_values <- function(function_argument)
       ~ "interpretation",
     function_argument == "feature_interpretation"
       ~ "interpretation",
-    function_argument == "miscellaneous_finds_material"
+    function_argument == "miscellaneous_find_material"
       ~ "material",
     function_argument == "human_genus"
       ~ "genus",
@@ -100,7 +100,7 @@ road_list_argument_values <- function(function_argument)
       ~ "symbolic_artifacts",
     function_argument == "feature_interpretation"
       ~ "feature",
-    function_argument == "miscellaneous_finds_material"
+    function_argument == "miscellaneous_find_material"
       ~ "miscellaneous_finds",
     function_argument == "human_genus"
       ~ "publication_desc_humanremains",

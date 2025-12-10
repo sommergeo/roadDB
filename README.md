@@ -61,7 +61,7 @@ The following arguments are optional and can be used with the corresponding `roa
 | `organic_tool_interpretation`       | character | organic_tools / interpretation                       | contains    |  "harpoon", "worked", "retoucher"             |
 | `symbolic_artifact_interpretation`  | character | symbolic_artifacts / interpretation                  | contains    |  "anthropomorphic"                            |
 | `feature_interpretation`            | character | feature / interpretation                             | exact       |  "stone construction"                         |
-| `miscellaneous_finds_material`      | character | miscellaneous_finds / material                       | exact       |  "ostrich egg shell", "metal"                 |
+| `miscellaneous_find_material`       | character | miscellaneous_finds / material                       | exact       |  "ostrich egg shell", "metal"                 |
 | `human_genus`                       | character | publication_desc_humanremains / genus                | exact       |  "Homo", "Paranthropus"                       |
 | `human_species`                     | character | publication_desc_humanremains / species              | exact       |  "sapiens rhodesiensis", "cf. sapiens"        |
 | `plant_remains`                     | character | plantremains / plant_remains                         | exact       |  "phytoliths", "plant macroremains"           |

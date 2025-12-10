@@ -14,7 +14,7 @@ road_get_miscellaneous_finds(
   category = NULL,
   age_min = NULL,
   age_max = NULL,
-  miscellaneous_finds_material = NULL,
+  miscellaneous_find_material = NULL,
   assemblages = NULL
 )
 }
@@ -64,10 +64,10 @@ as the baseline. If possible the argument \code{age_min} will be converted to an
 \item{age_max}{specifies the maximum age in years before present, using 1950 CE
 as the baseline. If possible the argument \code{age_max} will be converted to an integer; defaults to NULL.}
 
-\item{miscellaneous_finds_material}{specifies material of the miscellaneous 
+\item{miscellaneous_find_material}{specifies material of the miscellaneous 
 finds (e.g. shell, ochre, ostrich eggshell).
-Run \code{road_list_argument_values("miscellaneous_finds_material")} to 
-display possible values. The argument \code{miscellaneous_finds_material} is 
+Run \code{road_list_argument_values("miscellaneous_find_material")} to 
+display possible values. The argument \code{miscellaneous_find_material} is 
 a string (one item) or vector of strings; defaults to NULL.}
 
 \item{assemblages}{specifies a data frame necessarily containing columns 
@@ -111,7 +111,7 @@ cultural periods, material types, and assemblages. Use the parameters to filter 
 or omit them to retrieve a broader dataset.
 }
 \examples{
-road_get_miscellaneous_finds(miscellaneous_finds_material = "wood fossil")
+road_get_miscellaneous_finds(miscellaneous_find_material = "wood fossil")
 road_get_miscellaneous_finds(continent = c("Africa"), locality_type = "open air",
-                             miscellaneous_finds_material = "shell")
+                             miscellaneous_find_material = "shell")
 }

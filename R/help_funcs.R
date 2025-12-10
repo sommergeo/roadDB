@@ -395,7 +395,7 @@ print_null_result_message <- function(
     organic_tool_interpretation = NULL,
     symbolic_artifact_interpretation = NULL,
     feature_interpretation = NULL,
-    miscellaneous_finds_material = NULL,
+    miscellaneous_find_material = NULL,
     genus = NULL,
     species = NULL,
     plant_remains = NULL,
@@ -423,7 +423,7 @@ print_null_result_message <- function(
   organic_tool_interpretation_str <- ifelse(is.null(organic_tool_interpretation), "", paste("organic_tool_interpretation = (", toString(organic_tool_interpretation), ")"))
   symbolic_artifact_interpretation_str <- ifelse(is.null(symbolic_artifact_interpretation), "", paste("symbolic_artifact_interpretation = (", toString(symbolic_artifact_interpretation), ")"))
   feature_interpretation_str <- ifelse(is.null(feature_interpretation), "", paste("feature_interpretation = (", toString(feature_interpretation), ")"))
-  miscellaneous_finds_material_str <- ifelse(is.null(miscellaneous_finds_material), "", paste("miscellaneous_finds_material = (", toString(miscellaneous_finds_material), ")"))
+  miscellaneous_find_material_str <- ifelse(is.null(miscellaneous_find_material), "", paste("miscellaneous_find_material = (", toString(miscellaneous_find_material), ")"))
   
   human_genus_str <- ifelse(is.null(genus), "", paste("human_genus = (", toString(genus), ")"))
   human_species_str <- ifelse(is.null(species), "", paste("human_species = (", toString(species), ")"))
@@ -453,7 +453,7 @@ print_null_result_message <- function(
                 organic_tool_interpretation_str,
                 symbolic_artifact_interpretation_str,
                 feature_interpretation_str,
-                miscellaneous_finds_material_str,
+                miscellaneous_find_material_str,
                 human_genus_str,
                 human_species_str,
                 plant_remains_str,
