@@ -250,8 +250,9 @@ get_publications_as_text <- function (
     {
       if (editor != '' && isInBook)
       {
-        editorTmp <- str_replace_all(editor, c(" and " = ", ", ".and " = ", ", ",and " = ", "))
-        source <- paste0(source, ' In: ', editorTmp, ' (Eds.). ')
+        editorTmp <- str_replace_all(editor, c(" and " = ", ", ".and " = ", ", ",and " = ", ", ", ," = ", "))
+        if (grepl('.,', editorTmp, fixed = TRUE)) source <- paste0(source, ' In: ', editorTmp, ' (Eds.). ')
+        else source <- paste0(source, ' In: ', editorTmp, ' (Ed.). ') 
         source <- paste0(source, trim(data[r,'source_title']))
       }
       else source <- paste0(source, trim(data[r,'source_title']))
