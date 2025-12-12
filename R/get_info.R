@@ -10,7 +10,6 @@
 #'
 #' @examples road_list_argument_values("locality_type")
 #' @examples road_list_argument_values("subcontinent")
-#' @examples road_list_argument_values("dating_methods")
 road_list_argument_values <- function(function_argument)
 {
   if (is.null(function_argument))

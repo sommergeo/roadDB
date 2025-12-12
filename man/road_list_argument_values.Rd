@@ -19,5 +19,4 @@ given argument in the database or read values from file
 \examples{
 road_list_argument_values("locality_type")
 road_list_argument_values("subcontinent")
-road_list_argument_values("dating_methods")
 }
