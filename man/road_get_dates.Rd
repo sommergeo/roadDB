@@ -7,10 +7,10 @@
 road_get_dates(assemblages = NULL)
 }
 \arguments{
-\item{assemblages}{specifies a data frame necessarily containing columns 
-locality_id, assemblage_id. It can be  generated as return value of the 
-function 'road_get_assemblages'. It can be used instead of the locality 
-and assemblage search parameters to filter the results.}
+\item{assemblages}{specifies a data frame with the subset of assemblages, for
+which dating information should be retrieved. It must necessarily contain the
+columns \code{locality_id} and \code{assemblage_id} (e.g., the output of 
+\code{road_get_assemblages()} and other functions with this level of detail).}
 }
 \value{
 A data frame with absolute dating information. Rows represent individual dates, columns contain standard outputs and dating-related details on:
@@ -26,7 +26,7 @@ A data frame with absolute dating information. Rows represent individual dates, 
 \code{laboratory_idlaboratory}: The attribute is the official abbreviation for the designated analytical laboratory.
 }
 \description{
-The  \strong{\code{road_get_dates}} function retrieves absolute dating records for 
+The \strong{\code{road_get_dates}} function retrieves absolute dating records for 
 assemblages, geological layers, and archaeological layers from the ROAD database.
 }
 \details{

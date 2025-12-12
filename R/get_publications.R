@@ -1,19 +1,31 @@
 #' Get publication references from ROAD database
 #'
-#' The \strong{\code{road_get_publications}} fetches publication references for specified localities
-#' from the ROAD database. Publications are formatted according to standard bibliographic conventions
-#' and include books, journal articles, book chapters, theses, and web pages.
+#' The \strong{\code{road_get_publications}} function retrieves publication 
+#' references from the ROAD database. Entries are available in the \code{BibTex}
+#' format or formatted according to bibliographic conventions, including books,
+#' journal articles, book chapters, theses, and web pages.
 #'
-#' @param localities specifies the locality or localities for which to retrieve publications.
-#' The parameter can be a string (single locality name), a vector of strings (multiple locality names),
-#' or a data frame with a \code{locality_id} column (e.g., from \code{road_get_localities()}).
-#' Defaults to NULL.
-#' @param bibtex specifies if results - publication references, will be formatted as BibTeX.
-#' Defaults to FALSE.
+#' @param localities specifies the subset of localities for which publications 
+#' should be retrieved. This parameter can be a string (a single locality name), 
+#' a vector of strings (multiple locality names), or a data frame containing a 
+#' \code{locality_id} column (e.g., the output of \code{road_get_localities()}). 
+#' Defaults to \code{NULL}.
+#' @param bibtex specifies if publication references should be formatted as \code{BibTeX}.
+#' Defaults to \code{FALSE}.
+#' 
+#' @details With \code{localities = NULL} (the default), the function produces a 
+#' complete list of all references compiled in ROAD, with each publication 
+#' appearing only once. When \code{localities} is specified, duplicates may occur 
+#' in the \code{Publication} column if a single source provides information for 
+#' multiple sites.
+#' 
+#' All parameters are optional. If not used, omit them or set them to NULL.
 #'
 #' @return A data frame with two columns:
-#' \item{Locality}{The locality identifier}
-#' \item{Publication}{The formatted publication reference}
+#' @return \code{Locality}: Is only returned, if the argument \code{localities}
+#' is poplated.
+#' @return \code{Publication}: Items from ROAD's publication table, formatted as
+#' reference or \code{BibTex}.
 #'
 #' @export
 #'
