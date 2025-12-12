@@ -1,12 +1,12 @@
 #' Retrieve Dating Information for Assemblages, Geolayers, and Archlayers from the ROAD Database
 #'
-#' The  \strong{\code{road_get_dates}} function retrieves absolute dating records for 
+#' The \strong{\code{road_get_dates}} function retrieves absolute dating records for 
 #' assemblages, geological layers, and archaeological layers from the ROAD database. 
 #' 
-#' @param assemblages specifies a data frame necessarily containing columns 
-#' locality_id, assemblage_id. It can be  generated as return value of the 
-#' function 'road_get_assemblages'. It can be used instead of the locality 
-#' and assemblage search parameters to filter the results.
+#' @param assemblages specifies a data frame with the subset of assemblages, for
+#' which dating information should be retrieved. It must necessarily contain the
+#' columns \code{locality_id} and \code{assemblage_id} (e.g., the output of 
+#' \code{road_get_assemblages()} and other functions with this level of detail).
 #'
 #' @details
 #' The function is designed for users analyzing time series and allows for 

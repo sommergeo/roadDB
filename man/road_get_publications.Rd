@@ -7,23 +7,38 @@
 road_get_publications(localities = NULL, bibtex = F)
 }
 \arguments{
-\item{localities}{specifies the locality or localities for which to retrieve publications.
-The parameter can be a string (single locality name), a vector of strings (multiple locality names),
-or a data frame with a \code{locality_id} column (e.g., from \code{road_get_localities()}).
-Defaults to NULL.}
+\item{localities}{specifies the subset of localities for which publications 
+should be retrieved. This parameter can be a string (a single locality name), 
+a vector of strings (multiple locality names), or a data frame containing a 
+\code{locality_id} column (e.g., the output of \code{road_get_localities()}). 
+Defaults to \code{NULL}.}
 
-\item{bibtex}{specifies if results - publication references, will be formatted as BibTeX.
-Defaults to FALSE.}
+\item{bibtex}{specifies if publication references should be formatted as \code{BibTeX}.
+Defaults to \code{FALSE}.}
 }
 \value{
 A data frame with two columns:
-\item{Locality}{The locality identifier}
-\item{Publication}{The formatted publication reference}
+
+\code{Locality}: Is only returned, if the argument \code{localities}
+is poplated.
+
+\code{Publication}: Items from ROAD's publication table, formatted as
+reference or \code{BibTex}.
 }
 \description{
-The \strong{\code{road_get_publications}} fetches publication references for specified localities
-from the ROAD database. Publications are formatted according to standard bibliographic conventions
-and include books, journal articles, book chapters, theses, and web pages.
+The \strong{\code{road_get_publications}} function retrieves publication 
+references from the ROAD database. Entries are available in the \code{BibTex}
+format or formatted according to bibliographic conventions, including books,
+journal articles, book chapters, theses, and web pages.
+}
+\details{
+With \code{localities = NULL} (the default), the function produces a 
+complete list of all references compiled in ROAD, with each publication 
+appearing only once. When \code{localities} is specified, duplicates may occur 
+in the \code{Publication} column if a single source provides information for 
+multiple sites.
+
+All parameters are optional. If not used, omit them or set them to NULL.
 }
 \examples{
 road_get_publications(localities = c("Apollo 11", "Berg Aukas"))
