@@ -4,8 +4,26 @@
 \name{roadDB-package}
 \alias{roadDB}
 \alias{roadDB-package}
-\title{roadDB: Query data from the ROCEEH Out of Africa Database (ROAD)}
+\title{roadDB: Access data from the ROCEEH Out of Africa Database (ROAD)}
 \description{
-The aim of this package is to provide access to the ROCEEH Out of Africa Database (ROAD) and supply users with dataframes for further analysis in the R ecosystem.
+This package provides an R interface to the ROCEEH Out of Africa Database (ROAD) (https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php), wrapping SQL commands to simplify data access and supply dataframes for analysis in R.
+}
+\author{
+\strong{Maintainer}: Christian Sommer \email{christian.sommer@uni-tuebingen.de} (\href{https://orcid.org/0000-0001-9062-0876}{ORCID})
+
+Authors:
+\itemize{
+  \item Zara Kanaeva \email{zara.kanaeva@geographie.uni-tuebingen.de} (\href{https://orcid.org/0000-0002-1989-1494}{ORCID})
+  \item Jesper Borre Pedersen \email{jesper-borre.pedersen@ifu.uni-tuebingen.de} (\href{https://orcid.org/0000-0002-3468-0986}{ORCID})
+  \item Timo Patrick Streicher \email{timo.streicher@googlemail.com} (\href{https://orcid.org/0009-0009-2193-4308}{ORCID})
+}
+
+Other contributors:
+\itemize{
+  \item Andrew Kandel \email{a.kandel@uni-tuebingen.de} (\href{https://orcid.org/0000-0002-9889-9418}{ORCID}) [contributor]
+  \item Research Center: The Role of Culture in Early Expansions of Humans (ROCEEH) \email{info@roceeh.net} [copyright holder]
+  \item Heidelberg Academy of Sciences and Humanities [funder]
+}
+
 }
 \keyword{internal}

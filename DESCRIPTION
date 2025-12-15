@@ -3,14 +3,13 @@ Type: Package
 Title: Access data from the ROCEEH Out of Africa Database (ROAD)
 Version: 0.1.0
 Authors@R: c(
-    person(given = "Zara", family = "Kanaeva", role = c("aut", "cre"), email = "zara.kanaeva@geographie.uni-tuebingen.de", comment = c(ORCID = "0000-0002-1989-1494")),
-	person(given = "Andrew", family = "Kandel", role = "ctb", email = "a.kandel@uni-tuebingen.de", comment = c(ORCID = "0000-0002-9889-9418")),
-	person(given = "Jesper", family = "Borre Pedersen", role = c("aut", "cre"), email = "jesper-borre.pedersen@ifu.uni-tuebingen.de", comment = c(ORCID = "0000-0002-3468-0986")),
-	person(given = "Christian", family = "Sommer", role = c("aut", "cre", "maint"), email = "christian.sommer@uni-tuebingen.de", comment = c(ORCID = "0000-0001-9062-0876")),
-    person(given = "Timo Patrick", family = "Streicher", role = c("aut", "cre"), email = "timo.streicher@googlemail.com", comment = c(ORCID = "0009-0009-2193-4308")),
-    person(given = "Research Center: The Role of Culture in Early Expansions of Humans (ROCEEH)", role = "cph", email = "info@roceeh.net"),
-	person(given = "Heidelberg Academy of Sciences and Humanities", role = "fnd")
-)
+  person(given = "Zara", family = "Kanaeva", role = c("aut"), email = "zara.kanaeva@geographie.uni-tuebingen.de", comment = c(ORCID = "0000-0002-1989-1494")),
+  person(given = "Andrew", family = "Kandel", role = "ctb", email = "a.kandel@uni-tuebingen.de", comment = c(ORCID = "0000-0002-9889-9418")),
+  person(given = "Jesper", family = "Borre Pedersen", role = c("aut"), email = "jesper-borre.pedersen@ifu.uni-tuebingen.de", comment = c(ORCID = "0000-0002-3468-0986")),
+  person(given = "Christian", family = "Sommer", role = c("aut", "cre"), email = "christian.sommer@uni-tuebingen.de", comment = c(ORCID = "0000-0001-9062-0876")),
+  person(given = "Timo Patrick", family = "Streicher", role = c("aut"), email = "timo.streicher@googlemail.com", comment = c(ORCID = "0009-0009-2193-4308")),
+  person(given = "Research Center: The Role of Culture in Early Expansions of Humans (ROCEEH)", role = "cph", email = "info@roceeh.net"),
+  person(given = "Heidelberg Academy of Sciences and Humanities", role = "fnd"))
 Maintainer: Christian Sommer <christian.sommer@uni-tuebingen.de>
 Description: This package provides an R interface to the ROCEEH Out of Africa Database (ROAD) (https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php), wrapping SQL commands to simplify data access and supply dataframes for analysis in R.
 License: CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0/>
