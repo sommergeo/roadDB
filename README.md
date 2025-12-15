@@ -1,6 +1,20 @@
 # roadDB  <a href="http://roceeh.net"><img src="docs/logo.png" align="right" height="138" /></a>
 The aim of the package `roadDB` is to provide access to the [ROCEEH Out of Africa Database (ROAD)](https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php) and supply users with dataframes for further analysis in the R ecosystem.
 
+## Install
+```
+# CRAN installation
+# install.packages(roadDB)
+
+# Github installation
+install.packages("devtools")
+devtools::install_github("sommergeo/roadDB")
+```
+
+## Database version
+This package provides access to the ROCEEH Out of Africa Database (ROAD).  
+It uses a regularly updated snapshot of the database; the current version was updated on **2025-12-01**.
+
 ## Structure
 The roadDB package has three main levels of detail (LOD) that follow a hierarchical order: Locality, Assemblage and Date. A locality can have multiple assemblages, and each assemblage can have multiple dates associated with it.
 
@@ -17,19 +31,23 @@ As the ROAD database is exceptionally rich in information at the assemblage leve
 
 ## Functions
 ### Core functions
-- road_get_localities()
-- road_get_assemblages()
+- 1st level of detail:
+	- road_get_localities()
+- 2nd level of detail:
+	- road_get_assemblages()
 	- road_get_human_remains()
 	- road_get_paleofauna()
 	- road_get_paleobotany()
 	- archaeology-related:
-		- road_get_lithic_typology()
-		- road_get_lithic_raw_material()
+		- road_get_lithic_typologies()
+		- road_get_lithic_raw_materials()
 		- road_get_organic_tools()
 		- road_get_symbolic_artifacts()
-		- road_get_feature()
+		- road_get_features()
 		- road_get_miscellaneous_finds()
-- road_get_dates()
+- 3rd level of detail:
+	- road_get_dates()
+	- road_get_publications()
 
 ### Helper functions
 - road_list_argument_values()

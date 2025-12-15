@@ -1,0 +1,7 @@
+## R CMD check results
+
+0 errors | 0 warnings | 1 note
+
+* This is a new release.
+
+* Note: This package build generated the warning "unable to verify current time." This is typically due to time zone or system clock differences during the build process. It does not affect the functionality of the package, and we believe it can be safely ignored.
