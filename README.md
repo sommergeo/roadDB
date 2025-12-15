@@ -149,3 +149,9 @@ The following table provides an overview of return attributes.
 | `laboratory_idlaboratory`                 |  `road_get_dates`                            | character            |
 | `publication`                             |  `road_get_publications`                     | character            |
 
+## License
+
+This package is licensed under the **Creative Commons Attribution-ShareAlike 4.0 International [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)**.
+Contents retrieved from the ROAD database are published under the same license and should be cited as
+
+Kandel, A. W., Sommer, C., Kanaeva, Z., Bolus, M., Bruch, A. A., Groth, C., Haidle, M. N., Hertler, C., Heß, J., Malina, M., Märker, M., Hochschild, V., Mosbrugger, V., Schrenk, F., & Conard, N. J. (2023). The ROCEEH Out of Africa Database (ROAD): A large-scale research database serves as an indispensable tool for human evolutionary studies. PLOS ONE, 18(8), e0289513. https://doi.org/10.1371/journal.pone.0289513
