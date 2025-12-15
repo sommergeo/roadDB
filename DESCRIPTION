@@ -1,4 +1,4 @@
-Package: roadDB 
+Package: roadDB
 Type: Package
 Title: Access data from the ROCEEH Out of Africa Database (ROAD)
 Version: 0.1.0
