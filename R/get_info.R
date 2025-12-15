@@ -138,25 +138,25 @@ road_list_argument_values <- function(function_argument)
   return(data)
 }
 
-#' Retrieve Attribute Values from the ROAD Database
-#'
-#' The  \strong{\code{road_list_values}} function allows you to find valid 
-#' attribute values for a given attribute name. You can search for attribute 
-#' names from any `road_get_*` function, and the function will return a list of 
-#' all possible attribute values used in the associated tables. This is 
-#' particularly useful when you need to specify an attribute but are unsure of 
-#' its exact spelling or available values.
-#'
-#' @param attribute_name is a name of an attribute.
-#' @param table_names is a table name or table names to which the attribute belongs.
-#'
-#' @return List of attribute values.
-#' @export
-#'
-#' @examples
-#' road_list_values(table_names = "assemblage", attribute_name = "category")
-#' road_list_values(table_names = c("geological_layer_age", 
-#' "archaeological_layer_age", "assemblage_age"), attribute_name = "dating_method")
+# Retrieve Attribute Values from the ROAD Database
+#
+# The  \strong{\code{road_list_values}} function allows you to find valid 
+# attribute values for a given attribute name. You can search for attribute 
+# names from any `road_get_*` function, and the function will return a list of 
+# all possible attribute values used in the associated tables. This is 
+# particularly useful when you need to specify an attribute but are unsure of 
+# its exact spelling or available values.
+#
+# @param attribute_name is a name of an attribute.
+# @param table_names is a table name or table names to which the attribute belongs.
+#
+# @return List of attribute values.
+# @keywords internal
+#
+# @examples
+# road_list_values(table_names = "assemblage", attribute_name = "category")
+# road_list_values(table_names = c("geological_layer_age", 
+# "archaeological_layer_age", "assemblage_age"), attribute_name = "dating_method")
 road_list_values <- function (table_names, attribute_name)
 { 
    if (is.null(attribute_name))
