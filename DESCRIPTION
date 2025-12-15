@@ -4,7 +4,7 @@ Title: Access data from the ROCEEH Out of Africa Database (ROAD)
 Version: 0.1.0
 Authors@R: c(
     person(given = "Zara", family = "Kanaeva", role = c("aut", "cre"), email = "zara.kanaeva@geographie.uni-tuebingen.de", comment = c(ORCID = "0000-0002-1989-1494")),
-	person(given = "Andrew", family = "Kandel", role = "cre", email = "a.kandel@uni-tuebingen.de", comment = c(ORCID = "0000-0002-9889-9418")),
+	person(given = "Andrew", family = "Kandel", role = "ctb", email = "a.kandel@uni-tuebingen.de", comment = c(ORCID = "0000-0002-9889-9418")),
 	person(given = "Jesper", family = "Borre Pedersen", role = c("aut", "cre"), email = "jesper-borre.pedersen@ifu.uni-tuebingen.de", comment = c(ORCID = "0000-0002-3468-0986")),
 	person(given = "Christian", family = "Sommer", role = c("aut", "cre", "maint"), email = "christian.sommer@uni-tuebingen.de", comment = c(ORCID = "0000-0001-9062-0876")),
     person(given = "Timo Patrick", family = "Streicher", role = c("aut", "cre"), email = "timo.streicher@googlemail.com", comment = c(ORCID = "0009-0009-2193-4308")),

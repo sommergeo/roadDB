@@ -1,4 +1,4 @@
-citHeader("To cite package stars in publications, please use:")
+citHeader("To cite package roadDB in publications, please use:")
 
 bibentry(
   bibtype  = "Article",
