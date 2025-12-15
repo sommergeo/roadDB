@@ -68,13 +68,12 @@ cm_feature_interpretation <- "feature_interpretation"
 cm_miscellaneous_find_material <- "miscellaneous_find_material"
 cm_miscellaneous_find_raw_material_source <- "miscellaneous_find_raw_material_source"
 
-#' run query in ROAD database
-#' 
-#' @param query specifies the SQl query.
-#'
-#' @return Database search result as a data frame.
-#' @keywords internal
-
+# run query in ROAD database
+# 
+# @param query specifies the SQl query.
+# 
+# @return Database search result as a data frame.
+# @keywords internal
 road_run_query <- function(query)
 {
   query <- trimws(query)
@@ -91,9 +90,6 @@ road_run_query <- function(query)
 
   # run query
   result <- dbGetQuery(con, query)
-
-  #message(str(result$transport_distance))
-  #message(str(result))
 
   # replace all possible "NULL" values with NA
   result[result == ""] <- NA

@@ -4,3 +4,4 @@
 ^\.Rproj\.user$
 ^vignettes/articles$
 ^cran-comments\.md$
+^R/login.R$
