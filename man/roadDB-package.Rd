@@ -21,7 +21,7 @@ Authors:
 Other contributors:
 \itemize{
   \item Andrew Kandel \email{a.kandel@uni-tuebingen.de} (\href{https://orcid.org/0000-0002-9889-9418}{ORCID}) [contributor]
-  \item Research Center: The Role of Culture in Early Expansions of Humans (ROCEEH) \email{info@roceeh.net} [copyright holder]
+  \item Research Center: The Role of Culture in Early Expansions of Humans (ROCEEH) [copyright holder]
   \item Heidelberg Academy of Sciences and Humanities [funder]
 }
 
