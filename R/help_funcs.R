@@ -70,10 +70,10 @@ cm_miscellaneous_find_raw_material_source <- "miscellaneous_find_raw_material_so
 
 # run query in ROAD database
 # 
-# @param query specifies the SQl query.
+# param query specifies the SQl query.
 # 
-# @return Database search result as a data frame.
-# @keywords internal
+# return Database search result as a data frame.
+#' @keywords internal
 road_run_query <- function(query)
 {
   query <- trimws(query)

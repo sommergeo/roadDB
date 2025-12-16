@@ -155,21 +155,21 @@ get_publication_references <- function (
   return(publications)
 }
 
-#' Get formatted publication references as text for a single locality (internal helper function)
-#'
-#' Internal helper function that formats all publications
-#' associated with a single locality and formats them as BibTeX entries. The function
-#' generates proper BibTeX entries for different publication types including books,
-#' book chapters (inbook), journal articles, theses (PhD, Master's, Bachelor's),
-#' and unpublished works.
-#'
-#' @param locality A single locality identifier (string).
-#' @param data a data frame with all publication data queried from ROAD database and
-#' associated with the locality.
-#'
-#' @return A data frame with two columns:
-#' \item{Locality}{The locality identifier}
-#' \item{Publication}{The as text formatted publication entry}
+# Get formatted publication references as text for a single locality (internal helper function)
+#
+# Internal helper function that formats all ROAD publications
+# associated with a single locality and formats them as BibTeX entries. The function
+# generates proper BibTeX entries for different publication types including books,
+# book chapters (inbook), journal articles, theses (PhD, Master's, Bachelor's),
+# and unpublished works.
+#
+# @param locality A single locality identifier (string).
+# @param data a data frame with all publication data queried from ROAD database and
+# associated with the locality.
+#
+# @return A data frame with two columns:
+# \item{Locality}{The locality identifier}
+# \item{Publication}{The as text formatted publication entry}
 #' @keywords internal
 get_publications_as_text <- function (
     locality = NULL,
@@ -318,28 +318,28 @@ get_publications_as_text <- function (
   return(publications)
 }
 
-#' Get BibTeX formatted publication references for a single locality (internal helper function)
-#'
-#' Internal helper function that formats all publications
-#' associated with a single locality and formats them as BibTeX entries. The function
-#' generates proper BibTeX entries for different publication types including books,
-#' book chapters (inbook), journal articles, theses (PhD, Master's, Bachelor's),
-#' and unpublished works.
-#'
-#' @param locality A single locality identifier (string).
-#' @param data a data frame with all publication data queried from ROAD database and
-#' associated with the locality.
-#'
-#' @return A data frame with two columns:
-#' \item{Locality}{The locality identifier}
-#' \item{Publication}{The BibTeX formatted publication entry}
-#'
-#' @details The function automatically determines the correct BibTeX entry type
-#' (\code{@@book}, \code{@@inbook}, \code{@@article}, \code{@@phdthesis}, 
-#' \code{@@mastersthesis}, \code{@@bathesis}, \code{@@unpublished})
-#' based on publication metadata and includes all relevant fields such as author, title,
-#' journal/booktitle, publisher, year, pages, volume, DOI, and editor.
-#'
+# Get BibTeX formatted publication references for a single locality (internal helper function)
+#
+# Internal helper function that formats all ROAD publications
+# associated with a single locality and formats them as BibTeX entries. The function
+# generates proper BibTeX entries for different publication types including books,
+# book chapters (inbook), journal articles, theses (PhD, Master's, Bachelor's),
+# and unpublished works.
+#
+# @param locality A single locality identifier (string).
+# @param data a data frame with all publication data queried from ROAD database and
+# associated with the locality.
+#
+# @return A data frame with two columns:
+# \item{Locality}{The locality identifier}
+# \item{Publication}{The BibTeX formatted publication entry}
+#
+# @details The function automatically determines the correct BibTeX entry type
+# (\code{@@book}, \code{@@inbook}, \code{@@article}, \code{@@phdthesis}, 
+# \code{@@mastersthesis}, \code{@@bathesis}, \code{@@unpublished})
+# based on publication metadata and includes all relevant fields such as author, title,
+# journal/booktitle, publisher, year, pages, volume, DOI, and editor.
+#
 #' @keywords internal
 get_publications_as_bibtex <- function (
     locality = NULL,

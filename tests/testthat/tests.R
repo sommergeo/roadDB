@@ -4,11 +4,11 @@
 
 # localities1 <- road_get_localities(continents = "Africa")
 # localities2 <- road_get_localities(continents = c('Africa', "Asia"))
-# localities3 <- road_get_localities(countries = c("Germany", "France"), cultural_periods = "Middle Paleolithic")
+# localities3 <- road_get_localities(countries = c("Germany", "France"), cultural_period = "Middle Paleolithic")
 # 
-# humanremains0 <- road_get_human_remains(countries = "Ukraine")
+# humanremains0 <- road_get_human_remains(country = "Ukraine")
 # humanremains1 <- road_get_human_remains(age_min = 80000L, age_max = 120000L)
-# humanremains2 <- road_get_human_remains(continents = "Africa", human_genus = "Homo", human_species = "rudolfensis")
+# humanremains2 <- road_get_human_remains(continent = "Africa", human_genus = "Homo", human_species = "rudolfensis")
 # 
 # values0 <- road_list_argument_values()
 # values1 <- road_list_argument_values("type")
