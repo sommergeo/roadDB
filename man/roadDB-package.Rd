@@ -4,9 +4,9 @@
 \name{roadDB-package}
 \alias{roadDB}
 \alias{roadDB-package}
-\title{roadDB: Access data from the ROCEEH Out of Africa Database (ROAD)}
+\title{roadDB: Access Data from the ROCEEH Out of Africa Database (ROAD)}
 \description{
-This package provides an R interface to the ROCEEH Out of Africa Database (ROAD) (https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php), wrapping SQL commands to simplify data access and supply dataframes for analysis in R.
+Offers an R interface to the ROCEEH Out of Africa Database (ROAD) (\url{https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php}), wrapping SQL queries to facilitate data access and supply data frames for analysis in R.
 }
 \author{
 \strong{Maintainer}: Christian Sommer \email{christian.sommer@uni-tuebingen.de} (\href{https://orcid.org/0000-0001-9062-0876}{ORCID})

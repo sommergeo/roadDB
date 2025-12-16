@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_dates.R
 \name{road_get_dates}
 \alias{road_get_dates}
-\title{Retrieve Dating Information for Assemblages, Geolayers, and Archlayers from the ROAD Database}
+\title{Retrieve Dating Information for Assemblages, Geological and Archaeological Layers from the ROAD Database}
 \usage{
 road_get_dates(assemblages = NULL)
 }
@@ -61,7 +61,7 @@ not included in the \code{road_get_dates} function, which only returns raw data.
 \strong{Background on radiocarbon dating:} Please note that C14 dates are 
 uncalibrated. For further analysis, use one of the available calibration 
 tools, such as the \pkg{rcarbon} package available on CRAN 
-(see: \url{https://cran.r-project.org/web/packages/rcarbon/index.html}).
+(see: \url{https://cran.r-project.org/package=rcarbon}).
 
 All parameters are optional. If not used, omit them or set them to NULL.
 }
