@@ -23,14 +23,22 @@
 #'
 #' @return A data frame with two columns:
 #' @return \code{Locality}: Is only returned, if the argument \code{localities}
-#' is poplated.
+#' is populated.
 #' @return \code{Publication}: Items from ROAD's publication table, formatted as
 #' reference or \code{BibTex}.
 #'
 #' @export
 #'
 #' @examples
-#' road_get_publications(localities = c("Apollo 11", "Berg Aukas"))
+#' if (curl::has_internet())
+#' {
+#' tryCatch({
+#' result <- road_get_publications(localities = c("Apollo 11", "Berg Aukas"))
+#' print(result)
+#' }, error = function(e) {
+#' message("Service unavailable.")
+#' })
+#' }
 #' 
 #' # Using result from road_get_localities
 #' locs <- road_get_localities(country = "Germany")

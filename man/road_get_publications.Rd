@@ -41,7 +41,15 @@ multiple sites.
 All parameters are optional. If not used, omit them or set them to NULL.
 }
 \examples{
-road_get_publications(localities = c("Apollo 11", "Berg Aukas"))
+if (curl::has_internet())
+{
+tryCatch({
+result <- road_get_publications(localities = c("Apollo 11", "Berg Aukas"))
+print(result)
+}, error = function(e) {
+message("Service unavailable.")
+})
+}
 
 # Using result from road_get_localities
 locs <- road_get_localities(country = "Germany")
