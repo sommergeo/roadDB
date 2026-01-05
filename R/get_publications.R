@@ -40,9 +40,9 @@
 #' })
 #' }
 #' 
-#' # Using result from road_get_localities
-#' locs <- road_get_localities(country = "Germany")
-#' road_get_publications(localities = locs)
+# # Using result from road_get_localities
+# locs <- road_get_localities(country = "Germany")
+# road_get_publications(localities = locs)
 road_get_publications <- function (
    localities = NULL,
    bibtex = F
