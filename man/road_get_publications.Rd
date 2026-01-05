@@ -20,7 +20,7 @@ Defaults to \code{FALSE}.}
 A data frame with two columns:
 
 \code{Locality}: Is only returned, if the argument \code{localities}
-is poplated.
+is populated.
 
 \code{Publication}: Items from ROAD's publication table, formatted as
 reference or \code{BibTex}.
@@ -51,7 +51,4 @@ message("Service unavailable.")
 })
 }
 
-# Using result from road_get_localities
-locs <- road_get_localities(country = "Germany")
-road_get_publications(localities = locs)
 }
