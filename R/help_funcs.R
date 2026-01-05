@@ -89,7 +89,7 @@ road_run_query <- function(query)
   port = 5432, user = "road_user", password = "road")
 
   # run query
-  result <- dbGetQuery(con, query)
+  result <- dbGetQuery(conn = con, statement = query, keepalives = 1, keepalives_idle = 1200)
 
   # replace all possible "NULL" values with NA
   result[result == ""] <- NA
