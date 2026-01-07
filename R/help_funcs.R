@@ -88,10 +88,9 @@ road_run_query <- function(query)
   
   max_attempts <- 5
   attempt <- 1
-  success <- FALSE
   result <- NULL
   
-  while (attempt <= max_attempts && !success) {
+  while (attempt <= max_attempts) {
   
     con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
                      port = 5432, user = "road_user", password = "road")
@@ -104,7 +103,8 @@ road_run_query <- function(query)
                           }
                           # Wait 2^attempt seconds (2, 4, 8, 16...)
                           wait <- 2^attempt
-                          message(sprintf("Attempt %d failed. Retrying in %d seconds...", attempt, wait))
+                          message(paste("Attempt", attempt, "of", max_attempts, "..."))
+                          # message(sprintf("Attempt %d failed. Retrying in %d seconds...", attempt, wait))
                           Sys.sleep(wait)
                           return(NULL)
              })
