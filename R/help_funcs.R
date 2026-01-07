@@ -85,11 +85,33 @@ road_run_query <- function(query)
   # con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host="134.2.216.14", 
   #                  port=5432, user=rstudioapi::askForPassword("Database username"), 
   #                  password=rstudioapi::askForPassword("Database password"))
+  
+  max_attempts <- 5
+  attempt <- 1
+  success <- FALSE
+  result <- NULL
+  
+  while (attempt <= max_attempts && !success) {
+  
   con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
   port = 5432, user = "road_user", password = "road")
 
   # run query
-  result <- dbGetQuery(conn = con, statement = query, keepalives = 1, keepalives_idle = 1200)
+  result <- tryCatch({dbGetQuery(conn = con, statement = query) #, keepalives = 1, keepalives_idle = 1200)
+  }, error = function(e) {
+    if (attempt == max_attempts) {
+      stop("Final attempt failed: ", e$message)
+    }
+    
+    # Wait 2^attempt seconds (2, 4, 8, 16...)
+    wait <- 2^attempt
+    message(sprintf("Attempt %d failed. Retrying in %d seconds...", attempt, wait))
+    Sys.sleep(wait)
+    return(NULL)
+  })
+  
+  attempt <- attempt + 1
+  }
 
   # replace all possible "NULL" values with NA
   result[result == ""] <- NA
