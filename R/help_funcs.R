@@ -90,7 +90,7 @@ road_run_query <- function(query)
   attempt <- 1
   result <- NULL
   
-  while (attempt <= max_attempts) {
+  while (attempt <= max_attempts && is.null(result)) {
   
     con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
                      port = 5432, user = "road_user", password = "road")
@@ -100,16 +100,17 @@ road_run_query <- function(query)
               }, error = function(e) {
                            if (attempt == max_attempts) {
                              stop("Final attempt failed: ", e$message)
-                          }
-                          # Wait 2^attempt seconds (2, 4, 8, 16...)
-                          wait <- 2^attempt
-                          message(paste("Attempt", attempt, "of", max_attempts, "..."))
-                          # message(sprintf("Attempt %d failed. Retrying in %d seconds...", attempt, wait))
-                          Sys.sleep(wait)
-                          return(NULL)
+                           }
+                           # Wait 2^attempt seconds (2, 4, 8, 16...)
+                           wait <- 2^attempt
+                           message(paste("Attempt", attempt, "of", max_attempts, "..."))
+                           # message(sprintf("Attempt %d failed. Retrying in %d seconds...", attempt, wait))
+                           Sys.sleep(wait)
+                           return(NULL)
              })
   
     attempt <- attempt + 1
+    #message(paste("Attempt", attempt, "of", max_attempts, "..."))
   }
 
   # replace all possible "NULL" values with NA
