@@ -110,7 +110,7 @@ road_run_query <- function(query)
              })
   
     attempt <- attempt + 1
-    message(paste("Attempt", attempt, "of", max_attempts, "..."))
+    #message(paste("Attempt", attempt, "of", max_attempts, "..."))
   }
 
   # replace all possible "NULL" values with NA
