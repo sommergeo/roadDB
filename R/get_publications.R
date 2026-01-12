@@ -30,21 +30,12 @@
 #' @export
 #'
 #' @examples
-#' if (curl::has_internet())
-#' {
-#' tryCatch({
+#'
 #' result <- road_get_publications(localities = c("Apollo 11", "Berg Aukas"))
-#' print(result)
-#' }, error = function(e) {
-#' message("Service unavailable.")
-#' })
-#' }
 #' 
 #' # Using result from road_get_localities
-#' \donttest{
 #'   locs <- road_get_localities(country = "Estonia")
 #'   road_get_publications(localities = locs)
-#' }
 road_get_publications <- function (
    localities = NULL,
    bibtex = F
