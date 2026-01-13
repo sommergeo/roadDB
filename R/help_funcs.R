@@ -593,10 +593,13 @@ print_null_result_message <- function(
 # eliminate duplicates from a list as string
 well_formed_string_to_string_without_duplicates <- function(str_with_duplikates = NULL, separator = ",[ ]*")
 {
+  # if (is.na(str_with_duplikates)) message(str_with_duplikates)
   l <- str_split(str_with_duplikates, separator)
   v <- unique(l[[1]])
   
-  return(paste0(v, collapse = ", "))
+  vp <- paste0(v, collapse = ", ")
+  if (vp == "") return(NA) 
+  else return(vp) #(paste0(v, collapse = ", "))
   
 }
 

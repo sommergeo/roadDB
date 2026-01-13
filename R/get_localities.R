@@ -281,9 +281,9 @@ road_get_localities <- function(
     .data <- c()
     data_tmp <- assemblages_selected %>% group_by(.data$locality_id, .data$continent, .data$subcontinent,
                                                   .data$country, .data$locality_type, .data$coord_x, .data$coord_y, .data$coordinate_source,
-                                                  ) %>% summarise(category = well_formed_string_to_string_without_duplicates(paste0(category, collapse = ", ")),
-                                                                  cultural_period = well_formed_string_to_string_without_duplicates(paste0(cultural_period, collapse = ", ")),
-                                                                  technocomplex = well_formed_string_to_string_without_duplicates(paste0(technocomplex, collapse = ", ")),
+                                                  ) %>% summarise(category = well_formed_string_to_string_without_duplicates(apply(cbind(category), 2, function(x) paste(x[!is.na(x)], collapse = ", "))),
+                                                                  cultural_period = well_formed_string_to_string_without_duplicates(apply(cbind(cultural_period), 2, function(x) paste(x[!is.na(x)], collapse = ", "))),
+                                                                  technocomplex = well_formed_string_to_string_without_duplicates(apply(cbind(technocomplex), 2, function(x) paste(x[!is.na(x)], collapse = ", "))),
                                                                   subset_age_min = min(age_min),
                                                                   subset_age_max = max(age_max))
 
