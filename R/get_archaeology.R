@@ -522,8 +522,8 @@ road_get_organic_tools <- function(
 #' @export
 #'
 #' @examples
-#' road_get_symbolic_artifacts(symbolic_artifact_interpretation = c("instrument"))
-#' road_get_symbolic_artifacts(continent = "Africa", symbolic_artifact_interpretation = "zoomorphic")
+#' road_get_symbolic_artifacts(continent = "Europe", locality_type = "rock shelter", symbolic_artifact_interpretation = "instrument")
+#' road_get_symbolic_artifacts(subcontinent = "Southern Africa", symbolic_artifact_interpretation = "zoomorphic")
 road_get_symbolic_artifacts <- function(
     continent = NULL,
     subcontinent = NULL,
@@ -659,9 +659,8 @@ road_get_symbolic_artifacts <- function(
 #' @export
 #'
 #' @examples
-#' road_get_features(continent = c("Europe", "Africa"), feature_interpretation = "textile imprints")
-#' road_get_features(continent = "Africa", locality_type = c("cave"),
-#'                  feature_interpretation = "bedding")
+#' road_get_features(country = "Czech Republic", feature_interpretation = "textile imprints")
+#' road_get_features(continent = "Africa", locality_type = c("cave"), feature_interpretation = "bedding")
 road_get_features <- function(
     continent = NULL,
     subcontinent = NULL,
@@ -807,7 +806,7 @@ road_get_features <- function(
 #' @export
 #'
 #' @examples
-#' road_get_miscellaneous_finds(miscellaneous_find_material = "wood fossil")
+#' road_get_miscellaneous_finds(country = "Sudan", miscellaneous_find_material = "wood fossil")
 #' road_get_miscellaneous_finds(continent = c("Africa"), locality_type = "open air",
 #'                              miscellaneous_find_material = "shell")
 road_get_miscellaneous_finds <- function(

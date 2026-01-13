@@ -80,7 +80,7 @@
 #' @export
 #'
 #' @examples
-#' road_get_plantremains(plant_family = "Poaceae", plant_genus = "Setaria")
+#' road_get_plantremains(subcontinent = "Central Asia", plant_family = "Poaceae", plant_genus = "Setaria")
 #' road_get_plantremains(country = c("Israel"), plant_remains = "starch")
 road_get_plantremains <- function(
     continent = NULL,
