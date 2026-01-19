@@ -91,7 +91,6 @@ This function enables you to query feature data from the ROAD database using par
 cultural periods, feature interpretation, and assemblages. Use the parameters to filter the results or omit them for broader results.
 }
 \examples{
-road_get_features(continent = c("Europe", "Africa"), feature_interpretation = "textile imprints")
-road_get_features(continent = "Africa", locality_type = c("cave"),
-                 feature_interpretation = "bedding")
+road_get_features(country = "Czech Republic", feature_interpretation = "textile imprints")
+road_get_features(continent = "Africa", locality_type = c("cave"), feature_interpretation = "bedding")
 }
