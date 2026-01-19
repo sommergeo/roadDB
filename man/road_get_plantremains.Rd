@@ -62,10 +62,12 @@ plant remains. The argument \code{category} is a string (one item) or
 vector of strings (one or more items); defaults to NULL.}
 
 \item{age_min}{specifies the minimum age in years before present, using 1950 CE
-as the baseline. If possible the argument \code{age_min} will be converted to an integer; defaults to NULL.}
+as the baseline. If possible the argument \code{age_min} will be converted to 
+an integer; defaults to NULL.}
 
 \item{age_max}{specifies the maximum age in years before present, using 1950 CE
-as the baseline. If possible the argument \code{age_max} will be converted to an integer; defaults to NULL.}
+as the baseline. If possible the argument \code{age_max} will be converted to 
+an integer; defaults to NULL.}
 
 \item{assemblages}{specifies a data frame necessarily containing columns 
 locality_id, assemblage_id. It can be  generated as return value of the 
@@ -99,9 +101,11 @@ to display possible values. The argument \code{plant_species} is a string
 A data frame with plant remains information. Rows represent individual
 plant remains finds, columns contain standard outputs and plant remains-related details on:
 
-\code{plant_remains}: The attribute specifies the type of plant remains (e.g. pollen, plant macroremains).
+\code{plant_remains}: The attribute specifies the type of plant remains 
+(e.g. pollen, plant macroremains).
 
-\code{plant_family}, \code{plant_genus}, \code{plant_species}: The attributes specify the taxonomic classification of the plant remains.
+\code{plant_family}, \code{plant_genus}, \code{plant_species}: 
+The attributes specify the taxonomic classification of the plant remains.
 }
 \description{
 The function  \strong{\code{road_get_plantremains}} fetches data of paleobotanical remains from the ROAD database.
@@ -117,6 +121,7 @@ If genus and species are both specified, most of the time it's more sensible to 
 single strings and not as vectors with multiple search words to recieve useful results.
 }
 \examples{
-road_get_plantremains(subcontinent = "Central Asia", plant_family = "Poaceae", plant_genus = "Setaria")
+road_get_plantremains(subcontinent = "Central Asia", plant_family = "Poaceae", 
+plant_genus = "Setaria")
 road_get_plantremains(country = c("Israel"), plant_remains = "starch")
 }

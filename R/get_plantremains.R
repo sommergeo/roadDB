@@ -45,9 +45,11 @@
 #' plant remains. The argument \code{category} is a string (one item) or
 #' vector of strings (one or more items); defaults to NULL.
 #' @param age_min specifies the minimum age in years before present, using 1950 CE
-#' as the baseline. If possible the argument \code{age_min} will be converted to an integer; defaults to NULL.
+#' as the baseline. If possible the argument \code{age_min} will be converted to 
+#' an integer; defaults to NULL.
 #' @param age_max specifies the maximum age in years before present, using 1950 CE
-#' as the baseline. If possible the argument \code{age_max} will be converted to an integer; defaults to NULL.
+#' as the baseline. If possible the argument \code{age_max} will be converted to 
+#' an integer; defaults to NULL.
 #' @param assemblages specifies a data frame necessarily containing columns 
 #' locality_id, assemblage_id. It can be  generated as return value of the 
 #' function 'road_get_assemblages'. It can be used instead of the locality 
@@ -74,13 +76,16 @@
 #'
 #' @return A data frame with plant remains information. Rows represent individual
 #' plant remains finds, columns contain standard outputs and plant remains-related details on:
-#' @return \code{plant_remains}: The attribute specifies the type of plant remains (e.g. pollen, plant macroremains).
-#' @return \code{plant_family}, \code{plant_genus}, \code{plant_species}: The attributes specify the taxonomic classification of the plant remains.
+#' @return \code{plant_remains}: The attribute specifies the type of plant remains 
+#' (e.g. pollen, plant macroremains).
+#' @return \code{plant_family}, \code{plant_genus}, \code{plant_species}: 
+#' The attributes specify the taxonomic classification of the plant remains.
 #'
 #' @export
 #'
 #' @examples
-#' road_get_plantremains(subcontinent = "Central Asia", plant_family = "Poaceae", plant_genus = "Setaria")
+#' road_get_plantremains(subcontinent = "Central Asia", plant_family = "Poaceae", 
+#' plant_genus = "Setaria")
 #' road_get_plantremains(country = c("Israel"), plant_remains = "starch")
 road_get_plantremains <- function(
     continent = NULL,
