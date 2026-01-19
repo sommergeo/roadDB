@@ -122,6 +122,6 @@ single strings and not as vectors with multiple search words to recieve useful r
 }
 \examples{
 road_get_plantremains(subcontinent = "Central Asia", plant_family = "Poaceae", 
-plant_genus = "Setaria")
+                      plant_genus = "Setaria")
 road_get_plantremains(country = c("Israel"), plant_remains = "starch")
 }
