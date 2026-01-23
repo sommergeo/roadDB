@@ -161,7 +161,7 @@ road_get_dates <- function (assemblages = NULL)
                   ORDER BY idgeostrat")
   pgdata <- road_run_query(query)
   
-  #res_pg_data <- left_join(data, pgdata, by = c("locality_id", "geolayer"))
+  res_pg_data <- left_join(data, pgdata, by = c("locality_id", "geolayer"))
   
   
   query = paste0("SELECT publications, archlayer_idlocality as locality_id, '-1' as geolayer, archlayer_name as archlayer 
@@ -186,15 +186,16 @@ road_get_dates <- function (assemblages = NULL)
                         ON archlayer_correl_geolayer.geolayer_idlocality = publications_geostrat_with_geolayer.geolayer_idlocality 
                            AND archlayer_correl_geolayer.geolayer_name = publications_geostrat_with_geolayer.geolayer_name 
                   ORDER BY idgeostrat")
-  padata <- road_run_query(query)
+  #padata <- road_run_query(query)
   
-  pg_pa_data <- union(pgdata, padata) 
+  #pg_pa_data <- union(pgdata, padata) 
     
-  res_pg_pa_data <- left_join(data, pg_pa_data, by = c("locality_id", "geolayer", "archlayer"))
+  #res_pg_pa_data <- left_join(data, pg_pa_data, by = c("locality_id", "geolayer", "archlayer"))
   
   
-  #return(res_pg_pa_data)
-  return(data)
+  #return(pg_pa_data)
+  return(res_pg_data)
+  #return(data)
 }
 
 gstrat_publications <- function ()

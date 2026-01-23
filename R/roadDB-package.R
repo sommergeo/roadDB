@@ -9,7 +9,6 @@
 #' @importFrom dplyr group_by
 #' @importFrom dplyr inner_join
 #' @importFrom dplyr left_join
-#' @importFrom dplyr union
 #' @importFrom RPostgres dbConnect
 #' @importFrom RPostgres dbGetQuery
 #' @importFrom utils read.csv
