@@ -51,6 +51,13 @@
 #' @return \code{material_dated}: The attribute specifies the general type of material analyzed (e.g. bone, tooth, antler etc.).
 #' @return \code{dating_method}: The attribute specifies the method of analysis (e.g. 14C, OSL, IRSL, etc.).
 #' @return \code{laboratory_idlaboratory}: The attribute is the official abbreviation for the designated analytical laboratory.
+#' @return \code{analysis_number}: The attribute specifies the official laboratory number 
+#' assigned to the dated sample (e.g., Pta-2345, GrA-1234, OxA-X-2456-45). Always include 
+#' the lab prefix, followed by a single hyphen, and then the official number provided by the laboratory. 
+#' @return \code{date_of_analysis}: The attribute specifies the year of the analysis/report 
+#' or the first publication of the results in the format yyyy.
+#' @return \code{id}: The attribute is automatically generated, sequential number. This number is unique for each age table.
+#' @return \code{publication}: The attribute is a list of publications describing the respective geological stratigraphy.
 #' 
 #' @export
 #' 
@@ -137,7 +144,6 @@ road_get_dates <- function (assemblages = NULL)
   
   data <- road_run_query(query)
   
-  #message(query)
   
   # data <- add_locality_columns(data, assemblages = assemblages)
   data <- add_locality_columns(data, localities = localities)
@@ -159,10 +165,10 @@ road_get_dates <- function (assemblages = NULL)
                                   publication_desc_geostrat.publication_id_source = publication.edition_id_source 
                              ) AS publication_geostrat GROUP BY idgeostrat
                         ) AS publications_geostrat 
-                        INNER JOIN  geostrat_desc_geolayer
-                        ON idgeostrat = geostrat_idgeostrat
-                        GROUP BY geolayer_idlocality, geolayer_name
-                  UNION 
+                  INNER JOIN  geostrat_desc_geolayer
+                  ON idgeostrat = geostrat_idgeostrat
+                  GROUP BY geolayer_idlocality, geolayer_name
+                UNION 
                   SELECT DISTINCT string_agg(publications, ' +++ ' ) as publication, 
                          archlayer_idlocality as locality_id, -1 as assemblage_id, 
                          '-1' as geolayer, archlayer_name as archlayer 
@@ -183,11 +189,11 @@ road_get_dates <- function (assemblages = NULL)
                               INNER JOIN  geostrat_desc_geolayer
                               ON idgeostrat = geostrat_idgeostrat
                         ) AS publications_geostrat_with_geolayer
-                        INNER JOIN archlayer_correl_geolayer
-                        ON archlayer_correl_geolayer.geolayer_idlocality = publications_geostrat_with_geolayer.geolayer_idlocality 
-                           AND archlayer_correl_geolayer.geolayer_name = publications_geostrat_with_geolayer.geolayer_name 
-                       GROUP BY archlayer_idlocality, archlayer_name
-                  UNION
+                  INNER JOIN archlayer_correl_geolayer
+                  ON archlayer_correl_geolayer.geolayer_idlocality = publications_geostrat_with_geolayer.geolayer_idlocality 
+                     AND archlayer_correl_geolayer.geolayer_name = publications_geostrat_with_geolayer.geolayer_name 
+                  GROUP BY archlayer_idlocality, archlayer_name
+                UNION
                   SELECT DISTINCT string_agg(publications, ' +++ ' ) as publication, 
                          assemblage_idlocality as locality_id, 
                          assemblage_idassemblage as assemblage_id, '-1' as geolayer, '-1' as archlayer 
@@ -208,10 +214,10 @@ road_get_dates <- function (assemblages = NULL)
                          INNER JOIN  geostrat_desc_geolayer
                          ON idgeostrat = geostrat_idgeostrat
                         ) AS publications_geostrat_with_geolayer
-                        INNER JOIN assemblage_in_geolayer
-                        ON assemblage_in_geolayer.geolayer_idlocality = publications_geostrat_with_geolayer.geolayer_idlocality 
-                           AND assemblage_in_geolayer.geolayer_name = publications_geostrat_with_geolayer.geolayer_name
-                        GROUP BY assemblage_idlocality, assemblage_idassemblage
+                    INNER JOIN assemblage_in_geolayer
+                    ON assemblage_in_geolayer.geolayer_idlocality = publications_geostrat_with_geolayer.geolayer_idlocality 
+                       AND assemblage_in_geolayer.geolayer_name = publications_geostrat_with_geolayer.geolayer_name
+                    GROUP BY assemblage_idlocality, assemblage_idassemblage
                   ")
   
   
@@ -220,78 +226,4 @@ road_get_dates <- function (assemblages = NULL)
   res_data <- left_join(data, pdata, by = c("locality_id", "geolayer", "archlayer", "assemblage_id"))
   
   return(res_data)
-}
-
-gstrat_publications <- function ()
-{
-  query = paste0("SELECT idgeostrat, publications, geolayer_idlocality, geolayer_name 
-                 FROM (SELECT idgeostrat, string_agg(publication, ' +++ ' ) as publications 
-                       FROM (SELECT DISTINCT geostratigraphy_idgeostrat as idgeostrat,
-                                             concat(publication.author, '  ', edition.publication_year, '  ', 
-                                             publication_source.title, '  ', doi) as publication
-                                             FROM publication_source, edition, publication, publication_desc_geostrat
-                                             WHERE publication_source.id_source = edition.publication_source_id_source and 
-                                             publication.edition_idedition = edition.idedition and 
-                                             publication.edition_id_source = edition.publication_source_id_source and 
-                                             publication_desc_geostrat.publication_idpublication = publication.idpublication and 
-                                             publication_desc_geostrat.publication_idedition = publication.edition_idedition and 
-                                             publication_desc_geostrat.publication_id_source = publication.edition_id_source 
-                             ) AS publication_geostrat GROUP BY idgeostrat
-                        ) AS publications_geostrat 
-                        LEFT JOIN  geostrat_desc_geolayer
-                        ON idgeostrat = geostrat_idgeostrat
-                  ORDER BY idgeostrat")
-  pgdata <- road_run_query(query)
-
-  query = paste0("SELECT idgeostrat, publications, archlayer_idlocality, archlayer_name 
-                  FROM (SELECT idgeostrat, publications, geolayer_idlocality, geolayer_name 
-                        FROM (SELECT idgeostrat, string_agg(publication, ' +++ ' ) as publications 
-                              FROM (SELECT DISTINCT geostratigraphy_idgeostrat as idgeostrat,
-                                             concat(publication.author, '  ', edition.publication_year, '  ', 
-                                             publication_source.title, '  ', doi) as publication
-                                    FROM publication_source, edition, publication, publication_desc_geostrat
-                                    WHERE publication_source.id_source = edition.publication_source_id_source and 
-                                          publication.edition_idedition = edition.idedition and 
-                                          publication.edition_id_source = edition.publication_source_id_source and 
-                                          publication_desc_geostrat.publication_idpublication = publication.idpublication and 
-                                          publication_desc_geostrat.publication_idedition = publication.edition_idedition and 
-                                          publication_desc_geostrat.publication_id_source = publication.edition_id_source 
-                                    ) AS publication_geostrat GROUP BY idgeostrat
-                              ) AS publications_geostrat 
-                                        LEFT JOIN  geostrat_desc_geolayer
-                                        ON idgeostrat = geostrat_idgeostrat
-                        ) as publications_geostrat_with_geolayer
-                        RIGHT JOIN archlayer_correl_geolayer
-                        ON archlayer_correl_geolayer.geolayer_idlocality = publications_geostrat_with_geolayer.geolayer_idlocality 
-                           AND archlayer_correl_geolayer.geolayer_name = publications_geostrat_with_geolayer.geolayer_name 
-                  ORDER BY idgeostrat")
-  padata <- road_run_query(query)
-  
-  query = paste0("SELECT idgeostrat, publications, assemblage_idlocality, assemblage_idassemblage 
-                  FROM (SELECT idgeostrat, publications, geolayer_idlocality, geolayer_name 
-                        FROM (SELECT idgeostrat, string_agg(publication, ' +++ ' ) as publications 
-                              FROM (SELECT DISTINCT geostratigraphy_idgeostrat as idgeostrat,
-                                             concat(publication.author, '  ', edition.publication_year, '  ', 
-                                             publication_source.title, '  ', doi) as publication
-                                    FROM publication_source, edition, publication, publication_desc_geostrat
-                                    WHERE publication_source.id_source = edition.publication_source_id_source and 
-                                          publication.edition_idedition = edition.idedition and 
-                                          publication.edition_id_source = edition.publication_source_id_source and 
-                                          publication_desc_geostrat.publication_idpublication = publication.idpublication and 
-                                          publication_desc_geostrat.publication_idedition = publication.edition_idedition and 
-                                          publication_desc_geostrat.publication_id_source = publication.edition_id_source 
-                                    ) AS publication_geostrat GROUP BY idgeostrat
-                              ) AS publications_geostrat 
-                                        INNER JOIN  geostrat_desc_geolayer
-                                        ON idgeostrat = geostrat_idgeostrat
-                        ) as publications_geostrat_with_geolayer
-                        INNER JOIN assemblage_in_geolayer
-                        ON assemblage_in_geolayer.geolayer_idlocality = publications_geostrat_with_geolayer.geolayer_idlocality 
-                           AND assemblage_in_geolayer.geolayer_name = publications_geostrat_with_geolayer.geolayer_name 
-                  ORDER BY idgeostrat")
-  
-  pasdata <- road_run_query(query)
-  
-  
-  return(pasdata)
 }
