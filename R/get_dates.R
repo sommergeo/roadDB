@@ -182,7 +182,7 @@ road_get_dates <- function (assemblages = NULL)
                               ) AS publications_geostrat 
                               INNER JOIN  geostrat_desc_geolayer
                               ON idgeostrat = geostrat_idgeostrat
-                        ) as publications_geostrat_with_geolayer
+                        ) AS publications_geostrat_with_geolayer
                         INNER JOIN archlayer_correl_geolayer
                         ON archlayer_correl_geolayer.geolayer_idlocality = publications_geostrat_with_geolayer.geolayer_idlocality 
                            AND archlayer_correl_geolayer.geolayer_name = publications_geostrat_with_geolayer.geolayer_name 
@@ -207,7 +207,7 @@ road_get_dates <- function (assemblages = NULL)
                               ) AS publications_geostrat 
                          INNER JOIN  geostrat_desc_geolayer
                          ON idgeostrat = geostrat_idgeostrat
-                        ) as publications_geostrat_with_geolayer
+                        ) AS publications_geostrat_with_geolayer
                         INNER JOIN assemblage_in_geolayer
                         ON assemblage_in_geolayer.geolayer_idlocality = publications_geostrat_with_geolayer.geolayer_idlocality 
                            AND assemblage_in_geolayer.geolayer_name = publications_geostrat_with_geolayer.geolayer_name
