@@ -2,19 +2,46 @@
 % Please edit documentation in R/get_info.R
 \name{road_list_argument_values}
 \alias{road_list_argument_values}
-\title{Get argument value from ROAD Database}
+\title{Get argument values from the ROAD Database}
 \usage{
 road_list_argument_values(function_argument)
 }
 \arguments{
-\item{function_argument}{name of a function argument}
+\item{function_argument}{Name of a general or specific function argument used
+with one of the \code{road_get_*} functions. Current options include:
+\itemize{
+   \item \code{continent}
+   \item \code{subcontinent}
+   \item \code{country}
+   \item \code{locality_type}
+   \item \code{cultural_period}
+   \item \code{technocomplex}
+   \item \code{category}
+   \item \code{tool_list}
+   \item \code{raw_material_list}
+   \item \code{transport_distance}
+   \item \code{organic_tool_interpretation}
+   \item \code{symbolic_artifact_interpretation}
+   \item \code{feature_interpretation}
+   \item \code{miscellaneous_find_material}
+   \item \code{human_genus}
+   \item \code{human_species}
+   \item \code{fauna_genus}
+   \item \code{fauna_species}
+   \item \code{plant_remains}
+   \item \code{plant_family}
+   \item \code{plant_genus}
+   \item \code{plant_species}
+   }}
 }
 \value{
 List of attribute values.
 }
 \description{
-The  \strong{\code{road_list_argument_values}} function fetches values of a 
-given argument in the database or read values from file
+The \strong{\code{road_list_argument_values}} function returns a list of unique values 
+that can be used to populate functional arguments. This is particularly useful for 
+users who want to see which values are available or verify their exact spelling 
+(e.g., country names). Only categorical arguments are supported.
 }
 \examples{
 road_list_argument_values("locality_type")

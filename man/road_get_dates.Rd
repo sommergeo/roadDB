@@ -2,15 +2,15 @@
 % Please edit documentation in R/get_dates.R
 \name{road_get_dates}
 \alias{road_get_dates}
-\title{Retrieve Dating Information for Assemblages, Geological and Archaeological Layers from the ROAD Database}
+\title{Retrieve dating information for assemblages, geological and archaeological layers from the ROAD Database}
 \usage{
 road_get_dates(assemblages = NULL)
 }
 \arguments{
-\item{assemblages}{specifies a data frame with the subset of assemblages, for
+\item{assemblages}{specifies a data frame with a subset of assemblages, for
 which dating information should be retrieved. It must necessarily contain the
 columns \code{locality_id} and \code{assemblage_id} (e.g., the output of 
-\code{road_get_assemblages()} and other functions with this level of detail).}
+\code{road_get_assemblages()}, or other functions with this level of detail).}
 }
 \value{
 A data frame with absolute dating information. Rows represent individual dates, columns contain standard outputs and dating-related details on:
@@ -26,7 +26,7 @@ A data frame with absolute dating information. Rows represent individual dates, 
 \code{laboratory_idlaboratory}: The attribute is the official abbreviation for the designated analytical laboratory.
 
 \code{analysis_number}: The attribute specifies the official laboratory number 
-assigned to the dated sample (e.g., Pta-2345, GrA-1234, OxA-X-2456-45). Always include 
+assigned to the dated sample (e.g., Pta-2345, GrA-1234, OxA-X-2456-45). It always includes 
 the lab prefix, followed by a single hyphen, and then the official number provided by the laboratory.
 
 \code{date_of_analysis}: The attribute specifies the year of the analysis/report 
@@ -41,8 +41,15 @@ The \strong{\code{road_get_dates}} function retrieves absolute dating records fo
 assemblages, geological layers, and archaeological layers from the ROAD database.
 }
 \details{
+Use the argument to filter search results by assemblage or omit
+it to have a broader result set. The argument is optional and should be
+omitted or set to NULL when not used.
+
+
 The function is designed for users analyzing time series and allows for 
 filtering results based on various criteria.
+
+
 
 \strong{Background on Dating Context:}
 Not all finds can be directly dated, either due to potential damage during

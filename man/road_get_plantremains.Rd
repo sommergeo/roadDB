@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_plantremains.R
 \name{road_get_plantremains}
 \alias{road_get_plantremains}
-\title{Get paleobotany data from ROAD database}
+\title{Get paleobotany data from the ROAD database}
 \usage{
 road_get_plantremains(
   continent = NULL,
@@ -108,7 +108,7 @@ plant remains finds, columns contain standard outputs and plant remains-related 
 The attributes specify the taxonomic classification of the plant remains.
 }
 \description{
-The function  \strong{\code{road_get_plantremains}} fetches data of paleobotanical remains from the ROAD database.
+The function  \strong{\code{road_get_plantremains}} retrieves data on paleobotanical remains from the ROAD database.
 Paleobotanical remains are plant remains found in archaeological contexts and are associated with
 assemblages.
 }
@@ -118,7 +118,7 @@ various parameters such as geographical location, cultural periods, plant taxono
 and assemblages. Use the parameters to filter the results or omit them to retrieve a broader dataset.
 Genus and species parameters can be entered as a vector of strings to search for multiple entries.
 If genus and species are both specified, most of the time it's more sensible to enter them as
-single strings and not as vectors with multiple search words to recieve useful results.
+single strings and not as vectors with multiple search words to receive useful results.
 }
 \examples{
 road_get_plantremains(subcontinent = "Central Asia", plant_family = "Poaceae", 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_archaeology.R
 \name{road_get_symbolic_artifacts}
 \alias{road_get_symbolic_artifacts}
-\title{Get symbolic artifacts from ROAD database}
+\title{Get symbolic artifacts from the ROAD database}
 \usage{
 road_get_symbolic_artifacts(
   continent = NULL,
@@ -76,11 +76,7 @@ function 'road_get_assemblages'. It can be used instead of the locality
 and assemblage search parameters to filter the results.}
 }
 \value{
-Database search result as a data frame with the information about 
-symbolic artifact finds. Rows represent symbolic artifact finds and contain standard 
-information like locality name, geographic information, cultural period, 
-locality type, assemblage category, dating and symbolic artifacts-related details:
-interpretation
+A data frame with information about symbolic artifacts. Rows represent individual symbolic finds, columns contain details on:
 
 \code{symbolic artifacts category}: List of symbolic categories 
 (art, music, ornament).
@@ -103,7 +99,7 @@ artifact. Five fixed types of raw material source are possible:
 }
 }
 \description{
-The \strong{\code{road_get_symbolic_artifacts}} fetches data of symbolic artifacts from ROAD database.
+The \strong{\code{road_get_symbolic_artifacts}} retrieves data on symbolic artifacts from the ROAD database.
 Symbolic artifacts are objects interpreted as having symbolic or cultural significance
 in archaeological contexts. This function allows you to query symbolic artifact
 data from the ROAD database using parameters such as geographical location,

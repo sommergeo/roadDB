@@ -173,5 +173,17 @@ Specific arguments
 #' to display possible values. The argument \code{plant_species} is a string 
 #' (one item) or vector of strings; defaults to NULL.
 
-# Result values (to be fullfield?)
+#' @param localities specifies the subset of localities for which publications 
+#' should be retrieved. This parameter can be a string (a single locality name), 
+#' a vector of strings (multiple locality names), or a data frame containing a 
+#' \code{locality_id} column (e.g., the output of \code{road_get_localities()}). 
+#' Defaults to \code{NULL}.
 
+#' @param bibtex specifies if publication references should be formatted as \code{BibTeX}.
+#' Defaults to \code{FALSE}.
+
+#' @details With \code{localities = NULL} (the default), the function produces a 
+#' complete list of all references compiled in ROAD, with each publication 
+#' appearing only once. When \code{localities} is specified, duplicates may occur 
+#' in the \code{Publication} column if a single source provides information for 
+#' multiple sites.

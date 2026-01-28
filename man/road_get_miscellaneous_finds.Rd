@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_archaeology.R
 \name{road_get_miscellaneous_finds}
 \alias{road_get_miscellaneous_finds}
-\title{Get miscellaneous finds from ROAD database}
+\title{Get miscellaneous finds from the ROAD database}
 \usage{
 road_get_miscellaneous_finds(
   continent = NULL,
@@ -76,11 +76,7 @@ function 'road_get_assemblages'. It can be used instead of the locality
 and assemblage search parameters to filter the results.}
 }
 \value{
-Database search result as a data frame with the information about 
-miscellaneous finds. Rows represent miscellaneous finds and contain 
-standard information like locality name, geographic information, cultural 
-period, locality type, assemblage category, dating and miscellaneous 
-finds-related details
+A data frame with information about miscellaneous finds. Rows represent individual finds, columns contain details on:
 
 \code{miscellaneous find material}: Material of the miscellaneous 
 find. Some examples: beeswax, bitumen, clay, flax fiber, fossil, mineral 
@@ -102,7 +98,7 @@ miscellaneous finds. Five fixed types of material source are possible:
  in an assemblage with miscellaneous finds.
 }
 \description{
-The \strong{\code{road_get_miscellaneous_finds}} fetches data of feature finds from ROAD database.
+The \strong{\code{road_get_miscellaneous_finds}} retrieves data of miscellaneous finds from the ROAD database.
 Miscellaneous finds are archaeological objects that do not fit into other specific categories.
 Miscellaneous finds are classified by their material.
 This function allows you to query miscellaneous finds data from the ROAD database

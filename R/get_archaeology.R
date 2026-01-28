@@ -1,12 +1,11 @@
-#' Get lithic typology from ROAD database
+#' Get lithic typology from the ROAD database
 #'
-#' The \strong{\code{road_get_lithic_typologies}} fetches data of lithic finds 
-#' from ROAD databaseLithic typology refers to the classification of stone tools 
-#' based on their shape, technology, and function.This function enables you to 
-#' query lithic typology data from the ROAD database using various parameters such as
-#' geographical location, cultural periods, tool types, and assemblages. Use the 
-#' parameters to filter the results according to your research needs, or omit them 
-#' to retrieve a broader dataset.
+#' The \strong{\code{road_get_lithic_typologies}} function retrieves data on typological finds 
+#' from the ROAD database. Lithic typology refers to the classification of stone tools 
+#' based on their shape, technology, and function. This function allows you to query 
+#' lithic typology data using various parameters, such as geographical location, cultural 
+#' period, tool type, and assemblage. Use these parameters to filter results according to 
+#' your research needs, or omit them to retrieve a broader dataset.
 #'
 #' @param continent specifies the continent(s) (e.g. Africa, Europe, Asia).
 #' Run \code{road_list_argument_values("continent")} to display possible values.
@@ -57,17 +56,12 @@
 #' to display possible values. The argument \code{tool_list} is a string (one item) 
 #' or vector of strings (one or more items); defaults to NULL.
 #'
-#' @return Database search result as a data frame with the information about 
-#' lithic finds. Rows represent lithic finds and contain standard information 
-#' like locality name, geographic information, cultural period, locality type, 
-#' assemblage category, dating and lithic typology-related details:
-#' @return \code{typology}: Description of the group of tool type present in the 
-#' given lithic record. Following four values are possible: chipped tool, non-chipped 
-#' tool, non-tool and unknown.
-#' @return \code{percentage}: Percentage of the typology type of the given record
-#' in the corresponding assemblage. 
-#' @return \code{tool list}: List of tool types in the given lithic record.
-#' @export
+#' @return A data frame with information about lithic typology. Rows represent individual lithic finds, columns contain typology-related details on:
+#' @return \code{typology}: Description of the tool type group present in the 
+#' lithic record. Possible values are: "chipped tool", "non-chipped tool", "non-tool", 
+#' and "unknown".
+#' @return \code{percentage}:Percentage of the given typology within the corresponding assemblage.
+#' @return \code{tool_list}: List of specific tool types present in the lithic record.
 #'
 #' @examples
 #' road_get_lithic_typologies(continent = c("Asia"), tool_list = "adze")
@@ -142,10 +136,10 @@ road_get_lithic_typologies <- function(
 }
 
 
-#' Get lithic raw material from ROAD database
+#' Get lithic raw material from the ROAD database
 #'
-#' The \strong{\code{road_get_lithic_raw_materials}} fetches data of lithic finds 
-#' from ROAD database. Lithic raw material refers to the types of stone used for 
+#' The \strong{\code{road_get_lithic_raw_materials}} retrieves data of lithic finds 
+#' from the ROAD database. Lithic raw materials refer to the types of rock used for 
 #' tool production in archaeological contexts. This function allows you to query 
 #' lithic raw material data from the ROAD database using parameters such as 
 #' geographical location, cultural periods, raw material types, and assemblages. 
@@ -212,10 +206,7 @@ road_get_lithic_typologies <- function(
 #' The argument \code{transport_distance} is a string (one item) or vector of strings; 
 #' defaults to NULL.
 #'
-#' @return Database search result as a data frame with the information about 
-#' lithic finds. Rows represent lithic finds and contain standard information 
-#' like locality name, geographic information, cultural period, locality type, 
-#' assemblage category, dating and raw material-related details:
+#' @return A data frame with information about lithic finds. Rows represent individual raw material finds, columns contain details on:
 #' @return \code{transport distance}: Specific interval of transport for the 
 #' raw materials in the given record.
 #' @return \code{percentage}: Percentage of the raw materials of the given record
@@ -301,10 +292,10 @@ road_get_lithic_raw_materials <- function(
 }
 
 
-#' Get organic tools from ROAD database
+#' Get organic tools from the ROAD database
 #'
-#' The \strong{\code{road_get_organic_tools}} fetches data of organic tools from 
-#' ROAD database.Organic tools are artifacts made from organic materials such as 
+#' The \strong{\code{road_get_organic_tools}} function retrieves data on organic tools from the
+#' ROAD database. Organic tools are artifacts made from organic materials such as 
 #' bone, antler, or wood, found in archaeological contexts. This function enables 
 #' you to query organic tool data from the ROAD database based on parameters like 
 #' geographical location, cultural periods, tool interpretation, and assemblages. 
@@ -355,11 +346,8 @@ road_get_lithic_raw_materials <- function(
 #' Run \code{road_list_argument_values("organic_tool_interpretation")} 
 #' to display possible values. The argument \code{organic_tool_interpretation} 
 #' is a string (one item) or vector of strings; defaults to NULL.
-#'
-#' @return Database search result as a data frame with the information about 
-#' organic tool finds. Rows represent organic tool finds and contain standard 
-#' information like locality name, geographic information, cultural period, 
-#' locality type, assemblage category, dating and organic tools-related details:
+#' 
+#' @return A data frame with information about organic tools. Rows represent individual organic finds, columns contain details on:
 #' @return \code{organic tool interpretation}: List of organic tool types of 
 #' the given record.
 #' @return \code{organic raw material}: Material from which an organic tool is made.
@@ -443,9 +431,9 @@ road_get_organic_tools <- function(
 }
 
 
-#' Get symbolic artifacts from ROAD database
+#' Get symbolic artifacts from the ROAD database
 #'
-#' The \strong{\code{road_get_symbolic_artifacts}} fetches data of symbolic artifacts from ROAD database.
+#' The \strong{\code{road_get_symbolic_artifacts}} retrieves data on symbolic artifacts from the ROAD database.
 #' Symbolic artifacts are objects interpreted as having symbolic or cultural significance
 #' in archaeological contexts. This function allows you to query symbolic artifact
 #' data from the ROAD database using parameters such as geographical location,
@@ -498,11 +486,7 @@ road_get_organic_tools <- function(
 #' to display possible values. The argument \code{symbolic_artifact_interpretation} 
 #' is a string (one item) or vector of strings; defaults to NULL.
 #'
-#' @return Database search result as a data frame with the information about 
-#' symbolic artifact finds. Rows represent symbolic artifact finds and contain standard 
-#' information like locality name, geographic information, cultural period, 
-#' locality type, assemblage category, dating and symbolic artifacts-related details:
-#' interpretation
+#' @return A data frame with information about symbolic artifacts. Rows represent individual symbolic finds, columns contain details on:
 #' @return \code{symbolic artifacts category}: List of symbolic categories 
 #' (art, music, ornament).  
 #' @return \code{symbolic artifacts technology}: List of technologies such as: 
@@ -599,9 +583,9 @@ road_get_symbolic_artifacts <- function(
 }
 
 
-#' Get feature assemblages from ROAD database
+#' Get feature assemblages from the ROAD database
 #'
-#' The \strong{\code{road_get_features}} fetches data of feature finds from ROAD database. Feature assemblages refer to archaeological features such as hearths, pits, or structures found at a site.
+#' The \strong{\code{road_get_features}} retrieves data on archaeological features from the ROAD database. Feature assemblages refer to archaeological features such as hearths, pits, or structures found at a site.
 #' This function enables you to query feature data from the ROAD database using parameters like geographical location,
 #' cultural periods, feature interpretation, and assemblages. Use the parameters to filter the results or omit them for broader results.
 #'
@@ -650,14 +634,11 @@ road_get_symbolic_artifacts <- function(
 #' Run \code{road_list_argument_values("feature_interpretation")} to display 
 #' possible values. The argument \code{feature_interpretation} is a string 
 #' (one item) or vector of strings; defaults to NULL.
-#'
-#' @return Database search result as a data frame with the information about 
-#' archaeological finds. Rows represent archaeological finds and contain standard 
-#' information like locality name, geographic information, cultural period, 
-#' locality type, assemblage category, dating and feature-related details:
+#' 
+#' @return A data frame with information about archaeological features. Rows represent individual features, columns contain details on:
 #' @return \code{interpretations}: Interpretation of the feature present in the 
-#' archaeological assemblage. Interpretations can be bedding, burial, butchering 
-#' event, combustion feature, cupule, dumping area.
+#' archaeological assemblage. Interpretations can be "bedding", "burial", "butchering 
+#' event", "combustion feature", "cupule", "dumping area".
 #' @export
 #'
 #' @examples
@@ -729,9 +710,9 @@ road_get_features <- function(
   return(data)
 }
 
-#' Get miscellaneous finds from ROAD database
+#' Get miscellaneous finds from the ROAD database
 #'
-#' The \strong{\code{road_get_miscellaneous_finds}} fetches data of feature finds from ROAD database.
+#' The \strong{\code{road_get_miscellaneous_finds}} retrieves data of miscellaneous finds from the ROAD database.
 #' Miscellaneous finds are archaeological objects that do not fit into other specific categories.
 #' Miscellaneous finds are classified by their material.
 #' This function allows you to query miscellaneous finds data from the ROAD database
@@ -785,11 +766,7 @@ road_get_features <- function(
 #' display possible values. The argument \code{miscellaneous_find_material} is 
 #' a string (one item) or vector of strings; defaults to NULL.
 #'
-#' @return Database search result as a data frame with the information about 
-#' miscellaneous finds. Rows represent miscellaneous finds and contain 
-#' standard information like locality name, geographic information, cultural 
-#' period, locality type, assemblage category, dating and miscellaneous 
-#' finds-related details
+#' @return A data frame with information about miscellaneous finds. Rows represent individual finds, columns contain details on:
 #' @return \code{miscellaneous find material}: Material of the miscellaneous 
 #' find. Some examples: beeswax, bitumen, clay, flax fiber, fossil, mineral 
 #' diverse (materials such as crystals), mineral pigment (colorants such as 

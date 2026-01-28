@@ -1,6 +1,6 @@
-#' Get assemblages from ROAD database
+#' Get assemblages from the ROAD database
 #'
-#' The \strong{\code{road_get_assemblages}} fetches data of assemblages from ROAD database.
+#' The \strong{\code{road_get_assemblages}} function retrieves data on assemblages from the ROAD database.
 #' The ROAD table assemblage contains information about classes of finds. An assemblage is
 #' defined as a collected find consisting of grouped classes of materials, for example:
 #' archaeological finds (including raw material, typology, technology, function, organic tools,

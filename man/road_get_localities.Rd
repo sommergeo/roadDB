@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_localities.R
 \name{road_get_localities}
 \alias{road_get_localities}
-\title{Get localities from ROAD Database}
+\title{Get localities from the ROAD Database}
 \usage{
 road_get_localities(
   continent = NULL,
@@ -84,10 +84,10 @@ A data frame with location information. Rows represent individual locations, col
 \code{locality_age_min}, \code{locality_age_max}: The attributes specify the overall minimum and maximum age of all assemblages associated with this locality.
 }
 \description{
-The \strong{\code{road_get_localities}} fetches data of archaeological
-sites (localities) from ROAD database. The ROAD table locality provides basic
-information about each place where an assemblage of archaeological,
-paleoanthropological, paleontological, paleobotanical or other relevant materials
+The \strong{\code{road_get_localities}} funrction retrieves data of archaeological
+sites (localities) from the ROAD database. The ROAD table locality provides basic
+information about each location where an assemblage of archaeological,
+paleoanthropological, paleontological, paleobotanical or other relevant material
 was described, recorded, sampled or collected. Every locality (site) is
 situated in a specific country within a given geographic region. The name of every
 locality is unique.
