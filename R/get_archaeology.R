@@ -63,6 +63,8 @@
 #' @return \code{percentage}:Percentage of the given typology within the corresponding assemblage.
 #' @return \code{tool_list}: List of specific tool types present in the lithic record.
 #'
+#' @export
+#' 
 #' @examples
 #' road_get_lithic_typologies(continent = c("Asia"), tool_list = "adze")
 #' road_get_lithic_typologies(subcontinent = "Eastern Europe", 
