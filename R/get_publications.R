@@ -42,7 +42,12 @@ road_get_publications <- function (
 ) 
 {
   if (is.null(localities)) {
-    query = "SELECT DISTINCT edition.volume, edition.publication_year as year, publication_type, publication.title, publication.author, publication.pages, publication_source.title as source_title, publisher, publication_place, editor, publication.comments as comments, publication_source.comments as source_comments, url, access_date, doi FROM edition, publication, publication_source 
+    query = "SELECT DISTINCT edition.volume, edition.publication_year as year, publication_type, 
+                            publication.title, publication.author, publication.pages, 
+                            publication_source.title as source_title, publisher, 
+                            publication_place, editor, publication.comments as comments, 
+                            publication_source.comments as source_comments, url, access_date, 
+                            doi FROM edition, publication, publication_source 
              WHERE (publication_source.id_source = edition.publication_source_id_source 
                and publication.edition_idedition = edition.idedition 
                and publication.edition_id_source = edition.publication_source_id_source)
@@ -62,7 +67,7 @@ road_get_publications <- function (
   # localities can be string, vector or data frame
   if ( is.string(localities))
   {
-    publ <- get_publication_references(localities, bibtex = bibtex)
+    publ <- get_publication_references(locality = localities, bibtex = bibtex)
     publication_df <- rbind(publication_df, publ)
   }
   else
@@ -80,7 +85,7 @@ road_get_publications <- function (
      # if localities is a vector
       locality_vector <- unique(localities)
       for (locality in locality_vector) {
-        publ <- get_publication_references(locality, bibtex = bibtex)
+        publ <- get_publication_references(locality = locality, bibtex = bibtex)
         publication_df <- rbind(publication_df, publ)
       }
     }

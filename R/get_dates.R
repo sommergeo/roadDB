@@ -51,6 +51,13 @@
 #' @return \code{material_dated}: The attribute specifies the general type of material analyzed (e.g. bone, tooth, antler etc.).
 #' @return \code{dating_method}: The attribute specifies the method of analysis (e.g. 14C, OSL, IRSL, etc.).
 #' @return \code{laboratory_idlaboratory}: The attribute is the official abbreviation for the designated analytical laboratory.
+#' @return \code{analysis_number}: The attribute specifies the official laboratory number 
+#' assigned to the dated sample (e.g., Pta-2345, GrA-1234, OxA-X-2456-45). Always include 
+#' the lab prefix, followed by a single hyphen, and then the official number provided by the laboratory. 
+#' @return \code{date_of_analysis}: The attribute specifies the year of the analysis/report 
+#' or the first publication of the results in the format yyyy.
+#' @return \code{id}: The attribute is automatically generated, sequential number. This number is unique for each age table.
+#' @return \code{publication}: The attribute is a list of publications describing the respective geological stratigraphy.
 #' 
 #' @export
 #' 
@@ -86,7 +93,10 @@ road_get_dates <- function (assemblages = NULL)
     paste0("positive_standard_deviation AS ", cm_positive_standard_deviation),
     paste0("material_dated AS ", cm_material_dated),
     paste0("dating_method AS ", cm_dating_method),
-    paste0("laboratory_idlaboratory AS ", cm_laboratory_idlaboratory)
+    paste0("laboratory_idlaboratory AS ", cm_laboratory_idlaboratory),
+    paste0("analysis_number AS analysis_number"),
+    paste0("date_of_analysis AS date_of_analysis"),
+    paste0("id_geolayer_age AS id")
   )
   
   select_fields_ala <- c(
@@ -99,7 +109,10 @@ road_get_dates <- function (assemblages = NULL)
     paste0("positive_standard_deviation AS ", cm_positive_standard_deviation),
     paste0("material_dated AS ", cm_material_dated),
     paste0("dating_method AS ", cm_dating_method),
-    paste0("laboratory_idlaboratory AS ", cm_laboratory_idlaboratory)
+    paste0("laboratory_idlaboratory AS ", cm_laboratory_idlaboratory),
+    paste0("analysis_number AS analysis_number"),
+    paste0("date_of_analysis AS date_of_analysis"),
+    paste0("idarchaeological_layer_age AS id")
   )
   
   select_fields_asa <- c(
@@ -112,26 +125,105 @@ road_get_dates <- function (assemblages = NULL)
     paste0("positive_standard_deviation AS ", cm_positive_standard_deviation),
     paste0("material_dated AS ", cm_material_dated),
     paste0("dating_method AS ", cm_dating_method),
-    paste0("laboratory_idlaboratory AS ", cm_laboratory_idlaboratory)
+    paste0("laboratory_idlaboratory AS ", cm_laboratory_idlaboratory),
+    paste0("analysis_number AS analysis_number"),
+    paste0("date_of_analysis AS date_of_analysis"),
+    paste0("idassemblage_age AS id")
   )
   
   query <- paste0("SELECT * FROM (SELECT * FROM (SELECT ", paste(select_fields_gla, collapse = ", "),
                   " FROM geological_layer_age) as fooo ", "WHERE TRUE ", geolayer_condition,
                   " UNION
-            SELECT * FROM (SELECT ", paste(select_fields_ala, collapse = ", "), 
+                  SELECT * FROM (SELECT ", paste(select_fields_ala, collapse = ", "), 
                   " FROM archaeological_layer_age) as foooo ", "WHERE TRUE ", archlayer_condition,
                   " UNION
-            SELECT * FROM (SELECT ", paste(select_fields_asa, collapse = ", "),
+                  SELECT * FROM (SELECT ", paste(select_fields_asa, collapse = ", "),
                   " FROM assemblage_age) as fooooo ", "WHERE TRUE ", assemblage_condition,
                   ") as foo ",
-                  " ORDER BY ", cm_locality_idlocality)
+                  " ORDER BY lower(", cm_locality_idlocality, ")")
   
   data <- road_run_query(query)
   
-  #message(query)
   
   # data <- add_locality_columns(data, assemblages = assemblages)
   data <- add_locality_columns(data, localities = localities)
   
-  return(data)
+  # Get publications from publication_desc_geostrat
+  query = paste0("SELECT DISTINCT string_agg(publications, ' +++ ' ) as publication, 
+                         geolayer_idlocality as locality_id, -1 as assemblage_id, 
+                         geolayer_name as geolayer, '-1' as archlayer 
+                  FROM (SELECT idgeostrat, string_agg(publication, ' +++ ' ) as publications 
+                       FROM (SELECT DISTINCT geostratigraphy_idgeostrat as idgeostrat,
+                                             concat(publication.author, '  ', edition.publication_year, '  ', 
+                                             publication_source.title, '  ', doi) as publication
+                            FROM publication_source, edition, publication, publication_desc_geostrat
+                            WHERE publication_source.id_source = edition.publication_source_id_source and 
+                                  publication.edition_idedition = edition.idedition and 
+                                  publication.edition_id_source = edition.publication_source_id_source and 
+                                  publication_desc_geostrat.publication_idpublication = publication.idpublication and 
+                                  publication_desc_geostrat.publication_idedition = publication.edition_idedition and 
+                                  publication_desc_geostrat.publication_id_source = publication.edition_id_source 
+                             ) AS publication_geostrat GROUP BY idgeostrat
+                        ) AS publications_geostrat 
+                  INNER JOIN  geostrat_desc_geolayer
+                  ON idgeostrat = geostrat_idgeostrat
+                  GROUP BY geolayer_idlocality, geolayer_name
+                UNION 
+                  SELECT DISTINCT string_agg(publications, ' +++ ' ) as publication, 
+                         archlayer_idlocality as locality_id, -1 as assemblage_id, 
+                         '-1' as geolayer, archlayer_name as archlayer 
+                  FROM (SELECT idgeostrat, publications, geolayer_idlocality, geolayer_name 
+                        FROM (SELECT idgeostrat, string_agg(publication, ' +++ ' ) as publications 
+                              FROM (SELECT DISTINCT geostratigraphy_idgeostrat as idgeostrat,
+                                             concat(publication.author, '  ', edition.publication_year, '  ', 
+                                             publication_source.title, '  ', doi) as publication
+                                    FROM publication_source, edition, publication, publication_desc_geostrat
+                                    WHERE publication_source.id_source = edition.publication_source_id_source and 
+                                          publication.edition_idedition = edition.idedition and 
+                                          publication.edition_id_source = edition.publication_source_id_source and 
+                                          publication_desc_geostrat.publication_idpublication = publication.idpublication and 
+                                          publication_desc_geostrat.publication_idedition = publication.edition_idedition and 
+                                          publication_desc_geostrat.publication_id_source = publication.edition_id_source 
+                                    ) AS publication_geostrat GROUP BY idgeostrat
+                              ) AS publications_geostrat 
+                              INNER JOIN  geostrat_desc_geolayer
+                              ON idgeostrat = geostrat_idgeostrat
+                        ) AS publications_geostrat_with_geolayer
+                  INNER JOIN archlayer_correl_geolayer
+                  ON archlayer_correl_geolayer.geolayer_idlocality = publications_geostrat_with_geolayer.geolayer_idlocality 
+                     AND archlayer_correl_geolayer.geolayer_name = publications_geostrat_with_geolayer.geolayer_name 
+                  GROUP BY archlayer_idlocality, archlayer_name
+                UNION
+                  SELECT DISTINCT string_agg(publications, ' +++ ' ) as publication, 
+                         assemblage_idlocality as locality_id, 
+                         assemblage_idassemblage as assemblage_id, '-1' as geolayer, '-1' as archlayer 
+                  FROM (SELECT idgeostrat, publications, geolayer_idlocality, geolayer_name 
+                        FROM (SELECT idgeostrat, string_agg(publication, ' +++ ' ) as publications 
+                              FROM (SELECT DISTINCT geostratigraphy_idgeostrat as idgeostrat,
+                                           concat(publication.author, '  ', edition.publication_year, '  ', 
+                                           publication_source.title, '  ', doi) as publication
+                                    FROM publication_source, edition, publication, publication_desc_geostrat
+                                    WHERE publication_source.id_source = edition.publication_source_id_source and 
+                                          publication.edition_idedition = edition.idedition and 
+                                          publication.edition_id_source = edition.publication_source_id_source and 
+                                          publication_desc_geostrat.publication_idpublication = publication.idpublication and 
+                                          publication_desc_geostrat.publication_idedition = publication.edition_idedition and 
+                                          publication_desc_geostrat.publication_id_source = publication.edition_id_source 
+                                   ) AS publication_geostrat GROUP BY idgeostrat
+                              ) AS publications_geostrat 
+                         INNER JOIN  geostrat_desc_geolayer
+                         ON idgeostrat = geostrat_idgeostrat
+                        ) AS publications_geostrat_with_geolayer
+                    INNER JOIN assemblage_in_geolayer
+                    ON assemblage_in_geolayer.geolayer_idlocality = publications_geostrat_with_geolayer.geolayer_idlocality 
+                       AND assemblage_in_geolayer.geolayer_name = publications_geostrat_with_geolayer.geolayer_name
+                    GROUP BY assemblage_idlocality, assemblage_idassemblage
+                  ")
+  
+  
+  pdata <- road_run_query(query)
+  
+  res_data <- left_join(data, pdata, by = c("locality_id", "geolayer", "archlayer", "assemblage_id"))
+  
+  return(res_data)
 }

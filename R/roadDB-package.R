@@ -8,6 +8,7 @@
 #' @importFrom dplyr summarise
 #' @importFrom dplyr group_by
 #' @importFrom dplyr inner_join
+#' @importFrom dplyr left_join
 #' @importFrom RPostgres dbConnect
 #' @importFrom RPostgres dbGetQuery
 #' @importFrom utils read.csv

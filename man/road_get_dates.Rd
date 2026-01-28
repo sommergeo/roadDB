@@ -24,6 +24,17 @@ A data frame with absolute dating information. Rows represent individual dates, 
 \code{dating_method}: The attribute specifies the method of analysis (e.g. 14C, OSL, IRSL, etc.).
 
 \code{laboratory_idlaboratory}: The attribute is the official abbreviation for the designated analytical laboratory.
+
+\code{analysis_number}: The attribute specifies the official laboratory number 
+assigned to the dated sample (e.g., Pta-2345, GrA-1234, OxA-X-2456-45). Always include 
+the lab prefix, followed by a single hyphen, and then the official number provided by the laboratory.
+
+\code{date_of_analysis}: The attribute specifies the year of the analysis/report 
+or the first publication of the results in the format yyyy.
+
+\code{id}: The attribute is automatically generated, sequential number. This number is unique for each age table.
+
+\code{publication}: The attribute is a list of publications describing the respective geological stratigraphy.
 }
 \description{
 The \strong{\code{road_get_dates}} function retrieves absolute dating records for 
