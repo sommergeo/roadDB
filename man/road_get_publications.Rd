@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_publications.R
 \name{road_get_publications}
 \alias{road_get_publications}
-\title{Get publication references from ROAD database}
+\title{Get publication references from the ROAD database}
 \usage{
 road_get_publications(localities = NULL, bibtex = F)
 }
@@ -32,10 +32,14 @@ format or formatted according to bibliographic conventions, including books,
 journal articles, book chapters, theses, and web pages.
 }
 \details{
+Use arguments to filter search results by location or output format, or omit
+them to have a broader result set. All arguments are optional and should be
+omitted or set to NULL when not used.
+
 With \code{localities = NULL} (the default), the function produces a 
 complete list of all references compiled in ROAD, with each publication 
 appearing only once. When \code{localities} is specified, duplicates may occur 
-in the \code{Publication} column if a single source provides information for 
+in the \code{Publication} column, if a single source provides information for 
 multiple sites.
 
 All parameters are optional. If not used, omit them or set them to NULL.

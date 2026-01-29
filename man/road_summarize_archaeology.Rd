@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_info.R
 \name{road_summarize_archaeology}
 \alias{road_summarize_archaeology}
-\title{Get an Overview of the ROAD Archaeology Database}
+\title{Get an overview of categorical values in the ROAD database}
 \usage{
 road_summarize_archaeology(term)
 }
@@ -10,29 +10,30 @@ road_summarize_archaeology(term)
 \item{term}{A string containing the search term (one item).}
 }
 \value{
-Database search result as list of lithic finds with info about typology.
+Database search result as list.
 }
 \description{
 The `road_summarize_archaeology` function provides a quick overview of the
- presence of a given search term across archaeology-related tables/attributes 
- in the ROAD database and archaeology-related `road_get_*` functions.
+presence of a given search term across archaeology-related tables/attributes 
+in the ROAD database and archaeology-related \code{road_get_*} functions in \code{roadDB}.
 It queries all relevant functions and returns a list indicating whether 
 each function contains the search term. This helps you identify the appropriate 
-`road_get_*` functions for your query.
-Once identified, you can further query these functions to retrieve the 
-relevant assemblages.
+\code{road_get_*} functions for your search.
+Once identified, you can apply these functions to retrieve the relevant assemblages.
 }
 \details{
-Background: The ROAD archaeology database is rich in categorized data, where 
+Background: The ROAD archaeology database is rich in categorical data, where 
 archaeological findings are grouped according to their characteristics. These 
-categories can be accessed using a variety of `road_get_*` functions, such as:
+categories can be accessed using a variety of \code{road_get_*} functions, such as:
 
-- `road_get_lithic_typologies()`
-- `road_get_lithic_raw_materials()`
-- `road_get_organic_tools()`
-- `road_get_symbolic_artifacts()`
-- `road_get_features()`
-- `road_get_miscellaneous_finds()`
+\itemize{
+  \item \code{road_get_lithic_typologies()}
+  \item \code{road_get_lithic_raw_materials()}
+  \item \code{road_get_organic_tools()}
+  \item \code{road_get_symbolic_artifacts()}
+  \item \code{road_get_features()}
+  \item \code{road_get_miscellaneous_finds()}
+}
 
 Some search terms may not be easily categorized, while others may appear 
 across multiple categories depending on contextual interpretations. This 

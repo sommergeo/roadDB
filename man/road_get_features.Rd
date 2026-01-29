@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_archaeology.R
 \name{road_get_features}
 \alias{road_get_features}
-\title{Get feature assemblages from ROAD database}
+\title{Get feature assemblages from the ROAD database}
 \usage{
 road_get_features(
   continent = NULL,
@@ -76,17 +76,14 @@ function 'road_get_assemblages'. It can be used instead of the locality
 and assemblage search parameters to filter the results.}
 }
 \value{
-Database search result as a data frame with the information about 
-archaeological finds. Rows represent archaeological finds and contain standard 
-information like locality name, geographic information, cultural period, 
-locality type, assemblage category, dating and feature-related details:
+A data frame with information about archaeological features. Rows represent individual features, columns contain details on:
 
 \code{interpretations}: Interpretation of the feature present in the 
-archaeological assemblage. Interpretations can be bedding, burial, butchering 
-event, combustion feature, cupule, dumping area.
+archaeological assemblage. Interpretations can be "bedding", "burial", "butchering 
+event", "combustion feature", "cupule", "dumping area".
 }
 \description{
-The \strong{\code{road_get_features}} fetches data of feature finds from ROAD database. Feature assemblages refer to archaeological features such as hearths, pits, or structures found at a site.
+The \strong{\code{road_get_features}} retrieves data on archaeological features from the ROAD database. Feature assemblages refer to archaeological features such as hearths, pits, or structures found at a site.
 This function enables you to query feature data from the ROAD database using parameters like geographical location,
 cultural periods, feature interpretation, and assemblages. Use the parameters to filter the results or omit them for broader results.
 }
