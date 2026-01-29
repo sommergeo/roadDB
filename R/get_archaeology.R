@@ -370,7 +370,7 @@ road_get_lithic_raw_materials <- function(
 #' @export
 #'
 #' @examples
-#' road_get_organic_tools(continent = c("Europe"), organic_tool_interpretation = "fishhook")
+#' road_get_organic_tools(country = c("France"), organic_tool_interpretation = "fishhook")
 #' road_get_organic_tools(continent = "Africa", organic_tool_interpretation = c("fishhook"))
 road_get_organic_tools <- function(
     continent = NULL,
