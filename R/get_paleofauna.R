@@ -71,7 +71,7 @@
 #'
 #' @examples
 #' road_get_paleofauna(country = c("Spain", "Portugal"), fauna_genus = "Mammuthus")
-#' road_get_paleofauna(continent = "Arfica", fauna_genus = "Vulpes",
+#' road_get_paleofauna(continent = "Africa", fauna_genus = "Vulpes",
 #'                     fauna_species = "vulpes")
 road_get_paleofauna <- function(
   continent = NULL,

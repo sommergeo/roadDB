@@ -66,7 +66,7 @@
 #' @export
 #' 
 #' @examples
-#' road_get_lithic_typologies(continent = c("Asia"), tool_list = "adze")
+#' road_get_lithic_typologies(country = c("South Africa"), tool_list = "adze")
 #' road_get_lithic_typologies(subcontinent = "Eastern Europe", 
 #'                          tool_list = c("bladelet burin spall"))
 road_get_lithic_typologies <- function(
@@ -360,8 +360,8 @@ road_get_lithic_raw_materials <- function(
 #' @export
 #'
 #' @examples
-#' road_get_organic_tools(continent = c("Europe"), organic_tool_interpretation = "fishhook")
-#' road_get_organic_tools(continent = "Africa", organic_tool_interpretation = c("fishhook"))
+#' road_get_organic_tools(country = c("France"), organic_tool_interpretation = "fishhook")
+#' road_get_organic_tools(country = "Germany", organic_tool_interpretation = c("lance/spear"))
 road_get_organic_tools <- function(
     continent = NULL,
     subcontinent = NULL,

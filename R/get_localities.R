@@ -197,9 +197,9 @@ road_get_localities_internal <- function(
 #' @importFrom dplyr inner_join
 #'
 #' @examples
-#' df <- road_get_localities(continent = "Europe", country = c("Germany"),
+#' road_get_localities(continent = "Europe",
 #'                     locality_type = c("basin", "quarry"))
-#' df <- road_get_localities(country = c("Germany", "France"),
+#' road_get_localities(country = c("Germany","Austria"),
 #'                     cultural_period = "Epipaleolithic")
 road_get_localities <- function(
     continent = NULL,
