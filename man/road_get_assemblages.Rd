@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_assemblages.R
 \name{road_get_assemblages}
 \alias{road_get_assemblages}
-\title{Get assemblages from the ROAD database}
+\title{Get assemblages from ROAD database}
 \usage{
 road_get_assemblages(
   continent = NULL,
@@ -104,7 +104,7 @@ A data frame with assemblage information. Rows represent individual assemblages,
 \code{plant_remains}: Logical value indicating whether the assemblage contains plant remains.
 }
 \description{
-The \strong{\code{road_get_assemblages}} function retrieves data on assemblages from the ROAD database.
+The \strong{\code{road_get_assemblages}} fetches data of assemblages from ROAD database.
 The ROAD table assemblage contains information about classes of finds. An assemblage is
 defined as a collected find consisting of grouped classes of materials, for example:
 archaeological finds (including raw material, typology, technology, function, organic tools,

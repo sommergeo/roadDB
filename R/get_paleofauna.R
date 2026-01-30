@@ -1,6 +1,6 @@
-#' Get paleofauna data from the ROAD database
+#' Get paleofauna finds from ROAD database
 #'
-#' The \strong{\code{road_get_paleofauna}} function retrieves data on paleofauna finds from the ROAD database.
+#' The  \strong{\code{road_get_paleofauna}} function fetches data of paleofauna finds from the ROAD database.
 #' Paleofauna finds are animal fossil remains discovered in archaeological contexts and are always associated with an assemblage.
 #' These finds provide direct evidence for the presence of animal species at a particular locality and time.
 #' The function returns information about the assemblage in which certain faunal remains were found as well as their genus and species.
@@ -71,7 +71,7 @@
 #'
 #' @examples
 #' road_get_paleofauna(country = c("Spain", "Portugal"), fauna_genus = "Mammuthus")
-#' road_get_paleofauna(continent = "Africa", fauna_genus = "Vulpes",
+#' road_get_paleofauna(continent = "Arfica", fauna_genus = "Vulpes",
 #'                     fauna_species = "vulpes")
 road_get_paleofauna <- function(
   continent = NULL,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_humanremains.R
 \name{road_get_human_remains}
 \alias{road_get_human_remains}
-\title{Get human remains from the ROAD database}
+\title{Get human remains from ROAD database}
 \usage{
 road_get_human_remains(
   continent = NULL,
@@ -111,8 +111,8 @@ C for cranial bones, D for dental remains, P for postcranial bones, E for natura
 I for imprints that are negative molds of body parts, including footprints, S for sediment (containing human aDNA).
 }
 \description{
-The \strong{\code{road_get_human_remains}} function retrieves data on human
-remains from the ROAD database. Human remains are human fossil finds and always
+The \strong{\code{road_get_human_remains}} function fetches data of human
+remains from ROAD database. Human remains are human fossil finds and always
 associated with an assemblage. A human remain is a direct and substantial
 piece of evidence for the presence of fossil hominids at a particular locality.
 Next to the assemblage information the function returns genus, species,

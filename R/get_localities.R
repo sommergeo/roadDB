@@ -1,7 +1,7 @@
-# Get localities from the ROAD Database
+# Get localities from ROAD Database
 #
-# The \strong{\code{road_get_localities_internal}} retrieves data on archaeological sites
-# (localities) from the ROAD database. The ROAD table locality provides basic
+# The \strong{\code{road_get_localities_internal}} fetches data of archaeological sites
+# (localities) from ROAD database. The ROAD table locality provides basic
 # information about each place where an assemblage of archaeological,
 # paleoanthropological, paleontological, paleobotanical or other relevant materials
 # was described, recorded, sampled or collected. Every locality (site) is situated in a specific
@@ -126,12 +126,12 @@ road_get_localities_internal <- function(
   return(data)
 }
 
-#' Get localities from the ROAD Database
+#' Get localities from ROAD Database
 #'
-#' The \strong{\code{road_get_localities}} funrction retrieves data of archaeological
-#' sites (localities) from the ROAD database. The ROAD table locality provides basic
-#' information about each location where an assemblage of archaeological,
-#' paleoanthropological, paleontological, paleobotanical or other relevant material
+#' The \strong{\code{road_get_localities}} fetches data of archaeological
+#' sites (localities) from ROAD database. The ROAD table locality provides basic
+#' information about each place where an assemblage of archaeological,
+#' paleoanthropological, paleontological, paleobotanical or other relevant materials
 #' was described, recorded, sampled or collected. Every locality (site) is
 #' situated in a specific country within a given geographic region. The name of every
 #' locality is unique.
@@ -197,9 +197,9 @@ road_get_localities_internal <- function(
 #' @importFrom dplyr inner_join
 #'
 #' @examples
-#' road_get_localities(continent = "Europe",
+#' df <- road_get_localities(continent = "Europe", country = c("Germany"),
 #'                     locality_type = c("basin", "quarry"))
-#' road_get_localities(country = c("Germany","Austria"),
+#' df <- road_get_localities(country = c("Germany", "France"),
 #'                     cultural_period = "Epipaleolithic")
 road_get_localities <- function(
     continent = NULL,

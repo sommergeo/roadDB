@@ -1,6 +1,6 @@
-#' Get paleobotany data from the ROAD database
+#' Get paleobotany data from ROAD database
 #'
-#' The function  \strong{\code{road_get_plantremains}} retrieves data on paleobotanical remains from the ROAD database.
+#' The function  \strong{\code{road_get_plantremains}} fetches data of paleobotanical remains from the ROAD database.
 #' Paleobotanical remains are plant remains found in archaeological contexts and are associated with
 #' assemblages.
 #'
@@ -10,7 +10,7 @@
 #' and assemblages. Use the parameters to filter the results or omit them to retrieve a broader dataset.
 #' Genus and species parameters can be entered as a vector of strings to search for multiple entries.
 #' If genus and species are both specified, most of the time it's more sensible to enter them as
-#' single strings and not as vectors with multiple search words to receive useful results.
+#' single strings and not as vectors with multiple search words to recieve useful results.
 #'
 #' @param continent specifies the continent(s) (e.g. Africa, Europe, Asia).
 #' Run \code{road_list_argument_values("continent")} to display possible values.

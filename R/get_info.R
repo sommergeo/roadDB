@@ -1,36 +1,9 @@
-#' Get argument values from the ROAD Database
+#' Get argument value from ROAD Database
 #'
-#' The \strong{\code{road_list_argument_values}} function returns a list of unique values 
-#' that can be used to populate functional arguments. This is particularly useful for 
-#' users who want to see which values are available or verify their exact spelling 
-#' (e.g., country names). Only categorical arguments are supported.
+#' The  \strong{\code{road_list_argument_values}} function fetches values of a 
+#' given argument in the database or read values from file
 #'
-#' @param function_argument Name of a general or specific function argument used
-#' with one of the \code{road_get_*} functions. Current options include:
-#' \itemize{
-#'    \item \code{continent}
-#'    \item \code{subcontinent}
-#'    \item \code{country}
-#'    \item \code{locality_type}
-#'    \item \code{cultural_period}
-#'    \item \code{technocomplex}
-#'    \item \code{category}
-#'    \item \code{tool_list}
-#'    \item \code{raw_material_list}
-#'    \item \code{transport_distance}
-#'    \item \code{organic_tool_interpretation}
-#'    \item \code{symbolic_artifact_interpretation}
-#'    \item \code{feature_interpretation}
-#'    \item \code{miscellaneous_find_material}
-#'    \item \code{human_genus}
-#'    \item \code{human_species}
-#'    \item \code{fauna_genus}
-#'    \item \code{fauna_species}
-#'    \item \code{plant_remains}
-#'    \item \code{plant_family}
-#'    \item \code{plant_genus}
-#'    \item \code{plant_species}
-#'    }
+#' @param function_argument name of a function argument
 #'
 #' @return List of attribute values.
 #' @export
@@ -167,7 +140,7 @@ road_list_argument_values <- function(function_argument)
 
 # Retrieve Attribute Values from the ROAD Database
 #
-# The \strong{\code{road_list_values}} function allows you to find valid 
+# The  \strong{\code{road_list_values}} function allows you to find valid 
 # attribute values for a given attribute name. You can search for attribute 
 # names from any `road_get_*` function, and the function will return a list of 
 # all possible attribute values used in the associated tables. This is 
@@ -230,28 +203,27 @@ road_list_values <- function (table_names, attribute_name)
    return(data)
 }
 
-#' Get an overview of categorical values in the ROAD database
+#' Get an Overview of the ROAD Archaeology Database
 #'
 #' The `road_summarize_archaeology` function provides a quick overview of the
-#' presence of a given search term across archaeology-related tables/attributes 
-#' in the ROAD database and archaeology-related \code{road_get_*} functions in \code{roadDB}.
+#'  presence of a given search term across archaeology-related tables/attributes 
+#'  in the ROAD database and archaeology-related `road_get_*` functions.
 #' It queries all relevant functions and returns a list indicating whether 
 #' each function contains the search term. This helps you identify the appropriate 
-#' \code{road_get_*} functions for your search.
-#' Once identified, you can apply these functions to retrieve the relevant assemblages.
+#' `road_get_*` functions for your query.
+#' Once identified, you can further query these functions to retrieve the 
+#' relevant assemblages.
 #'
-#' Background: The ROAD archaeology database is rich in categorical data, where 
+#' Background: The ROAD archaeology database is rich in categorized data, where 
 #' archaeological findings are grouped according to their characteristics. These 
-#' categories can be accessed using a variety of \code{road_get_*} functions, such as:
+#' categories can be accessed using a variety of `road_get_*` functions, such as:
 #'
-#' \itemize{
-#'   \item \code{road_get_lithic_typologies()}
-#'   \item \code{road_get_lithic_raw_materials()}
-#'   \item \code{road_get_organic_tools()}
-#'   \item \code{road_get_symbolic_artifacts()}
-#'   \item \code{road_get_features()}
-#'   \item \code{road_get_miscellaneous_finds()}
-#' }
+#' - `road_get_lithic_typologies()`
+#' - `road_get_lithic_raw_materials()`
+#' - `road_get_organic_tools()`
+#' - `road_get_symbolic_artifacts()`
+#' - `road_get_features()`
+#' - `road_get_miscellaneous_finds()`
 #'
 #' Some search terms may not be easily categorized, while others may appear 
 #' across multiple categories depending on contextual interpretations. This 
@@ -259,7 +231,7 @@ road_list_values <- function (table_names, attribute_name)
 #'
 #' @param term A string containing the search term (one item).
 #'
-#' @return Database search result as list.
+#' @return Database search result as list of lithic finds with info about typology.
 #' @export
 #'
 #' @examples

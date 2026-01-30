@@ -1,13 +1,9 @@
-#' Get publication references from the ROAD database
+#' Get publication references from ROAD database
 #'
 #' The \strong{\code{road_get_publications}} function retrieves publication 
 #' references from the ROAD database. Entries are available in the \code{BibTex}
 #' format or formatted according to bibliographic conventions, including books,
 #' journal articles, book chapters, theses, and web pages.
-#'
-#' Use arguments to filter search results by location or output format, or omit
-#' them to have a broader result set. All arguments are optional and should be
-#' omitted or set to NULL when not used.
 #'
 #' @param localities specifies the subset of localities for which publications 
 #' should be retrieved. This parameter can be a string (a single locality name), 
@@ -20,7 +16,7 @@
 #' @details With \code{localities = NULL} (the default), the function produces a 
 #' complete list of all references compiled in ROAD, with each publication 
 #' appearing only once. When \code{localities} is specified, duplicates may occur 
-#' in the \code{Publication} column, if a single source provides information for 
+#' in the \code{Publication} column if a single source provides information for 
 #' multiple sites.
 #' 
 #' All parameters are optional. If not used, omit them or set them to NULL.
@@ -35,7 +31,7 @@
 #'
 #' @examples
 #'
-#' road_get_publications(localities = c("Apollo 11", "Berg Aukas"))
+#' result <- road_get_publications(localities = c("Apollo 11", "Berg Aukas"))
 #' 
 #' # Using result from road_get_localities
 #'   locs <- road_get_localities(country = "Estonia")

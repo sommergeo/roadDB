@@ -12,7 +12,7 @@ Authors@R: c(
   person(given = "Heidelberg Academy of Sciences and Humanities", role = "fnd"))
 Maintainer: Christian Sommer <christian.sommer@uni-tuebingen.de>
 Description: Offers an R interface to the ROCEEH Out of Africa Database (ROAD) (<https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php>), wrapping SQL queries to facilitate data access and supply data frames for analysis in R.
-License: CC BY-SA 4.0
+License: CC BY-SA 4.0 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.3
