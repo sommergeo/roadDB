@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_archaeology.R
 \name{road_get_organic_tools}
 \alias{road_get_organic_tools}
-\title{Get organic tools from ROAD database}
+\title{Get organic tools from the ROAD database}
 \usage{
 road_get_organic_tools(
   continent = NULL,
@@ -76,10 +76,7 @@ function 'road_get_assemblages'. It can be used instead of the locality
 and assemblage search parameters to filter the results.}
 }
 \value{
-Database search result as a data frame with the information about 
-organic tool finds. Rows represent organic tool finds and contain standard 
-information like locality name, geographic information, cultural period, 
-locality type, assemblage category, dating and organic tools-related details:
+A data frame with information about organic tools. Rows represent individual organic finds, columns contain details on:
 
 \code{organic tool interpretation}: List of organic tool types of 
 the given record.
@@ -93,8 +90,8 @@ organic tools of the given record.
 material in the assemblage.
 }
 \description{
-The \strong{\code{road_get_organic_tools}} fetches data of organic tools from 
-ROAD database.Organic tools are artifacts made from organic materials such as 
+The \strong{\code{road_get_organic_tools}} function retrieves data on organic tools from the
+ROAD database. Organic tools are artifacts made from organic materials such as 
 bone, antler, or wood, found in archaeological contexts. This function enables 
 you to query organic tool data from the ROAD database based on parameters like 
 geographical location, cultural periods, tool interpretation, and assemblages. 

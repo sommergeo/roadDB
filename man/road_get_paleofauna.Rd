@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_paleofauna.R
 \name{road_get_paleofauna}
 \alias{road_get_paleofauna}
-\title{Get paleofauna finds from ROAD database}
+\title{Get paleofauna data from the ROAD database}
 \usage{
 road_get_paleofauna(
   continent = NULL,
@@ -90,7 +90,7 @@ faunal remains finds, columns contain standard outputs and faunal remains-relate
 \code{fauna_genus}, \code{fauna_species}: The attributes specify the taxonomic classification of the paleofaunal remains.
 }
 \description{
-The  \strong{\code{road_get_paleofauna}} function fetches data of paleofauna finds from the ROAD database.
+The \strong{\code{road_get_paleofauna}} function retrieves data on paleofauna finds from the ROAD database.
 Paleofauna finds are animal fossil remains discovered in archaeological contexts and are always associated with an assemblage.
 These finds provide direct evidence for the presence of animal species at a particular locality and time.
 The function returns information about the assemblage in which certain faunal remains were found as well as their genus and species.

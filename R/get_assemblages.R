@@ -1,6 +1,6 @@
-#' Get assemblages from ROAD database
+#' Get assemblages from the ROAD database
 #'
-#' The \strong{\code{road_get_assemblages}} fetches data of assemblages from ROAD database.
+#' The \strong{\code{road_get_assemblages}} function retrieves data on assemblages from the ROAD database.
 #' The ROAD table assemblage contains information about classes of finds. An assemblage is
 #' defined as a collected find consisting of grouped classes of materials, for example:
 #' archaeological finds (including raw material, typology, technology, function, organic tools,
@@ -75,10 +75,10 @@
 #' @export
 #'
 #' @examples
-#' road_get_assemblages(country = c("Germany", "France"), age_min = 300000L,
+#' road_get_assemblages(country = c("Germany", "France"), age_min = 300000,
 #'                      category = c("miscellaneous finds"))
 #' road_get_assemblages(subcontinent = c("Caucasus"), category = "human remains",
-#'                      age_max = 100000L)
+#'                      age_max = 100000)
 road_get_assemblages <- function(
     continent = NULL,
     subcontinent = NULL,

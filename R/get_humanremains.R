@@ -1,7 +1,7 @@
-#' Get human remains from ROAD database
+#' Get human remains from the ROAD database
 #'
-#' The \strong{\code{road_get_human_remains}} function fetches data of human
-#' remains from ROAD database. Human remains are human fossil finds and always
+#' The \strong{\code{road_get_human_remains}} function retrieves data on human
+#' remains from the ROAD database. Human remains are human fossil finds and always
 #' associated with an assemblage. A human remain is a direct and substantial
 #' piece of evidence for the presence of fossil hominids at a particular locality.
 #' Next to the assemblage information the function returns genus, species,

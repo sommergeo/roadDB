@@ -1,12 +1,16 @@
-#' Retrieve Dating Information for Assemblages, Geological and Archaeological Layers from the ROAD Database
+#' Retrieve dating information for assemblages, geological and archaeological layers from the ROAD Database
 #'
 #' The \strong{\code{road_get_dates}} function retrieves absolute dating records for 
 #' assemblages, geological layers, and archaeological layers from the ROAD database. 
 #' 
-#' @param assemblages specifies a data frame with the subset of assemblages, for
+#' Use the argument to filter search results by assemblage or omit
+#' it to have a broader result set. The argument is optional and should be
+#' omitted or set to NULL when not used.
+#' 
+#' @param assemblages specifies a data frame with a subset of assemblages, for
 #' which dating information should be retrieved. It must necessarily contain the
 #' columns \code{locality_id} and \code{assemblage_id} (e.g., the output of 
-#' \code{road_get_assemblages()} and other functions with this level of detail).
+#' \code{road_get_assemblages()}, or other functions with this level of detail).
 #'
 #' @details
 #' The function is designed for users analyzing time series and allows for 
@@ -52,7 +56,7 @@
 #' @return \code{dating_method}: The attribute specifies the method of analysis (e.g. 14C, OSL, IRSL, etc.).
 #' @return \code{laboratory_idlaboratory}: The attribute is the official abbreviation for the designated analytical laboratory.
 #' @return \code{analysis_number}: The attribute specifies the official laboratory number 
-#' assigned to the dated sample (e.g., Pta-2345, GrA-1234, OxA-X-2456-45). Always include 
+#' assigned to the dated sample (e.g., Pta-2345, GrA-1234, OxA-X-2456-45). It always includes 
 #' the lab prefix, followed by a single hyphen, and then the official number provided by the laboratory. 
 #' @return \code{date_of_analysis}: The attribute specifies the year of the analysis/report 
 #' or the first publication of the results in the format yyyy.

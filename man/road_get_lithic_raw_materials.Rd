@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_archaeology.R
 \name{road_get_lithic_raw_materials}
 \alias{road_get_lithic_raw_materials}
-\title{Get lithic raw material from ROAD database}
+\title{Get lithic raw material from the ROAD database}
 \usage{
 road_get_lithic_raw_materials(
   continent = NULL,
@@ -92,10 +92,7 @@ function 'road_get_assemblages'. It can be used instead of the locality
 and assemblage search parameters to filter the results.}
 }
 \value{
-Database search result as a data frame with the information about 
-lithic finds. Rows represent lithic finds and contain standard information 
-like locality name, geographic information, cultural period, locality type, 
-assemblage category, dating and raw material-related details:
+A data frame with information about lithic finds. Rows represent individual raw material finds, columns contain details on:
 
 \code{transport distance}: Specific interval of transport for the 
 raw materials in the given record.
@@ -106,8 +103,8 @@ in the corresponding assemblage.
 \code{raw material list}: List of raw materials of the given record.
 }
 \description{
-The \strong{\code{road_get_lithic_raw_materials}} fetches data of lithic finds 
-from ROAD database. Lithic raw material refers to the types of stone used for 
+The \strong{\code{road_get_lithic_raw_materials}} retrieves data of lithic finds 
+from the ROAD database. Lithic raw materials refer to the types of rock used for 
 tool production in archaeological contexts. This function allows you to query 
 lithic raw material data from the ROAD database using parameters such as 
 geographical location, cultural periods, raw material types, and assemblages. 
