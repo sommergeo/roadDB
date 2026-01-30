@@ -107,8 +107,8 @@ cultural periods, artifact interpretation, and assemblages. Use the parameters
 to filter the results or omit them to retrieve a broader dataset.
 }
 \examples{
-road_get_symbolic_artifacts(continent = "Europe", locality_type = "rock shelter", 
-                            symbolic_artifact_interpretation = "instrument")
-road_get_symbolic_artifacts(subcontinent = "Southern Africa", 
-                            symbolic_artifact_interpretation = "zoomorphic")
+\donttest{road_get_symbolic_artifacts(continent = "Europe", locality_type = "rock shelter", 
+                            symbolic_artifact_interpretation = "instrument")}
+\donttest{road_get_symbolic_artifacts(subcontinent = "Southern Africa", 
+                            symbolic_artifact_interpretation = "zoomorphic")}
 }

@@ -107,7 +107,7 @@ cultural periods, material types, and assemblages. Use the parameters to filter 
 or omit them to retrieve a broader dataset.
 }
 \examples{
-road_get_miscellaneous_finds(country = "Sudan", miscellaneous_find_material = "wood fossil")
-road_get_miscellaneous_finds(continent = c("Africa"), locality_type = "open air",
-                             miscellaneous_find_material = "shell")
+\donttest{road_get_miscellaneous_finds(country = "Sudan", miscellaneous_find_material = "wood fossil")}
+\donttest{road_get_miscellaneous_finds(continent = c("Africa"), locality_type = "open air",
+                             miscellaneous_find_material = "shell")}
 }

@@ -10,9 +10,9 @@
 
 ## Resubmission comments
 
-* All examples were checked with the "tictoc" package and run in under five seconds on our local machines across different networks.
+* Lengthy examples were deactivated for testing with \donttest{}
 
-* We updated our SSL certificates to ensure safe network connections.
+* We updated our SSL certificates to ensure secured network connections.
 
 * The Word "ROCEEH" is not misspelled, but the Abbreviation of the Research Center "The Role of Culture in Early Expansions of Humans", which curates the "ROCEEH Out of Africa Database (ROAD)".
 

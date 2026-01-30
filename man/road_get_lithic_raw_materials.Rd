@@ -112,7 +112,7 @@ Use the parameters to filter the results or omit them to retrieve a broader
 dataset.
 }
 \examples{
-road_get_lithic_raw_materials(subcontinent = "South Asia", raw_material_list = c("limestone"))
-road_get_lithic_raw_materials(subcontinent = c("Caucasus"), locality_type = "cave",
-                             raw_material_list = c("chalcedony", "limestone"))
+\donttest{road_get_lithic_raw_materials(subcontinent = "South Asia", raw_material_list = c("limestone"))}
+\donttest{road_get_lithic_raw_materials(subcontinent = c("Caucasus"), locality_type = "cave",
+                             raw_material_list = c("chalcedony", "limestone"))}
 }

@@ -121,7 +121,7 @@ If genus and species are both specified, most of the time it's more sensible to 
 single strings and not as vectors with multiple search words to receive useful results.
 }
 \examples{
-road_get_plantremains(subcontinent = "Central Asia", plant_family = "Poaceae", 
-                      plant_genus = "Setaria")
-road_get_plantremains(country = c("Israel"), plant_remains = "starch")
+\donttest{road_get_plantremains(subcontinent = "Central Asia", plant_family = "Poaceae", 
+                      plant_genus = "Setaria")}
+\donttest{road_get_plantremains(country = c("Israel"), plant_remains = "starch")}
 }

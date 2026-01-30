@@ -98,8 +98,8 @@ them to have a broader result set. All parameters are optional and should be
 omitted or set to NULL when not used.
 }
 \examples{
-road_get_localities(continent = "Europe",
-                    locality_type = c("basin", "quarry"))
-road_get_localities(country = c("Germany","Austria"),
-                    cultural_period = "Epipaleolithic")
+\donttest{road_get_localities(continent = "Europe",
+                    locality_type = c("basin", "quarry"))}
+\donttest{road_get_localities(country = c("Germany","Austria"),
+                    cultural_period = "Epipaleolithic")}
 }

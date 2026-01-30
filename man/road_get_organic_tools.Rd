@@ -98,6 +98,6 @@ geographical location, cultural periods, tool interpretation, and assemblages.
 Use the parameters to filter the results or omit them for broader results.
 }
 \examples{
-road_get_organic_tools(country = c("France"), organic_tool_interpretation = "fishhook")
-road_get_organic_tools(country = "Germany", organic_tool_interpretation = c("lance/spear"))
+\donttest{road_get_organic_tools(country = c("France"), organic_tool_interpretation = "fishhook")}
+\donttest{road_get_organic_tools(country = "Germany", organic_tool_interpretation = c("lance/spear"))}
 }

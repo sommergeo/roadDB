@@ -51,10 +51,9 @@
 # @return \code{technocomplex}: The attribute specifies the archaeological culture or named stone tool industry associated with the locality. If there are multiple, they are returned in a comma separated list.
 #
 # @examples
-# df <- road_get_localities_internal(continent = "Europe", country = c("Germany"),
-#                     locality_type = c("basin", "quarry"))
-# df <- road_get_localities_internal(country =
-#                 c("Germany", "France"), cultural_period = "Epipaleolithic")
+# \donttest{road_get_localities_internal(continent = "Europe", locality_type = c("basin", "quarry"))}
+# \donttest{road_get_localities_internal(country =
+#                 c("Germany", "France"), cultural_period = "Epipaleolithic")}
 road_get_localities_internal <- function(
     continent = NULL,
     subcontinent = NULL,
@@ -197,10 +196,10 @@ road_get_localities_internal <- function(
 #' @importFrom dplyr inner_join
 #'
 #' @examples
-#' road_get_localities(continent = "Europe",
-#'                     locality_type = c("basin", "quarry"))
-#' road_get_localities(country = c("Germany","Austria"),
-#'                     cultural_period = "Epipaleolithic")
+#' \donttest{road_get_localities(continent = "Europe",
+#'                     locality_type = c("basin", "quarry"))}
+#' \donttest{road_get_localities(country = c("Germany","Austria"),
+#'                     cultural_period = "Epipaleolithic")}
 road_get_localities <- function(
     continent = NULL,
     subcontinent = NULL,

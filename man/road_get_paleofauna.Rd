@@ -102,7 +102,7 @@ If genus and species are both specified, most of the time it's more sensible to 
 single strings and not as vectors with multiple search words to recieve useful results.
 }
 \examples{
-road_get_paleofauna(country = c("Spain", "Portugal"), fauna_genus = "Mammuthus")
-road_get_paleofauna(continent = "Africa", fauna_genus = "Vulpes",
-                    fauna_species = "vulpes")
+\donttest{road_get_paleofauna(country = c("Spain", "Portugal"), fauna_genus = "Mammuthus")}
+\donttest{road_get_paleofauna(continent = "Africa", fauna_genus = "Vulpes",
+                    fauna_species = "vulpes")}
 }

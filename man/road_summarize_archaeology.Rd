@@ -40,5 +40,5 @@ across multiple categories depending on contextual interpretations. This
 function assists in identifying the most relevant categories for your search.
 }
 \examples{
-road_summarize_archaeology(term = "Cores")
+\donttest{road_summarize_archaeology(term = "Cores")}
 }

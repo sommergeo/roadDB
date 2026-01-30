@@ -35,8 +35,9 @@
 #' @return List of attribute values.
 #' @export
 #'
-#' @examples road_list_argument_values("locality_type")
-#' @examples road_list_argument_values("subcontinent")
+#' @examples
+#' \donttest{road_list_argument_values("locality_type")}
+#' \donttest{road_list_argument_values("subcontinent")}
 road_list_argument_values <- function(function_argument)
 {
   if (is.null(function_argument))
@@ -181,9 +182,9 @@ road_list_argument_values <- function(function_argument)
 # @keywords internal
 #
 # @examples
-# road_list_values(table_names = "assemblage", attribute_name = "category")
-# road_list_values(table_names = c("geological_layer_age", 
-# "archaeological_layer_age", "assemblage_age"), attribute_name = "dating_method")
+# \donttest{road_list_values(table_names = "assemblage", attribute_name = "category")}
+# \donttest{road_list_values(table_names = c("geological_layer_age", 
+# "archaeological_layer_age", "assemblage_age"), attribute_name = "dating_method")}
 road_list_values <- function (table_names, attribute_name)
 { 
    if (is.null(attribute_name))
@@ -263,7 +264,7 @@ road_list_values <- function (table_names, attribute_name)
 #' @export
 #'
 #' @examples
-#' road_summarize_archaeology(term = "Cores")
+#' \donttest{road_summarize_archaeology(term = "Cores")}
 road_summarize_archaeology <- function(term)
 {
   if (is.null(term))

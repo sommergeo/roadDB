@@ -34,12 +34,11 @@
 #' @export
 #'
 #' @examples
-#'
-#' road_get_publications(localities = c("Apollo 11", "Berg Aukas"))
+#' \donttest{road_get_publications(localities = c("Apollo 11", "Berg Aukas"))}
 #' 
-#' # Using result from road_get_localities
-#'   locs <- road_get_localities(country = "Estonia")
-#'   road_get_publications(localities = locs)
+#' \donttest{# Using result from road_get_localities}
+#' \donttest{locs <- road_get_localities(country = "Estonia")}
+#' \donttest{road_get_publications(localities = locs)}
 road_get_publications <- function (
    localities = NULL,
    bibtex = F

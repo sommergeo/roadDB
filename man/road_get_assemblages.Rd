@@ -120,8 +120,8 @@ category, age or omit them to have a broader result set.
 All parameters are optional and should be omitted or set to NULL when not used.
 }
 \examples{
-road_get_assemblages(country = c("Germany", "France"), age_min = 300000,
-                     category = c("miscellaneous finds"))
-road_get_assemblages(subcontinent = c("Caucasus"), category = "human remains",
-                     age_max = 100000)
+\donttest{road_get_assemblages(country = c("Germany", "France"), age_min = 300000,
+                     category = c("miscellaneous finds"))}
+\donttest{road_get_assemblages(subcontinent = c("Caucasus"), category = "human remains",
+                     age_max = 100000)}
 }

@@ -1,6 +1,6 @@
 #' Get lithic typology from the ROAD database
 #'
-#' The \strong{\code{road_get_lithic_typologies}} function retrieves data on typological finds 
+#' The \strong{\code{road_get_lithic_typologies}} function retrieves data on find typology 
 #' from the ROAD database. Lithic typology refers to the classification of stone tools 
 #' based on their shape, technology, and function. This function allows you to query 
 #' lithic typology data using various parameters, such as geographical location, cultural 
@@ -66,9 +66,9 @@
 #' @export
 #' 
 #' @examples
-#' road_get_lithic_typologies(country = c("South Africa"), tool_list = "adze")
-#' road_get_lithic_typologies(subcontinent = "Eastern Europe", 
-#'                          tool_list = c("bladelet burin spall"))
+#' \donttest{road_get_lithic_typologies(country = c("South Africa"), tool_list = "adze")}
+#' \donttest{road_get_lithic_typologies(subcontinent = "Eastern Europe", 
+#'                          tool_list = c("bladelet burin spall"))}
 road_get_lithic_typologies <- function(
     continent = NULL,
     subcontinent = NULL,
@@ -218,9 +218,9 @@ road_get_lithic_typologies <- function(
 #' @export
 #'
 #' @examples
-#' road_get_lithic_raw_materials(subcontinent = "South Asia", raw_material_list = c("limestone"))
-#' road_get_lithic_raw_materials(subcontinent = c("Caucasus"), locality_type = "cave",
-#'                              raw_material_list = c("chalcedony", "limestone"))
+#' \donttest{road_get_lithic_raw_materials(subcontinent = "South Asia", raw_material_list = c("limestone"))}
+#' \donttest{road_get_lithic_raw_materials(subcontinent = c("Caucasus"), locality_type = "cave",
+#'                              raw_material_list = c("chalcedony", "limestone"))}
 road_get_lithic_raw_materials <- function(
     continent = NULL,
     subcontinent = NULL,
@@ -360,8 +360,8 @@ road_get_lithic_raw_materials <- function(
 #' @export
 #'
 #' @examples
-#' road_get_organic_tools(country = c("France"), organic_tool_interpretation = "fishhook")
-#' road_get_organic_tools(country = "Germany", organic_tool_interpretation = c("lance/spear"))
+#' \donttest{road_get_organic_tools(country = c("France"), organic_tool_interpretation = "fishhook")}
+#' \donttest{road_get_organic_tools(country = "Germany", organic_tool_interpretation = c("lance/spear"))}
 road_get_organic_tools <- function(
     continent = NULL,
     subcontinent = NULL,
@@ -508,10 +508,10 @@ road_get_organic_tools <- function(
 #' @export
 #'
 #' @examples
-#' road_get_symbolic_artifacts(continent = "Europe", locality_type = "rock shelter", 
-#'                             symbolic_artifact_interpretation = "instrument")
-#' road_get_symbolic_artifacts(subcontinent = "Southern Africa", 
-#'                             symbolic_artifact_interpretation = "zoomorphic")
+#' \donttest{road_get_symbolic_artifacts(continent = "Europe", locality_type = "rock shelter", 
+#'                             symbolic_artifact_interpretation = "instrument")}
+#' \donttest{road_get_symbolic_artifacts(subcontinent = "Southern Africa", 
+#'                             symbolic_artifact_interpretation = "zoomorphic")}
 road_get_symbolic_artifacts <- function(
     continent = NULL,
     subcontinent = NULL,
@@ -644,9 +644,9 @@ road_get_symbolic_artifacts <- function(
 #' @export
 #'
 #' @examples
-#' road_get_features(country = "Czech Republic", feature_interpretation = "textile imprints")
-#' road_get_features(continent = "Africa", locality_type = c("cave"), 
-#'                                          feature_interpretation = "bedding")
+#' \donttest{road_get_features(country = "Czech Republic", feature_interpretation = "textile imprints")}
+#' \donttest{road_get_features(continent = "Africa", locality_type = c("cave"), 
+#'                                          feature_interpretation = "bedding")}
 road_get_features <- function(
     continent = NULL,
     subcontinent = NULL,
@@ -788,9 +788,9 @@ road_get_features <- function(
 #' @export
 #'
 #' @examples
-#' road_get_miscellaneous_finds(country = "Sudan", miscellaneous_find_material = "wood fossil")
-#' road_get_miscellaneous_finds(continent = c("Africa"), locality_type = "open air",
-#'                              miscellaneous_find_material = "shell")
+#' \donttest{road_get_miscellaneous_finds(country = "Sudan", miscellaneous_find_material = "wood fossil")}
+#' \donttest{road_get_miscellaneous_finds(continent = c("Africa"), locality_type = "open air",
+#'                              miscellaneous_find_material = "shell")}
 road_get_miscellaneous_finds <- function(
     continent = NULL,
     subcontinent = NULL,

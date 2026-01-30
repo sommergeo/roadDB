@@ -44,6 +44,6 @@ users who want to see which values are available or verify their exact spelling
 (e.g., country names). Only categorical arguments are supported.
 }
 \examples{
-road_list_argument_values("locality_type")
-road_list_argument_values("subcontinent")
+\donttest{road_list_argument_values("locality_type")}
+\donttest{road_list_argument_values("subcontinent")}
 }

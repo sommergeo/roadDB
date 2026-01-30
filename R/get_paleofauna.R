@@ -70,9 +70,9 @@
 #' @export
 #'
 #' @examples
-#' road_get_paleofauna(country = c("Spain", "Portugal"), fauna_genus = "Mammuthus")
-#' road_get_paleofauna(continent = "Africa", fauna_genus = "Vulpes",
-#'                     fauna_species = "vulpes")
+#' \donttest{road_get_paleofauna(country = c("Spain", "Portugal"), fauna_genus = "Mammuthus")}
+#' \donttest{road_get_paleofauna(continent = "Africa", fauna_genus = "Vulpes",
+#'                     fauna_species = "vulpes")}
 road_get_paleofauna <- function(
   continent = NULL,
   subcontinent = NULL,

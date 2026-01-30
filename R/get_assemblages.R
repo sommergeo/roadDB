@@ -75,10 +75,10 @@
 #' @export
 #'
 #' @examples
-#' road_get_assemblages(country = c("Germany", "France"), age_min = 300000,
-#'                      category = c("miscellaneous finds"))
-#' road_get_assemblages(subcontinent = c("Caucasus"), category = "human remains",
-#'                      age_max = 100000)
+#' \donttest{road_get_assemblages(country = c("Germany", "France"), age_min = 300000,
+#'                      category = c("miscellaneous finds"))}
+#' \donttest{road_get_assemblages(subcontinent = c("Caucasus"), category = "human remains",
+#'                      age_max = 100000)}
 road_get_assemblages <- function(
     continent = NULL,
     subcontinent = NULL,

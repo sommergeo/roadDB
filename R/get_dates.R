@@ -66,8 +66,8 @@
 #' @export
 #' 
 #' @examples 
-#' assemblages <- road_get_assemblages(country="Slovenia")
-#' road_get_dates(assemblages)
+#' \donttest{assemblages <- road_get_assemblages(country="Slovenia")}
+#' \donttest{road_get_dates(assemblages)}
 road_get_dates <- function (assemblages = NULL) 
 {
   localities <- road_get_localities_internal()

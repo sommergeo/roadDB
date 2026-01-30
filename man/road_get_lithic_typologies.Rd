@@ -90,7 +90,7 @@ and "unknown".
 \code{tool_list}: List of specific tool types present in the lithic record.
 }
 \description{
-The \strong{\code{road_get_lithic_typologies}} function retrieves data on typological finds 
+The \strong{\code{road_get_lithic_typologies}} function retrieves data on find typology 
 from the ROAD database. Lithic typology refers to the classification of stone tools 
 based on their shape, technology, and function. This function allows you to query 
 lithic typology data using various parameters, such as geographical location, cultural 
@@ -98,7 +98,7 @@ period, tool type, and assemblage. Use these parameters to filter results accord
 your research needs, or omit them to retrieve a broader dataset.
 }
 \examples{
-road_get_lithic_typologies(country = c("South Africa"), tool_list = "adze")
-road_get_lithic_typologies(subcontinent = "Eastern Europe", 
-                         tool_list = c("bladelet burin spall"))
+\donttest{road_get_lithic_typologies(country = c("South Africa"), tool_list = "adze")}
+\donttest{road_get_lithic_typologies(subcontinent = "Eastern Europe", 
+                         tool_list = c("bladelet burin spall"))}
 }
