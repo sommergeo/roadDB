@@ -46,7 +46,7 @@ All parameters are optional. If not used, omit them or set them to NULL.
 }
 \examples{
 
-result <- road_get_publications(localities = c("Apollo 11", "Berg Aukas"))
+road_get_publications(localities = c("Apollo 11", "Berg Aukas"))
 
 # Using result from road_get_localities
   locs <- road_get_localities(country = "Estonia")

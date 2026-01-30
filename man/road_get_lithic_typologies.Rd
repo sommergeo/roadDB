@@ -98,7 +98,7 @@ period, tool type, and assemblage. Use these parameters to filter results accord
 your research needs, or omit them to retrieve a broader dataset.
 }
 \examples{
-road_get_lithic_typologies(continent = c("Asia"), tool_list = "adze")
+road_get_lithic_typologies(country = c("South Africa"), tool_list = "adze")
 road_get_lithic_typologies(subcontinent = "Eastern Europe", 
                          tool_list = c("bladelet burin spall"))
 }

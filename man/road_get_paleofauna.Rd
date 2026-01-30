@@ -103,6 +103,6 @@ single strings and not as vectors with multiple search words to recieve useful r
 }
 \examples{
 road_get_paleofauna(country = c("Spain", "Portugal"), fauna_genus = "Mammuthus")
-road_get_paleofauna(continent = "Arfica", fauna_genus = "Vulpes",
+road_get_paleofauna(continent = "Africa", fauna_genus = "Vulpes",
                     fauna_species = "vulpes")
 }

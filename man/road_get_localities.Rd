@@ -98,8 +98,8 @@ them to have a broader result set. All parameters are optional and should be
 omitted or set to NULL when not used.
 }
 \examples{
-df <- road_get_localities(continent = "Europe", country = c("Germany"),
+road_get_localities(continent = "Europe",
                     locality_type = c("basin", "quarry"))
-df <- road_get_localities(country = c("Germany", "France"),
+road_get_localities(country = c("Germany","Austria"),
                     cultural_period = "Epipaleolithic")
 }
