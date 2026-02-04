@@ -4,7 +4,7 @@
 \alias{get_publication_references}
 \title{Get formatted publication references for a single locality (internal helper function)}
 \usage{
-get_publication_references(locality = NULL, bibtex = F)
+get_publication_references(locality = NULL, bibtex = FALSE)
 }
 \arguments{
 \item{locality}{A single locality identifier (string).}

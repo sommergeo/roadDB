@@ -4,7 +4,7 @@
 \alias{road_get_publications}
 \title{Get publication references from the ROAD database}
 \usage{
-road_get_publications(localities = NULL, bibtex = F)
+road_get_publications(localities = NULL, bibtex = FALSE)
 }
 \arguments{
 \item{localities}{specifies the subset of localities for which publications 

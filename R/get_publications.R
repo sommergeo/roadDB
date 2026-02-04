@@ -41,7 +41,7 @@
 #' \donttest{road_get_publications(localities = locs)}
 road_get_publications <- function (
    localities = NULL,
-   bibtex = F
+   bibtex = FALSE
 ) 
 {
   if (is.null(localities)) {
@@ -121,7 +121,7 @@ road_get_publications <- function (
 #' @keywords internal
 get_publication_references <- function (
     locality = NULL,
-    bibtex = F
+    bibtex = FALSE
 ) 
 {
   publications <- data.frame(matrix(ncol = 2, nrow = 0))
