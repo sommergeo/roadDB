@@ -8,12 +8,12 @@
 
 * We have chosen the CC BY-SA 4.0 license for our package because it ensures compatibility with the related ROAD database. As a result, both the package and the data retrieved through it are made available under the same license, simplifying its use.
 
+* The word "ROCEEH" is not misspelled, but the Abbreviation of the Research Center "The Role of Culture in Early Expansions of Humans", which curates the "ROCEEH Out of Africa Database (ROAD)".
+
+* The term "paleoenvironmental" is spelled correctly.
+
 ## Resubmission comments
 
-* Lengthy examples were deactivated for testing with \donttest{}
+* We improved the package description in the DESCRIPTION file by adding more detail.
 
-* We updated our SSL certificates to ensure secured network connections.
-
-* The Word "ROCEEH" is not misspelled, but the Abbreviation of the Research Center "The Role of Culture in Early Expansions of Humans", which curates the "ROCEEH Out of Africa Database (ROAD)".
-
-* The +LICENSE file was removed, because redundant.
+* Replace 'T' and 'F' with 'TRUE' and 'FALSE'
