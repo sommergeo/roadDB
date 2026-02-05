@@ -3,7 +3,7 @@ This package provides an R interface to the [ROCEEH Out of Africa Database (ROAD
 The package allows users to retrieve data from the online database at different levels of detail and customize search requests.
 Functions return `data frame` objects compatible with other R packages used in prehistoric and paleoenvironmental science, supporting reproducible workflows as an input provider.  
 
-The package is maintained by [Christian Sommer](https://orcid.org/0000-0001-9062-0876), [Zara Kanaeva](https://orcid.org/0000-0002-1989-1494), [Timo Schtreicher](https://orcid.org/0009-0009-2193-4308) and [Jesper Borre Pedersen](https://orcid.org/0000-0002-3468-0986) at the Research Center [The Role of Culture in Early Expansions of Humans (ROCEEH)](https://www.hadw-bw.de/en/research/research-center/roceeh) and funded by the [Heidelberg Academy of Sciences and Humanties](https://www.hadw-bw.de/en).
+The package is maintained by [Christian Sommer](https://orcid.org/0000-0001-9062-0876), [Zara Kanaeva](https://orcid.org/0000-0002-1989-1494), [Timo Streicher](https://orcid.org/0009-0009-2193-4308) and [Jesper Borre Pedersen](https://orcid.org/0000-0002-3468-0986) at the Research Center [The Role of Culture in Early Expansions of Humans (ROCEEH)](https://www.hadw-bw.de/en/research/research-center/roceeh) and funded by the [Heidelberg Academy of Sciences and Humanties](https://www.hadw-bw.de/en).
 
 
 ## :cloud: Database status
@@ -16,7 +16,7 @@ Current snapshot:  :date: **2025-12-01**.
 
 
 ## :notebook: Tutorial
-An introduction to the package with example workflows can be found at [https://www.sommergeo.com/roadDB/tutorial.html]()
+An introduction to the package with example workflows can be found at [https://www.sommergeo.com/roadDB/tutorial.html](https://www.sommergeo.com/roadDB/tutorial.html)
 
 
 ## :unlock: License
