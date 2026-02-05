@@ -1,5 +1,5 @@
 # roadDB  <a href="https://www.hadw-bw.de/en/research/research-center/roceeh"><img src="docs/roadDB_logo.png" align="right" height="138" /></a>
-Provides an R interface to the [ROCEEH Out of Africa Database (ROAD)](<https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php>), a comprehensive resource for archaeological, anthropological, paleoenvironmental and geographic data from Africa and Eurasia dating from 3,000,000 to 20,000 years BP.
+This package provides an R interface to the [ROCEEH Out of Africa Database (ROAD)](<https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php>), a comprehensive resource for archaeological, anthropological, paleoenvironmental and geographic data from Africa and Eurasia dating from 3,000,000 to 20,000 years BP.
 The package allows users to retrieve data from the online database at different levels of detail and customize search requests.
 Functions return `data frame` objects compatible with other R packages used in prehistoric and paleoenvironmental science, supporting reproducible workflows as an input provider.  
 
@@ -7,11 +7,12 @@ The package is maintained by [Christian Sommer](https://orcid.org/0000-0001-9062
 
 
 ## :cloud: Database status
-This package provides an online connection to the ROCEEH Out of Africa Database (ROAD). Please ensure a stable internet connection when working with roadDB.
+This package provides online access to a regularly updated snapshot of the ROAD database.
+A stable internet connection is required when working with `roadDB`.
 
-The database is currently:  :green_circle: **Online**
+Current status:  :green_circle: **Online**
 
-It uses a regularly updated snapshot of the database; the current version was updated on **2025-12-01**.
+Current snapshot:  :date: **2025-12-01**.
 
 
 ## :notebook: Tutorial
@@ -41,11 +42,13 @@ devtools::install_github("sommergeo/roadDB")
 
 
 ### Structure
-The roadDB package has three main levels of detail (LOD) that follow a hierarchical order: Locality, Assemblage and Date. A locality can have multiple assemblages, and each assemblage can have multiple dates associated with it.
+The roadDB package has three main levels of detail (LOD) that follow a hierarchical order: Localitie, Assemblages and Dates & Publications. For example, a locality can have multiple assemblages, and each assemblage can have multiple dates associated with it.
 
 <p align="center">
 <img src="docs/levels_of_detail.svg" alt="Illustration of the three levels of the roadDB R-package from top to bottom: Locality, Assemblage and Date" height="250">
 </p>
+
+*Fig: Three Levels of Detail (LODs) for data retrieval.*
 
 Users can query information at different LODs using dedicated functions that follow the `road_get_*` naming convention. These return dataframes where each row represents an item at the requested granularity and includes attribute columns relevant to those items.
 
@@ -53,31 +56,46 @@ An extensive set of arguments can be applied to all `road_get_*` functions, allo
 
 As the ROAD database offers exceptionally rich information at the assemblage level, there are subordinate functions for querying human remains, archaeology, palaeofauna and palaeobotany.
 
+<p align="center">
+<img src="docs/functions_and_arguments.png" alt="Crosstable of compatibility between roadDB functions and related arguments" height="250">
+</p>
 
-### Core functions
-- 1st level of detail:
-	- road_get_localities()
-- 2nd level of detail:
-	- road_get_assemblages()
-	- road_get_human_remains()
-	- road_get_paleofauna()
-	- road_get_paleobotany()
-	- archaeology-related:
-		- road_get_lithic_typologies()
-		- road_get_lithic_raw_materials()
-		- road_get_organic_tools()
-		- road_get_symbolic_artifacts()
-		- road_get_features()
-		- road_get_miscellaneous_finds()
-- 3rd level of detail:
-	- road_get_dates()
-	- road_get_publications()
+*Fig: Crosstable of functions and compatible arguments. [Download](https://www.sommergeo.com/roadDB/functions_and_arguments.pdf)*
 
-### Helper functions
-- road_list_argument_values()
-- road_summarize_archaeology()
+
+
+### Functions
+```
+# 1st level of detail:
+	road_get_localities()
+
+# 2nd level of detail:
+	road_get_assemblages()
+	road_get_human_remains()
+	road_get_paleofauna()
+	road_get_paleobotany()
+
+	## archaeology-related:
+	road_get_lithic_typologies()
+	road_get_lithic_raw_materials()
+	road_get_organic_tools()
+	road_get_symbolic_artifacts()
+	road_get_features()
+	road_get_miscellaneous_finds()
+
+# 3rd level of detail:
+	road_get_dates()
+	road_get_publications()
+	
+# Helper functions:
+	road_list_argument_values()
+	road_summarize_archaeology()
+```
+
 
 ### Arguments
+
+#### General arguments
 The following arguments are optional and can be used with every `road_get_*` function to constrain queries.
 
 | Argument                            | Type      | ROAD table / attribute                               | Search type | Example                                       |
@@ -93,6 +111,7 @@ The following arguments are optional and can be used with every `road_get_*` fun
 | `cultural_period`                   | character | archaeological_stratigraphy / cultural_period        | exact       | "Middle Stone Age"                            |
 
 
+#### Specific aruments
 The following arguments are optional and can be used with the corresponding `road_get_*` function to constrain queries.
 
 | Argument                            | Type      | ROAD table / attribute                               | Search type | Example(s)                                    |
