@@ -11,7 +11,7 @@ Authors@R: c(
   person(given = "Research Center: The Role of Culture in Early Expansions of Humans (ROCEEH)", role = "cph"),
   person(given = "Heidelberg Academy of Sciences and Humanities", role = "fnd"))
 Maintainer: Christian Sommer <christian.sommer@uni-tuebingen.de>
-Description: Provides an R interface to the ROCEEH Out of Africa Database (ROAD) (<https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php>), a comprehensive resource for archaeological, anthropological, paleoenvironmental and geographic data from Africa and Eurasia dating from 3,000,000 to 20,000 years BP. The package allows users to retrieve data from the online database at different levels of detail and customize search requests. Functions return `data frame` objects compatible with other R packages used in prehistoric and paleoenvironmental science, supporting reproducible workflows as an input provider.  
+Description: Provides an R interface to the ROCEEH Out of Africa Database (ROAD) (<https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php>), a comprehensive resource for archaeological, anthropological, paleoenvironmental and geographic data from Africa and Eurasia dating from 3,000,000 to 20,000 years BP. The package allows users to retrieve data from the online database at different levels of detail and customize search requests. Functions return data frame objects compatible with other R packages used in prehistoric and paleoenvironmental science, supporting reproducible workflows as an input provider.  
 License: CC BY-SA 4.0
 Encoding: UTF-8
 LazyData: true

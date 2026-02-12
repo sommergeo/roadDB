@@ -1,4 +1,4 @@
-# roadDB  <a href="https://www.hadw-bw.de/en/research/research-center/roceeh"><img src="docs/roadDB_logo.png" align="right" height="138" /></a>
+# roadDB  <img src="docs/roadDB_logo.png" align="right" height="138" />
 This package provides an R interface to the [ROCEEH Out of Africa Database (ROAD)](<https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php>), a comprehensive resource for archaeological, anthropological, paleoenvironmental and geographic data from Africa and Eurasia dating from 3,000,000 to 20,000 years BP.
 The package allows users to retrieve data from the online database at different levels of detail and customize search requests.
 Functions return `data frame` objects compatible with other R packages used in prehistoric and paleoenvironmental science, supporting reproducible workflows as an input provider.  
@@ -42,7 +42,7 @@ devtools::install_github("sommergeo/roadDB")
 
 
 ### Structure
-The roadDB package has three main levels of detail (LOD) that follow a hierarchical order: Localitie, Assemblages and Dates & Publications. For example, a locality can have multiple assemblages, and each assemblage can have multiple dates associated with it.
+The roadDB package has three main levels of detail (LOD) that follow a hierarchical order: (1) Localities, (2) Assemblages and (3) Dates & Publications. For example, a locality can have multiple assemblages, and each assemblage can have multiple dates associated with it.
 
 <p align="center">
 <img src="docs/levels_of_detail.svg" alt="Illustration of the three levels of the roadDB R-package from top to bottom: Locality, Assemblage and Date" height="250">
@@ -210,4 +210,3 @@ The following table provides an overview of returned attributes.
 | `dating_method`                           |  `road_get_dates`                            | character            |
 | `laboratory_idlaboratory`                 |  `road_get_dates`                            | character            |
 | `publication`                             |  `road_get_publications`                     | character            |
-
