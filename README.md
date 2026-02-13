@@ -12,7 +12,7 @@ A stable internet connection is required when working with `roadDB`.
 
 Current status:  :green_circle: **Online**
 
-Current snapshot:  :date: **2025-12-01**.
+Current snapshot:  :date: **2025-12-01**
 
 
 ## :notebook: Tutorial
@@ -25,14 +25,24 @@ Contents retrieved from the ROAD database are published under the same license a
 
 > Kandel, A. W., Sommer, C., Kanaeva, Z., Bolus, M., Bruch, A. A., Groth, C., Haidle, M. N., Hertler, C., Heß, J., Malina, M., Märker, M., Hochschild, V., Mosbrugger, V., Schrenk, F., & Conard, N. J. (2023). The ROCEEH Out of Africa Database (ROAD): A large-scale research database serves as an indispensable tool for human evolutionary studies. PLOS ONE, 18(8), e0289513. https://doi.org/10.1371/journal.pone.0289513
 
+## :information_source: Using roadDB Responsibly
+ROAD is continuously growing and updated, and therefore a comprehensive, but not complete archive of early human prehistory. 
+All data are curated by researchers and trained research assistants, but still may contain errors. 
+Information is recorded closely following the interpretations of the original literature and does not necessarily reflect the views of the database curators.
+
+Please critically evaluate results obtained via roadDB, verify them against the original literature, retrieve references using `road_get_publications()` and check for new publications not yet entered.
+
+roadDB covers the most frequently used tables and columns of ROAD. For additional fields, complex SQL queries, or full database access, please register and log in to [ROAD](https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php).
+
+If you find errors, please contact info@roceeh.net.
 
 ## :computer: Functionality
 
 
 ### Installation
 ```
-# CRAN installation (currently in review)
-# install.packages(roadDB)
+# CRAN installation
+install.packages(roadDB)
 
 # Github installation
 # Windows users are required to install Rtools: https://cran.r-project.org/bin/windows/Rtools/
