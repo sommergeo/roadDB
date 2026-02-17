@@ -1,9 +1,9 @@
 # roadDB  <img src="docs/roadDB_logo.png" align="right" height="138" />
-This package provides an R interface to the [ROCEEH Out of Africa Database (ROAD)](<https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php>), a comprehensive resource for archaeological, anthropological, paleoenvironmental and geographic data from Africa and Eurasia dating from 3,000,000 to 20,000 years BP.
-The package allows users to retrieve data from the online database at different levels of detail and customize search requests.
+This package provides an R interface to the [ROCEEH Out of Africa Database (ROAD)](<https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php>), a comprehensive resource for archaeological, anthropological, paleoenvironmental and geographic data from Africa and Eurasia dating between 3,000,000 and 20,000 years BP.
+The package is avaliable on [CRAN](https://doi.org/10.32614/CRAN.package.roadDB) and allows users to retrieve data from the online database at different levels of detail and customize search requests.
 Functions return `data frame` objects compatible with other R packages used in prehistoric and paleoenvironmental science, supporting reproducible workflows as an input provider.  
 
-The package is maintained by [Christian Sommer](https://orcid.org/0000-0001-9062-0876), [Zara Kanaeva](https://orcid.org/0000-0002-1989-1494), [Timo Streicher](https://orcid.org/0009-0009-2193-4308) and [Jesper Borre Pedersen](https://orcid.org/0000-0002-3468-0986) at the Research Center [The Role of Culture in Early Expansions of Humans (ROCEEH)](https://www.hadw-bw.de/en/research/research-center/roceeh) and funded by the [Heidelberg Academy of Sciences and Humanties](https://www.hadw-bw.de/en).
+The package is maintained by [Christian Sommer](https://orcid.org/0000-0001-9062-0876), [Zara Kanaeva](https://orcid.org/0000-0002-1989-1494), [Timo Streicher](https://orcid.org/0009-0009-2193-4308) and [Jesper Borre Pedersen](https://orcid.org/0000-0002-3468-0986) at the Research Center [The Role of Culture in Early Expansions of Humans (ROCEEH)](https://www.hadw-bw.de/en/research/research-center/roceeh) and is funded by the [Heidelberg Academy of Sciences and Humanties](https://www.hadw-bw.de/en).
 
 
 ## :cloud: Database status
@@ -25,7 +25,7 @@ Contents retrieved from the ROAD database are published under the same license a
 
 > Kandel, A. W., Sommer, C., Kanaeva, Z., Bolus, M., Bruch, A. A., Groth, C., Haidle, M. N., Hertler, C., Heß, J., Malina, M., Märker, M., Hochschild, V., Mosbrugger, V., Schrenk, F., & Conard, N. J. (2023). The ROCEEH Out of Africa Database (ROAD): A large-scale research database serves as an indispensable tool for human evolutionary studies. PLOS ONE, 18(8), e0289513. https://doi.org/10.1371/journal.pone.0289513
 
-## :information_source: Using roadDB Responsibly
+## :information_source: Using roadDB responsibly
 ROAD is continuously growing and updated, and therefore a comprehensive, but not complete archive of early human prehistory. 
 All data are curated by researchers and trained research assistants, but still may contain errors. 
 Information is recorded closely following the interpretations of the original literature and does not necessarily reflect the views of the database curators.
@@ -55,7 +55,7 @@ devtools::install_github("sommergeo/roadDB")
 The roadDB package has three main levels of detail (LOD) that follow a hierarchical order: (1) Localities, (2) Assemblages and (3) Dates & Publications. For example, a locality can have multiple assemblages, and each assemblage can have multiple dates associated with it.
 
 <p align="center">
-<img src="docs/levels_of_detail.svg" alt="Illustration of the three levels of the roadDB R-package from top to bottom: Locality, Assemblage and Date" height="250">
+<img src="docs/levels_of_detail.svg" alt="Illustration of the three levels of the roadDB R-package from top to bottom: Locality, Assemblage and Object" height="250">
 </p>
 
 *Fig: Three Levels of Detail (LODs) for data retrieval.*
