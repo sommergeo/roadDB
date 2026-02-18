@@ -40,7 +40,7 @@ install.packages("devtools")
 devtools::install_github("sommergeo/roadDB")
 
 # CRAN installation (will be made available later)
-# install.packages(roadDB)
+# install.packages("roadDB")
 ```
 
 ### Load roadDB
@@ -136,12 +136,12 @@ A large number of these functions are specifically related to archaeological con
 * `road_get_assemblages()`
     - `road_get_human_remains()`
     - `road_get_paleofauna()`
-    - `road_get_paleobotany()`
-    - `road_get_lithic_typology()`
-    - `road_get_lithic_raw_material()`
+    - `road_get_plantremains()`
+    - `road_get_lithic_typologies()`
+    - `road_get_lithic_raw_materials()`
     - `road_get_organic_tools()`
     - `road_get_symbolic_artifacts()`
-    - `road_get_feature()`
+    - `road_get_features()`
     - `road_get_miscellaneous_finds()`
 * `road_get_dates()`
 
@@ -158,10 +158,10 @@ Arguments can also be combined, and you may supply a single value or a list of v
 road_get_localities(cultural_period='MSA')
 
 # Multiple arguments
-road_get_localities(cultural_period='MSA', countries='South Africa')
+road_get_localities(cultural_period='MSA', country='South Africa')
 
 # Lists of arguments
-road_get_localities(cultural_period=c('MSA','LSA'), countries=c('South Africa','Namibia'))
+road_get_localities(cultural_period=c('MSA','LSA'), country=c('South Africa','Namibia'))
 ```
 
 The package provides two sets of arguments: 
@@ -179,15 +179,15 @@ And second, the **function-specific arguments** (tab. 2), which are only availab
 
 | Argument            | Type      | Example                                       |
 | ------------------- | --------- | --------------------------------------------- |
-| `continents`        | character | "Africa"                                      |
-| `subcontinents`     | character | "Southern Africa"                             |
-| `countries`         | character | "South Africa"                                |
-| `locality_types`    | character | "rock shelter"                                |
-| `categories`        | character | "symbolic artifacts, typology"                |
+| `continent`         | character | "Africa"                                      |
+| `subcontinent`      | character | "Southern Africa"                             |
+| `country`           | character | "South Africa"                                |
+| `locality_type`     | character | "rock shelter"                                |
+| `category`          | character | "symbolic artifacts, typology"                |
 | `age_min`           | numeric   | 20000                                         |
 | `age_max`           | numeric   | 3000000                                       |
-| `technocomplexes`   | character | "ESA/ Early Acheulean"                        |
-| `cultural_periods`  | character | "Middle Stone Age"                            |
+| `technocomplex`     | character | "ESA/ Early Acheulean"                        |
+| `cultural_period`   | character | "Middle Stone Age"                            |
 
 **Table 2:** Function-specific arguments are available for certain `road_get_*` functions.
 
@@ -198,10 +198,10 @@ And second, the **function-specific arguments** (tab. 2), which are only availab
 | `tool_list`                         | character | contains    | "bladelet"                          |
 | `raw_material_list`                 | character | contains    | "ironstone banded"                  |
 | `transport_distance`                | character | exact       | "regional (6–20 km)"                |
-| `organic_tools_interpretation`      | character | contains    | "retoucher"                         |
-| `symbolic_artifacts_interpretation` | character | contains    | "anthropomorphic"                   |
+| `organic_tool_interpretation`       | character | contains    | "retoucher"                         |
+| `symbolic_artifact_interpretation`  | character | contains    | "anthropomorphic"                   |
 | `feature_interpretation`            | character | exact       | "stone construction"                |
-| `miscellaneous_finds_material`      | character | exact       | "ostrich egg shell"                 |
+| `miscellaneous_find_material`       | character | exact       | "ostrich egg shell"                 |
 | `human_genus`                       | character | exact       | "Homo"                              |
 | `human_species`                     | character | exact       | "sapiens"                           |
 | `plant_remains`                     | character | exact       | "phytoliths"                        |
@@ -223,7 +223,7 @@ Each function in ROAD comes with detailed documentation, accessible through the 
 ```{r helper_help, eval=FALSE, include=TRUE}
 # Examples
 help(road_get_localities)
-help(road_get_lithic_typology)
+help(road_get_lithic_typologies)
 help(road_get_dates)
 ```
 
@@ -236,8 +236,8 @@ For instance, you might not know how specific archaeological technocomplexes are
 
 ```{r helper_argument, eval=FALSE, include=TRUE}
 # Examples
-road_list_argument_values("countries")
-road_list_argument_values("cultural_periods")
+road_list_argument_values("country")
+road_list_argument_values("cultural_period")
 road_list_argument_values("human_genus")
 ```
 
@@ -281,7 +281,7 @@ For example, the query below retrieves only sites from the African continent tha
 
 ```{r}
 # Query selected localities
-african_msa_localities <- road_get_localities(continents = "Africa", cultural_periods = "MSA")
+african_msa_localities <- road_get_localities(continent = "Africa", cultural_period = "MSA")
 head(african_msa_localities)
 ```
 
@@ -337,10 +337,10 @@ Before selecting one, it’s helpful to get an overview of the available options
 **Use it to display all available technocomplexes, and then choose one that interests you.**
 
 ```{r eval=FALSE}
-road_list_argument_values("technocomplexes")
+road_list_argument_values("technocomplex")
 ```
 ```{r echo=FALSE}
-cat(paste0(paste(head(road_list_argument_values("technocomplexes")$technocomplex,40), collapse = ", "), ", and many more."))
+cat(paste0(paste(head(road_list_argument_values("technocomplex")$technocomplex, 40), collapse = ", "), ", and many more."))
 ```
 
 Now, adapt the mapping workflow from above to display the technocomplex you selected.
@@ -349,7 +349,7 @@ Use your chosen value as argument value in the `road_get_localities` function to
 
 ```{r ex2.2_map, out.width="100%", eval=FALSE, include=TRUE}
 # Query Mousterian sites
-mousterian <- road_get_localities(technocomplexes = c("MP/ Mousterian - Eurasia", "MP/ Mousterian - Levant"))
+mousterian <- road_get_localities(technocomplex = c("MP/ Mousterian - Eurasia", "MP/ Mousterian - Levant"))
 
 # Create spatial dataset
 mousterian_sf <- st_as_sf(mousterian, 
@@ -362,7 +362,7 @@ tmap_mode("plot")  # or "view" for interactive map
 tm_shape(mousterian_sf) +
   tm_basemap("OpenStreetMap") +
   tm_dots(
-    col = "technocomplexes",
+    col = "technocomplex",
     palette = "Set2")+
   tm_layout(legend.outside = TRUE)
 
@@ -371,7 +371,7 @@ tm_shape(mousterian_sf) +
 
 ```{r, out.width="100%", echo=FALSE, message=FALSE, warning=FALSE}
 # Query Mousterian sites
-mousterian <- road_get_localities(technocomplexes = c("MP/ Mousterian - Eurasia", "MP/ Mousterian - Levant"))
+mousterian <- road_get_localities(technocomplex = c("MP/ Mousterian - Eurasia", "MP/ Mousterian - Levant"))
 
 # Create spatial dataset
 mousterian_sf <- st_as_sf(mousterian, 
@@ -384,14 +384,14 @@ tmap_mode("view")  # or "view" for interactive map
 tm_shape(mousterian_sf) +
   tm_basemap("OpenStreetMap") +
   tm_dots(
-    col = "technocomplexes",
+    col = "technocomplex",
     palette = "Set2")+
   tm_layout(legend.outside = TRUE)
 
 ```
 As you can see, the map can be customized using the arguments available in  [`tmap::tm_dots()`](https://r-tmap.github.io/tmap/reference/tm_symbols.html).
 
-In this example, we visualize different technocomplex categories by setting the `col` argument (which determines what variable is used for coloring — here, `mousterian$technocomplexes`) and the palette argument (which specifies the color scheme to use).
+In this example, we visualize different technocomplex categories by setting the `col` argument (which determines what variable is used for coloring — here, `mousterian$technocomplex`) and the palette argument (which specifies the color scheme to use).
 
 Once you have transferred your dataset to a spatial data type, there are many interesting packages available, that make use of the spatial data in ROAD:
 - [`spatstat`](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) for spatial point pattern analysis, kernel density, etc.
@@ -408,11 +408,11 @@ Moving to the next level of detail (LOD) of roadDB we will now query assemblages
 assemblages <- road_get_assemblages()
 
 # Or we can make more specific queries
-lithic_typology <- road_get_lithic_typology()
-lithic_raw_mat <- road_get_lithic_raw_material()
+lithic_typology <- road_get_lithic_typologies()
+lithic_raw_mat <- road_get_lithic_raw_materials()
 organic_tools <- road_get_organic_tools()
 symbolic <- road_get_symbolic_artifacts()
-feature <- road_get_feature()
+features <- road_get_features()
 mix <- road_get_miscellaneous_finds()
 people <- road_get_human_remains()
 animals <- road_get_paleofauna()
@@ -423,10 +423,10 @@ plants <- road_get_plantremains()
 
 ### 2.1 Lithic Tools
 
-If we stay with our Mousterian people for a bit, we can go into more detail and look at the lithic tools that are present at the localities using the `road_get_lithictypology()` function. But since the Mousterian concept exists in many different classifications, we need to now the exact technocomplexes to query. Using the `road_list_argument_values()` function.
+If we stay with our Mousterian people for a bit, we can go into more detail and look at the lithic tools that are present at the localities using the `road_get_lithic_typologies()` function. But since the Mousterian concept exists in many different classifications, we need to now the exact technocomplexes to query. Using the `road_list_argument_values()` function.
 
 ```{r}
-techno <- road_list_argument_values("technocomplexes")
+techno <- road_list_argument_values("technocomplex")
 ```
 
 We can then take our new *techno* data frame and grab all technocomplexes that contain the word *Mousterian*.
@@ -438,24 +438,24 @@ df_mousterian <- techno[grepl("mousterian", techno$technocomplex, ignore.case = 
 And use this new data frame to gather all lithic typology data in ROAD that stems from a Mousterian context.
 
 ```{r}
-mous_tools <- road_get_lithic_typology(technocomplexes = df_mousterian)
+mous_tools <- road_get_lithic_typologies(technocomplex = df_mousterian$technocomplex)
 ```
 
 We can then inspect our result.
 
-This tool list as a bit hard to get an overview of, but if we know what we´re  looking for, then we can specify this using the `tool_list()` function which can be used together with the `road_get_lithic_typology()` function. We can first use the `road_list_argument_values()` function to see what our choices are.
+This tool list as a bit hard to get an overview of, but if we know what we´re  looking for, then we can specify this using the `tool_list()` function which can be used together with the `road_get_lithic_typologies()` function. We can first use the `road_list_argument_values()` function to see what our choices are.
 
 ```{r eval=FALSE}
 road_list_argument_values("tool_list")
 ```
 ```{r echo=FALSE}
-cat(paste0(paste(head(road_list_argument_values("tool_list")$tool_list,40), collapse = ", "), ", and many more."))
+cat(paste0(paste(head(road_list_argument_values("tool_list")$tool_list, 40), collapse = ", "), ", and many more."))
 ```
 
 This gives us an alphabetical list of all *tool types*. Let us look for all instances of Levallois technology, a defining element of the Mousterian tradition. The term *Levallois* occurs in many different cases and in combination with many different words/categories. Luckily, we do not need the entire entry as the `tool_list()` function conducts a *fuzzy* search and we can therefore just enter *levallois*.
 
 ```{r}
-mous_levallois <- road_get_lithic_typology(technocomplexes = df_mousterian,
+mous_levallois <- road_get_lithic_typologies(technocomplex = df_mousterian$technocomplex,
                                            tool_list = "levallois")
 ```
 
@@ -507,19 +507,19 @@ We then combine the two data frames using the [`merge`](https://www.rdocumentati
 ```{r}
 # Query from miscellaneous finds
 eggshell_misc <- road_get_miscellaneous_finds() # download whole dataframe
-eggshell_misc <- eggshell_misc[grepl("ostrich egg shell", eggshell_misc$miscellaneous_finds_material), ] # filter rows for search pattern
+eggshell_misc <- eggshell_misc[grepl("ostrich egg shell", eggshell_misc$miscellaneous_find_material), ] # filter rows for search pattern
 
 # Query from symbolic artifacts
 eggshell_symbolic <- road_get_symbolic_artifacts() # download whole dataframe
-eggshell_symbolic <- eggshell_symbolic[grepl("ostrich egg shell", eggshell_symbolic$symbolic_artifacts_material), ] # filter rows for search pattern
+eggshell_symbolic <- eggshell_symbolic[grepl("ostrich egg shell", eggshell_symbolic$symbolic_artifact_material), ] # filter rows for search pattern
 
 # Combine dataframes
 eggshell_combined <- merge(
   eggshell_misc,
   eggshell_symbolic,
   by = c("locality_id", "assemblage_id", "continent", "subcontinent", "country",
-         "locality_types", "coord_x", "coord_y", "assemblage_name", "categories",
-         "age_min", "age_max", "cultural_periods", "technocomplexes"),
+         "locality_type", "coord_x", "coord_y", "assemblage_name", "category",
+         "age_min", "age_max", "cultural_period", "technocomplex"),
   all = TRUE
 )
 ```
@@ -527,7 +527,7 @@ eggshell_combined <- merge(
 Finally, we can visualize the results in a simple bar chart.
 ```{r fig.width=7}
 # Plot the ostrich egg shell distribution over cultural periods
-ggplot(eggshell_combined, aes(y = cultural_periods)) +
+ggplot(eggshell_combined, aes(y = cultural_period)) +
   geom_bar() +
   labs(
     title = "Ostrich egg shells",
@@ -578,13 +578,13 @@ hohle_fels_dates <- all_dates[grepl("Hohle Fels", all_dates$locality_id), ]
 **Figure 4:** Flute from the Aurignacian layers of Hohle Fels | H. Jensen/Universität Tübingen 
 
 Hohle Fels is known for a number of fascinating finds, including one nearly complete bone flute and fragments of three ivory flutes that were excavated from archaeological layer Vb ([Conard et al. 2009](https://www.nature.com/articles/nature08169)). The radiocarbon ages for this layer were derived from bone and charcoal and were analyzed at the Oxford Radiocarbon Accelerator Unit and the Leibniz Laboratory in Kiel.
-We can extend our filter to select this specific archaeological layer and symbolic artifats.
+We can extend our filter to select this specific archaeological layer and symbolic artifacts.
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 # Filter for archaeological layer Vb
 hohle_fels_Vb <- hohle_fels_dates[grepl("AH Vb", hohle_fels_dates$archlayer), ]
 # Extend filter for symbolic artifacts
-hohle_fels_Vb <- hohle_fels_Vb[grepl("symbolic artifacts", hohle_fels_Vb$categories), ]
+hohle_fels_Vb <- hohle_fels_Vb[grepl("symbolic artifacts", hohle_fels_Vb$category), ]
 ```
 
 We'll calibrate layer Vb ages using the R package [`rcarbon`](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html). Since the site is located in the Northern Hemisphere, we'll use the "IntCal20" calibration curve ([Reimer et al. 2020](https://doi.org/10.1017/RDC.2020.41)).
