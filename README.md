@@ -12,7 +12,9 @@ A stable internet connection is required when working with `roadDB`.
 
 Current status:  :green_circle: **Online**
 
-Current snapshot:  :date: **2025-12-01**
+Current snapshot:  :date: **2026-03-13**
+
+:construction: A scheduled downtime is planned for 2026-03-28.
 
 
 ## :notebook: Tutorial
