@@ -126,6 +126,7 @@ The use of `roadDB` can be summarized as follows:
 The `road_get_*` functions are used to query data from the ROAD server. They support three **Levels of Detail (LOD)**, which determine the granularity of the returned data frame. Accordingly, each *row* (or *observation*) in the output will represent a **locality**, an **assemblage**, or a specific **object**, depending on the selected level of detail (see fig. 1)
 
 ![](../../docs/levels_of_detail.svg){width=350px}
+
 **Figure 1:** Three levels of detail determine the granularity of data frame.
 
 Since ROAD contains extensive information at the assemblage level—and because different types of assemblages may include diverse and sometimes unique sets of *columns* (or *variables*)—additional subordinate functions are provided to handle these cases.
@@ -234,7 +235,7 @@ help(road_get_dates)
 
 If you are unsure which values are valid for a given argument, use `road_list_argument_values()`.
 
-For instance, you might not know how specific archaeological technocomplexes are spelled in ROAD, or which human genera are available. This helper function returns all unique values for the specified argument, allowing you to explore available options before constructing your query.
+For instance, you might not know how specific cultural periods are spelled in ROAD, or which human genera are available. This helper function returns all unique values for the specified argument, allowing you to explore available options before constructing your query.
 
 ```{r helper_argument, eval=FALSE, include=TRUE}
 # Examples
@@ -259,7 +260,8 @@ head(road_summarize_archaeology('egg shell'),4)
 
 
 # Examples
-The following examples demonstrate how to query data from ROAD and seamlessly use the results with external R packages. 
+The following examples demonstrate how to query data from ROAD and seamlessly use the results with external R packages.
+The tutorial uses the [pipe](https://tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/) operator `|>`, which is a native function since R v4.1, allowing to forward the results from one function into the next one (e.g. `function1() |> function2()`). You can write it by pressing `STRG+SHIFT+M`.
 
 
 ## Example #1: Localities
@@ -267,7 +269,7 @@ The following examples demonstrate how to query data from ROAD and seamlessly us
 ### 1.1 Map the Middle Stone Age
 You can retrieve a table of all localities stored in ROAD using the function `road_get_localities()`.
 
-Table 1 shows the first few rows of more than 2,000 localities currently available. Each locality is represented as a row, with attributes stored in the columns.
+The table shows the first few rows of more than 2,000 localities currently available. Each locality is represented as a row, with attributes stored in the columns.
 
 To explore the complete dataset interactively, you can use the `View()` function in RStudio.
 
@@ -332,7 +334,7 @@ You can extend this map with various functions included in the [`tmap`](https://
 
 ### 1.2 Map a technocomplex of your choice
 
-Now we’ll generate a map for a technocomplex of your choice.
+Now you can generate a map for a technocomplex of your choice.
 
 Before selecting one, it’s helpful to get an overview of the available options. This is where the helper function `road_list_argument_values()` comes in — it allows us to list the unique values that can be used as arguments.
 
@@ -393,7 +395,7 @@ tm_shape(mousterian_sf) +
 ```
 As you can see, the map can be customized using the arguments available in  [`tmap::tm_dots()`](https://r-tmap.github.io/tmap/reference/tm_symbols.html).
 
-In this example, we visualize different technocomplex categories by setting the `col` argument (which determines what variable is used for coloring — here, `mousterian$technocomplex`) and the palette argument (which specifies the color scheme to use).
+In this example, we visualize different technocomplex categories by setting the `col` argument (which determines which variable is used for coloring — here, `mousterian$technocomplex`) and the palette argument (which specifies the color scheme to use).
 
 Once you have transferred your dataset to a spatial data type, there are many interesting packages available, that make use of the spatial data in ROAD:
 - [`spatstat`](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) for spatial point pattern analysis, kernel density, etc.
@@ -419,7 +421,6 @@ mix <- road_get_miscellaneous_finds()
 people <- road_get_human_remains()
 animals <- road_get_paleofauna()
 plants <- road_get_plantremains()
-
 ```
 
 
@@ -434,7 +435,7 @@ techno <- road_list_argument_values("technocomplex")
 We can then take our new *techno* data frame and grab all technocomplexes that contain the word *Mousterian*.
 
 ```{r}
-df_mousterian <- techno[grepl("mousterian", techno$technocomplex, ignore.case = TRUE), ]
+df_mousterian <- techno |> filter(str_detect(technocomplex, regex("mousterian", ignore_case = TRUE)))
 ```
 
 And use this new data frame to gather all lithic typology data in ROAD that stems from a Mousterian context.
@@ -508,12 +509,14 @@ We then combine the two data frames using the [`merge`](https://www.rdocumentati
 
 ```{r}
 # Query from miscellaneous finds
-eggshell_misc <- road_get_miscellaneous_finds() # download whole dataframe
-eggshell_misc <- eggshell_misc[grepl("ostrich egg shell", eggshell_misc$miscellaneous_find_material), ] # filter rows for search pattern
+eggshell_misc <- road_get_miscellaneous_finds() %>%
+  filter(str_detect(miscellaneous_find_material,
+                    regex("ostrich egg shell", ignore_case = TRUE))) # filter rows for search pattern
 
 # Query from symbolic artifacts
-eggshell_symbolic <- road_get_symbolic_artifacts() # download whole dataframe
-eggshell_symbolic <- eggshell_symbolic[grepl("ostrich egg shell", eggshell_symbolic$symbolic_artifact_material), ] # filter rows for search pattern
+eggshell_symbolic <- road_get_symbolic_artifacts() %>%
+  filter(str_detect(symbolic_artifact_material,
+                    regex("ostrich egg shell", ignore_case = TRUE))) # filter rows for search pattern
 
 # Combine dataframes
 eggshell_combined <- merge(
@@ -548,7 +551,7 @@ This is especially true for radiocarbon ages, which are stored as uncalibrated d
 For this reason, we implemented `road_get_dates()`.
 
 
-### Radiocarbon calibration
+### 3.1 Getting chronological dates
 
 Let's have a look at Hohle Fels, a well-known Paleolithic cave site in the Swabian Jura with plenty of dates. 
 
@@ -556,66 +559,74 @@ Let's have a look at Hohle Fels, a well-known Paleolithic cave site in the Swabi
 
 **Figure 3:** Inside the UNESCO site "Hohle Fels" | [CC BY-SA Thilo Parg](https://commons.wikimedia.org/wiki/File:Hohler_Fels_Halle_Achtal_Schelklingen.jpg)
 
-First, we'll get an overview of all the available data, and then use `grepl()` to narrow down our results to rows, where the column `locality_id` contains the value "Hohle Fels".
-
-```{r message=FALSE, warning=FALSE}
-# Load all dates
-all_dates <- road_get_dates() 
-
-# Now filter the column locality_id for the value "Hohle Fels"
-hohle_fels_dates <- all_dates[grepl("Hohle Fels", all_dates$locality_id), ]
-```
-
-*Try to answer these questions:*
-
-- *How many dates are there altogether?*
-
-- *How many radiocarbon dates are there?*
-
-- *Which technocomplexes are present at the site?*
-
+Hohle Fels is known for a number of fascinating finds, including one nearly complete bone flute and fragments of three ivory flutes that were excavated from archaeological layer Vb ([Conard et al. 2009](https://www.nature.com/articles/nature08169)). The radiocarbon ages for this layer were derived from bone and charcoal and were analyzed at the Oxford Radiocarbon Accelerator Unit and the Leibniz Laboratory in Kiel.
 
 ![](02_Kombi_Griffloecher.jpg){width=350px}
 
 **Figure 4:** Flute from the Aurignacian layers of Hohle Fels | H. Jensen/Universität Tübingen 
 
-Hohle Fels is known for a number of fascinating finds, including one nearly complete bone flute and fragments of three ivory flutes that were excavated from archaeological layer Vb ([Conard et al. 2009](https://www.nature.com/articles/nature08169)). The radiocarbon ages for this layer were derived from bone and charcoal and were analyzed at the Oxford Radiocarbon Accelerator Unit and the Leibniz Laboratory in Kiel.
-We can extend our filter to select this specific archaeological layer and symbolic artifacts.
+First, we'll get an overview of all the available assemblages from this site using `road_get_assemblages()`, and then `filter()` to narrow down our results to rows, where the column `locality_id` contains the site name.
 
-```{r message=FALSE, warning=FALSE, eval=TRUE}
-# Filter for archaeological layer Vb
-hohle_fels_Vb <- hohle_fels_dates[grepl("AH Vb", hohle_fels_dates$archlayer), ]
-# Extend filter for symbolic artifacts
-hohle_fels_Vb <- hohle_fels_Vb[grepl("symbolic artifacts", hohle_fels_Vb$category), ]
+In the next step, we download the dates for these assemblages with `road_get_dates()`. It is a handy feature, that the argument `assemblages` accepts data frames, like the one we created one step ahead, for filtering the chronological dates.
+
+```{r}
+# Download a data frame of all assemblages and filter for the site
+hohle_fels_assemblages <- road_get_assemblages() |> 
+  filter(locality_id=='Hohle Fels')
+
+# Use the dataframe to query specific dates
+hohle_fels_dates <- road_get_dates(assemblages = hohle_fels_assemblages)
 ```
 
-We'll calibrate layer Vb ages using the R package [`rcarbon`](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html). Since the site is located in the Northern Hemisphere, we'll use the "IntCal20" calibration curve ([Reimer et al. 2020](https://doi.org/10.1017/RDC.2020.41)).
+*Try to answer the following questions:*
+
+- *How many assemblages are there in Hohle Fels*
+
+- *How many dates are there?*
+
+- *How many of the dates used radiocarbon dating?*
+
+- *Which technocomplexes are present at the site?*
+
+
+### 3.2 Radiocarbon calibration
+
+In this example we will calibrate the radiocarbon dates from the ivory flute layer "AH Vb" from Hohle Fels. To do so, we adapt the code from above, so that it filters for the right `locality_id` and additionally for the needed `archlayer`.
+
+```{r}
+flute_dates <- road_get_assemblages() |> 
+  filter(locality_id=='Hohle Fels', archlayer=='AH Vb') |> 
+  road_get_dates()
+```
+
+
+We can calibrate the layer Vb ages using the R package [`rcarbon`](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html). Since the site is located in the Northern Hemisphere, we'll use the "IntCal20" calibration curve ([Reimer et al. 2020](https://doi.org/10.1017/RDC.2020.41)).
 
 ```{r message=FALSE, warning=FALSE, eval=TRUE}
 # Load radiocarbon library
 library(rcarbon)
 
 # Calibrate
-hohle_fels_Vb_cal <- calibrate(x=hohle_fels_Vb$age,
-                           errors=hohle_fels_Vb$positive_standard_deviation,
-                           calCurves='intcal20')
+flute_dates_cal <- calibrate(x=flute_dates$age,
+                             errors=flute_dates$positive_standard_deviation,
+                             calCurves='intcal20')
 ```
 
 Now the calibrated ages can be displayed using `summary()`.
 ```{r message=FALSE}
 # Display calibrated ages
-summary(hohle_fels_Vb_cal)
+summary(flute_dates_cal)
 ```
 
 You can also visualize the results with `plot()` and `multiplot()`.
 ```{r message=FALSE, warning=FALSE}
 # Visualize the first date
-plot(hohle_fels_Vb_cal,1)
+plot(flute_dates_cal,1)
 ```
 
 ```{r message=FALSE, warning=FALSE}
 # Visualize all dates, with numbers indicating row number
-multiplot(hohle_fels_Vb_cal,
+multiplot(flute_dates_cal,
           decreasing=TRUE,
           rescale=TRUE,
           HPD=TRUE,
