@@ -83,7 +83,7 @@ As the ROAD database offers exceptionally rich information at the assemblage lev
 	road_get_assemblages()
 	road_get_human_remains()
 	road_get_paleofauna()
-	road_get_paleobotany()
+	road_get_plantremains()
 
 	## archaeology-related:
 	road_get_lithic_typologies()
@@ -121,7 +121,7 @@ The following arguments are optional and can be used with every `road_get_*` fun
 | `cultural_period`                   | character | archaeological_stratigraphy / cultural_period        | exact       | "Middle Stone Age"                            |
 
 
-#### Specific aruments
+#### Specific arguments
 The following arguments are optional and can be used with the corresponding `road_get_*` function to constrain queries.
 
 | Argument                            | Type      | ROAD table / attribute                               | Search type | Example(s)                                    |
@@ -141,13 +141,13 @@ The following arguments are optional and can be used with the corresponding `roa
 | `plant_species`                     | character | plant_taxonomy / species                             | exact       |  "Potamogeton gramineus L."                   |
 | `fauna_genus`                       | character | taxonomical_classification / genus                   | exact       |  "Lemniscomys", "Hipposideros"                |
 | `fauna_species`                     | character | paleofauna / species                                 | exact       |  "cf. germanicus", "atapuerquensis"           |
-| `bibtex`                            | character | publication / edition / publication_source           | exact       |  "F", "T", "False", "TRUE         "           |
+| `bibtex`                            | character | publication / edition / publication_source           | exact       |  "TRUE", "FALSE"                              |
 
 
 ### Result tables
 The following table provides an overview of returned attributes.
 
-| Attribute                                 | Funktion                                     | Type                 |
+| Attribute                                 | Function                                     | Type                 |
 | ----------------------------------------- | -------------------------------------------- | -------------------- |
 | `locality_id`                             |  `road_get_*`                                | character            |
 | `continent`                               |  `road_get_*`                                | character            |
