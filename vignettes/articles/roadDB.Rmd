@@ -28,11 +28,11 @@ But first, let's start with the installation.
 ### Install R, RStudio
 Please install the current version of the statistical software `R` and the Integrated Development Environment (IDE) `RStudio`, both available from [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/).
 
-If you would like to install the development version of `roadDB` on MS windows, make sure to install `Rtools` from [https://cran.r-project.org/bin/windows/Rtools/](https://cran.r-project.org/bin/windows/Rtools/).
+If you would like to install the development version of `roadDB` on MS Windows, make sure to install `Rtools` from [https://cran.r-project.org/bin/windows/Rtools/](https://cran.r-project.org/bin/windows/Rtools/).
 
 
 ### Install roadDB
-You only need to install the package once on your R setup, so you can skip this step if it's already installed. The easiest way to install a stable release through CRAN. Alternatively, you can acquire a development version from Github.
+You only need to install the package once on your R setup, so you can skip this step if it's already installed. The easiest way to install a stable release is through CRAN. Alternatively, you can acquire a development version from Github.
 
 ```{r install, eval=FALSE, include=TRUE}
 # CRAN installation (stable release)
@@ -91,11 +91,11 @@ library(rcarbon)
 ## ROCEEH Out of Africa Database
 `roadDB` is an R package designed to provide simplified access to the [ROCEEH Out of Africa Database (ROAD)](https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php).
 
-Developed over the past 18 years by the [ROCEEH research center](https://www.hadw-bw.de/roceeh) (The Role of Culture in Early Expansions of Humans), ROAD integrates a wealth of archaeological, anthropological, paleoenvironmental and geographical data from both Africa and Eurasia, covering a timeframe from 3,000,000 to 20,000 years before present.
+Developed over the past 18 years by the [ROCEEH (The Role of Culture in Early Expansions of Humans) research center](https://www.hadw-bw.de/roceeh), ROAD integrates a wealth of archaeological, anthropological, paleoenvironmental and geographical data from both Africa and Eurasia, covering a timeframe from 3,000,000 to 20,000 years before present.
 
 The database currently encompasses information on over 29,000 assemblages and 2,700 localities, derived from more than 6,500 publications in over 10 languages. ROAD offers structured data with a high level of both quantity and detail, making it an invaluable resource for quantitative and computational analysis.
 
-However, due to its complexity and expert-level focus, the database can be challenging to navigate and analyze directly. This is why the `roadDB` package was implemented as a short-cut into the R ecosystem.
+However, due to its complexity and expert-level focus, the database can be challenging to navigate and analyse directly. This is why the `roadDB` package was implemented as a short-cut into the R ecosystem.
 
 ## R implementation
 The package aims to provide a simplified, intuitive, and convenient interface for accessing the ROAD database by following a few core principles:
@@ -116,7 +116,7 @@ As a result, query results may change over time and might not always reflect the
 Because the package relies on a remote server connection, it requires an active internet connection. Occasionally, the server may experience downtime for maintenance or security checks, particularly during the Christmas holidays. The current server status and and planned times of inaccessibility can be accessed using the link above.
 
 # How to use roadDB
-The use of `roadDB` can be summarized as follows:
+The use of `roadDB` can be summarised as follows:
 
 * **Functions** starting with `road_get_*` define the structure and content of the output table.
 * **Arguments** are optional and allow you to refine your queries using filters.
@@ -127,7 +127,7 @@ The `road_get_*` functions are used to query data from the ROAD server. They sup
 
 ![](../../docs/levels_of_detail.svg){width=350px}
 
-**Figure 1:** Three levels of detail determine the granularity of data frame.
+**Figure 1:** Three levels of detail determine the granularity of the data frame.
 
 Since ROAD contains extensive information at the assemblage level—and because different types of assemblages may include diverse and sometimes unique sets of *columns* (or *variables*)—additional subordinate functions are provided to handle these cases.
 
@@ -246,7 +246,7 @@ road_list_argument_values("human_genus")
 
 #### road_summarize_archaeology()
 
-When working with archaeological data, it can be helpful to summarize content across multiple road_get_* functions. For example, you may want to identify all datasets containing the term "egg shell".
+When working with archaeological data, it can be helpful to summarise content across multiple road_get_* functions. For example, you may want to identify all datasets containing the term "egg shell".
 
 The summary table shows which road_get_* functions include the term, and in which columns it appears. This allows you to refine and target your queries more effectively.
 
@@ -261,7 +261,7 @@ head(road_summarize_archaeology('egg shell'),4)
 
 # Examples
 The following examples demonstrate how to query data from ROAD and seamlessly use the results with external R packages.
-The tutorial uses the [pipe](https://tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/) operator `|>`, which is a native function since R v4.1, allowing to forward the results from one function into the next one (e.g. `function1() |> function2()`). You can write it by pressing `STRG+SHIFT+M`.
+The tutorial uses the [pipe](https://tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/) operator `|>`, which is a native function since R v4.1, allowing to forward the results from one function into the next one (e.g. `function1() |> function2()`). You can write it by pressing `CTRL+SHIFT+M`.
 
 
 ## Example #1: Localities
@@ -290,7 +290,7 @@ head(african_msa_localities)
 ```
 
 
-Since the dataset contains geographical coordinates in the columns `coord_x` and `coord_y`, you can easily convert the results into a spatial object with the `sf` package and visualize them on an interactive map using the package `tmap`.
+Since the dataset contains geographical coordinates in the columns `coord_x` and `coord_y`, you can easily convert the results into a spatial object with the `sf` package and visualise them on an interactive map using the package `tmap`.
 
 ```{r ex1.2_map, out.width="100%", eval=FALSE, include=TRUE}
 # Load geospatial libraries
