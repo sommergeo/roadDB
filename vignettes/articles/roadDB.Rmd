@@ -393,9 +393,9 @@ tm_shape(mousterian_sf) +
   tm_layout(legend.outside = TRUE)
 
 ```
-As you can see, the map can be customized using the arguments available in  [`tmap::tm_dots()`](https://r-tmap.github.io/tmap/reference/tm_symbols.html).
+As you can see, the map can be customised using the arguments available in  [`tmap::tm_dots()`](https://r-tmap.github.io/tmap/reference/tm_symbols.html).
 
-In this example, we visualize different technocomplex categories by setting the `col` argument (which determines which variable is used for coloring — here, `mousterian$technocomplex`) and the palette argument (which specifies the color scheme to use).
+In this example, we visualise different technocomplex categories by setting the `col` argument (which determines which variable is used for colouring — here, `mousterian$technocomplex`) and the palette argument (which specifies the colour scheme to use).
 
 Once you have transferred your dataset to a spatial data type, there are many interesting packages available, that make use of the spatial data in ROAD:
 - [`spatstat`](https://cran.r-project.org/web/packages/spatstat/vignettes/getstart.pdf) for spatial point pattern analysis, kernel density, etc.
@@ -426,7 +426,7 @@ plants <- road_get_plantremains()
 
 ### 2.1 Lithic Tools
 
-If we stay with our Mousterian people for a bit, we can go into more detail and look at the lithic tools that are present at the localities using the `road_get_lithic_typologies()` function. But since the Mousterian concept exists in many different classifications, we need to now the exact technocomplexes to query. Using the `road_list_argument_values()` function.
+If we stay with our Mousterian people for a bit, we can go into more detail and look at the lithic tools that are present at the localities using the `road_get_lithic_typologies()` function. But since the Mousterian concept exists in many different classifications, we need to now the exact technocomplexes to query. Using the `road_list_argument_values()` function once more.
 
 ```{r}
 techno <- road_list_argument_values("technocomplex")
@@ -495,7 +495,7 @@ ggplot(combined, aes(x = fct_infreq(country), # x-axis = countries ordered by ho
 
 ### 2.2 Ostrich egg shells
 
-Ostrich egg shells are an interesting material with a variety of uses. In this exercise, we'll create a quick graph to visualize their appearance across different cultural periods.
+Ostrich egg shells are an interesting material with a variety of uses. In this exercise, we'll create a quick graph to visualise their appearance across different cultural periods.
 
 First, we can use `road_summarize_archaeology()` to get an overview of the tables in which these items can be found. The search term *ostrich egg shell* appears in two tables: `miscellaneous finds` and `symbolic artifacts`. In these tables, the term is found in the attributes `material` and `comments`, and the hit count indicates how many rows contain these items.
 
@@ -529,7 +529,7 @@ eggshell_combined <- merge(
 )
 ```
 
-Finally, we can visualize the results in a simple bar chart.
+Finally, we can visualise the results in a simple bar chart.
 ```{r fig.width=7}
 # Plot the ostrich egg shell distribution over cultural periods
 ggplot(eggshell_combined, aes(y = cultural_period)) +
@@ -546,20 +546,20 @@ Throughout this tutorial, you may have noticed the columns `age_min` and `age_ma
 
 However, if the temporal aspect is crucial for your research, for example a time series analysis, it is important to look at the actual data rather than aggregates.
 
-This is especially true for radiocarbon ages, which are stored as uncalibrated dates in ROAD, and which require you to perform and customize your own age modelling.
+This is especially true for radiocarbon ages, which are stored as uncalibrated dates in ROAD, and which require you to perform and customise your own age modelling.
 
 For this reason, we implemented `road_get_dates()`.
 
 
 ### 3.1 Getting chronological dates
 
-Let's have a look at Hohle Fels, a well-known Paleolithic cave site in the Swabian Jura with plenty of dates. 
+Let's have a look at Hohle Fels, a well-known Palaeolithic cave site in the Swabian Jura with plenty of dates. 
 
 ![](Hohler_Fels_Halle_Achtal_Schelklingen.jpg){width=350px}
 
 **Figure 3:** Inside the UNESCO site "Hohle Fels" | [CC BY-SA Thilo Parg](https://commons.wikimedia.org/wiki/File:Hohler_Fels_Halle_Achtal_Schelklingen.jpg)
 
-Hohle Fels is known for a number of fascinating finds, including one nearly complete bone flute and fragments of three ivory flutes that were excavated from archaeological layer Vb ([Conard et al. 2009](https://www.nature.com/articles/nature08169)). The radiocarbon ages for this layer were derived from bone and charcoal and were analyzed at the Oxford Radiocarbon Accelerator Unit and the Leibniz Laboratory in Kiel.
+Hohle Fels is known for a number of fascinating finds, including one nearly complete bone flute and fragments of three ivory flutes that were excavated from archaeological layer Vb ([Conard et al. 2009](https://www.nature.com/articles/nature08169)). The radiocarbon ages for this layer were derived from bone and charcoal and were analysed at the Oxford Radiocarbon Accelerator Unit and the Leibniz Laboratory in Kiel.
 
 ![](02_Kombi_Griffloecher.jpg){width=350px}
 
@@ -618,14 +618,14 @@ Now the calibrated ages can be displayed using `summary()`.
 summary(flute_dates_cal)
 ```
 
-You can also visualize the results with `plot()` and `multiplot()`.
+You can also visualise the results with `plot()` and `multiplot()`.
 ```{r message=FALSE, warning=FALSE}
-# Visualize the first date
+# Visualise the first date
 plot(flute_dates_cal,1)
 ```
 
 ```{r message=FALSE, warning=FALSE}
-# Visualize all dates, with numbers indicating row number
+# Visualise all dates, with numbers indicating row number
 multiplot(flute_dates_cal,
           decreasing=TRUE,
           rescale=TRUE,
