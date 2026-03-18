@@ -57,7 +57,7 @@ devtools::install_github("sommergeo/roadDB")
 The roadDB package has three main levels of detail (LOD) that follow a hierarchical order: (1) Localities, (2) Assemblages and (3) Dates & Publications. For example, a locality can have multiple assemblages, and each assemblage can have multiple dates associated with it.
 
 <p align="center">
-<img src="docs/levels_of_detail.svg" alt="Illustration of the three levels of the roadDB R-package from top to bottom: Locality, Assemblage and Object" height="250">
+<img src="docs/materials/levels_of_detail.svg" alt="Illustration of the three levels of the roadDB R-package from top to bottom: Locality, Assemblage and Object" height="250">
 </p>
 
 *Fig: Three Levels of Detail (LODs) for data retrieval.*
@@ -69,7 +69,7 @@ An extensive set of arguments can be applied to all `road_get_*` functions, allo
 As the ROAD database offers exceptionally rich information at the assemblage level, there are subordinate functions for querying human remains, archaeology, palaeofauna and palaeobotany.
 
 <p align="center">
-<img src="docs/functions_and_arguments.png" alt="Crosstable of compatibility between roadDB functions and related arguments" height="250">
+<img src="docs/materials/functions_and_arguments.png" alt="Crosstable of compatibility between roadDB functions and related arguments" height="250">
 </p>
 
 *Fig: Crosstable of functions and compatible arguments. [Download](https://www.sommergeo.com/roadDB/functions_and_arguments.pdf)*
