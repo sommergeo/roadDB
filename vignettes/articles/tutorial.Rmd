@@ -636,6 +636,8 @@ multiplot(flute_dates_cal,
 
 The radiocarbon analyses were based on an [introduction](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html) into the [`rcarbon`] software. Using this, you can extend your `roadDB` workflow to create [Summed Probability Distributions (SPD)](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#aggregating-14c-dates-summed-probability-distributions-spd), [temporal composite kernel density estimates (CKDE)](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#composite-kernel-density-estimates-ckde) or [spatio-temporal](https://cran.r-project.org/web/packages/rcarbon/vignettes/rcarbon.html#spatial-analysis) analyses, for example.
 
+A dedicated tutorial is available for analyzing chronological data from roadDB in conjunction with the [Chronomodel](https://chronomodel.com/) software: [https://github.com/ameliechallier/roadDB_chrono_tutorial](https://github.com/ameliechallier/roadDB_chrono_tutorial).
+
 # Further Reading
 
 [Ben Marwick: How To Do Archaeological Science Using R](https://benmarwick.github.io/aswr/)
