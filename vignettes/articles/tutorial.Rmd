@@ -36,7 +36,7 @@ You only need to install the package once on your R setup, so you can skip this 
 
 ```{r install, eval=FALSE, include=TRUE}
 # CRAN installation (stable release)
-install.packages(roadDB)
+install.packages("roadDB")
 
 # Github installation (development version)
 install.packages("devtools")
@@ -160,13 +160,13 @@ Arguments can also be combined, and you may supply a single value or a list of v
 
 ```{r arguments_example, eval=FALSE, include=TRUE}
 # Single argument
-road_get_localities(cultural_period='MSA')
+road_get_localities(cultural_period="MSA")
 
 # Multiple arguments
-road_get_localities(cultural_period='MSA', country='South Africa')
+road_get_localities(cultural_period="MSA", country="South Africa")
 
 # Lists of arguments
-road_get_localities(cultural_period=c('MSA','LSA'), country=c('South Africa','Namibia'))
+road_get_localities(cultural_period=c("MSA","LSA"), country=c("South Africa","Namibia"))
 ```
 
 The package provides two sets of arguments: 
@@ -252,10 +252,10 @@ The summary table shows which road_get_* functions include the term, and in whic
 
 ```{r helper_summarize, eval=FALSE, include=TRUE}
 # Find 'egg shell'
-road_summarize_archaeology('egg shell')
+road_summarize_archaeology("egg shell")
 ```
 ```{r echo=FALSE}
-head(road_summarize_archaeology('egg shell'),4)
+head(road_summarize_archaeology("egg shell"),4)
 ```
 
 
@@ -500,7 +500,7 @@ Ostrich egg shells are an interesting material with a variety of uses. In this e
 First, we can use `road_summarize_archaeology()` to get an overview of the tables in which these items can be found. The search term *ostrich egg shell* appears in two tables: `miscellaneous finds` and `symbolic artifacts`. In these tables, the term is found in the attributes `material` and `comments`, and the hit count indicates how many rows contain these items.
 
 ```{r}
-road_summarize_archaeology('ostrich egg shell')
+road_summarize_archaeology("ostrich egg shell")
 ```
 
 In the next step, we can use this information to run the appropriate query functions: `road_get_miscellaneous_finds()` and `road_get_symbolic_artifacts()`.
@@ -572,7 +572,7 @@ In the next step, we download the dates for these assemblages with `road_get_dat
 ```{r}
 # Download a data frame of all assemblages and filter for the site
 hohle_fels_assemblages <- road_get_assemblages() |> 
-  filter(locality_id=='Hohle Fels')
+  filter(locality_id=="Hohle Fels")
 
 # Use the dataframe to query specific dates
 hohle_fels_dates <- road_get_dates(assemblages = hohle_fels_assemblages)
@@ -595,7 +595,7 @@ In this example we will calibrate the radiocarbon dates from the ivory flute lay
 
 ```{r}
 flute_dates <- road_get_assemblages() |> 
-  filter(locality_id=='Hohle Fels', archlayer=='AH Vb') |> 
+  filter(locality_id=="Hohle Fels", archlayer=="AH Vb") |> 
   road_get_dates()
 ```
 
@@ -609,7 +609,7 @@ library(rcarbon)
 # Calibrate
 flute_dates_cal <- calibrate(x=flute_dates$age,
                              errors=flute_dates$positive_standard_deviation,
-                             calCurves='intcal20')
+                             calCurves="intcal20")
 ```
 
 Now the calibrated ages can be displayed using `summary()`.
@@ -640,13 +640,11 @@ A dedicated tutorial is available for analyzing chronological data from roadDB i
 
 # Further Reading
 
-[Ben Marwick: How To Do Archaeological Science Using R](https://benmarwick.github.io/aswr/)
-
 [Open-Archaeo: A list of open source archaeological software and resources](https://github.com/zackbatist/open-archaeo)
 
 ```{r eval=FALSE, include=FALSE}
 rmarkdown::render(
-  input = "vignettes/articles/roadDB.Rmd",
+  input = "vignettes/articles/tutorial.Rmd",
   output_file = "tutorial.html",
   output_dir = "docs")
 ```
