@@ -2,11 +2,11 @@
 #'
 #' The \strong{\code{road_get_dates}} function retrieves absolute dating records for 
 #' assemblages, geological layers, and archaeological layers from the ROAD database. 
-#' 
+#'
 #' Use the argument to filter search results by assemblage or omit
 #' it to have a broader result set. The argument is optional and should be
 #' omitted or set to NULL when not used.
-#' 
+#'
 #' @param assemblages specifies a data frame with a subset of assemblages, for
 #' which dating information should be retrieved. It must necessarily contain the
 #' columns \code{locality_id} and \code{assemblage_id} (e.g., the output of 
@@ -62,22 +62,23 @@
 #' or the first publication of the results in the format yyyy.
 #' @return \code{id}: The attribute is automatically generated, sequential number. This number is unique for each age table.
 #' @return \code{publication}: The attribute is a list of publications describing the respective geological stratigraphy.
-#' 
+#' @return \code{comments}: The attribute contains any additional comments.
+#'
 #' @export
-#' 
-#' @examples 
+#'
+#' @examples
 #' \donttest{assemblages <- road_get_assemblages(country="Slovenia")}
 #' \donttest{road_get_dates(assemblages)}
-road_get_dates <- function (assemblages = NULL) 
+road_get_dates <- function(assemblages = NULL)
 {
   localities <- road_get_localities_internal()
 
-  
+
   if (is.null(assemblages))
   {
-    assemblage_condition <- ''
-    geolayer_condition <- ''
-    archlayer_condition <- ''
+    assemblage_condition <- ""
+    geolayer_condition <- ""
+    archlayer_condition <- ""
   }
   else
   {
@@ -85,7 +86,7 @@ road_get_dates <- function (assemblages = NULL)
     geolayer_condition <- get_geolayer_condition(query_start = "AND ", assemblages = assemblages)
     archlayer_condition <- get_archlayer_condition(query_start = "AND ", assemblages = assemblages)
   }
-    
+
   # select fields
   select_fields_gla <- c(
     paste0("geological_layer_age.geolayer_idlocality AS  ", cm_locality_idlocality),
@@ -100,9 +101,10 @@ road_get_dates <- function (assemblages = NULL)
     paste0("laboratory_idlaboratory AS ", cm_laboratory_idlaboratory),
     paste0("analysis_number AS analysis_number"),
     paste0("date_of_analysis AS date_of_analysis"),
-    paste0("id_geolayer_age AS id")
+    paste0("id_geolayer_age AS id"),
+    paste0("comments AS ", cm_comments)
   )
-  
+
   select_fields_ala <- c(
     paste0("archaeological_layer_age.archlayer_idlocality AS ", cm_locality_idlocality),
     paste0("-1 AS ", cm_assemblages_idassemblage),
@@ -116,9 +118,10 @@ road_get_dates <- function (assemblages = NULL)
     paste0("laboratory_idlaboratory AS ", cm_laboratory_idlaboratory),
     paste0("analysis_number AS analysis_number"),
     paste0("date_of_analysis AS date_of_analysis"),
-    paste0("idarchaeological_layer_age AS id")
+    paste0("idarchaeological_layer_age AS id"),
+    paste0("comments AS ", cm_comments)
   )
-  
+
   select_fields_asa <- c(
     paste0("assemblage_age.assemblage_idlocality AS ", cm_locality_idlocality),
     paste0("assemblage_age.assemblage_idassemblage AS ", cm_assemblages_idassemblage),
@@ -132,28 +135,29 @@ road_get_dates <- function (assemblages = NULL)
     paste0("laboratory_idlaboratory AS ", cm_laboratory_idlaboratory),
     paste0("analysis_number AS analysis_number"),
     paste0("date_of_analysis AS date_of_analysis"),
-    paste0("idassemblage_age AS id")
+    paste0("idassemblage_age AS id"),
+    paste0("comments AS ", cm_comments)
   )
-  
+
   query <- paste0("SELECT * FROM (SELECT * FROM (SELECT ", paste(select_fields_gla, collapse = ", "),
                   " FROM geological_layer_age) as fooo ", "WHERE TRUE ", geolayer_condition,
                   " UNION
-                  SELECT * FROM (SELECT ", paste(select_fields_ala, collapse = ", "), 
+                  SELECT * FROM (SELECT ", paste(select_fields_ala, collapse = ", "),
                   " FROM archaeological_layer_age) as foooo ", "WHERE TRUE ", archlayer_condition,
                   " UNION
                   SELECT * FROM (SELECT ", paste(select_fields_asa, collapse = ", "),
                   " FROM assemblage_age) as fooooo ", "WHERE TRUE ", assemblage_condition,
                   ") as foo ",
                   " ORDER BY lower(", cm_locality_idlocality, ")")
-  
+
   data <- road_run_query(query)
-  
-  
+
+
   # data <- add_locality_columns(data, assemblages = assemblages)
   data <- add_locality_columns(data, localities = localities)
-  
+
   # Get publications from publication_desc_geostrat
-  query = paste0("SELECT DISTINCT string_agg(publications, ' +++ ' ) as publication, 
+  query <- paste0("SELECT DISTINCT string_agg(publications, ' +++ ' ) as publication, 
                          geolayer_idlocality as locality_id, -1 as assemblage_id, 
                          geolayer_name as geolayer, '-1' as archlayer 
                   FROM (SELECT idgeostrat, string_agg(publication, ' +++ ' ) as publications 
@@ -223,11 +227,10 @@ road_get_dates <- function (assemblages = NULL)
                        AND assemblage_in_geolayer.geolayer_name = publications_geostrat_with_geolayer.geolayer_name
                     GROUP BY assemblage_idlocality, assemblage_idassemblage
                   ")
-  
-  
+
   pdata <- road_run_query(query)
-  
+
   res_data <- left_join(data, pdata, by = c("locality_id", "geolayer", "archlayer", "assemblage_id"))
-  
+
   return(res_data)
 }
