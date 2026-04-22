@@ -232,5 +232,12 @@ road_get_dates <- function(assemblages = NULL)
 
   res_data <- left_join(data, pdata, by = c("locality_id", "geolayer", "archlayer", "assemblage_id"))
 
+  # Replace 0 and 1000000 with NA in standard deviation columns as they indicate out-of-bounds values
+  sentinel_cols <- c(cm_negative_standard_deviation, cm_positive_standard_deviation)
+  res_data[sentinel_cols] <- lapply(res_data[sentinel_cols], function(x) {
+    x[x == 0 | x == 1000000] <- NA
+    x
+  })
+
   return(res_data)
 }
