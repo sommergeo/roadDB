@@ -1,0 +1,25 @@
+#' Execute a custom SQL query on the ROAD database
+#'
+#' The \strong{\code{road_get_sql}} function allows you to run a custom SQL
+#' query directly against the ROAD database and returns the result as a data
+#' frame. This function is intended for advanced users who are familiar with
+#' the ROAD database schema and SQL syntax.
+#'
+#' @param query a character string containing a valid SQL query to be executed
+#' against the ROAD database. The argument \code{query} is a string (one item).
+#'
+#' @details The query is passed directly to the database without modification
+#' (aside from trimming whitespace). Users are responsible for ensuring the
+#' query is valid and returns the desired result. For standard data retrieval,
+#' consider using the dedicated \code{road_get_*()} functions instead.
+#'
+#' @return A data frame containing the result of the SQL query. The structure
+#' of the returned data frame depends on the columns selected in the query.
+#'
+#' @examples
+#' \donttest{road_get_sql("SELECT * FROM locality LIMIT 10")}
+#' \donttest{road_get_sql("SELECT locality_name, country FROM locality WHERE continent = 'Europe'")}
+#' @export
+road_get_sql <- function(query) {
+  road_run_query(query)
+}

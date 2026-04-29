@@ -35,6 +35,8 @@ or the first publication of the results in the format yyyy.
 \code{id}: The attribute is automatically generated, sequential number. This number is unique for each age table.
 
 \code{publication}: The attribute is a list of publications describing the respective geological stratigraphy.
+
+\code{comments}: The attribute contains any additional comments.
 }
 \description{
 The \strong{\code{road_get_dates}} function retrieves absolute dating records for 
