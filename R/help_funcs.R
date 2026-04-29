@@ -114,9 +114,17 @@ road_run_query <- function(query)
   }
 
   # replace all possible "NULL" values with NA
-  result[result == ""] <- NA
-  result[result == -1] <- NA
-  result[result == "undefined"] <- NA
+  # Apply replacements only to columns of matching type to avoid
+  # coercion errors (e.g. charToDate) on Date or other non-character columns
+  char_cols <- names(result)[sapply(result, is.character)]
+  num_cols  <- names(result)[sapply(result, is.numeric)]
+  for (col in char_cols) {
+    result[[col]][result[[col]] == ""]          <- NA
+    result[[col]][result[[col]] == "undefined"] <- NA
+  }
+  for (col in num_cols) {
+    result[[col]][result[[col]] == -1] <- NA
+  }
 
   # "unknown" is a correct value of 'transport_distance', we dont want replace it.
   # if ("transport_distance" %in% colnames(result))
