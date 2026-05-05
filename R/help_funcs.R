@@ -1,5 +1,7 @@
 #source("./R/login.R")
 
+db_source_select <- "road_server"
+
 # column names
 cm_locality_idlocality <- "locality_id"
 cm_locality_type <- "locality_type"
@@ -85,32 +87,46 @@ road_run_query <- function(query)
   # con <- dbConnect(RPostgres::Postgres(), dbname = "roceeh", host="134.2.216.14", 
   #                  port=5432, user=rstudioapi::askForPassword("Database username"), 
   #                  password=rstudioapi::askForPassword("Database password"))
-  
-  max_attempts <- 5
-  attempt <- 1
-  result <- NULL
-  
-  while (attempt <= max_attempts && is.null(result)) {
-  
-    con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
-                     port = 5432, user = "road_user", password = "road")
 
-    # run query
-    result <- tryCatch({dbGetQuery(conn = con, statement = query) #, keepalives = 1, keepalives_idle = 1200)
-              }, error = function(e) {
-                           if (attempt == max_attempts) {
-                             stop("Final attempt failed: ", e$message)
-                           }
-                           # Wait 2^attempt seconds (2, 4, 8, 16...)
-                           wait <- 2^attempt
-                           message(paste("Attempt", attempt, "of", max_attempts, "..."))
-                           # message(sprintf("Attempt %d failed. Retrying in %d seconds...", attempt, wait))
-                           Sys.sleep(wait)
-                           return(NULL)
-             })
-  
-    attempt <- attempt + 1
-    #message(paste("Attempt", attempt, "of", max_attempts, "..."))
+  if (db_source_select == "road_server")
+  {
+    max_attempts <- 5
+    attempt <- 1
+    result <- NULL
+
+    while (attempt <= max_attempts && is.null(result)) {
+
+      con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
+                      port = 5432, user = "road_user", password = "road")
+
+      # run query
+      result <- tryCatch({dbGetQuery(conn = con, statement = query) #, keepalives = 1, keepalives_idle = 1200)
+                }, error = function(e) {
+                            if (attempt == max_attempts) {
+                              stop("Final attempt failed: ", e$message)
+                            }
+                            # Wait 2^attempt seconds (2, 4, 8, 16...)
+                            wait <- 2^attempt
+                            message(paste("Attempt", attempt, "of", max_attempts, "..."))
+                            # message(sprintf("Attempt %d failed. Retrying in %d seconds...", attempt, wait))
+                            Sys.sleep(wait)
+                            return(NULL)
+              })
+
+      dbDisconnect(con)
+      attempt <- attempt + 1
+      #message(paste("Attempt", attempt, "of", max_attempts, "..."))
+    }
+  }
+  else if (db_source_select == "local_sqlite")
+  {
+    con <- dbConnect(RSQLite::SQLite(), dbname = "data/road_db.sqlite")
+    result <- dbGetQuery(conn = con, statement = query)
+    dbDisconnect(con)
+  }
+  else
+  {
+    stop("Invalid database source selected.")
   }
 
   # replace all possible "NULL" values with NA

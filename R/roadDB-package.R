@@ -10,6 +10,7 @@
 #' @importFrom dplyr inner_join
 #' @importFrom dplyr left_join
 #' @importFrom RPostgres dbConnect
+#' @importFrom RPostgres dbDisconnect
 #' @importFrom RPostgres dbGetQuery
 #' @importFrom utils read.csv
 #' @importFrom stringr str_split
