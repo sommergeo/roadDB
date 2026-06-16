@@ -1,6 +1,6 @@
 #source("./R/login.R")
 
-db_source_select <- "road_server"
+db_source_select <- "local_sqlite" # "road_server" or "local_sqlite"
 
 # column names
 cm_locality_idlocality <- "locality_id"
@@ -182,6 +182,17 @@ parameter_to_query <- function(query_start = "", parameter, query_end = "")
 }
 
 
+# build a STRING_AGG / GROUP_CONCAT expression depending on the active database source
+#' @keywords internal
+sql_string_agg <- function(col, separator = ", ")
+{
+  if (db_source_select == "local_sqlite")
+    paste0("GROUP_CONCAT(DISTINCT ", col, ", '", separator, "')")
+  else
+    paste0("STRING_AGG(DISTINCT ", col, ", '", separator, "')")
+}
+
+
 # build query to check if parameters intersect with comma separated database values
 query_check_intersection <- function(query_start = "", parameter, column)
 {
@@ -192,11 +203,26 @@ query_check_intersection <- function(query_start = "", parameter, column)
 
     if (is.vector(parameter))
     {
-      query <- paste(
-        #sapply(parameter, function(x) paste0("OR '", x, "' = ANY(STRING_TO_ARRAY(", column, ", ', '))")),
-        sapply(parameter, function(x) paste0("OR '", x, "' = ANY(regexp_split_to_array(", column, ", ',\\s*'))")),
-        collapse = " "
-      )
+      if (db_source_select == "local_sqlite")
+      {
+        query <- paste(
+          sapply(parameter, function(x) paste0(
+            "OR (", column, " = '", x, "'",
+            " OR ", column, " LIKE '", x, ", %'",
+            " OR ", column, " LIKE '%, ", x, ", %'",
+            " OR ", column, " LIKE '%, ", x, "')"
+          )),
+          collapse = " "
+        )
+      }
+      else
+      {
+        query <- paste(
+          #sapply(parameter, function(x) paste0("OR '", x, "' = ANY(STRING_TO_ARRAY(", column, ", ', '))")),
+          sapply(parameter, function(x) paste0("OR '", x, "' = ANY(regexp_split_to_array(", column, ", ',\\s*'))")),
+          collapse = " "
+        )
+      }
       query <- paste0(
         query_start,
         "(",

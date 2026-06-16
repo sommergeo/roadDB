@@ -6,3 +6,5 @@ old.trash
 **/login.R
 .Rproj.user
 .lintr
+
+data/*.sqlite
