@@ -1,6 +1,7 @@
 .onAttach <- function(libname, pkgname)
 {
   packageStartupMessage("
+  SQLite Branch
   This package utilizes a regularly updated version of ROAD, 
   so results may vary over time.
   

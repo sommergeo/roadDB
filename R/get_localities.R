@@ -73,8 +73,8 @@ road_get_localities_internal <- function(
     paste0("locality.x AS ", cm_locality_x),
     paste0("locality.y AS ", cm_locality_y),
     paste0("locality.coordinate_source AS ", cm_coordinate_source),
-    paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.cultural_period, ', ') AS ", cm_cultural_period),
-    paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.technocomplex, ', ') AS ", cm_technocomplex)
+    paste0(sql_string_agg("archaeological_stratigraphy.cultural_period"), " AS ", cm_cultural_period),
+    paste0(sql_string_agg("archaeological_stratigraphy.technocomplex"), " AS ", cm_technocomplex)
   )
   
   # order by
@@ -99,7 +99,7 @@ road_get_localities_internal <- function(
     parameter_to_query("AND geopolitical_units.continent IN (", continent, ")"),
     parameter_to_query("AND geopolitical_units.continent_region IN (", subcontinent, ")"),
     parameter_to_query("AND locality.country IN (", country, ")"),
-    parameter_to_query("AND string_to_array(locality.type, ', ') && array[", locality_type, "]"),
+    query_check_intersection("AND ", locality_type, "locality.type"),
     parameter_to_query("AND archaeological_stratigraphy.cultural_period IN (", cultural_period, ")"),
     parameter_to_query("AND archaeological_stratigraphy.technocomplex IN (", technocomplex, ")"),
     # parameter_to_query(
@@ -108,10 +108,9 @@ road_get_localities_internal <- function(
     #     LEFT JOIN archaeological_stratigraphy ON archaeological_layer.archstratigraphy_idarchstrat = archaeological_stratigraphy.idarchstrat 
     #     WHERE archaeological_stratigraphy.cultural_period IN (", cultural_period, "))"
     # ),
-    "GROUP BY locality.idlocality, geopolitical_units.continent, geopolitical_units.continent_region, locality.country, locality.type, locality.x, locality.y",
+    "GROUP BY locality.idlocality, geopolitical_units.continent, geopolitical_units.continent_region, locality.country, locality.type, locality.x, locality.y ",
     query_order_by
   )
-  
   data <- road_run_query(query)
 
   if (nrow(data) == 0) 
