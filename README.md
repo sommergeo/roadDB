@@ -14,6 +14,8 @@ Current status:  :green_circle: **Online**
 
 Current snapshot:  :date: **2026-06-16**
 
+:construction: A scheduled downtime is planned for 2026-08-10 to 2026-08-14.
+
 :construction: A scheduled downtime is planned for 2026-09-16.
 
 
