@@ -28,5 +28,5 @@ consider using the dedicated \code{road_get_*()} functions instead.
 }
 \examples{
 \donttest{road_get_sql("SELECT * FROM locality LIMIT 10")}
-\donttest{road_get_sql("SELECT locality_name, country FROM locality WHERE continent = 'Europe'")}
+\donttest{road_get_sql("SELECT idlocality, country FROM locality WHERE country = 'Italy'")}
 }

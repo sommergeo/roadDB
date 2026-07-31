@@ -104,20 +104,24 @@ road_run_query <- function(query)
                          or check https://github.com/sommergeo/roadDB#cloud-database-status")
                  return(NULL)
                })
-
+        
       # run query
       if (!is.null(con)) {
         result <- tryCatch({dbGetQuery(conn = con, statement = query) #, keepalives = 1, keepalives_idle = 1200)
                   }, error = function(e) {
-                              if (attempt == max_attempts) {
-                                stop("Final attempt failed: ", e$message)
-                              }
+                              stop("Attempt failed, the database message is: ", e$message)
+                              
+                              #if (attempt == max_attempts) {
+                                #stop("Final attempt failed: ", e$message)
+                              #}
                               return(NULL)
                   })
 
         dbDisconnect(con)
         con <- NULL
       }
+      # sometimes the db connection could be established but the db is too busy, then
+      # result is null as if db were unreachable
       if (is.null(result)) {
         # Wait 2^attempt seconds (2, 4, 8, 16...)
         wait <- 2^attempt
