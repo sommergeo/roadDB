@@ -93,30 +93,41 @@ road_run_query <- function(query)
     max_attempts <- 5
     attempt <- 1
     result <- NULL
+    con <- NULL
 
     while (attempt <= max_attempts && is.null(result)) {
 
-      con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
-                      port = 5432, user = "road_user", password = "road")
+      tryCatch({con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
+                      port = 5432, user = "road_user", password = "road") 
+               }, error = function(e) {
+                 message("roadDB could not connect to the server. Please check your internet connection
+                         or check https://github.com/sommergeo/roadDB#cloud-database-status")
+                 return(NULL)
+               })
 
       # run query
-      result <- tryCatch({dbGetQuery(conn = con, statement = query) #, keepalives = 1, keepalives_idle = 1200)
-                }, error = function(e) {
-                            if (attempt == max_attempts) {
-                              stop("Final attempt failed: ", e$message)
-                            }
-                            # Wait 2^attempt seconds (2, 4, 8, 16...)
-                            wait <- 2^attempt
-                            message(paste("Attempt", attempt, "of", max_attempts, "..."))
-                            # message(sprintf("Attempt %d failed. Retrying in %d seconds...", attempt, wait))
-                            Sys.sleep(wait)
-                            return(NULL)
-              })
+      if (!is.null(con)) {
+        result <- tryCatch({dbGetQuery(conn = con, statement = query) #, keepalives = 1, keepalives_idle = 1200)
+                  }, error = function(e) {
+                              if (attempt == max_attempts) {
+                                stop("Final attempt failed: ", e$message)
+                              }
+                              return(NULL)
+                  })
 
-      dbDisconnect(con)
-      attempt <- attempt + 1
-      #message(paste("Attempt", attempt, "of", max_attempts, "..."))
+        dbDisconnect(con)
+        con <- NULL
+      }
+      if (is.null(result)) {
+        # Wait 2^attempt seconds (2, 4, 8, 16...)
+        wait <- 2^attempt
+        message(paste("Attempt", attempt, "of", max_attempts, "..."))
+        Sys.sleep(wait)
+        attempt <- attempt + 1
+      }
+      else break
     }
+    if (attempt > max_attempts) stop("Error: no database connection.")
   }
   else if (db_source_select == "local_sqlite")
   {
