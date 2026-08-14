@@ -201,32 +201,42 @@ road_list_values <- function (table_names, attribute_name)
 
    cm_attribute_name <- attribute_name
 
-   q_extension <- ""
-   q <- ""
+   # "transport_distance" values are already atomic (no comma separated lists,
+   # no numeric disambiguation suffix), so no further post-processing is needed
+   if (cm_attribute_name == "transport_distance")
+   {
+     query <- paste("SELECT DISTINCT ", cm_attribute_name,
+                     " AS ", cm_attribute_name,
+                     " FROM ", table_names)
+     data <- road_run_query(query)
+     return(data)
+   }
 
-   q_extension <- paste("SELECT DISTINCT TRIM(regexp_replace(", cm_attribute_name, ", ' +[1234567890]+', '')) AS ",
-                        cm_attribute_name,
-                        " FROM ( ")
+   q <- paste("SELECT DISTINCT ", cm_attribute_name, " AS ", cm_attribute_name, " from ")
 
-   q <- paste("SELECT 
-              DISTINCT(unnest(regexp_split_to_array(", cm_attribute_name, ",',[ ]*'))) AS ",
-              cm_attribute_name,
-              " from ")
-   if (cm_attribute_name == "transport_distance") q <- paste("SELECT DISTINCT ", cm_attribute_name,
-                                                              " AS ", cm_attribute_name,
-                                                              " from ")
-
-   que <- paste(
+   query <- paste(
     sapply(table_names, function(x) paste0(q, x)),
     collapse = " UNION "
    )
-   query <- paste0(q_extension, que, ") AS foo ORDER BY ", cm_attribute_name, "")
 
-   # First exception
-   if (cm_attribute_name == "transport_distance") query <- paste("SELECT DISTINCT ", cm_attribute_name,
-                                                              " AS ", cm_attribute_name,
-                                                              " FROM ", table_names)
    data <- road_run_query(query)
+
+   # Some attribute values are stored as comma separated lists (e.g. "Acheulean,
+   # Mousterian") and/or carry a trailing numeric disambiguation suffix (e.g.
+   # "Mousterian 2") to mark duplicate entries in ROAD. Both are resolved here in
+   # R rather than in SQL, since PostgreSQL's array/regexp functions
+   # (regexp_split_to_array(), unnest(), regexp_replace()) have no guaranteed
+   # equivalent available in SQLite.
+   raw_values <- as.character(data[[cm_attribute_name]])
+   raw_values <- raw_values[!is.na(raw_values)]
+   split_values <- unlist(strsplit(raw_values, ",[ ]*"))
+   # sub() (not gsub()) mirrors PostgreSQL's regexp_replace() default of
+   # replacing only the first match
+   cleaned_values <- trimws(sub(" +[0-9]+", "", split_values))
+   cleaned_values <- sort(unique(cleaned_values[cleaned_values != ""]))
+
+   data <- data.frame(cleaned_values, stringsAsFactors = FALSE)
+   colnames(data) <- cm_attribute_name
 
    return(data)
 }
@@ -272,85 +282,85 @@ road_summarize_archaeology <- function(term)
   else
     query <- paste0("SELECT * FROM ( ",
                     "SELECT '", term, "' AS term, 'typology' AS road_get_, 'typology' AS attribute, count(*) AS hit_number 
-                   FROM typology WHERE typology ILIKE '%", term, "%'", 
+                   FROM typology WHERE LOWER(typology) LIKE LOWER('%", term, "%')", 
                     " UNION ",
                     "SELECT '", term, "' AS term, 'typology' AS road_get_, 'tool_list' AS attribute, count(*) AS hit_number 
-                   FROM typology WHERE tool_list ILIKE '%", term, "%'",
+                   FROM typology WHERE LOWER(tool_list) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'typology' AS road_get_, 'comments' AS attribute, count(*) AS hit_number 
-                   FROM typology WHERE comments ILIKE '%", term, "%'",
+                   FROM typology WHERE LOWER(comments) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'technology' AS road_get_, 'technology' AS attribute, count(*) AS hit_number 
-                   FROM technology WHERE technology ILIKE '%", term, "%'",
+                   FROM technology WHERE LOWER(technology) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'technology' AS road_get_, 'technology_type' AS attribute, count(*) AS hit_number 
-                   FROM technology WHERE technology_type ILIKE '%", term, "%'",
+                   FROM technology WHERE LOWER(technology_type) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'technology' AS road_get_, 'product_list' AS attribute, count(*) AS hit_number 
-                   FROM technology WHERE product_list ILIKE '%", term, "%'",
+                   FROM technology WHERE LOWER(product_list) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'technology' AS road_get_, 'comments' AS attribute, count(*) AS hit_number 
-                   FROM technology WHERE comments ILIKE '%", term, "%'",
+                   FROM technology WHERE LOWER(comments) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'function' AS road_get_, 'functional_traces' AS attribute, count(*) AS hit_number 
-                   FROM function WHERE functional_traces ILIKE '%", term, "%'",
+                   FROM function WHERE LOWER(functional_traces) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'function' AS road_get_, 'function_list' AS attribute, count(*) AS hit_number 
-                   FROM function WHERE function_list ILIKE '%", term, "%'",
+                   FROM function WHERE LOWER(function_list) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'function' AS road_get_, 'comments' AS attribute, count(*) AS hit_number 
-                   FROM function WHERE comments ILIKE '%", term, "%'",
+                   FROM function WHERE LOWER(comments) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'raw_material' AS road_get_, 'raw_material_list' AS attribute, count(*) AS hit_number 
-                   FROM raw_material WHERE raw_material_list ILIKE '%", term, "%'", 
+                   FROM raw_material WHERE LOWER(raw_material_list) LIKE LOWER('%", term, "%')", 
                     " UNION ",
                     "SELECT '", term, "' AS term, 'raw_material' AS road_get_, 'comments' AS attribute, count(*) AS hit_number 
-                   FROM raw_material WHERE comments ILIKE '%", term, "%'", 
+                   FROM raw_material WHERE LOWER(comments) LIKE LOWER('%", term, "%')", 
                     " UNION ",
                     "SELECT '", term, "' AS term, 'symbolic_artifacts' AS road_get_, 'material' AS attribute, count(*) AS hit_number 
-                   FROM symbolic_artifacts WHERE material ILIKE '%", term, "%'",
+                   FROM symbolic_artifacts WHERE LOWER(material) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'symbolic_artifacts' AS road_get_, 'interpretation' AS attribute, count(*) AS hit_number 
-                   FROM symbolic_artifacts WHERE interpretation ILIKE '%", term, "%'",
+                   FROM symbolic_artifacts WHERE LOWER(interpretation) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'symbolic_artifacts' AS road_get_, 'technology' AS attribute, count(*) AS hit_number 
-                   FROM symbolic_artifacts WHERE technology ILIKE '%", term, "%'",
+                   FROM symbolic_artifacts WHERE LOWER(technology) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'symbolic_artifacts' AS road_get_, 'category' AS attribute, count(*) AS hit_number 
-                   FROM symbolic_artifacts WHERE category ILIKE '%", term, "%'",
+                   FROM symbolic_artifacts WHERE LOWER(category) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'symbolic_artifacts' AS road_get_, 'raw_material_source' AS attribute, count(*) AS hit_number 
-                   FROM symbolic_artifacts WHERE raw_material_source ILIKE '%", term, "%'",
+                   FROM symbolic_artifacts WHERE LOWER(raw_material_source) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'symbolic_artifacts' AS road_get_, 'comments' AS attribute, count(*) AS hit_number 
-                   FROM symbolic_artifacts WHERE comments ILIKE '%", term, "%'",
+                   FROM symbolic_artifacts WHERE LOWER(comments) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'organic_tools' AS road_get_, 'organic_raw_material' AS attribute, count(*) AS hit_number 
-                   FROM organic_tools WHERE organic_raw_material ILIKE '%", term, "%'",
+                   FROM organic_tools WHERE LOWER(organic_raw_material) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'organic_tools' AS road_get_, 'interpretation' AS attribute, count(*) AS hit_number 
-                   FROM organic_tools WHERE interpretation ILIKE '%", term, "%'",
+                   FROM organic_tools WHERE LOWER(interpretation) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'organic_tools' AS road_get_, 'technology' AS attribute, count(*) AS hit_number 
-                   FROM organic_tools WHERE technology ILIKE '%", term, "%'",
+                   FROM organic_tools WHERE LOWER(technology) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'organic_tools' AS road_get_, 'comments' AS attribute, count(*) AS hit_number 
-                   FROM organic_tools WHERE comments ILIKE '%", term, "%'",
+                   FROM organic_tools WHERE LOWER(comments) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'miscellaneous_finds' AS road_get_, 'raw_material_source' AS attribute, count(*) AS hit_number 
-                   FROM miscellaneous_finds WHERE raw_material_source ILIKE '%", term, "%'",
+                   FROM miscellaneous_finds WHERE LOWER(raw_material_source) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'miscellaneous_finds' AS road_get_, 'material' AS attribute, count(*) AS hit_number 
-                   FROM miscellaneous_finds WHERE material ILIKE '%", term, "%'",
+                   FROM miscellaneous_finds WHERE LOWER(material) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'miscellaneous_finds' AS road_get_, 'comments' AS attribute, count(*) AS hit_number 
-                   FROM miscellaneous_finds WHERE comments ILIKE '%", term, "%'",
+                   FROM miscellaneous_finds WHERE LOWER(comments) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'feature' AS road_get_, 'interpretation' AS attribute, count(*) AS hit_number 
-                   FROM feature WHERE interpretation ILIKE '%", term, "%'",
+                   FROM feature WHERE LOWER(interpretation) LIKE LOWER('%", term, "%')",
                     " UNION ",
                     "SELECT '", term, "' AS term, 'feature' AS road_get_, 'comments' AS attribute, count(*) AS hit_number 
-                   FROM feature WHERE comments ILIKE '%", term, "%'",
+                   FROM feature WHERE LOWER(comments) LIKE LOWER('%", term, "%')",
                     " ) as foo ORDER BY hit_number DESC,road_get_, attribute "
     )
 
