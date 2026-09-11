@@ -1,4 +1,7 @@
 # roadDB  <img src="docs/roadDB_logo.png" align="right" height="138" />
+
+<img src="https://cranlogs.r-pkg.org/badges/grand-total/roadDB" alt="Grand total number of downloads from CRAN">
+
 This package provides an R interface to the [ROCEEH Out of Africa Database (ROAD)](<https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php>), a comprehensive resource for archaeological, anthropological, paleoenvironmental and geographic data from Africa and Eurasia dating between 3,000,000 and 20,000 years BP.
 The package is avaliable on [CRAN](https://doi.org/10.32614/CRAN.package.roadDB) and allows users to retrieve data from the online database at different levels of detail and customize search requests.
 Functions return `data frame` objects compatible with other R packages used in prehistoric and paleoenvironmental science, supporting reproducible workflows as an input provider.  
@@ -13,8 +16,6 @@ A stable internet connection is required when working with `roadDB`.
 Current status:  :green_circle: **Online**
 
 Current snapshot:  :date: **2026-06-16**
-
-:construction: A scheduled downtime is planned for 2026-08-10 to 2026-08-14.
 
 :construction: A scheduled downtime is planned for 2026-09-16.
 
