@@ -72,6 +72,32 @@ cm_feature_interpretation <- "feature_interpretation"
 cm_miscellaneous_find_material <- "miscellaneous_find_material"
 cm_miscellaneous_find_raw_material_source <- "miscellaneous_find_raw_material_source"
 
+
+#' Set the package data directory path
+#' @param path Character string. Path to the data directory.
+#' @export
+set_database_path <- function(path=NULL) {
+  if (!is.null(path))
+  {
+    # Normalize and check path existence
+    expanded_path <- normalizePath(path, mustWork = FALSE)
+  
+    if (!dir.exists(expanded_path)) {
+      warning("Directory does not exist: ", expanded_path)
+    }
+  
+    options(roadDB.database_path = expanded_path)
+    invisible(expanded_path)
+    }
+    else options(roadDB.database_path = NULL)
+}
+
+#' Get the package data directory path
+#' @export
+get_database_path <- function() {
+  getOption("roadDB.database_path", default = NULL)
+}
+
 # run query in ROAD database
 # 
 # param query specifies the SQl query.
@@ -79,7 +105,7 @@ cm_miscellaneous_find_raw_material_source <- "miscellaneous_find_raw_material_so
 # return Database search result as a data frame.
 #' @keywords internal
 road_run_query <- function(query)
-{
+{ #print(getOption("roadDB.data_path", default = NULL))
   query <- trimws(query)
 
   if (query == "") {
@@ -90,39 +116,71 @@ road_run_query <- function(query)
   #                  port=5432, user=rstudioapi::askForPassword("Database username"), 
   #                  password=rstudioapi::askForPassword("Database password"))
 
-  if (db_source_select == "road_server")
+  db_path <- get_database_path()
+  db <- paste0(db_path, '/road.db')
+  #if (db_source_select == "road_server")
+  if (is.null(db_path))
   {
     max_attempts <- 5
     attempt <- 1
     result <- NULL
+    con <- NULL
 
     while (attempt <= max_attempts && is.null(result)) {
 
-      con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
-                      port = 5432, user = "road_user", password = "road")
-
-      # run query
-      result <- tryCatch({dbGetQuery(conn = con, statement = query) #, keepalives = 1, keepalives_idle = 1200)
-                }, error = function(e) {
-                            if (attempt == max_attempts) {
-                              stop("Final attempt failed: ", e$message)
-                            }
-                            # Wait 2^attempt seconds (2, 4, 8, 16...)
-                            wait <- 2^attempt
-                            message(paste("Attempt", attempt, "of", max_attempts, "..."))
-                            # message(sprintf("Attempt %d failed. Retrying in %d seconds...", attempt, wait))
-                            Sys.sleep(wait)
-                            return(NULL)
+      # con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
+        #              port = 5432, user = "road_user", password = "road")
+      tryCatch({con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
+                                 port = 5432, user = "road_user", password = "road") 
+               }, error = function(e) {
+                 message("roadDB could not connect to the server. Please check your internet connection
+                         or check https://github.com/sommergeo/roadDB#cloud-database-status")
+                 return(NULL)
               })
 
-      dbDisconnect(con)
-      attempt <- attempt + 1
-      #message(paste("Attempt", attempt, "of", max_attempts, "..."))
+      # run query
+      if (!is.null(con)) {
+        result <- tryCatch({dbGetQuery(conn = con, statement = query) #, keepalives = 1, keepalives_idle = 1200)
+                  }, error = function(e) {
+                              stop("Attempt failed, the database message is: ", e$message)
+                    
+                              #if (attempt == max_attempts) {
+                                #stop("Final attempt failed: ", e$message)
+                              #}
+                              return(NULL)
+                    
+                            #if (attempt == max_attempts) {
+                            #  stop("Final attempt failed: ", e$message)
+                            #}
+                            ## Wait 2^attempt seconds (2, 4, 8, 16...)
+                            #wait <- 2^attempt
+                            #message(paste("Attempt", attempt, "of", max_attempts, "..."))
+                            ## message(sprintf("Attempt %d failed. Retrying in %d seconds...", attempt, wait))
+                            #Sys.sleep(wait)
+                            #return(NULL)
+                  })
+
+        dbDisconnect(con)
+        # attempt <- attempt + 1
+        con <- NULL
+      }
+      # sometimes the db connection could be established but the db is too busy, then
+      # result is null as if db were unreachable
+      if (is.null(result)) {
+        # Wait 2^attempt seconds (2, 4, 8, 16...)
+        wait <- 2^attempt
+        message(paste("Attempt", attempt, "of", max_attempts, "..."))
+        Sys.sleep(wait)
+        attempt <- attempt + 1
+      }
+      else break
     }
+    if (attempt > max_attempts) stop("Error: no database connection.")
   }
-  else if (db_source_select == "local_sqlite")
+  #else if (db_source_select == "local_sqlite")
+  else if (file.exists(db))
   {
-    con <- dbConnect(RSQLite::SQLite(), dbname = "road.db")
+    con <- dbConnect(RSQLite::SQLite(), dbname = 'road.db')
     result <- dbGetQuery(conn = con, statement = query)
     dbDisconnect(con)
   }
@@ -188,7 +246,11 @@ parameter_to_query <- function(query_start = "", parameter, query_end = "")
 #' @keywords internal
 sql_string_agg <- function(col, separator = ", ")
 {
-  if (db_source_select == "local_sqlite")
+  db_path <- get_database_path()
+  db <- paste0(db_path, '/road.db')
+
+  # if (db_source_select == "local_sqlite")
+  if (file.exists(db))
     paste0("GROUP_CONCAT(DISTINCT ", col, ")")
   else
     paste0("STRING_AGG(DISTINCT ", col, ", '", separator, "')")
@@ -198,6 +260,9 @@ sql_string_agg <- function(col, separator = ", ")
 # build query to check if parameters intersect with comma separated database values
 query_check_intersection <- function(query_start = "", parameter, column)
 {
+  db_path <- get_database_path()
+  db <- paste0(db_path, '/road.db')
+  
   query <- ""
   if (!is.null(parameter))
   {
@@ -205,7 +270,8 @@ query_check_intersection <- function(query_start = "", parameter, column)
 
     if (is.vector(parameter))
     {
-      if (db_source_select == "local_sqlite")
+      # if (db_source_select == "local_sqlite")
+      if (file.exists(db))
       {
         query <- paste(
           sapply(parameter, function(x) paste0(
