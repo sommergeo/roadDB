@@ -127,9 +127,7 @@ road_run_query <- function(query)
     con <- NULL
 
     while (attempt <= max_attempts && is.null(result)) {
-
-      # con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
-        #              port = 5432, user = "road_user", password = "road")
+      
       tryCatch({con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
                                  port = 5432, user = "road_user", password = "road") 
                }, error = function(e) {
