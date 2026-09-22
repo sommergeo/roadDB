@@ -17,7 +17,7 @@ Current status:  :green_circle: **Online**
 
 Current snapshot:  :date: **2026-09-18**
 
-:construction: A scheduled downtime is planned for 2026-09-16.
+:construction: A scheduled downtime is planned for 2026-09-28 at ca. [16:00 UTC+2](https://www.inyourowntime.zone/2026-09-28_16.00_Europe.Berlin) for ca. 1 hour.
 
 
 ## :notebook: Tutorial
