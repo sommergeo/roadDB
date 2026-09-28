@@ -177,7 +177,7 @@ road_run_query <- function(query)
   #else if (db_source_select == "local_sqlite")
   else if (file.exists(db))
   {
-    con <- dbConnect(RSQLite::SQLite(), dbname = 'road.db')
+    con <- dbConnect(RSQLite::SQLite(), dbname = db)
     result <- dbGetQuery(conn = con, statement = query)
     dbDisconnect(con)
   }
@@ -442,7 +442,9 @@ get_geolayer_condition <- function(query_start = "", assemblages = NULL, localit
   
   for (r in 1:nrow(assemblages))   
   {
-    tt <- unlist(strsplit(assemblages[r,'geolayer'], ', '))
+    # split on bare ',' and trim - SQLite's GROUP_CONCAT ignores the ', ' separator used by
+    # PostgreSQL's STRING_AGG and always joins with a plain ','
+    tt <- trimws(unlist(strsplit(assemblages[r,'geolayer'], ',')))
     assemblages[r,'locality_geolayer_cols'] <- paste(assemblages[r,'locality_id'], tt, sep = ', ', collapse = '%%')
   }
 
@@ -481,7 +483,9 @@ get_archlayer_condition <- function(query_start = "", assemblages = NULL, locali
   
   for (r in 1:nrow(assemblages))   
   {
-    tt <- unlist(strsplit(assemblages[r,'archlayer'], ', '))
+    # split on bare ',' and trim - SQLite's GROUP_CONCAT ignores the ', ' separator used by
+    # PostgreSQL's STRING_AGG and always joins with a plain ','
+    tt <- trimws(unlist(strsplit(assemblages[r,'archlayer'], ',')))
     assemblages[r,'locality_archlayer_cols'] <- paste(assemblages[r,'locality_id'], tt, sep = ', ', collapse = '%%')
   }
   
