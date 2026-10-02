@@ -2,10 +2,13 @@
 % Please edit documentation in R/help_funcs.R
 \name{get_database_path}
 \alias{get_database_path}
-\title{Get the package data directory path}
+\title{Get the package database path}
 \usage{
 get_database_path()
 }
+\value{
+The local path, in which the road.sqlite is located.
+}
 \description{
-Get the package data directory path
+Get the package database path
 }

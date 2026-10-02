@@ -2,13 +2,27 @@
 % Please edit documentation in R/help_funcs.R
 \name{set_database_path}
 \alias{set_database_path}
-\title{Set the package data directory path}
+\title{Set the ROAD database directory path}
 \usage{
 set_database_path(path = NULL)
 }
 \arguments{
-\item{path}{Character string. Path to the data directory.}
+\item{path}{Character string. Path to the road.sqlite.}
 }
 \description{
-Set the package data directory path
+The \strong{\code{set_database_path}} function sets the ROAD database 
+directory path, if the user wish to use SQLite version of ROAD, 
+\strong{\code{road.sqlite}} . 
+\strong{\code{road.sqlite}} is a file-based database, which means that the ROAD database 
+is stored in a single file and can be used offline.
+}
+\details{
+Initially, the database directory path is not set. If the database path 
+is NULL, the package roadDB uses ROAD online.
+If the database directory path is set, but you wish to use ROAD online, 
+execute set_database_path()
+}
+\examples{
+\donttest{set_database_path('D:/your_user_name/R_Packages/roadDB/')}
+set_database_path()
 }

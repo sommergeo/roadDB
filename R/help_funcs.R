@@ -72,9 +72,25 @@ cm_miscellaneous_find_material <- "miscellaneous_find_material"
 cm_miscellaneous_find_raw_material_source <- "miscellaneous_find_raw_material_source"
 
 
-#' Set the package data directory path
-#' @param path Character string. Path to the data directory.
+#' Set the ROAD database directory path
+#' 
+#' The \strong{\code{set_database_path}} function sets the ROAD database 
+#' directory path, if the user wish to use SQLite version of ROAD, 
+#' \strong{\code{road.sqlite}} . 
+#' \strong{\code{road.sqlite}} is a file-based database, which means that the ROAD database 
+#' is stored in a single file and can be used offline.
+#' 
+#' Initially, the database directory path is not set. If the database path 
+#' is NULL, the package roadDB uses ROAD online.
+#' If the database directory path is set, but you wish to use ROAD online, 
+#' execute set_database_path()
+#' 
+#' @param path Character string. Path to the road.sqlite.
 #' @export
+#' 
+#' @examples
+#' \donttest{set_database_path('D:/your_user_name/R_Packages/roadDB/')}
+#' set_database_path()
 set_database_path <- function(path=NULL) {
   if (!is.null(path))
   {
@@ -91,7 +107,9 @@ set_database_path <- function(path=NULL) {
     else options(roadDB.database_path = NULL)
 }
 
-#' Get the package data directory path
+#' Get the package database path
+#' 
+#' @return The local path, in which the road.sqlite is located.
 #' @export
 get_database_path <- function() {
   getOption("roadDB.database_path", default = NULL)
