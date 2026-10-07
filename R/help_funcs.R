@@ -1,6 +1,7 @@
 #source("./R/login.R")
 
-db_source_select <- "road_server"
+# db_source_select <- "local_sqlite"
+# db_source_select <- "road_server"
 
 # column names
 cm_locality_idlocality <- "locality_id"
@@ -70,6 +71,50 @@ cm_feature_interpretation <- "feature_interpretation"
 cm_miscellaneous_find_material <- "miscellaneous_find_material"
 cm_miscellaneous_find_raw_material_source <- "miscellaneous_find_raw_material_source"
 
+
+#' Set the ROAD database directory path
+#' 
+#' The \strong{\code{set_database_path}} function sets the ROAD database 
+#' directory path, if the user wish to use SQLite version of ROAD, 
+#' \strong{\code{road.sqlite}} . 
+#' \strong{\code{road.sqlite}} is a file-based database, which means that the ROAD database 
+#' is stored in a single file and can be used offline.
+#' 
+#' Initially, the database directory path is not set. If the database path 
+#' is NULL, the package roadDB uses ROAD online.
+#' If the database directory path is set, but you wish to use ROAD online, 
+#' execute set_database_path()
+#' 
+#' @param path Character string. Path to the road.sqlite.
+#' @export
+#' 
+#' @examples
+#' \donttest{set_database_path('D:/your_user_name/R_Packages/roadDB/')}
+#' set_database_path()
+set_database_path <- function(path=NULL) {
+  if (!is.null(path))
+  {
+    # Normalize and check path existence
+    expanded_path <- normalizePath(path, mustWork = FALSE)
+  
+    if (!dir.exists(expanded_path)) {
+      warning("Directory does not exist: ", expanded_path)
+    }
+  
+    options(roadDB.database_path = expanded_path)
+    invisible(expanded_path)
+    }
+    else options(roadDB.database_path = NULL)
+}
+
+#' Get the package database path
+#' 
+#' @return The local path, in which the road.sqlite is located.
+#' @export
+get_database_path <- function() {
+  getOption("roadDB.database_path", default = NULL)
+}
+
 # run query in ROAD database
 # 
 # param query specifies the SQl query.
@@ -77,7 +122,7 @@ cm_miscellaneous_find_raw_material_source <- "miscellaneous_find_raw_material_so
 # return Database search result as a data frame.
 #' @keywords internal
 road_run_query <- function(query)
-{
+{ #print(getOption("roadDB.data_path", default = NULL))
   query <- trimws(query)
 
   if (query == "") {
@@ -88,11 +133,15 @@ road_run_query <- function(query)
   #                  port=5432, user=rstudioapi::askForPassword("Database username"), 
   #                  password=rstudioapi::askForPassword("Database password"))
 
-  if (db_source_select == "road_server")
+  db_path <- get_database_path()
+  db <- paste0(db_path, '/road.db')
+  #if (db_source_select == "road_server")
+  if (is.null(db_path))
   {
     max_attempts <- 5
     attempt <- 1
     result <- NULL
+    con <- NULL
     con <- NULL
 
     while (attempt <= max_attempts && is.null(result)) {
@@ -132,10 +181,12 @@ road_run_query <- function(query)
       else break
     }
     if (attempt > max_attempts) stop("Error: no database connection.")
+    if (attempt > max_attempts) stop("Error: no database connection.")
   }
-  else if (db_source_select == "local_sqlite")
+  #else if (db_source_select == "local_sqlite")
+  else if (file.exists(db))
   {
-    con <- dbConnect(RSQLite::SQLite(), dbname = "data/road_db.sqlite")
+    con <- dbConnect(RSQLite::SQLite(), dbname = db)
     result <- dbGetQuery(conn = con, statement = query)
     dbDisconnect(con)
   }
@@ -197,9 +248,27 @@ parameter_to_query <- function(query_start = "", parameter, query_end = "")
 }
 
 
+# build a STRING_AGG / GROUP_CONCAT expression depending on the active database source
+#' @keywords internal
+sql_string_agg <- function(col, separator = ", ")
+{
+  db_path <- get_database_path()
+  db <- paste0(db_path, '/road.db')
+
+  # if (db_source_select == "local_sqlite")
+  if (file.exists(db))
+    paste0("GROUP_CONCAT(DISTINCT ", col, ")")
+  else
+    paste0("STRING_AGG(DISTINCT ", col, ", '", separator, "')")
+}
+
+
 # build query to check if parameters intersect with comma separated database values
 query_check_intersection <- function(query_start = "", parameter, column)
 {
+  db_path <- get_database_path()
+  db <- paste0(db_path, '/road.db')
+  
   query <- ""
   if (!is.null(parameter))
   {
@@ -207,11 +276,27 @@ query_check_intersection <- function(query_start = "", parameter, column)
 
     if (is.vector(parameter))
     {
-      query <- paste(
-        #sapply(parameter, function(x) paste0("OR '", x, "' = ANY(STRING_TO_ARRAY(", column, ", ', '))")),
-        sapply(parameter, function(x) paste0("OR '", x, "' = ANY(regexp_split_to_array(", column, ", ',\\s*'))")),
-        collapse = " "
-      )
+      # if (db_source_select == "local_sqlite")
+      if (file.exists(db))
+      {
+        query <- paste(
+          sapply(parameter, function(x) paste0(
+            "OR (", column, " = '", x, "'",
+            " OR ", column, " LIKE '", x, ", %'",
+            " OR ", column, " LIKE '%, ", x, ", %'",
+            " OR ", column, " LIKE '%, ", x, "')"
+          )),
+          collapse = " "
+        )
+      }
+      else
+      {
+        query <- paste(
+          #sapply(parameter, function(x) paste0("OR '", x, "' = ANY(STRING_TO_ARRAY(", column, ", ', '))")),
+          sapply(parameter, function(x) paste0("OR '", x, "' = ANY(regexp_split_to_array(", column, ", ',\\s*'))")),
+          collapse = " "
+        )
+      }
       query <- paste0(
         query_start,
         "(",
@@ -366,7 +451,9 @@ get_geolayer_condition <- function(query_start = "", assemblages = NULL, localit
   
   for (r in 1:nrow(assemblages))   
   {
-    tt <- unlist(strsplit(assemblages[r,'geolayer'], ', '))
+    # split on bare ',' and trim - SQLite's GROUP_CONCAT ignores the ', ' separator used by
+    # PostgreSQL's STRING_AGG and always joins with a plain ','
+    tt <- trimws(unlist(strsplit(assemblages[r,'geolayer'], ',')))
     assemblages[r,'locality_geolayer_cols'] <- paste(assemblages[r,'locality_id'], tt, sep = ', ', collapse = '%%')
   }
 
@@ -405,7 +492,9 @@ get_archlayer_condition <- function(query_start = "", assemblages = NULL, locali
   
   for (r in 1:nrow(assemblages))   
   {
-    tt <- unlist(strsplit(assemblages[r,'archlayer'], ', '))
+    # split on bare ',' and trim - SQLite's GROUP_CONCAT ignores the ', ' separator used by
+    # PostgreSQL's STRING_AGG and always joins with a plain ','
+    tt <- trimws(unlist(strsplit(assemblages[r,'archlayer'], ',')))
     assemblages[r,'locality_archlayer_cols'] <- paste(assemblages[r,'locality_id'], tt, sep = ', ', collapse = '%%')
   }
   

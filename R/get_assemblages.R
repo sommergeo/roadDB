@@ -122,11 +122,19 @@ road_get_assemblages <- function(
     paste0("assemblage.category AS ", cm_assemblages_category),
     paste0("MIN(geological_stratigraphy.age_min) AS ", cm_geological_stratigraphy_age_min),
     paste0("MAX(geological_stratigraphy.age_max) AS ", cm_geological_stratigraphy_age_max),
-    paste0("STRING_AGG(DISTINCT assemblage_in_geolayer.geolayer_name, ', ') AS ", cm_assemblage_in_geolayer_geolayer_name),
-    paste0("STRING_AGG(DISTINCT assemblage_in_archlayer.archlayer_name, ', ') AS ", cm_assemblage_in_archlayer_archlayer_name),
-    paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.cultural_period, ', ') AS ", cm_cultural_period),
-    paste0("STRING_AGG(DISTINCT archaeological_stratigraphy.technocomplex, ', ') AS ", cm_technocomplex)
+    paste0(sql_string_agg("assemblage_in_geolayer.geolayer_name"), " AS ", cm_assemblage_in_geolayer_geolayer_name),
+    paste0(sql_string_agg("assemblage_in_archlayer.archlayer_name"), " AS ", cm_assemblage_in_archlayer_archlayer_name),
+    paste0(sql_string_agg("archaeological_stratigraphy.cultural_period"), " AS ", cm_cultural_period),
+    paste0(sql_string_agg("archaeological_stratigraphy.technocomplex"), " AS ", cm_technocomplex)
   )
+
+  # condition to check whether an assemblage's category belongs to the archaeology group;
+  # built via query_check_intersection() so it works against comma separated category
+  # values for both PostgreSQL and SQLite
+  archaeology_category_condition <- query_check_intersection("", c("raw material", "symbolic artifacts",
+                                                                    "technology", "typology", "miscellaneous finds",
+                                                                    "feature", "organic tools", "function"),
+                                                              "category")
 
   # combine query parts
   query <- paste(
@@ -141,8 +149,10 @@ road_get_assemblages <- function(
     "ELSE NULL",
     "END AS", cm_is_systematic, ", ",
     "CASE",
-    "WHEN (assemblage.locality_idlocality, assemblage.idassemblage) IN (SELECT assemblage_idlocality, assemblage_idassemblage FROM humanremains) 
-       THEN true",
+    "WHEN EXISTS (SELECT 1 FROM humanremains",
+    "WHERE humanremains.assemblage_idlocality = assemblage.locality_idlocality",
+    "AND humanremains.assemblage_idassemblage = assemblage.idassemblage)",
+    "THEN true",
     "ELSE false",
     "END AS human_remains,",
     "CASE",
@@ -150,7 +160,7 @@ road_get_assemblages <- function(
     "ELSE false",
     "END AS paleofauna,",
     "CASE",
-    "WHEN category ~ 'raw material|symbolic artifacts|technology|typology|miscellaneous finds|feature|organic tools|function' THEN true",
+    "WHEN", archaeology_category_condition, "THEN true",
     "ELSE false",
     "END AS archaeology,",
     "CASE",
@@ -181,26 +191,30 @@ road_get_assemblages <- function(
     parameter_to_query("AND ", age_min, " <= geological_stratigraphy.age_max"),
     parameter_to_query("AND ", age_max, " >= geological_stratigraphy.age_min"),
     parameter_to_query(
-      "AND (assemblage.locality_idlocality, assemblage.idassemblage) IN (
-        SELECT DISTINCT assemblage_in_archlayer.assemblage_idlocality, assemblage_in_archlayer.assemblage_idassemblage
+      "AND EXISTS (
+        SELECT 1
         FROM archaeological_layer
         LEFT JOIN assemblage_in_archlayer ON
           assemblage_in_archlayer.archlayer_idlocality = archaeological_layer.locality_idlocality
           AND archaeological_layer.name = assemblage_in_archlayer.archlayer_name
         LEFT JOIN archaeological_stratigraphy ON
           archaeological_layer.archstratigraphy_idarchstrat = archaeological_stratigraphy.idarchstrat
-        WHERE archaeological_stratigraphy.cultural_period IN (", cultural_period, "))"
+        WHERE assemblage_in_archlayer.assemblage_idlocality = assemblage.locality_idlocality
+          AND assemblage_in_archlayer.assemblage_idassemblage = assemblage.idassemblage
+          AND archaeological_stratigraphy.cultural_period IN (", cultural_period, "))"
     ),
     parameter_to_query(
-      "AND (assemblage.locality_idlocality, assemblage.idassemblage) IN (
-        SELECT DISTINCT assemblage_in_archlayer.assemblage_idlocality, assemblage_in_archlayer.assemblage_idassemblage
+      "AND EXISTS (
+        SELECT 1
         FROM archaeological_layer
         LEFT JOIN assemblage_in_archlayer ON
           assemblage_in_archlayer.archlayer_idlocality = archaeological_layer.locality_idlocality
           AND archaeological_layer.name = assemblage_in_archlayer.archlayer_name
         LEFT JOIN archaeological_stratigraphy ON
           archaeological_layer.archstratigraphy_idarchstrat = archaeological_stratigraphy.idarchstrat
-        WHERE archaeological_stratigraphy.technocomplex IN (", technocomplex, "))"
+        WHERE assemblage_in_archlayer.assemblage_idlocality = assemblage.locality_idlocality
+          AND assemblage_in_archlayer.assemblage_idassemblage = assemblage.idassemblage
+          AND archaeological_stratigraphy.technocomplex IN (", technocomplex, "))"
     ),
     # GROUP and ORDER
     "GROUP BY assemblage.locality_idlocality, assemblage.idassemblage, assemblage.name, 
@@ -210,6 +224,14 @@ road_get_assemblages <- function(
   )
 
   data <- road_run_query(query)
+
+  # SQLite has no native boolean type and returns TRUE/FALSE literals as
+  # integers (0/1), whereas PostgreSQL already returns proper logicals;
+  # coerce explicitly so the result is consistent across both database sources
+  data$human_remains <- as.logical(data$human_remains)
+  data$paleofauna <- as.logical(data$paleofauna)
+  data$archaeology <- as.logical(data$archaeology)
+  data$plant_remains <- as.logical(data$plant_remains)
 
   if (nrow(data) == 0 && nrow(localities) > 0)
   {

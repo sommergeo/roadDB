@@ -157,13 +157,24 @@ road_get_dates <- function(assemblages = NULL)
   data <- add_locality_columns(data, localities = localities)
 
   # Get publications from publication_desc_geostrat
-  query <- paste0("SELECT DISTINCT string_agg(publications, ' +++ ' ) as publication, 
+  # STRING_AGG/GROUP_CONCAT and a NULL-safe, portable substitute for PostgreSQL's
+  # concat() (which treats NULL as an empty string) are precomputed here so the
+  # query works identically against PostgreSQL and SQLite
+  publications_agg <- sql_string_agg("publications", " +++ ")
+  publication_agg <- sql_string_agg("publication", " +++ ")
+  publication_concat <- paste0(
+    "(COALESCE(CAST(publication.author AS TEXT), '') || '  ' || ",
+    "COALESCE(CAST(edition.publication_year AS TEXT), '') || '  ' || ",
+    "COALESCE(CAST(publication_source.title AS TEXT), '') || '  ' || ",
+    "COALESCE(CAST(doi AS TEXT), ''))"
+  )
+
+  query <- paste0("SELECT DISTINCT ", publications_agg, " as publication, 
                          geolayer_idlocality as locality_id, -1 as assemblage_id, 
                          geolayer_name as geolayer, '-1' as archlayer 
-                  FROM (SELECT idgeostrat, string_agg(publication, ' +++ ' ) as publications 
+                  FROM (SELECT idgeostrat, ", publication_agg, " as publications 
                        FROM (SELECT DISTINCT geostratigraphy_idgeostrat as idgeostrat,
-                                             concat(publication.author, '  ', edition.publication_year, '  ', 
-                                             publication_source.title, '  ', doi) as publication
+                                             ", publication_concat, " as publication
                             FROM publication_source, edition, publication, publication_desc_geostrat
                             WHERE publication_source.id_source = edition.publication_source_id_source and 
                                   publication.edition_idedition = edition.idedition and 
@@ -177,14 +188,13 @@ road_get_dates <- function(assemblages = NULL)
                   ON idgeostrat = geostrat_idgeostrat
                   GROUP BY geolayer_idlocality, geolayer_name
                 UNION 
-                  SELECT DISTINCT string_agg(publications, ' +++ ' ) as publication, 
+                  SELECT DISTINCT ", publications_agg, " as publication, 
                          archlayer_idlocality as locality_id, -1 as assemblage_id, 
                          '-1' as geolayer, archlayer_name as archlayer 
                   FROM (SELECT idgeostrat, publications, geolayer_idlocality, geolayer_name 
-                        FROM (SELECT idgeostrat, string_agg(publication, ' +++ ' ) as publications 
+                        FROM (SELECT idgeostrat, ", publication_agg, " as publications 
                               FROM (SELECT DISTINCT geostratigraphy_idgeostrat as idgeostrat,
-                                             concat(publication.author, '  ', edition.publication_year, '  ', 
-                                             publication_source.title, '  ', doi) as publication
+                                             ", publication_concat, " as publication
                                     FROM publication_source, edition, publication, publication_desc_geostrat
                                     WHERE publication_source.id_source = edition.publication_source_id_source and 
                                           publication.edition_idedition = edition.idedition and 
@@ -202,14 +212,13 @@ road_get_dates <- function(assemblages = NULL)
                      AND archlayer_correl_geolayer.geolayer_name = publications_geostrat_with_geolayer.geolayer_name 
                   GROUP BY archlayer_idlocality, archlayer_name
                 UNION
-                  SELECT DISTINCT string_agg(publications, ' +++ ' ) as publication, 
+                  SELECT DISTINCT ", publications_agg, " as publication, 
                          assemblage_idlocality as locality_id, 
                          assemblage_idassemblage as assemblage_id, '-1' as geolayer, '-1' as archlayer 
                   FROM (SELECT idgeostrat, publications, geolayer_idlocality, geolayer_name 
-                        FROM (SELECT idgeostrat, string_agg(publication, ' +++ ' ) as publications 
+                        FROM (SELECT idgeostrat, ", publication_agg, " as publications 
                               FROM (SELECT DISTINCT geostratigraphy_idgeostrat as idgeostrat,
-                                           concat(publication.author, '  ', edition.publication_year, '  ', 
-                                           publication_source.title, '  ', doi) as publication
+                                           ", publication_concat, " as publication
                                     FROM publication_source, edition, publication, publication_desc_geostrat
                                     WHERE publication_source.id_source = edition.publication_source_id_source and 
                                           publication.edition_idedition = edition.idedition and 
