@@ -6,7 +6,7 @@ This package provides an R interface to the [ROCEEH Out of Africa Database (ROAD
 The package is avaliable on [CRAN](https://doi.org/10.32614/CRAN.package.roadDB) and allows users to retrieve data from the online database at different levels of detail and customize search requests.
 Functions return `data frame` objects compatible with other R packages used in prehistoric and paleoenvironmental science, supporting reproducible workflows as an input provider.  
 
-The package is maintained by [Christian Sommer](https://orcid.org/0000-0001-9062-0876), [Zara Kanaeva](https://orcid.org/0000-0002-1989-1494), [Timo Streicher](https://orcid.org/0009-0009-2193-4308) and [Jesper Borre Pedersen](https://orcid.org/0000-0002-3468-0986) at the Research Center [The Role of Culture in Early Expansions of Humans (ROCEEH)](https://www.hadw-bw.de/roceeh) and is funded by the [Heidelberg Academy of Sciences and Humanties](https://en.hadw-bw.de/).
+The package is maintained by [Christian Sommer](https://orcid.org/0000-0001-9062-0876), [Zara Kanaeva](https://orcid.org/0000-0002-1989-1494), [Timo Streicher](https://orcid.org/0009-0009-2193-4308) and [Jesper Borre Pedersen](https://orcid.org/0000-0002-3468-0986) at the Research Center [The Role of Culture in Early Expansions of Humans (ROCEEH)](https://www.hadw-bw.de/en/roceeh) and is funded by the [Heidelberg Academy of Sciences and Humanties](https://en.hadw-bw.de/en).
 
 
 ## :cloud: Database status
@@ -17,8 +17,6 @@ Current status:  :green_circle: **Online**
 
 Current snapshot:  :date: **2026-09-18**
 
-:construction: A scheduled downtime is planned for 2026-09-28 at ca. [16:00 UTC+2](https://www.inyourowntime.zone/2026-09-28_16.00_Europe.Berlin) for ca. 1 hour.
-
 
 ## :notebook: Tutorial
 An introduction to the package with example workflows can be found at [https://www.sommergeo.com/roadDB/tutorial.html](https://www.sommergeo.com/roadDB/tutorial.html)
@@ -26,6 +24,11 @@ An introduction to the package with example workflows can be found at [https://w
 
 ## :unlock: License
 This package is licensed under the **Creative Commons Attribution-ShareAlike 4.0 International ([CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/))**.
+
+To cite the R package, please use:
+
+> Sommer, C., Pedersen, J. B., Kanaeva, Z., Streicher, T. P., Kandel, A. W., Conard, N. J., & Hochschild, V. (2026). roadDB: An R package for exploring early human prehistory and environments with the ROCEEH Out of Africa Database. PLOS ONE, 21(10), e0359952. https://doi.org/10.1371/journal.pone.0359952
+
 Contents retrieved from the ROAD database are published under the same license and should be cited as
 
 > Kandel, A. W., Sommer, C., Kanaeva, Z., Bolus, M., Bruch, A. A., Groth, C., Haidle, M. N., Hertler, C., Heß, J., Malina, M., Märker, M., Hochschild, V., Mosbrugger, V., Schrenk, F., & Conard, N. J. (2023). The ROCEEH Out of Africa Database (ROAD): A large-scale research database serves as an indispensable tool for human evolutionary studies. PLOS ONE, 18(8), e0289513. https://doi.org/10.1371/journal.pone.0289513

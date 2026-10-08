@@ -1,26 +1,48 @@
-citHeader("To cite package roadDB in publications, please use:")
 
 bibentry(
-  bibtype  = "Article",
-  title = "The ROCEEH Out of Africa Database (ROAD): A large-scale research database serves as an indispensable tool for human evolutionary studies",
-  author=c(
-  person(c("A.", "W."), "Kandel"),
-  person(c("C."), "Sommer"),
-  person(c("Z."), "Kanaeva"),
-  person(c("M."), "Bolus"),
-  person(c("A.", "A."), "Bruch"),
-  person(c("C."), "Groth"),
-  person(c("M.", "N."), "Haidle"),
-  person(c("C."), "Hertler"),
-  person(c("J."), "Heß"),
-  person(c("M."), "Malina"),
-  person(c("M."), "Märker"),
-  person(c("V."), "Hochschild"),
-  person(c("V."), "Mosbrugger"),
-  person(c("F."), "Schrenk"),
-  person(c("N.", "J."), "Conard")),
+  header = "To cite the roadDB R package, please use:",
+  bibtype = "Article",
+  title = "roadDB: An R package for exploring early human prehistory and environments with the ROCEEH Out of Africa Database",
+  author = c(
+    person("C.", "Sommer"),
+    person("J. B.", "Pedersen"),
+    person("Z.", "Kanaeva"),
+    person("T. P.", "Streicher"),
+    person("A. W.", "Kandel"),
+    person("N. J.", "Conard"),
+    person("V.", "Hochschild")
+  ),
   journal = "PLOS ONE",
-  year = "2023",
+  year = 2026,
+  volume = "21",
+  number = "10",
+  pages = "e0359952",
+  doi = "10.1371/journal.pone.0359952"
+)
+
+bibentry(
+  header = "To cite data derived from ROAD, please use:",
+  bibtype = "Article",
+  title = "The ROCEEH Out of Africa Database (ROAD): A large-scale research database serves as an indispensable tool for human evolutionary studies",
+  author = c(
+    person("A. W.", "Kandel"),
+    person("C.", "Sommer"),
+    person("Z.", "Kanaeva"),
+    person("M.", "Bolus"),
+    person("A. A.", "Bruch"),
+    person("C.", "Groth"),
+    person("M. N.", "Haidle"),
+    person("C.", "Hertler"),
+    person("J.", "He\u00df"),
+    person("M.", "Malina"),
+    person("M.", "Maerker"),
+    person("V.", "Hochschild"),
+    person("V.", "Mosbrugger"),
+    person("F.", "Schrenk"),
+    person("N. J.", "Conard")
+  ),
+  journal = "PLOS ONE",
+  year = 2023,
   volume = "18",
   number = "8",
   pages = "e0289513",
