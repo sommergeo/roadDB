@@ -13,6 +13,7 @@ Provides an R interface to the ROCEEH Out of Africa Database (ROAD) (\url{https:
 
 Authors:
 \itemize{
+  \item Christian Sommer \email{christian.sommer@uni-tuebingen.de} (\href{https://orcid.org/0000-0001-9062-0876}{ORCID})
   \item Zara Kanaeva \email{zara.kanaeva@geographie.uni-tuebingen.de} (\href{https://orcid.org/0000-0002-1989-1494}{ORCID})
   \item Jesper Borre Pedersen \email{jesper-borre.pedersen@ifu.uni-tuebingen.de} (\href{https://orcid.org/0000-0002-3468-0986}{ORCID})
   \item Timo Patrick Streicher \email{timo.streicher@googlemail.com} (\href{https://orcid.org/0009-0009-2193-4308}{ORCID})

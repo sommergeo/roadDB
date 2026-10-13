@@ -20,7 +20,11 @@ test_that("road_get_dates() returns the correct data types", {
   expect_equal(class(result$material_dated), "character")
   expect_equal(class(result$dating_method), "character")
   expect_equal(class(result$laboratory_idlaboratory), "character")
-  # expect_equal(class(result$technocomplex), "character")
+  expect_equal(class(result$analysis_number), "character")
+  expect_equal(class(result$date_of_analysis), "integer")
+  expect_equal(class(result$id), "integer")
+  expect_equal(class(result$comment), "character")
+  expect_equal(class(result$publication), "character")
   
   # Check if the result is a data frame and has the expected number of rows and columns
   expect_s3_class(result, "data.frame")

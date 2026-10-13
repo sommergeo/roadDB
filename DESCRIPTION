@@ -1,7 +1,7 @@
 Package: roadDB
 Type: Package
 Title: Access Data from the ROCEEH Out of Africa Database (ROAD)
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
   person(given = "Zara", family = "Kanaeva", role = c("aut"), email = "zara.kanaeva@geographie.uni-tuebingen.de", comment = c(ORCID = "0000-0002-1989-1494")),
   person(given = "Andrew", family = "Kandel", role = "ctb", email = "a.kandel@uni-tuebingen.de", comment = c(ORCID = "0000-0002-9889-9418")),
@@ -15,7 +15,6 @@ Description: Provides an R interface to the ROCEEH Out of Africa Database (ROAD)
 License: CC BY-SA 4.0
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.3
 Suggests:
     ggplot2,
     knitr,
@@ -30,3 +29,4 @@ Imports:
     dplyr,
     stringr,
     glue
+Config/roxygen2/version: 8.1.0
