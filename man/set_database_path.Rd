@@ -20,7 +20,8 @@ is stored in a single file and can be used offline.
 Initially, the database directory path is not set. If the database path 
 is NULL, the package roadDB uses ROAD online.
 If the database directory path is set, but you wish to use ROAD online, 
-execute set_database_path()
+execute \strong{\code{set_database_path(db_path)}}. Note: the database file 
+must have the name "road.sqlite".
 }
 \examples{
 \donttest{set_database_path('D:/your_user_name/R_Packages/roadDB/')}

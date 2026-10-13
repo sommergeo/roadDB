@@ -83,7 +83,8 @@ cm_miscellaneous_find_raw_material_source <- "miscellaneous_find_raw_material_so
 #' Initially, the database directory path is not set. If the database path 
 #' is NULL, the package roadDB uses ROAD online.
 #' If the database directory path is set, but you wish to use ROAD online, 
-#' execute set_database_path()
+#' execute \strong{\code{set_database_path(db_path)}}. Note: the database file 
+#' must have the name "road.sqlite".
 #' 
 #' @param path Character string. Path to the road.sqlite.
 #' @export
