@@ -13,15 +13,15 @@ set_database_path(path = NULL)
 The \strong{\code{set_database_path}} function sets the ROAD database 
 directory path, if the user wish to use SQLite version of ROAD, 
 \strong{\code{road.sqlite}} . 
-\strong{\code{road.sqlite}} is a file-based database, which means that the ROAD database 
-is stored in a single file and can be used offline.
+\strong{\code{road.sqlite}} is a file-based database, which means that the 
+ROAD database is stored in a single file and can be used offline.
 }
 \details{
 Initially, the database directory path is not set. If the database path 
 is NULL, the package roadDB uses ROAD online.
-If the database directory path is set, but you wish to use ROAD online, 
-execute \strong{\code{set_database_path(db_path)}}. Note: the database file 
-must have the name "road.sqlite".
+If the database directory path is set to an existing directory, 
+the offline version of ROAD as file with the mandatory name 
+\strong{\code{road.sqlite}} must be located in this directory.
 }
 \examples{
 \donttest{set_database_path('D:/your_user_name/R_Packages/roadDB/')}
