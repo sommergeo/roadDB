@@ -13,10 +13,11 @@ The package is maintained by [Christian Sommer](https://orcid.org/0000-0001-9062
 This package provides online access to a regularly updated snapshot of the ROAD database.
 A stable internet connection is required when working with `roadDB`.
 
-Current status:  :green_circle: **Online**
+Current status:  :yellow_circle: **Access limited** 
 
 Current snapshot:  :date: **2026-09-18**
 
+🚧 roadDB will only be available inside the University of Tübingen's network until 16/11/2026 due to [network maintenance](https://uni-tuebingen.de/einrichtungen/zentrum-fuer-datenverarbeitung/hiddenpages/newsfullview-aktuelles/article/vorsorgliche-schutzmassnahmen-fuer-die-it-infrastruktur-am-wochenende/).
 
 ## :notebook: Tutorial
 An introduction to the package with example workflows can be found at [https://www.sommergeo.com/roadDB/tutorial.html](https://www.sommergeo.com/roadDB/tutorial.html)
