@@ -17,7 +17,7 @@ Current status:  :yellow_circle: **Access limited**
 
 Current snapshot:  :date: **2026-09-18**
 
-🚧 roadDB will only be available inside the University of Tübingen's network until 16/11/2026 due to [network maintenance](https://uni-tuebingen.de/einrichtungen/zentrum-fuer-datenverarbeitung/hiddenpages/newsfullview-aktuelles/article/vorsorgliche-schutzmassnahmen-fuer-die-it-infrastruktur-am-wochenende/).
+🚧 roadDB will only be available inside the University of Tübingen's network until further notice due to [network maintenance](https://uni-tuebingen.de/einrichtungen/zentrum-fuer-datenverarbeitung/hiddenpages/newsfullview-aktuelles/article/vorsorgliche-schutzmassnahmen-fuer-die-it-infrastruktur-am-wochenende-und-danach/).
 
 ## :notebook: Tutorial
 An introduction to the package with example workflows can be found at [https://www.sommergeo.com/roadDB/tutorial.html](https://www.sommergeo.com/roadDB/tutorial.html)
