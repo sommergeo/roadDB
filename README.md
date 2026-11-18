@@ -17,7 +17,7 @@ Current status:  :yellow_circle: **Access limited**
 
 Current snapshot:  :date: **2026-09-18**
 
-🚧 roadDB will only be available inside the University of Tübingen's network until further notice due to [network maintenance](https://uni-tuebingen.de/einrichtungen/zentrum-fuer-datenverarbeitung/hiddenpages/newsfullview-aktuelles/article/vorsorgliche-schutzmassnahmen-fuer-die-it-infrastruktur-am-wochenende-und-danach/).
+🚧 We regret that ROAD is currently offline. For the time being, the database and its many services can only be accessed from within the University of Tübingen network. This results from increased security measures implemented by the University's network administration after a cyberattack last week. Therefore, access to ROAD and its services, including ROAD Simple Search, AskROAD, roadDB, etc., is restricted. 
 
 ## :notebook: Tutorial
 An introduction to the package with example workflows can be found at [https://www.sommergeo.com/roadDB/tutorial.html](https://www.sommergeo.com/roadDB/tutorial.html)
