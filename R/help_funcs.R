@@ -97,7 +97,8 @@ road_run_query <- function(query)
 
     while (attempt <= max_attempts && is.null(result)) {
 
-      tryCatch({con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
+#      tryCatch({con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "134.2.216.13", 
+      tryCatch({con <- dbConnect(RPostgres::Postgres(), dbname = "road", host = "204.168.163.171", 
                       port = 5432, user = "road_user", password = "road") 
                }, error = function(e) {
                  message("roadDB could not connect to the server. Please check your internet connection
