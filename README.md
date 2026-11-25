@@ -2,22 +2,25 @@
 
 <img src="https://cranlogs.r-pkg.org/badges/grand-total/roadDB" alt="Grand total number of downloads from CRAN">
 
-This package provides an R interface to the [ROCEEH Out of Africa Database (ROAD)](<https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php>), a comprehensive resource for archaeological, anthropological, paleoenvironmental and geographic data from Africa and Eurasia dating between 3,000,000 and 20,000 years BP.
+This package provides an R interface to the [ROCEEH Out of Africa Database (ROAD)](https://www.hadw-bw.de/en/roceeh), a comprehensive resource for archaeological, anthropological, paleoenvironmental and geographic data from Africa and Eurasia dating between 3,000,000 and 20,000 years BP.
 The package is avaliable on [CRAN](https://doi.org/10.32614/CRAN.package.roadDB) and allows users to retrieve data from the online database at different levels of detail and customize search requests.
 Functions return `data frame` objects compatible with other R packages used in prehistoric and paleoenvironmental science, supporting reproducible workflows as an input provider.  
 
-The package is maintained by [Christian Sommer](https://orcid.org/0000-0001-9062-0876), [Zara Kanaeva](https://orcid.org/0000-0002-1989-1494), [Timo Streicher](https://orcid.org/0009-0009-2193-4308) and [Jesper Borre Pedersen](https://orcid.org/0000-0002-3468-0986) at the Research Center [The Role of Culture in Early Expansions of Humans (ROCEEH)](https://www.hadw-bw.de/en/roceeh) and is funded by the [Heidelberg Academy of Sciences and Humanties](https://en.hadw-bw.de/en).
+The package is maintained by [Christian Sommer](https://orcid.org/0000-0001-9062-0876), [Zara Kanaeva](https://orcid.org/0000-0002-1989-1494), [Timo Streicher](https://orcid.org/0009-0009-2193-4308) and [Jesper Borre Pedersen](https://orcid.org/0000-0002-3468-0986) at the Research Center [The Role of Culture in Early Expansions of Humans (ROCEEH)](https://www.hadw-bw.de/en/roceeh) and is funded by the [Heidelberg Academy of Sciences and Humanties](https://www.hadw-bw.de/en).
 
 
 ## :cloud: Database status
 This package provides online access to a regularly updated snapshot of the ROAD database.
 A stable internet connection is required when working with `roadDB`.
 
-Current status:  :yellow_circle: **Access limited** 
+Current status:  :green_circle: **Online** 
 
 Current snapshot:  :date: **2026-09-18**
 
-🚧 We regret that ROAD is currently offline. For the time being, the database and its many services can only be accessed from within the University of Tübingen network. This results from increased security measures implemented by the University's network administration after a cyberattack last week. Therefore, access to ROAD and its services, including ROAD Simple Search, AskROAD, roadDB, etc., is restricted. 
+🚧 roadDB has been patched to version 1.0.1 and now connects to an external mirror, as the University of Tübingen's network remains unavailable for the foreseeable future due to an IT security issue. After updating to the
+latest version (`install.packages("roadDB")`), roadDB should work as usual again. We apologise for the inconvenience caused by the unplanned downtime in
+mid-November 2026.
+
 
 ## :notebook: Tutorial
 An introduction to the package with example workflows can be found at [https://www.sommergeo.com/roadDB/tutorial.html](https://www.sommergeo.com/roadDB/tutorial.html)
@@ -41,7 +44,7 @@ Information is recorded closely following the interpretations of the original li
 
 Please critically evaluate results obtained via roadDB, verify them against the original literature, retrieve references using `road_get_publications()` and check for new publications not yet entered.
 
-roadDB covers the most frequently used tables and columns of ROAD. For additional fields, complex SQL queries, or full database access, please register and log in to [ROAD](https://www.roceeh.uni-tuebingen.de/roadweb/smarty_road_simple_search.php).
+roadDB covers the most frequently used tables and columns of ROAD. For additional fields, complex SQL queries, or full database access, please register and log in to ROAD.
 
 If you find errors, please contact info@roceeh.net.
 

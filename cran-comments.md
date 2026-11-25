@@ -1,5 +1,6 @@
 ## R CMD check results
 
-0 errors | 0 warnings | 0 note
+0 errors | 0 warnings | 0 notes
 
-* This major release updates the citation and is consistent with the journal publication: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0359952
+* This update fixes check failures caused by the temporary unavailability of the data server at the University of Tübingen. roadDB now retrieves its data from a mirror, so users, examples and tests no longer depend on that server.
+* Broken hyperlink in README.md and the DESCRIPTION was replaced.
